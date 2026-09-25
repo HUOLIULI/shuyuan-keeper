@@ -81,6 +81,32 @@ jobs:
             git push
           fi
 
+      - name: Sync site to cPanel host (FTP)
+        env:
+          FTP_HOST: ${{ secrets.CPANEL_FTP_HOST }}
+          FTP_USER: ${{ secrets.CPANEL_FTP_USER }}
+          FTP_PASS: ${{ secrets.CPANEL_FTP_PASS }}
+          FTP_DIR: htdocs
+        run: |
+          if [ -z "$FTP_HOST" ] || [ -z "$FTP_USER" ]; then
+            echo "FTP secrets not set, skip cPanel sync"
+            exit 0
+          fi
+          python - <<'PY'
+          import ftplib, os
+          ftp=ftplib.FTP()
+          ftp.connect(os.environ["FTP_HOST"],21,timeout=30)
+          ftp.login(os.environ["FTP_USER"],os.environ["FTP_PASS"])
+          base=os.environ.get("FTP_DIR","htdocs")
+          for f in sorted(os.listdir("docs")):
+              with open(os.path.join("docs",f),"rb") as fh:
+                  ftp.storbinary(f"STOR {base}/{f}",fh)
+              print("  up:",f)
+          ftp.cwd(base)
+          print("remote now:",sorted(ftp.nlst()))
+          ftp.quit()
+          PY
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

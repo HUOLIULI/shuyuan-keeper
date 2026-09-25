@@ -59,12 +59,36 @@
   .badge.green{background:#dafce7;color:#1a7f37}
   .badge.yellow{background:#fff5b1;color:#7a5c00}
   .badge.red{background:#ffebe9;color:#cf222e}
+  .dc{border:1px solid #d4a72c;background:#fffbe6;border-radius:10px;padding:10px 14px;margin:14px 0;font-size:12.5px;line-height:1.7;color:#4a4a4a}
+  .dc b{color:#7a5c00}
+  .dc .t{font-weight:600;cursor:pointer;user-select:none;display:flex;align-items:center;gap:8px}
+  .dc .t::before{content:"▸";color:#d4a72c;transition:transform .15s}
+  .dc.open .t::before{transform:rotate(90deg)}
+  .dc .body{display:none;margin-top:8px}
+  .dc.open .body{display:block}
+  .dc ul{margin:6px 0 0 18px;padding:0}
+  .dc li{margin:3px 0}
+  .dc a{color:#0969da;text-decoration:none}
+  .dc a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>资源聚合仓库</h1>
   <p class="sub">书源 · 订阅源 · TVBox · IPTV · 采集接口 — 上游日验 + 本仓二次复核</p>
+
+  <div class="dc" id="dc" onclick="this.classList.toggle('open')">
+    <div class="t"><b>免责声明</b><span>本仓库仅供个人学习、研究、备份。全部资源版权归原权利人所有，禁止商用、二次分发或搬运。点击展开完整条款。</span></div>
+    <div class="body">
+      <ul>
+        <li>本仓库为非营利性个人仓库，与原始内容权利人无关联、无合作、无授权关系。</li>
+        <li>未经权利人许可，禁止：Fork / 克隆 / 镜像 / 搬运本仓库至其他平台；售卖、付费传播、引流变现等任何商业用途；二次分发、打包转载。</li>
+        <li>本仓库随时可能无通知删除、清空或停止维护，不保证内容完整性、准确性与永久可用性。</li>
+        <li>访问、下载或使用本仓库任何内容产生的风险与后果，由使用者自行承担；如相关内容在您所在地区不合法，请立即停止使用。</li>
+        <li>侵权反馈：通过仓库 <a href="https://github.com/HUOLIULI/shuyuan-keeper/issues" target="_blank">Issue</a> 提交（权利证明 + 侵权位置 + 有效联系方式），核实后删除。</li>
+      </ul>
+    </div>
+  </div>
 
   <div class="stats" id="stats"></div>
 
