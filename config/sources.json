@@ -241,6 +241,12 @@
         "黑狐.json"
       ],
       "verify_daily": false
+    },
+    {
+      "name": "资源站监测·ziyuanzhan·在线",
+      "url": "https://mylazily.github.io/ziyuanzhan/data/online.json",
+      "type": "collect",
+      "verify_daily": true
     }
   ],
   "yckceo_index": [
