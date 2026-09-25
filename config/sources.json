@@ -104,12 +104,6 @@
       "verify_daily": false
     },
     {
-      "name": "苹果CMS·lziapi-xml采集",
-      "url": "https://cj.lziapi.com/api.php/provide/vod/at/xml/",
-      "type": "collect",
-      "verify_daily": false
-    },
-    {
       "name": "苹果CMS·爱坤",
       "url": "https://ikunzyapi.com/api.php/provide/vod/",
       "type": "collect",
@@ -130,6 +124,24 @@
     {
       "name": "苹果CMS·豪华",
       "url": "https://hhzyapi.com/api.php/provide/vod/",
+      "type": "collect",
+      "verify_daily": false
+    },
+    {
+      "name": "苹果CMS·豪华",
+      "url": "https://haohuazy.com/api.php/provide/vod/",
+      "type": "collect",
+      "verify_daily": false
+    },
+    {
+      "name": "苹果CMS·红牛",
+      "url": "https://hsckzy888.com/api.php/provide/vod/",
+      "type": "collect",
+      "verify_daily": false
+    },
+    {
+      "name": "苹果CMS·索尼",
+      "url": "https://suonizy.net/api.php/provide/vod/",
       "type": "collect",
       "verify_daily": false
     },
