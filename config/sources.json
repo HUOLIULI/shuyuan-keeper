@@ -110,37 +110,37 @@
       "verify_daily": false
     },
     {
-      "name": "苹果CMS·索尼",
+      "name": "苹果CMS·索尼(suoniapi)",
       "url": "https://suoniapi.com/api.php/provide/vod/",
       "type": "collect",
       "verify_daily": false
     },
     {
-      "name": "苹果CMS·红牛",
+      "name": "苹果CMS·红牛(hongniuzy2)",
       "url": "https://www.hongniuzy2.com/api.php/provide/vod/",
       "type": "collect",
       "verify_daily": false
     },
     {
-      "name": "苹果CMS·豪华",
+      "name": "苹果CMS·豪华(hhzyapi)",
       "url": "https://hhzyapi.com/api.php/provide/vod/",
       "type": "collect",
       "verify_daily": false
     },
     {
-      "name": "苹果CMS·豪华",
+      "name": "苹果CMS·豪华(haohuazy)",
       "url": "https://haohuazy.com/api.php/provide/vod/",
       "type": "collect",
       "verify_daily": false
     },
     {
-      "name": "苹果CMS·红牛",
+      "name": "苹果CMS·红牛(hsckzy888)",
       "url": "https://hsckzy888.com/api.php/provide/vod/",
       "type": "collect",
       "verify_daily": false
     },
     {
-      "name": "苹果CMS·索尼",
+      "name": "苹果CMS·索尼(suonizy)",
       "url": "https://suonizy.net/api.php/provide/vod/",
       "type": "collect",
       "verify_daily": false

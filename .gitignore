@@ -9,3 +9,19 @@ ENV/
 .DS_Store
 Thumbs.db
 *.log
+
+# --- generated data (kept out of git; state persists via Actions cache) ---
+data/store.json
+data/archive.json
+data/stats.json
+data/upstreams.json
+data/valid.json
+data/valid_subscribe.json
+data/valid_tvbox.json
+data/valid_collect.json
+data/valid_videosite.json
+data/valid_iptv.m3u
+
+# generated site payloads (deployed via artifact + FTP, not committed)
+docs/*.json
+docs/*.m3u

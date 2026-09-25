@@ -30,6 +30,9 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import requests
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
@@ -67,6 +70,8 @@ FAIL_LIMIT = 3
 FETCH_GAP = 20 * 3600
 VALIDATE_MINUTES = 35
 RECHECK_HOURS = DEFAULTS["recheck_hours"]
+# 失效条目标墓碑后，多少天内不再重新入库；过期后允许上游再次带回来
+TOMBSTONE_DAYS = 30
 
 
 def load_config():
@@ -100,6 +105,7 @@ def empty_store():
     return {
         "sources": [],
         "archived": [],
+        "dead": {},
         "last_fetch": 0,
         "discovered": [],
         "upstreams": {},
@@ -136,6 +142,62 @@ def domain_key(url):
     clean = (url or "").split("#", 1)[0].strip()
     host = (urlparse(clean).hostname or "").lower()
     return host[4:] if host.startswith("www.") else host
+
+
+def origin_of(url):
+    """取 URL 的 scheme://host[:port]，用于站点级存活探测。"""
+    try:
+        p = urlparse((url or "").split("#", 1)[0].strip())
+    except Exception:  # noqa: BLE001
+        return ""
+    if p.scheme not in ("http", "https") or not p.hostname:
+        return ""
+    return f"{p.scheme}://{p.hostname}" + (f":{p.port}" if p.port else "")
+
+
+def site_alive(url):
+    """站点级存活：只要主机能建立连接并返回任意 HTTP 响应即算站点还在。
+
+    对证书链不完整的国内站点做降级（verify=False / https→http 回退），
+    用于区分「站点整个没了（dead）」和「站点还在、只是某条规则/接口失效（flaky）」。
+    """
+    origin = origin_of(url)
+    if not origin:
+        return False
+    candidates = [origin]
+    if origin.startswith("https://"):
+        candidates.append("http://" + origin[len("https://"):])
+    for base in candidates:
+        for verify in (True, False):
+            try:
+                resp = requests.get(base, headers={"User-Agent": UA}, timeout=8,
+                                    allow_redirects=True, stream=True, verify=verify)
+                resp.close()
+                return True
+            except Exception:  # noqa: BLE001
+                continue
+    return False
+
+
+def dedup_str(rec):
+    """把 dedup_key 转成可序列化字符串，用于墓碑集合。"""
+    return "|".join(str(x) for x in dedup_key(rec))
+
+
+def active_tombstones(store):
+    """返回仍在保护期内的失效墓碑 key 集合，并顺手把 store["dead"] 规范成 dict。
+
+    旧格式（list）视为已过期；超过 TOMBSTONE_DAYS 的墓碑自动清理，
+    给暂时宕机、后来恢复的站点一个重新入库的机会。
+    """
+    raw = store.get("dead")
+    if isinstance(raw, dict):
+        items = raw
+    else:
+        items = {k: "1970-01-01T00:00:00Z" for k in (raw or [])}
+    fresh = {k: ts for k, ts in items.items() if _age_hours(ts) < TOMBSTONE_DAYS * 24}
+    store["dead"] = fresh
+    return set(fresh)
 
 
 def http_get(url, timeout=25, headers=None, allow_redirects=True):
@@ -342,6 +404,7 @@ def parse_collect(text, origin):
 # --------------------------------------------------------------------------- #
 def merge_items(store, items, stype, origin):
     existing = {dedup_key(r): r for r in store["sources"]}
+    tombstones = active_tombstones(store)
     new_n = upd_n = 0
     for item in items:
         url = item.get("url") or ""
@@ -368,6 +431,9 @@ def merge_items(store, items, stype, origin):
             entry["domain"] = entry["url"] or entry["name"]
 
         key = dedup_key(entry)
+        if dedup_str(entry) in tombstones:
+            # 已被判定失效并删除，除非明显更新否则不再入库
+            continue
         rec = existing.get(key)
         if rec is None:
             store["sources"].append(entry)
@@ -592,55 +658,58 @@ def cmd_fetch(force=False):
 # --------------------------------------------------------------------------- #
 # validate（按类型差异化）
 # --------------------------------------------------------------------------- #
+def _rule_status(site_ok, rule_ok):
+    """统一判定：规则通过=valid；规则失效但站点在=flaky；站点没了=dead。"""
+    if rule_ok:
+        return "valid"
+    return "flaky" if site_ok else "dead"
+
+
 def check_book(rec):
     src = rec.get("source") or {}
     base = (src.get("bookSourceUrl") or rec.get("url") or "").split("#", 1)[0]
     if not base.startswith(("http://", "https://")):
-        return False
-    try:
-        resp = requests.get(base, headers={"User-Agent": UA}, timeout=TIMEOUT,
-                            allow_redirects=True)
-        if resp.status_code >= 400:
-            return False
-    except Exception:  # noqa: BLE001
-        return False
+        return "dead"
+    site_ok = site_alive(base)
 
     search_url = (src.get("searchUrl") or "").strip()
     template = search_url.split(",", 1)[0]
     if template and "{{key}}" in template:
         probe = template.replace("{{key}}", requests.utils.quote(SEARCH_KEY))
         try:
-            resp = requests.get(probe, headers={"User-Agent": UA}, timeout=TIMEOUT)
-            return resp.status_code < 400
+            resp = requests.get(probe, headers={"User-Agent": UA}, timeout=TIMEOUT,
+                                verify=False)
+            rule_ok = resp.status_code < 400
         except Exception:  # noqa: BLE001
-            return False
-    return True
+            rule_ok = False
+        return _rule_status(site_ok, rule_ok)
+    return "valid" if site_ok else "dead"
 
 
 def check_tvbox(rec):
     """TVBox 站点条目：有可探测 URL 就探活，结构性条目（无 URL）视为有效。"""
     src = rec.get("source") or {}
     sub = rec.get("sub_config") or ""
-    if sub:
-        return http_get(sub, timeout=TIMEOUT) is not None
-    url = (src.get("api") or src.get("searchUrl") or rec.get("url") or "").strip()
-    if not url:
+    target = sub or (src.get("api") or src.get("searchUrl") or rec.get("url") or "").strip()
+    if not target:
         # 多仓子项、或仅有 key/ext 的结构性条目，无独立 URL 可探活
-        return True
-    if url.startswith(("http://", "https://")):
-        return http_get(url, timeout=TIMEOUT) is not None
-    return False
+        return "valid"
+    if not target.startswith(("http://", "https://")):
+        return "dead"
+    if http_get(target, timeout=TIMEOUT) is not None:
+        return "valid"
+    return "flaky" if site_alive(target) else "dead"
 
 
 def check_iptv(rec):
     url = rec.get("url") or ""
     if not url.startswith(("http://", "https://")):
-        return url.startswith(("rtmp://", "rtsp://")) or url.startswith(("rtp://", "udp://"))
+        return "valid" if url.startswith(("rtmp://", "rtsp://", "rtp://", "udp://")) else "dead"
     try:
         resp = requests.head(url, headers={"User-Agent": UA}, timeout=8,
                              allow_redirects=True)
         if resp.status_code < 400:
-            return True
+            return "valid"
     except Exception:  # noqa: BLE001
         pass
     try:
@@ -648,45 +717,58 @@ def check_iptv(rec):
         chunk = next(resp.iter_content(1024), b"")
         code = resp.status_code
         resp.close()
-        return code == 200 and len(chunk) > 0
+        if code == 200 and len(chunk) > 0:
+            return "valid"
     except Exception:  # noqa: BLE001
-        return False
+        pass
+    # 流本身取不到；若主机（域名）还在，只算规则/流失效（黄），否则站点没了（红）
+    return "flaky" if site_alive(url) else "dead"
 
 
 def check_collect(rec):
-    url = (rec.get("url") or "").rstrip("/") + "/?ac=list"
-    is_xml = "/at/xml/" in url or url.endswith(".xml")
+    url = (rec.get("url") or "").rstrip("/")
+    if not url.startswith(("http://", "https://")):
+        return "dead"
+    probe = url + "/?ac=list"
+    is_xml = "/at/xml/" in probe or probe.endswith(".xml")
+    rule_ok = False
     try:
-        resp = requests.get(url, headers={"User-Agent": UA}, timeout=15)
-        if resp.status_code != 200:
-            return False
-        text = resp.text.lstrip()
-        if is_xml:
-            return text.startswith("<?xml") and ("<video" in text or "<list" in text)
-        data = json.loads(text)
-        return isinstance(data, dict) and ("class" in data or "list" in data)
+        resp = requests.get(probe, headers={"User-Agent": UA}, timeout=15)
+        if resp.status_code == 200:
+            text = resp.text.lstrip()
+            if is_xml:
+                rule_ok = text.startswith("<?xml") and ("<video" in text or "<list" in text)
+            else:
+                data = json.loads(text)
+                rule_ok = isinstance(data, dict) and ("class" in data or "list" in data)
     except Exception:  # noqa: BLE001
-        return False
+        rule_ok = False
+    # 接口规则失效但站点还能打开 → 黄；站点也没了 → 红
+    return _rule_status(site_alive(url), rule_ok)
 
 
 def check_videosite(rec):
-    """影视直连站：远端 http(s) 站点 200 即有效。"""
+    """影视直连站：站点能打开即有效（无独立规则层）。"""
     url = rec.get("url") or ""
     if not url.startswith(("http://", "https://")):
-        return False
+        return "dead"
     try:
-        resp = requests.head(url, headers={"User-Agent": UA}, timeout=8, allow_redirects=True)
+        resp = requests.head(url, headers={"User-Agent": UA}, timeout=8,
+                             allow_redirects=True, verify=False)
         if resp.status_code < 400:
-            return True
+            return "valid"
     except Exception:  # noqa: BLE001
         pass
     try:
-        resp = requests.get(url, headers={"User-Agent": UA}, timeout=8, stream=True)
+        resp = requests.get(url, headers={"User-Agent": UA}, timeout=8, stream=True,
+                            verify=False)
         chunk = next(resp.iter_content(512), b"")
         resp.close()
-        return resp.status_code == 200 and len(chunk) > 0
+        if resp.status_code == 200 and len(chunk) > 0:
+            return "valid"
     except Exception:  # noqa: BLE001
-        return False
+        pass
+    return "valid" if site_alive(url) else "dead"
 
 
 CHECKERS = {
@@ -727,7 +809,7 @@ def cmd_validate(batch=400, types=None):
 
     print(f"[info] 本轮 {len(targets)} 条")
     started = time.time()
-    ok_n = fail_n = 0
+    ok_n = yellow_n = dead_n = 0
     chunk_size = 60
     for i in range(0, len(targets), chunk_size):
         if time.time() - started > VALIDATE_MINUTES * 60:
@@ -739,30 +821,42 @@ def cmd_validate(batch=400, types=None):
                        for rec in chunk]
             for rec, future in futures:
                 try:
-                    ok = bool(future.result())
+                    verdict = future.result()
                 except Exception:  # noqa: BLE001
-                    ok = False
+                    verdict = "dead"
+                if verdict not in ("valid", "flaky", "dead"):
+                    verdict = "valid" if verdict else "dead"
                 rec["last_check"] = now_iso()
-                if ok:
+                if verdict == "valid":
                     rec["status"] = "valid"
                     rec["fail_count"] = 0
                     ok_n += 1
-                else:
+                elif verdict == "flaky":
+                    # 站点还活着，只是规则/接口失效：标黄，不计死亡次数
+                    rec["status"] = "flaky"
+                    yellow_n += 1
+                else:  # dead：站点整个没了
                     rec["fail_count"] = rec.get("fail_count", 0) + 1
-                    fail_n += 1
+                    dead_n += 1
                     if rec["fail_count"] >= FAIL_LIMIT:
                         rec["status"] = "invalid"
                     elif rec["status"] != "pending":
                         rec["status"] = "flaky"
 
+    # 失效：自动删除（不再堆积归档），并记墓碑避免下次 fetch 又被重新拉进来
     dead = [r for r in store["sources"] if r["status"] == "invalid"]
     if dead:
-        store["archived"].extend(dead)
-        store["sources"] = [r for r in store["sources"] if r["status"] != "invalid"]
-        print(f"[arch] {len(dead)} 条归档")
+        tombstones = active_tombstones(store)
+        stamp = now_iso()
+        for r in dead:
+            tombstones.add(dedup_str(r))
+        store["dead"] = {k: stamp for k in tombstones}
+        removed = {dedup_str(r) for r in dead}
+        store["sources"] = [r for r in store["sources"] if dedup_str(r) not in removed]
+        print(f"[del] 失效自动删除 {len(dead)} 条（墓碑保护 {TOMBSTONE_DAYS} 天）")
 
     save_store(store)
-    print(f"[done] 存活 {ok_n} / 失败 {fail_n}，耗时 {time.time() - started:.0f}s")
+    print(f"[done] 绿 {ok_n} / 黄 {yellow_n} / 红(站点不可达) {dead_n}，耗时 {time.time() - started:.0f}s")
 
 
 # --------------------------------------------------------------------------- #
@@ -821,6 +915,7 @@ def cmd_export():
     m3u_text = "\n".join(m3u_lines) + "\n"
 
     archived = [r.get("source") for r in store["archived"]]
+    flaky_n = sum(1 for r in store["sources"] if r.get("status") == "flaky")
     stats = {
         "total": len(store["sources"]) + len(store["archived"]),
         "valid_book": len(cats["book"]),
@@ -829,9 +924,11 @@ def cmd_export():
         "valid_iptv": len(seen_streams),
         "valid_collect": len(cats["collect"]),
         "valid_videosite": len(cats["videosite"]),
+        "flaky": flaky_n,
         "archived": len(archived),
+        "dead_removed": len(store.get("dead") or []),
         "upstreams_alive": sum(1 for v in store["upstreams"].values() if v.get("ok")),
-        "upstreams_total": len(UPSTREAMS) + 1,
+        "upstreams_total": len(store["upstreams"]),
         "updated_at": now_iso(),
     }
 
@@ -914,12 +1011,17 @@ def cmd_ingest(submit_dir=None, types=None):
                     continue
                 if rec["type"] != stype:
                     continue
-                ok = bool(CHECKERS[stype](rec))
+                verdict = CHECKERS[stype](rec)
+                if verdict not in ("valid", "flaky", "dead"):
+                    verdict = "valid" if verdict else "dead"
                 rec["last_check"] = now_iso()
-                if ok:
+                if verdict == "valid":
                     rec["status"] = "valid"
                     rec["fail_count"] = 0
                     color = "green"
+                elif verdict == "flaky":
+                    rec["status"] = "flaky"
+                    color = "yellow"
                 else:
                     was_valid = rec.get("status") == "valid"
                     rec["fail_count"] = rec.get("fail_count", 0) + 1
@@ -938,8 +1040,13 @@ def cmd_ingest(submit_dir=None, types=None):
                 })
             dead = [r for r in store["sources"] if r["status"] == "invalid" and "user" in r.get("origins", [])]
             if dead:
-                store["archived"].extend(dead)
-                store["sources"] = [r for r in store["sources"] if r["status"] != "invalid"]
+                tombstones = active_tombstones(store)
+                stamp = now_iso()
+                for r in dead:
+                    tombstones.add(dedup_str(r))
+                store["dead"] = {k: stamp for k in tombstones}
+                removed = {dedup_str(r) for r in dead}
+                store["sources"] = [r for r in store["sources"] if dedup_str(r) not in removed]
             results.append({
                 "file": path.name, "type": stype,
                 "items": len(parsed), "new": new_n, "checked": checked,

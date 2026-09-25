@@ -142,7 +142,7 @@
     <h2>上游仓库监控</h2>
     <div class="ups" id="ups"></div>
   </div>
-  <p class="tag">数据更新于 <span id="ts">-</span> · 失效条目已归档 <a href="archive.json">查看</a></p>
+  <p class="tag">数据更新于 <span id="ts">-</span> · 站点已失效的条目自动删除（已删 <span id="dead-n">0</span> 条）；仅规则失效但站点仍在的标黄保留</p>
 </div>
 <div id="toast"></div>
 
@@ -441,9 +441,12 @@ function downloadSubmit() {
   try {
     const s = await (await fetch("stats.json")).json();
     document.getElementById("ts").textContent = s.updated_at || "-";
+    const dn = document.getElementById("dead-n");
+    if (dn) dn.textContent = s.dead_removed == null ? "0" : s.dead_removed;
     const items = [
       ["书源", s.valid_book], ["订阅", s.valid_subscribe], ["TVBox", s.valid_tvbox],
-      ["IPTV", s.valid_iptv], ["采集", s.valid_collect], ["影视直连", s.valid_videosite], ["归档", s.archived],
+      ["IPTV", s.valid_iptv], ["采集", s.valid_collect], ["影视直连", s.valid_videosite],
+      ["标黄", s.flaky], ["已删除", s.dead_removed],
       ["上游", `${s.upstreams_alive}/${s.upstreams_total}`]
     ];
     document.getElementById("stats").innerHTML =

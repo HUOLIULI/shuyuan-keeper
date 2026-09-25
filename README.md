@@ -21,8 +21,8 @@
 shuyuan-keeper/
 ├── config/sources.json          上游清单与参数
 ├── scripts/keeper.py            聚合 / 验证 / 导出
-├── data/                        运行状态与导出副本（自动提交）
-├── docs/                        GitHub Pages 站点 + 导出文件
+├── data/                        运行状态（store.json 不入库，靠 Actions cache 持久化）
+├── docs/                        站点页面 index.html（导出 json 运行时生成、不入库）
 ├── .github/workflows/update.yml 定时任务与 Pages 部署
 └── requirements.txt
 ```
@@ -62,7 +62,7 @@ python -m http.server 8080
 3. Settings → Actions → General → Workflow permissions 选择 `Read and write permissions`。
 4. 手动触发一次 `update-and-deploy` 工作流（默认 force=true），等待 Pages 部署完成。
 
-工作流每天 4 班自动运行（UTC 01/07/13/19），拉取上游、验证、导出并提交 `data/` 与 `docs/`。
+工作流每天 18:01（北京时间）自动运行一次，拉取上游、验证、导出，并把站点同步到 cPanel 主机与 GitHub Pages。校验状态 `data/store.json` 通过 Actions cache 在多次运行间持久化，生成文件不进入 git。
 
 ## 各 App 的订阅链接
 
@@ -105,4 +105,10 @@ https://cdn.jsdelivr.net/gh/你的用户名/仓库@main/docs/valid_tvbox.json
 | iptv | 流地址 HEAD / GET 可达 | 3 天 |
 | collect | `?ac=list` 返回 JSON | 3 天 |
 
-连续失败达到 `fail_limit` 的条目会移入 `archive.json`，不再出现在导出文件中。
+复验结果分三级：
+
+| 结果 | 含义 | 处理 |
+| --- | --- | --- |
+| 绿 valid | 规则与站点都正常 | 正常导出 |
+| 黄 flaky | 站点还在，仅规则/接口失效 | 标黄保留，不计死亡 |
+| 红 dead | 站点整体不可达 | 连续 3 次后自动删除，并记墓碑防止再次入库 |
