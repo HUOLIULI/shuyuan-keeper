@@ -95,15 +95,21 @@ jobs:
           python - <<'PY'
           import ftplib, os
           ftp=ftplib.FTP()
-          ftp.connect(os.environ["FTP_HOST"],21,timeout=30)
+          ftp.connect(os.environ["FTP_HOST"],21,timeout=60)
           ftp.login(os.environ["FTP_USER"],os.environ["FTP_PASS"])
           base=os.environ.get("FTP_DIR","htdocs")
           for f in sorted(os.listdir("docs")):
-              with open(os.path.join("docs",f),"rb") as fh:
-                  ftp.storbinary(f"STOR {base}/{f}",fh)
-              print("  up:",f)
-          ftp.cwd(base)
-          print("remote now:",sorted(ftp.nlst()))
+              try:
+                  with open(os.path.join("docs",f),"rb") as fh:
+                      ftp.storbinary(f"STOR {base}/{f}",fh,blocksize=32768)
+                  print("  up:",f)
+              except Exception as e:
+                  print(f"  WARN: upload {f} failed: {e}")
+          try:
+              ftp.cwd(base)
+              print("remote now:",sorted(ftp.nlst())[:50])
+          except Exception as e:
+              print("verify warn:",e)
           ftp.quit()
           PY
 
