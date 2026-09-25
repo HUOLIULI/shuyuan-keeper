@@ -22,6 +22,7 @@ CLI:
 
 import argparse
 import json
+import os
 import re
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -51,7 +52,7 @@ DEFAULTS = {
     "fail_limit": 3,
     "fetch_gap_hours": 20,
     "validate_minutes": 35,
-    "recheck_hours": {"book": 168, "subscribe": 168, "tvbox": 72, "iptv": 72, "collect": 72, "videosite": 72},
+    "recheck_hours": {"book": 168, "subscribe": 168, "tvbox": 72, "iptv": 72, "collect": 72, "videosite": 72, "music": 168},
     "upstreams": [],
     "yckceo_index": [],
     "yckceo_collect_index": [],
@@ -216,9 +217,24 @@ def http_get(url, timeout=25, headers=None, allow_redirects=True):
     return None
 
 
+def gh_api(url):
+    """GitHub REST 调用；有 GITHUB_TOKEN 时带上以提高限额（Actions 里注入）。"""
+    headers = {"User-Agent": UA, "Accept": "application/vnd.github+json"}
+    token = os.environ.get("GITHUB_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    try:
+        resp = requests.get(url, headers=headers, timeout=25)
+        if resp.status_code == 200:
+            return resp.json()
+    except Exception:  # noqa: BLE001
+        pass
+    return None
+
+
 def dedup_key(rec):
-    """iptv 用完整 URL 去重（同域名多频道），其余用域名去重。"""
-    if rec["type"] == "iptv":
+    """iptv / music 用完整 URL 去重（同域名多频道、同 CDN 多插件），其余用域名去重。"""
+    if rec["type"] in ("iptv", "music"):
         return (rec["url"], rec["type"])
     return (rec["domain"], rec["type"])
 
@@ -228,6 +244,27 @@ def coerce_version(value):
         return int(value)
     except (TypeError, ValueError):
         return 0
+
+
+_JSON_COMMENT_RE = re.compile(r'("(?:\\.|[^"\\])*")|//[^\n]*|/\*.*?\*/', re.S)
+
+
+def strip_json_comments(text):
+    """去掉 JSON 里的 // 与 /* */ 注释（TVBox 配置常见脏格式）。"""
+    return _JSON_COMMENT_RE.sub(lambda m: m.group(1) or "", text)
+
+
+def loads_lenient(text):
+    """尽量解析 JSON；失败时先去注释再试。"""
+    if isinstance(text, (dict, list)):
+        return text
+    try:
+        return json.loads(text)
+    except Exception:  # noqa: BLE001
+        try:
+            return json.loads(strip_json_comments(text))
+        except Exception:  # noqa: BLE001
+            return None
 
 
 # --------------------------------------------------------------------------- #
@@ -280,12 +317,9 @@ def parse_book(text, origin):
 
 
 def parse_tvbox(text, origin):
-    """TVBox 配置：多仓 {storeHouse:[...]} 或单仓 {spider,sites,lives,parses}。"""
+    """TVBox 配置：多仓 {storeHouse:[...]} 或单仓 {spider,sites,lives,parses}；容忍 // 注释。"""
     if isinstance(text, str):
-        try:
-            text = json.loads(text)
-        except Exception:  # noqa: BLE001
-            return []
+        text = loads_lenient(text)
     items = []
     if not isinstance(text, dict):
         return items
@@ -396,6 +430,100 @@ def parse_collect(text, origin):
         name = src.get("name") or src.get("title") or domain_key(url)
         if url.startswith(("http://", "https://")):
             items.append({"url": url, "name": name, "raw": src})
+    return items
+
+
+def parse_music(raw, up):
+    """音源上游解析，按 up.kind 分派：
+
+    - musicfree：MusicFree 插件订阅 JSON（{plugins:[{name,url,...}]}）
+    - lxreadme ：markdown 里提取 raw .js 音源链接（洛雪聚合仓库 README）
+    - single   ：上游 URL 本身就是一个 .js 音源
+    """
+    kind = up.get("kind") or "single"
+    origin = up.get("name") or "音源"
+    src_url = up.get("url") or ""
+    items = []
+
+    if kind == "musicfree":
+        data = loads_lenient(raw)
+        if isinstance(data, dict):
+            plugins = data.get("plugins") or data.get("data") or []
+        elif isinstance(data, list):
+            plugins = data
+        else:
+            plugins = []
+        for p in plugins or []:
+            if not isinstance(p, dict):
+                continue
+            purl = p.get("url") or p.get("src") or ""
+            if not str(purl).startswith(("http://", "https://")):
+                continue
+            name = p.get("name") or domain_key(purl)
+            items.append(
+                {"url": purl, "name": name,
+                 "raw": {"name": name, "url": purl, "version": p.get("version") or ""}}
+            )
+        return items
+
+    if kind == "lxreadme":
+        name = origin
+        seen = set()
+        for line in (raw or "").splitlines():
+            m = re.match(r"^\s*#{2,4}\s*(.+?)\s*$", line)
+            if m:
+                name = m.group(1).strip()
+            for u in re.findall(r"https://raw\.githubusercontent\.com/[^\s\)\]\"'`]+?\.js", line):
+                if u in seen:
+                    continue
+                seen.add(u)
+                items.append({"url": u, "name": name, "raw": {"name": name, "url": u}})
+        return items
+
+    # single：URL 即一个音源文件
+    if src_url.startswith(("http://", "https://")):
+        name = origin
+        m = re.search(r"/([^/]+)\.js(?:\?|$)", src_url)
+        if m:
+            name = f"{origin}·{m.group(1)}"
+        items.append({"url": src_url, "name": name, "raw": {"name": name, "url": src_url}})
+    return items
+
+
+def _ver_num(text):
+    m = re.search(r"(\d{6})", text)
+    return int(m.group(1)) if m else -1
+
+
+def fetch_music_tree(repo_url, origin):
+    """从 GitHub 仓库枚举音源：只取最新版本目录（形如 V260817）下的 *.js。"""
+    m = re.match(r"https?://github\.com/([\w.-]+)/([\w.-]+?)(?:\.git)?/?$", repo_url or "")
+    if not m:
+        print(f"  [warn] {origin}: 不是 GitHub 仓库地址，跳过")
+        return []
+    owner, repo = m.groups()
+    info = gh_api(f"https://api.github.com/repos/{owner}/{repo}")
+    if not info:
+        print(f"  [warn] {origin}: GitHub API 不可用（限额或网络），跳过")
+        return []
+    branch = info.get("default_branch", "main")
+    tree = gh_api(f"https://api.github.com/repos/{owner}/{repo}/git/trees/{branch}?recursive=1")
+    if not tree:
+        return []
+    blobs = [t for t in tree.get("tree", [])
+             if t.get("type") == "blob" and t["path"].endswith(".js")]
+    if not blobs:
+        return []
+    tops = {b["path"].split("/")[0] for b in blobs}
+    vers = sorted([t for t in tops if _ver_num(t) >= 0], key=_ver_num)
+    if vers:
+        newest = vers[-1]
+        blobs = [b for b in blobs if b["path"].split("/")[0] == newest]
+    items = []
+    for b in blobs:
+        raw = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{b['path']}"
+        label = b["path"].rsplit("/", 1)[-1][:-3]
+        items.append({"url": raw, "name": f"{origin}·{label}", "raw": {"name": label, "url": raw}})
     return items
 
 
@@ -598,6 +726,23 @@ def cmd_fetch(force=False):
                 print(f"  [err]  {up['name']}: {exc}")
             continue
 
+        # music lxtree 走 GitHub API 枚举仓库，不直接 fetch raw
+        if up["type"] == "music" and up.get("kind") == "lxtree":
+            status = store["upstreams"].setdefault(up["name"], {})
+            try:
+                items = fetch_music_tree(up["url"], up["name"])
+                new_n, upd_n = merge_items(store, items, "music", up["name"])
+                status.update(ok=bool(items), last=now_iso(), count=len(items),
+                              msg=f"+{new_n}/~{upd_n}", daily=up.get("verify_daily", False))
+                total_new += new_n
+                print(f"  [ok]   {up['name']}(music·tree): {len(items)}条, 新增{new_n}")
+                time.sleep(1)
+            except Exception as exc:  # noqa: BLE001
+                status.update(ok=False, last=now_iso(), count=0, msg=f"解析失败:{exc}",
+                              daily=up.get("verify_daily", False))
+                print(f"  [err]  {up['name']}: {exc}")
+            continue
+
         raw = http_get(up["url"], timeout=40)
         status = store["upstreams"].setdefault(up["name"], {})
         if not raw:
@@ -633,6 +778,8 @@ def cmd_fetch(force=False):
                     items = fetch_videosite_batch(up["url"], up["name"])
                 else:
                     items = parse_videosite(raw, up["name"])
+            elif up["type"] == "music":
+                items = parse_music(raw, up)
         except Exception as exc:  # noqa: BLE001
             status.update(ok=False, last=now_iso(), count=0, msg=f"解析失败:{exc}",
                           daily=up.get("verify_daily", False))
@@ -771,6 +918,26 @@ def check_videosite(rec):
     return "valid" if site_alive(url) else "dead"
 
 
+def check_music(rec):
+    """音源文件：直接探测 .js 可达且非 HTML 错误页。"""
+    url = rec.get("url") or ""
+    if not url.startswith(("http://", "https://")):
+        return "dead"
+    try:
+        resp = requests.get(url, headers={"User-Agent": UA}, timeout=TIMEOUT, stream=True,
+                            verify=False)
+        chunk = next(resp.iter_content(512), b"")
+        code = resp.status_code
+        resp.close()
+        if code == 200 and len(chunk) > 0:
+            head = chunk.decode("utf-8", "ignore").lstrip().lower()
+            if not head.startswith("<!doctype") and "<html" not in head[:200]:
+                return "valid"
+    except Exception:  # noqa: BLE001
+        pass
+    return "dead"
+
+
 CHECKERS = {
     "book": check_book,
     "subscribe": check_book,
@@ -778,6 +945,7 @@ CHECKERS = {
     "iptv": check_iptv,
     "collect": check_collect,
     "videosite": check_videosite,
+    "music": check_music,
 }
 
 
@@ -889,7 +1057,7 @@ def build_tvbox_config(records):
 
 def cmd_export():
     store = load_store()
-    cats = {"book": [], "subscribe": [], "tvbox": [], "iptv": [], "collect": [], "videosite": []}
+    cats = {"book": [], "subscribe": [], "tvbox": [], "iptv": [], "collect": [], "videosite": [], "music": []}
     tvbox_records = []
     for rec in store["sources"]:
         if rec["status"] not in ("valid", "flaky"):
@@ -924,6 +1092,7 @@ def cmd_export():
         "valid_iptv": len(seen_streams),
         "valid_collect": len(cats["collect"]),
         "valid_videosite": len(cats["videosite"]),
+        "valid_music": len(cats["music"]),
         "flaky": flaky_n,
         "archived": len(archived),
         "dead_removed": len(store.get("dead") or []),
@@ -942,6 +1111,7 @@ def cmd_export():
             ensure_ascii=False, indent=1,
         ),
         "valid_videosite.json": json.dumps(cats["videosite"], ensure_ascii=False, indent=1),
+        "valid_music.json": json.dumps(cats["music"], ensure_ascii=False, indent=1),
         "archive.json": json.dumps(archived, ensure_ascii=False, indent=1),
         "stats.json": json.dumps(stats, ensure_ascii=False, indent=1),
         "upstreams.json": json.dumps(store["upstreams"], ensure_ascii=False, indent=1),

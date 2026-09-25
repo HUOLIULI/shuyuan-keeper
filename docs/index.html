@@ -99,6 +99,7 @@
     <div class="tab" data-tab="iptv">IPTV</div>
     <div class="tab" data-tab="collect">采集</div>
     <div class="tab" data-tab="videosite">影视直连站</div>
+    <div class="tab" data-tab="music">音源</div>
     <div class="tab" data-tab="upload" style="border-color:var(--green);color:var(--green)">+ 用户上传</div>
   </div>
 
@@ -108,6 +109,7 @@
   <div class="panel hidden" id="tab-iptv"></div>
   <div class="panel hidden" id="tab-collect"></div>
   <div class="panel hidden" id="tab-videosite"></div>
+  <div class="panel hidden" id="tab-music"></div>
   <div class="panel hidden" id="tab-upload"></div>
 
   <div class="panel" id="up-panel" style="display:none">
@@ -117,6 +119,7 @@
       <select id="up-type">
         <option value="collect">采集接口（苹果CMS）</option>
         <option value="videosite">影视直连站</option>
+        <option value="music">音源（洛雪/MusicFree）</option>
         <option value="book">书源（Legado）</option>
         <option value="subscribe">订阅源</option>
         <option value="tvbox">TVBox 配置</option>
@@ -148,19 +151,21 @@
 
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
-const TABS = ["book", "subscribe", "tvbox", "iptv", "collect", "videosite", "upload"];
+const TABS = ["book", "subscribe", "tvbox", "iptv", "collect", "videosite", "music", "upload"];
 const FILE = {book: "valid.json", subscribe: "valid_subscribe.json", tvbox: "valid_tvbox.json",
-              iptv: "valid_iptv.m3u", collect: "valid_collect.json", videosite: "valid_videosite.json"};
-const LABEL = {book: "书源", subscribe: "订阅源", tvbox: "站点", iptv: "频道", collect: "采集接口", videosite: "影视直连站"};
+              iptv: "valid_iptv.m3u", collect: "valid_collect.json", videosite: "valid_videosite.json",
+              music: "valid_music.json"};
+const LABEL = {book: "书源", subscribe: "订阅源", tvbox: "站点", iptv: "频道", collect: "采集接口", videosite: "影视直连站", music: "音源"};
 const META = {
-  book:      {title: "有效书源", desc: "阅读 Legado：书源管理 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "bookSource", extraBtn: ""},
-  subscribe: {title: "有效订阅源", desc: "阅读 Legado：我的 → 订阅 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "rssSource", extraBtn: ""},
-  tvbox:     {title: "TVBox 配置", desc: "TVBox / 影视仓：设置 → 配置地址 → 粘贴下面地址，每次启动自动刷新。", extraBtn: "copyAll"},
-  iptv:      {title: "IPTV 直播源（M3U）", desc: "VLC / Kodi / DIYP / TVBox：播放列表或直播源设置里填下面 M3U 地址。", extraBtn: "copyAll"},
-  collect:   {title: "采集接口（苹果CMS）", desc: "苹果CMS / 空壳影视：采集接口配置里填下面 JSON 地址。", extraBtn: ""},
-  videosite: {title: "影视直连站", desc: "本地 drpy/HCCX 规则映射出的可直连影视站，浏览器可直接打开。", extraBtn: ""}
+   book:      {title: "有效书源", desc: "阅读 Legado：书源管理 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "bookSource", extraBtn: ""},
+   subscribe: {title: "有效订阅源", desc: "阅读 Legado：我的 → 订阅 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "rssSource", extraBtn: ""},
+   tvbox:     {title: "TVBox 配置", desc: "TVBox / 影视仓：设置 → 配置地址 → 粘贴下面地址，每次启动自动刷新。", extraBtn: "copyAll"},
+   iptv:      {title: "IPTV 直播源（M3U）", desc: "VLC / Kodi / DIYP / TVBox：播放列表或直播源设置里填下面 M3U 地址。", extraBtn: "copyAll"},
+   collect:   {title: "采集接口（苹果CMS）", desc: "苹果CMS / 空壳影视：采集接口配置里填下面 JSON 地址。", extraBtn: ""},
+   videosite: {title: "影视直连站", desc: "本地 drpy/HCCX 规则映射出的可直连影视站，浏览器可直接打开。", extraBtn: ""},
+   music:     {title: "有效音源", desc: "洛雪 LX / MusicFree 音源（.js）：复制下面地址作为插件订阅源导入。", extraBtn: "copyAll"}
 };
-const data = {book: [], subscribe: [], tvbox: [], iptv: [], collect: [], videosite: []};
+const data = {book: [], subscribe: [], tvbox: [], iptv: [], collect: [], videosite: [], music: []};
 const loaded = {};
 
 const abs = (file) => new URL(file, location.href).href;
@@ -364,6 +369,13 @@ async function probeOne(item, type) {
         const t = await g2.text().catch(() => "");
         if (type === "videosite" && t.length < 200) ok = false;
       }
+    } else if (type === "music") {
+      const g4 = await fetch(url, {method: "GET", redirect: "follow", mode: "cors"}).catch(() => null);
+      if (!g4 || g4.status >= 400) ok = false;
+      else {
+        const t = (await g4.text().catch(() => "")).ltrim().toLowerCase();
+        if (t.startsWith("<!doctype") || t.includes("<html")) ok = false;
+      }
     } else if (type === "book" || type === "subscribe" || type === "tvbox") {
       const g3 = await fetch(url, {method: "GET", redirect: "follow", mode: "cors"}).catch(() => null);
       ok = g3 && g3.status < 400;
@@ -446,6 +458,7 @@ function downloadSubmit() {
     const items = [
       ["书源", s.valid_book], ["订阅", s.valid_subscribe], ["TVBox", s.valid_tvbox],
       ["IPTV", s.valid_iptv], ["采集", s.valid_collect], ["影视直连", s.valid_videosite],
+      ["音源", s.valid_music],
       ["标黄", s.flaky], ["已删除", s.dead_removed],
       ["上游", `${s.upstreams_alive}/${s.upstreams_total}`]
     ];

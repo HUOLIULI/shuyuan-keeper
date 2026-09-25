@@ -20,6 +20,7 @@ data/valid_subscribe.json
 data/valid_tvbox.json
 data/valid_collect.json
 data/valid_videosite.json
+data/valid_music.json
 data/valid_iptv.m3u
 
 # generated site payloads (deployed via artifact + FTP, not committed)

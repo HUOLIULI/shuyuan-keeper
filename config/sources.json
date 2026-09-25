@@ -10,7 +10,9 @@
     "subscribe": 168,
     "tvbox": 72,
     "iptv": 72,
-    "collect": 72
+    "collect": 72,
+    "videosite": 72,
+    "music": 168
   },
   "upstreams": [
     {
@@ -271,6 +273,46 @@
       "url": "https://0.wdzb.eu.cc/tvbox/海量采集聚合接口.json",
       "type": "tvbox",
       "verify_daily": true
+    },
+    {
+      "name": "tvbox·T4·ediart",
+      "url": "https://raw.githubusercontent.com/ediart/tvbox/main/T4.json",
+      "type": "tvbox",
+      "verify_daily": false
+    },
+    {
+      "name": "tvbox·T4·tlswch",
+      "url": "https://raw.githubusercontent.com/tlswch/zzzgit_zzz/main/T4.json",
+      "type": "tvbox",
+      "verify_daily": false
+    },
+    {
+      "name": "音源·MusicFree·qwerwhr",
+      "url": "https://raw.githubusercontent.com/qwerwhr/musicfree-plugins/main/plugins.json",
+      "type": "music",
+      "kind": "musicfree",
+      "verify_daily": true
+    },
+    {
+      "name": "音源·洛雪·pdone",
+      "url": "https://raw.githubusercontent.com/pdone/lx-music-source/main/README.md",
+      "type": "music",
+      "kind": "lxreadme",
+      "verify_daily": false
+    },
+    {
+      "name": "音源·洛雪·ikun",
+      "url": "https://github.com/Macrohard0001/lx-ikun-music-sources",
+      "type": "music",
+      "kind": "lxtree",
+      "verify_daily": false
+    },
+    {
+      "name": "音源·洛雪·星海",
+      "url": "https://raw.githubusercontent.com/cdyUuu/lx-music-xinghai-source/main/xinghai-music-source.js",
+      "type": "music",
+      "kind": "single",
+      "verify_daily": false
     }
   ],
   "yckceo_index": [
