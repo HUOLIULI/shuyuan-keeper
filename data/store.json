@@ -360580,7 +360580,8 @@
       "fail_count": 0,
       "last_check": "2026-09-25T06:51:59Z",
       "origins": [
-        "影视直连·hccx规则·荷城茶秀"
+        "影视直连·hccx规则·荷城茶秀",
+        "影视直连·hccx规则·荷城茶秀·全目录"
       ]
     },
     {
@@ -360596,7 +360597,8 @@
       "fail_count": 0,
       "last_check": "2026-09-25T06:51:59Z",
       "origins": [
-        "影视直连·hccx规则·动漫巴士"
+        "影视直连·hccx规则·动漫巴士",
+        "影视直连·hccx规则·荷城茶秀·全目录"
       ]
     },
     {
@@ -360612,7 +360614,8 @@
       "fail_count": 0,
       "last_check": "2026-09-25T06:51:59Z",
       "origins": [
-        "影视直连·hccx规则·好戏影视"
+        "影视直连·hccx规则·好戏影视",
+        "影视直连·hccx规则·荷城茶秀·全目录"
       ]
     },
     {
@@ -360628,7 +360631,9 @@
       "fail_count": 0,
       "last_check": "2026-09-25T06:51:59Z",
       "origins": [
-        "影视直连·hccx规则·黑狐影视"
+        "影视直连·hccx规则·黑狐影视",
+        "影视直连·hccx规则·荷城茶秀·全目录",
+        "影视直连·hccx规则·c目录"
       ]
     },
     {
@@ -360644,7 +360649,666 @@
       "fail_count": 0,
       "last_check": "2026-09-25T06:51:59Z",
       "origins": [
-        "影视直连·hccx规则·五五影视"
+        "影视直连·hccx规则·五五影视",
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.03yy.co",
+        "name": "03yy.json"
+      },
+      "domain": "03yy.co",
+      "type": "videosite",
+      "url": "https://www.03yy.co",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·03yy.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:29:37Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录",
+        "影视直连·hccx规则·c目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://348z.com/",
+        "name": "348影视.json"
+      },
+      "domain": "348z.com",
+      "type": "videosite",
+      "url": "https://348z.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·348影视.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:29:37Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://4k4k.live/",
+        "name": "4K剧院.json"
+      },
+      "domain": "4k4k.live",
+      "type": "videosite",
+      "url": "https://4k4k.live/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·4K剧院.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:09Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.freeok.vip",
+        "name": "Free影视.json"
+      },
+      "domain": "freeok.vip",
+      "type": "videosite",
+      "url": "https://www.freeok.vip",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·Free影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:09Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "http://www.tvyb03.com/",
+        "name": "TVB云播.json"
+      },
+      "domain": "tvyb03.com",
+      "type": "videosite",
+      "url": "http://www.tvyb03.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·TVB云播.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:09Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.yyds.one/",
+        "name": "YYDS影视.json"
+      },
+      "domain": "yyds.one",
+      "type": "videosite",
+      "url": "https://www.yyds.one/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·YYDS影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.eyy.cc",
+        "name": "eyy.json"
+      },
+      "domain": "eyy.cc",
+      "type": "videosite",
+      "url": "https://www.eyy.cc",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·eyy.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "http://www.hanjulao.com",
+        "name": "hanjulao.json"
+      },
+      "domain": "hanjulao.com",
+      "type": "videosite",
+      "url": "http://www.hanjulao.com",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·hanjulao.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.inmi.app/",
+        "name": "inmi.json"
+      },
+      "domain": "inmi.app",
+      "type": "videosite",
+      "url": "https://www.inmi.app/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·inmi.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://lkvod.us",
+        "name": "lkvod.json"
+      },
+      "domain": "lkvod.us",
+      "type": "videosite",
+      "url": "https://lkvod.us",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·lkvod.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://nkdyw.us",
+        "name": "nkdyw.json"
+      },
+      "domain": "nkdyw.us",
+      "type": "videosite",
+      "url": "https://nkdyw.us",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·nkdyw.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://nkvlog.com",
+        "name": "nkvlog.json"
+      },
+      "domain": "nkvlog.com",
+      "type": "videosite",
+      "url": "https://nkvlog.com",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·nkvlog.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://nkvod.com",
+        "name": "nkvod.json"
+      },
+      "domain": "nkvod.com",
+      "type": "videosite",
+      "url": "https://nkvod.com",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·nkvod.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.voflix.me",
+        "name": "voflix.json"
+      },
+      "domain": "voflix.me",
+      "type": "videosite",
+      "url": "https://www.voflix.me",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·voflix.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.zxzjhd.com",
+        "name": "zxzj.json"
+      },
+      "domain": "zxzjhd.com",
+      "type": "videosite",
+      "url": "https://www.zxzjhd.com",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·zxzj.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "http://www.7xdy.com/",
+        "name": "七新影视.json"
+      },
+      "domain": "7xdy.com",
+      "type": "videosite",
+      "url": "http://www.7xdy.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·七新影视.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.9day.cc/",
+        "name": "七月影视.json"
+      },
+      "domain": "9day.cc",
+      "type": "videosite",
+      "url": "https://www.9day.cc/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·七月影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.w1988.cc/",
+        "name": "万达影视.json"
+      },
+      "domain": "w1988.cc",
+      "type": "videosite",
+      "url": "https://www.w1988.cc/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·万达影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://m.xiangdao.me/",
+        "name": "农民影视.json"
+      },
+      "domain": "m.xiangdao.me",
+      "type": "videosite",
+      "url": "https://m.xiangdao.me/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·农民影视.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.tuhao.tv/",
+        "name": "土豪影视.json"
+      },
+      "domain": "tuhao.tv",
+      "type": "videosite",
+      "url": "https://www.tuhao.tv/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·土豪影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://sc1080.top/",
+        "name": "圣城影视.json"
+      },
+      "domain": "sc1080.top",
+      "type": "videosite",
+      "url": "https://sc1080.top/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·圣城影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "http://www.qiyoudy1.com/",
+        "name": "奇优影视.json"
+      },
+      "domain": "qiyoudy1.com",
+      "type": "videosite",
+      "url": "http://www.qiyoudy1.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·奇优影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.6080yy1.com/",
+        "name": "新视觉影视.json"
+      },
+      "domain": "6080yy1.com",
+      "type": "videosite",
+      "url": "https://www.6080yy1.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·新视觉影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://rebozj.pro/",
+        "name": "热播之家.json"
+      },
+      "domain": "rebozj.pro",
+      "type": "videosite",
+      "url": "https://rebozj.pro/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·热播之家.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录",
+        "影视直连·hccx规则·c目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.3wyy.com/",
+        "name": "爱看影视.json"
+      },
+      "domain": "3wyy.com",
+      "type": "videosite",
+      "url": "https://www.3wyy.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·爱看影视.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://m.fenggoudy3.com/",
+        "name": "疯狗影视.json"
+      },
+      "domain": "m.fenggoudy3.com",
+      "type": "videosite",
+      "url": "https://m.fenggoudy3.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·疯狗影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://bkyb.net/",
+        "name": "真不卡影视.json"
+      },
+      "domain": "bkyb.net",
+      "type": "videosite",
+      "url": "https://bkyb.net/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·真不卡影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://m.duanju5.com/",
+        "name": "短剧网.json"
+      },
+      "domain": "m.duanju5.com",
+      "type": "videosite",
+      "url": "https://m.duanju5.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·短剧网.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "http://www.sharenice.net",
+        "name": "短视频聚合.json"
+      },
+      "domain": "sharenice.net",
+      "type": "videosite",
+      "url": "http://www.sharenice.net",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·短视频聚合.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.miai9.cc/",
+        "name": "米爱影视.json"
+      },
+      "domain": "miai9.cc",
+      "type": "videosite",
+      "url": "https://www.miai9.cc/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·米爱影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.uiviki.com/",
+        "name": "维奇动漫.json"
+      },
+      "domain": "uiviki.com",
+      "type": "videosite",
+      "url": "https://www.uiviki.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·维奇动漫.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "http://www.pg8090.com/",
+        "name": "苹果影视.json"
+      },
+      "domain": "pg8090.com",
+      "type": "videosite",
+      "url": "http://www.pg8090.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·苹果影视.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.dandanju.cc/",
+        "name": "蛋蛋影视.json"
+      },
+      "domain": "dandanju.cc",
+      "type": "videosite",
+      "url": "https://www.dandanju.cc/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·蛋蛋影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://bzhanyy.com/",
+        "name": "超前B站.json"
+      },
+      "domain": "bzhanyy.com",
+      "type": "videosite",
+      "url": "https://bzhanyy.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·超前B站.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "http://www.dadagui.me/",
+        "name": "达达龟影视.json"
+      },
+      "domain": "dadagui.me",
+      "type": "videosite",
+      "url": "http://www.dadagui.me/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·达达龟影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://cj.lziapi.com/",
+        "name": "量子资源网.json"
+      },
+      "domain": "cj.lziapi.com",
+      "type": "videosite",
+      "url": "https://cj.lziapi.com/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·量子资源网.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "http://ffzy5.tv/",
+        "name": "非凡资源网.json"
+      },
+      "domain": "ffzy5.tv",
+      "type": "videosite",
+      "url": "http://ffzy5.tv/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·非凡资源网.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://saohuo.vip/",
+        "name": "骚火影视.json"
+      },
+      "domain": "saohuo.vip",
+      "type": "videosite",
+      "url": "https://saohuo.vip/",
+      "name": "影视直连·hccx规则·荷城茶秀·全目录·骚火影视.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·荷城茶秀·全目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://wyys.wuyays.top/appto/v1/home/cateData?id=1",
+        "name": "乌鸦.json"
+      },
+      "domain": "wyys.wuyays.top",
+      "type": "videosite",
+      "url": "https://wyys.wuyays.top/appto/v1/home/cateData?id=1",
+      "name": "影视直连·hccx规则·c目录·乌鸦.json",
+      "status": "pending",
+      "fail_count": 1,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·c目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.xsmp3.com",
+        "name": "相声.json"
+      },
+      "domain": "xsmp3.com",
+      "type": "videosite",
+      "url": "https://www.xsmp3.com",
+      "name": "影视直连·hccx规则·c目录·相声.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·c目录"
+      ]
+    },
+    {
+      "source": {
+        "url": "https://www.psmp3.com",
+        "name": "评书.json"
+      },
+      "domain": "psmp3.com",
+      "type": "videosite",
+      "url": "https://www.psmp3.com",
+      "name": "影视直连·hccx规则·c目录·评书.json",
+      "status": "valid",
+      "fail_count": 0,
+      "last_check": "2026-09-25T07:30:27Z",
+      "origins": [
+        "影视直连·hccx规则·c目录"
       ]
     }
   ],
@@ -390737,7 +391401,7 @@
       ]
     }
   ],
-  "last_fetch": 1790319093.626924,
+  "last_fetch": 1790321366.0755816,
   "discovered": [
     "https://www.yckceo.com/yuedu/rss/json/id/193.json",
     "https://www.yckceo.com/yuedu/rss/json/id/349.json",
@@ -390783,140 +391447,140 @@
   "upstreams": {
     "XIU2·书源": {
       "ok": true,
-      "last": "2026-09-25T06:49:24Z",
+      "last": "2026-09-25T07:25:58Z",
       "count": 22,
       "msg": "+0/~0",
       "daily": true
     },
     "linux-doc·书源": {
       "ok": true,
-      "last": "2026-09-25T06:49:25Z",
+      "last": "2026-09-25T07:26:00Z",
       "count": 22,
       "msg": "+0/~0",
       "daily": true
     },
     "aoaostar·全量": {
       "ok": true,
-      "last": "2026-09-25T06:49:28Z",
+      "last": "2026-09-25T07:26:02Z",
       "count": 3834,
       "msg": "+0/~0",
       "daily": false
     },
     "aoaostar·XIU2": {
       "ok": true,
-      "last": "2026-09-25T06:49:30Z",
+      "last": "2026-09-25T07:26:04Z",
       "count": 22,
       "msg": "+0/~0",
       "daily": false
     },
     "Gladtbam·ALL": {
       "ok": true,
-      "last": "2026-09-25T06:49:31Z",
+      "last": "2026-09-25T07:26:05Z",
       "count": 0,
       "msg": "+0/~0",
       "daily": false
     },
     "订阅·APP源": {
       "ok": true,
-      "last": "2026-09-25T06:49:32Z",
+      "last": "2026-09-25T07:26:06Z",
       "count": 1,
       "msg": "+0/~0",
       "daily": false
     },
     "订阅·文档": {
       "ok": true,
-      "last": "2026-09-25T06:49:34Z",
+      "last": "2026-09-25T07:26:08Z",
       "count": 1,
       "msg": "+0/~0",
       "daily": false
     },
     "tvbox·多仓订阅": {
       "ok": true,
-      "last": "2026-09-25T06:49:35Z",
+      "last": "2026-09-25T07:26:09Z",
       "count": 0,
       "msg": "+0/~0",
       "daily": true
     },
     "tvbox·单仓聚合": {
       "ok": true,
-      "last": "2026-09-25T06:49:37Z",
+      "last": "2026-09-25T07:26:10Z",
       "count": 167,
       "msg": "+0/~0",
       "daily": true
     },
     "tvbox·xiaolong": {
       "ok": true,
-      "last": "2026-09-25T06:49:38Z",
+      "last": "2026-09-25T07:26:13Z",
       "count": 48,
       "msg": "+0/~0",
       "daily": true
     },
     "iptv-org·全球": {
       "ok": true,
-      "last": "2026-09-25T06:49:41Z",
+      "last": "2026-09-25T07:26:15Z",
       "count": 10916,
       "msg": "+0/~0",
       "daily": true
     },
     "Guovin·IPv4": {
       "ok": true,
-      "last": "2026-09-25T06:49:42Z",
+      "last": "2026-09-25T07:26:16Z",
       "count": 473,
       "msg": "+0/~0",
       "daily": true
     },
     "Guovin·IPv6": {
       "ok": true,
-      "last": "2026-09-25T06:49:43Z",
+      "last": "2026-09-25T07:26:17Z",
       "count": 1303,
       "msg": "+0/~0",
       "daily": true
     },
     "suxuang·IPv4": {
       "ok": true,
-      "last": "2026-09-25T06:49:45Z",
+      "last": "2026-09-25T07:26:18Z",
       "count": 1225,
       "msg": "+0/~0",
       "daily": false
     },
     "苹果CMS·lziapi采集接口": {
       "ok": true,
-      "last": "2026-09-25T06:49:56Z",
+      "last": "2026-09-25T07:26:30Z",
       "count": 1,
       "msg": "+0/~0",
       "daily": false
     },
     "苹果CMS·lziapi-xml采集": {
       "ok": true,
-      "last": "2026-09-25T06:49:58Z",
+      "last": "2026-09-25T07:26:41Z",
       "count": 1,
       "msg": "+0/~0",
       "daily": false
     },
     "苹果CMS·爱坤": {
       "ok": true,
-      "last": "2026-09-25T06:50:09Z",
+      "last": "2026-09-25T07:26:52Z",
       "count": 1,
       "msg": "+0/~0",
       "daily": false
     },
     "苹果CMS·索尼": {
       "ok": true,
-      "last": "2026-09-25T06:50:10Z",
+      "last": "2026-09-25T07:26:53Z",
       "count": 1,
       "msg": "+0/~0",
       "daily": false
     },
     "苹果CMS·红牛": {
       "ok": true,
-      "last": "2026-09-25T06:50:12Z",
+      "last": "2026-09-25T07:26:55Z",
       "count": 1,
       "msg": "+0/~0",
       "daily": false
     },
     "苹果CMS·豪华": {
       "ok": true,
-      "last": "2026-09-25T06:50:13Z",
+      "last": "2026-09-25T07:26:57Z",
       "count": 1,
       "msg": "+0/~0",
       "daily": false
@@ -390976,7 +391640,28 @@
       "count": 1,
       "msg": "+1/~0",
       "daily": false
+    },
+    "影视直连·hccx规则·荷城茶秀·全目录": {
+      "ok": true,
+      "last": "2026-09-25T07:27:50Z",
+      "count": 43,
+      "msg": "+0/~0",
+      "daily": false
+    },
+    "影视直连·hccx规则·xyq目录": {
+      "ok": true,
+      "last": "2026-09-25T07:27:58Z",
+      "count": 0,
+      "msg": "+0/~0",
+      "daily": false
+    },
+    "影视直连·hccx规则·c目录": {
+      "ok": true,
+      "last": "2026-09-25T07:28:04Z",
+      "count": 6,
+      "msg": "+0/~0",
+      "daily": false
     }
   },
-  "updated_at": "2026-09-25T06:51:59Z"
+  "updated_at": "2026-09-25T07:30:27Z"
 }

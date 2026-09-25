@@ -56,6 +56,7 @@ DEFAULTS = {
 
 CONF = {}
 UPSTREAMS = []
+UPSTREAM_FILES = {}
 YCKCEO_INDEX = []
 YCKCEO_COLLECT_INDEX = []
 YCKCEO_PROBE_LIMIT = 40
@@ -80,6 +81,7 @@ def load_config():
             print(f"[warn] 读取 {CONFIG} 失败：{exc}")
     CONF = cfg
     UPSTREAMS = cfg.get("upstreams", [])
+    UPSTREAM_FILES = {u.get("name", ""): u.get("files", []) for u in UPSTREAMS}
     YCKCEO_INDEX = cfg.get("yckceo_index", [])
     YCKCEO_COLLECT_INDEX = cfg.get("yckceo_collect_index", [])
     SEARCH_KEY = cfg.get("search_key", "我的")
@@ -261,8 +263,7 @@ def parse_tvbox(text, origin):
 
 def parse_videosite(text, origin):
     """影视直连站：从 hccx 规则 JSON 的 `主页url` 字段抽出远端站点。"""
-    import re as _re
-    home = _re.findall(r'"主页url"\s*:\s*"([^"]+)"', text)
+    home = re.findall(r'"主页url"\s*:\s*"([^"]+)"', text)
     items = []
     seen = set()
     for u in home:
@@ -448,6 +449,62 @@ def fetch_yckceo_collect(store):
     return total
 
 
+def fetch_videosite_batch(dir_url, origin):
+    """批量拉取 hccx 规则目录：枚举目录下所有 *.json 规则，逐个抽 `主页url` 映射成影视站。
+
+    优先用 GitHub contents API 列目录；API 失败时回退到 config 里 `files` 白名单。
+    """
+    import time as _time
+    items = []
+    seen = set()
+
+    def collect_rule(content_url, label):
+        text = http_get(content_url, timeout=20)
+        if not text:
+            return
+        for home in parse_videosite(text, label):
+            url = home["url"]
+            if url in seen:
+                continue
+            seen.add(url)
+            home["name"] = f"{origin}·{label}"
+            items.append(home)
+        _time.sleep(0.2)
+
+    m = re.match(
+        r"https://raw\.githubusercontent\.com/([\w.-]+)/([\w.-]+)/(\w+)/(.*)", dir_url
+    )
+    if m:
+        owner, repo, branch, sub = m.groups()
+        api = f"https://api.github.com/repos/{owner}/{repo}/contents/{sub}?ref={branch}"
+        listing = http_get(api, timeout=20)
+        entries = []
+        if listing:
+            try:
+                entries = json.loads(listing)
+            except Exception:  # noqa: BLE001
+                entries = []
+            if isinstance(entries, dict):
+                entries = [entries]
+        # API 失败则回退到 config 白名单 files
+        if not entries:
+            raw_base = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{sub}"
+            for fname in UPSTREAM_FILES.get(origin, []):
+                collect_rule(f"{raw_base}/{fname}", fname)
+            return items
+        for ent in entries:
+            if not isinstance(ent, dict):
+                continue
+            name = ent.get("name", "")
+            if not name.endswith(".json"):
+                continue
+            content_url = ent.get("download_url")
+            if not content_url:
+                continue
+            collect_rule(content_url, name)
+    return items
+
+
 def cmd_fetch(force=False):
     store = load_store()
     gap = time.time() - (store.get("last_fetch") or 0)
@@ -458,6 +515,23 @@ def cmd_fetch(force=False):
     total_new = 0
     print(f"[info] 上游 {len(UPSTREAMS)} 个 + yckceo 发现（书源 {len(YCKCEO_INDEX)} 页 / 采集 {len(YCKCEO_COLLECT_INDEX)} 页）")
     for up in UPSTREAMS:
+        # batch videosite 不依赖 raw（URL 是目录），单独处理
+        if up["type"] == "videosite" and up.get("batch"):
+            status = store["upstreams"].setdefault(up["name"], {})
+            try:
+                items = fetch_videosite_batch(up["url"], up["name"])
+                new_n, upd_n = merge_items(store, items, "videosite", up["name"])
+                status.update(ok=True, last=now_iso(), count=len(items),
+                             msg=f"+{new_n}/~{upd_n}", daily=up.get("verify_daily", False))
+                total_new += new_n
+                print(f"  [ok]   {up['name']}(videosite·batch): {len(items)}条, 新增{new_n}")
+                time.sleep(1)
+            except Exception as exc:  # noqa: BLE001
+                status.update(ok=False, last=now_iso(), count=0, msg=f"解析失败:{exc}",
+                              daily=up.get("verify_daily", False))
+                print(f"  [err]  {up['name']}: {exc}")
+            continue
+
         raw = http_get(up["url"], timeout=40)
         status = store["upstreams"].setdefault(up["name"], {})
         if not raw:
@@ -488,7 +562,11 @@ def cmd_fetch(force=False):
                 else:
                     items = parse_collect(raw, up["name"])
             elif up["type"] == "videosite":
-                items = parse_videosite(raw, up["name"])
+                if up.get("batch"):
+                    # 批量模式：上游 URL 指向 hccx 规则目录，自动枚举目录下 json 规则
+                    items = fetch_videosite_batch(up["url"], up["name"])
+                else:
+                    items = parse_videosite(raw, up["name"])
         except Exception as exc:  # noqa: BLE001
             status.update(ok=False, last=now_iso(), count=0, msg=f"解析失败:{exc}",
                           daily=up.get("verify_daily", False))

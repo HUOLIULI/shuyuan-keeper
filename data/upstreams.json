@@ -1,140 +1,140 @@
 {
  "XIU2·书源": {
   "ok": true,
-  "last": "2026-09-25T06:49:24Z",
+  "last": "2026-09-25T07:25:58Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": true
  },
  "linux-doc·书源": {
   "ok": true,
-  "last": "2026-09-25T06:49:25Z",
+  "last": "2026-09-25T07:26:00Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": true
  },
  "aoaostar·全量": {
   "ok": true,
-  "last": "2026-09-25T06:49:28Z",
+  "last": "2026-09-25T07:26:02Z",
   "count": 3834,
   "msg": "+0/~0",
   "daily": false
  },
  "aoaostar·XIU2": {
   "ok": true,
-  "last": "2026-09-25T06:49:30Z",
+  "last": "2026-09-25T07:26:04Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": false
  },
  "Gladtbam·ALL": {
   "ok": true,
-  "last": "2026-09-25T06:49:31Z",
+  "last": "2026-09-25T07:26:05Z",
   "count": 0,
   "msg": "+0/~0",
   "daily": false
  },
  "订阅·APP源": {
   "ok": true,
-  "last": "2026-09-25T06:49:32Z",
+  "last": "2026-09-25T07:26:06Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "订阅·文档": {
   "ok": true,
-  "last": "2026-09-25T06:49:34Z",
+  "last": "2026-09-25T07:26:08Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "tvbox·多仓订阅": {
   "ok": true,
-  "last": "2026-09-25T06:49:35Z",
+  "last": "2026-09-25T07:26:09Z",
   "count": 0,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·单仓聚合": {
   "ok": true,
-  "last": "2026-09-25T06:49:37Z",
+  "last": "2026-09-25T07:26:10Z",
   "count": 167,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·xiaolong": {
   "ok": true,
-  "last": "2026-09-25T06:49:38Z",
+  "last": "2026-09-25T07:26:13Z",
   "count": 48,
   "msg": "+0/~0",
   "daily": true
  },
  "iptv-org·全球": {
   "ok": true,
-  "last": "2026-09-25T06:49:41Z",
+  "last": "2026-09-25T07:26:15Z",
   "count": 10916,
   "msg": "+0/~0",
   "daily": true
  },
  "Guovin·IPv4": {
   "ok": true,
-  "last": "2026-09-25T06:49:42Z",
+  "last": "2026-09-25T07:26:16Z",
   "count": 473,
   "msg": "+0/~0",
   "daily": true
  },
  "Guovin·IPv6": {
   "ok": true,
-  "last": "2026-09-25T06:49:43Z",
+  "last": "2026-09-25T07:26:17Z",
   "count": 1303,
   "msg": "+0/~0",
   "daily": true
  },
  "suxuang·IPv4": {
   "ok": true,
-  "last": "2026-09-25T06:49:45Z",
+  "last": "2026-09-25T07:26:18Z",
   "count": 1225,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·lziapi采集接口": {
   "ok": true,
-  "last": "2026-09-25T06:49:56Z",
+  "last": "2026-09-25T07:26:30Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·lziapi-xml采集": {
   "ok": true,
-  "last": "2026-09-25T06:49:58Z",
+  "last": "2026-09-25T07:26:41Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·爱坤": {
   "ok": true,
-  "last": "2026-09-25T06:50:09Z",
+  "last": "2026-09-25T07:26:52Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·索尼": {
   "ok": true,
-  "last": "2026-09-25T06:50:10Z",
+  "last": "2026-09-25T07:26:53Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·红牛": {
   "ok": true,
-  "last": "2026-09-25T06:50:12Z",
+  "last": "2026-09-25T07:26:55Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·豪华": {
   "ok": true,
-  "last": "2026-09-25T06:50:13Z",
+  "last": "2026-09-25T07:26:57Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
@@ -193,6 +193,27 @@
   "last": "2026-09-25T06:50:20Z",
   "count": 1,
   "msg": "+1/~0",
+  "daily": false
+ },
+ "影视直连·hccx规则·荷城茶秀·全目录": {
+  "ok": true,
+  "last": "2026-09-25T07:27:50Z",
+  "count": 43,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "影视直连·hccx规则·xyq目录": {
+  "ok": true,
+  "last": "2026-09-25T07:27:58Z",
+  "count": 0,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "影视直连·hccx规则·c目录": {
+  "ok": true,
+  "last": "2026-09-25T07:28:04Z",
+  "count": 6,
+  "msg": "+0/~0",
   "daily": false
  }
 }
