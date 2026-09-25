@@ -1,0 +1,114 @@
+{
+ "XIU2·书源": {
+  "ok": true,
+  "last": "2026-09-24T14:19:38Z",
+  "count": 22,
+  "msg": "+0/~0",
+  "daily": true
+ },
+ "linux-doc·书源": {
+  "ok": true,
+  "last": "2026-09-24T14:19:40Z",
+  "count": 22,
+  "msg": "+0/~0",
+  "daily": true
+ },
+ "aoaostar·全量": {
+  "ok": true,
+  "last": "2026-09-24T14:19:43Z",
+  "count": 3834,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "aoaostar·XIU2": {
+  "ok": true,
+  "last": "2026-09-24T14:19:44Z",
+  "count": 22,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "Gladtbam·ALL": {
+  "ok": true,
+  "last": "2026-09-24T14:19:47Z",
+  "count": 0,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "订阅·APP源": {
+  "ok": true,
+  "last": "2026-09-24T14:19:48Z",
+  "count": 1,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "订阅·文档": {
+  "ok": true,
+  "last": "2026-09-24T14:19:50Z",
+  "count": 1,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "tvbox·多仓订阅": {
+  "ok": true,
+  "last": "2026-09-24T14:19:51Z",
+  "count": 0,
+  "msg": "+0/~0",
+  "daily": true
+ },
+ "tvbox·单仓聚合": {
+  "ok": true,
+  "last": "2026-09-24T14:19:52Z",
+  "count": 167,
+  "msg": "+0/~0",
+  "daily": true
+ },
+ "tvbox·xiaolong": {
+  "ok": true,
+  "last": "2026-09-24T14:19:54Z",
+  "count": 48,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "iptv-org·全球": {
+  "ok": true,
+  "last": "2026-09-24T14:19:56Z",
+  "count": 10906,
+  "msg": "+0/~0",
+  "daily": true
+ },
+ "Guovin·IPv4": {
+  "ok": true,
+  "last": "2026-09-24T14:19:58Z",
+  "count": 473,
+  "msg": "+0/~0",
+  "daily": true
+ },
+ "Guovin·IPv6": {
+  "ok": true,
+  "last": "2026-09-24T14:19:59Z",
+  "count": 1303,
+  "msg": "+0/~0",
+  "daily": true
+ },
+ "suxuang·IPv4": {
+  "ok": true,
+  "last": "2026-09-24T14:20:01Z",
+  "count": 1225,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "苹果CMS·lziapi采集接口": {
+  "ok": true,
+  "last": "2026-09-24T14:20:12Z",
+  "count": 1,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "苹果CMS·lziapi-xml采集": {
+  "ok": true,
+  "last": "2026-09-24T14:20:13Z",
+  "count": 1,
+  "msg": "+0/~0",
+  "daily": false
+ }
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>资源聚合仓库 · 书源 / 订阅 / TVBox / IPTV / 采集</title>
+<style>
+  :root{--bg:#f6f8fa;--card:#fff;--green:#07c160;--red:#cf222e;--text:#24292f;--blue:#0969da;--line:#d0d7de;--muted:#57606a}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);-webkit-text-size-adjust:100%}
+  .wrap{max-width:1040px;margin:0 auto;padding:24px 16px 48px}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 4px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px;margin:16px 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+  .stat b{display:block;font-size:22px;line-height:1.3}
+  .stat span{font-size:12px;color:var(--muted)}
+  .tabs{display:flex;gap:6px;margin:16px 0;flex-wrap:wrap}
+  .tab{padding:8px 14px;border:1px solid var(--line);background:var(--card);border-radius:8px;cursor:pointer;font-size:14px;user-select:none}
+  .tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+  .panel h2{font-size:15px;margin:0 0 10px}
+  .btn{display:inline-block;background:var(--green);color:#fff;padding:9px 14px;border:none;border-radius:8px;font-size:14px;cursor:pointer;text-decoration:none;margin:3px 6px 3px 0}
+  .btn.gray{background:#57606a}
+  .btn.blue{background:var(--blue)}
+  code{display:inline-block;background:#eff1f3;padding:6px 8px;border-radius:6px;font-size:12px;word-break:break-all;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  input[type=search]{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:14px;margin:10px 0}
+  .tblwrap{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+  table{width:100%;border-collapse:collapse;background:var(--card)}
+  th,td{padding:7px 12px;border-bottom:1px solid #eaeef2;font-size:13px;text-align:left;vertical-align:top}
+  th{background:#f0f2f4;position:sticky;top:0;z-index:1}
+  .tag{color:var(--muted);font-size:11px}
+  .hidden{display:none}
+  .ups{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px;font-size:12px}
+  .up{display:flex;align-items:center;gap:6px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex:none}
+  .dot.dead{background:var(--red)}
+  .up small{color:var(--muted);margin-left:auto}
+  .hint{color:var(--muted);font-size:12px;margin:4px 0 8px}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:20}
+  .modal .box{background:#fff;border-radius:12px;padding:20px;text-align:center;max-width:90vw}
+  .modal canvas,.modal img{max-width:260px;height:auto}
+  #toast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);background:#24292f;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:30}
+  #toast.show{opacity:.95}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>资源聚合仓库</h1>
+  <p class="sub">书源 · 订阅源 · TVBox · IPTV · 采集接口 — 上游日验 + 本仓二次复核</p>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="book">书源</div>
+    <div class="tab" data-tab="subscribe">订阅源</div>
+    <div class="tab" data-tab="tvbox">TVBox</div>
+    <div class="tab" data-tab="iptv">IPTV</div>
+    <div class="tab" data-tab="collect">采集</div>
+  </div>
+
+  <div class="panel" id="tab-book"></div>
+  <div class="panel hidden" id="tab-subscribe"></div>
+  <div class="panel hidden" id="tab-tvbox"></div>
+  <div class="panel hidden" id="tab-iptv"></div>
+  <div class="panel hidden" id="tab-collect"></div>
+
+  <div class="panel">
+    <h2>上游仓库监控</h2>
+    <div class="ups" id="ups"></div>
+  </div>
+  <p class="tag">数据更新于 <span id="ts">-</span> · 失效条目已归档 <a href="archive.json">查看</a></p>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+const TABS = ["book", "subscribe", "tvbox", "iptv", "collect"];
+const FILE = {book: "valid.json", subscribe: "valid_subscribe.json", tvbox: "valid_tvbox.json",
+              iptv: "valid_iptv.m3u", collect: "valid_collect.json"};
+const LABEL = {book: "书源", subscribe: "订阅源", tvbox: "站点", iptv: "频道", collect: "采集接口"};
+const META = {
+  book:      {title: "有效书源", desc: "阅读 Legado：书源管理 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "bookSource", extraBtn: ""},
+  subscribe: {title: "有效订阅源", desc: "阅读 Legado：我的 → 订阅 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "rssSource", extraBtn: ""},
+  tvbox:     {title: "TVBox 配置", desc: "TVBox / 影视仓：设置 → 配置地址 → 粘贴下面地址，每次启动自动刷新。", extraBtn: "copyAll"},
+  iptv:      {title: "IPTV 直播源（M3U）", desc: "VLC / Kodi / DIYP / TVBox：播放列表或直播源设置里填下面 M3U 地址。", extraBtn: "copyAll"},
+  collect:   {title: "采集接口（苹果CMS）", desc: "苹果CMS / 空壳影视：采集接口配置里填下面 JSON 地址。", extraBtn: ""}
+};
+const data = {book: [], subscribe: [], tvbox: [], iptv: [], collect: []};
+const loaded = {};
+
+const abs = (file) => new URL(file, location.href).href;
+
+function toast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove("show"), 1600);
+}
+
+async function copy(text, msg) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); ta.remove();
+  }
+  toast(msg || "已复制");
+}
+
+function buildPanel(tab) {
+  const meta = META[tab];
+  const url = abs(FILE[tab]);
+  const importBtn = meta.importKind
+    ? `<button class="btn" onclick="doImport('${meta.importKind}')">一键导入阅读APP</button>` : "";
+  const extraBtn = meta.extraBtn === "copyAll"
+    ? `<button class="btn gray" onclick="copyAllContent('${tab}')">复制全部内容</button>` : "";
+  document.getElementById(`tab-${tab}`).innerHTML = `
+    <h2>${meta.title}</h2>
+    <p class="hint">${meta.desc}</p>
+    <p><code id="url-${tab}">${url}</code></p>
+    ${importBtn}
+    <button class="btn gray" onclick="copy('${url}','链接已复制')">复制链接</button>
+    ${extraBtn}
+    <button class="btn gray" onclick="showQR('${url}','${meta.title}')">二维码</button>
+    <a class="btn gray" href="${FILE[tab]}" download>下载</a>
+    <input type="search" id="q-${tab}" placeholder="搜索名称或地址…" oninput="renderTable('${tab}')">
+    <div class="tblwrap"><table id="tbl-${tab}"></table></div>`;
+}
+
+async function load(tab) {
+  if (loaded[tab]) return;
+  loaded[tab] = true;
+  try {
+    if (tab === "tvbox") {
+      const cfg = await (await fetch(FILE.tvbox)).json();
+      data.tvbox = (cfg.sites || []).map(s => ({name: s.name || s.key || "", url: s.api || s.searchUrl || ""}));
+    } else if (tab === "iptv") {
+      const text = await (await fetch(FILE.iptv)).text();
+      let name = "";
+      data.iptv = [];
+      text.split("\n").forEach(line => {
+        line = line.trim();
+        if (line.startsWith("#EXTINF")) name = (line.split(",").pop() || "").trim();
+        else if (line.startsWith("http")) data.iptv.push({name, url: line});
+      });
+    } else if (tab === "collect") {
+      const arr = await (await fetch(FILE.collect)).json();
+      data.collect = (arr || []).map(x => ({name: x.name || x.title || "", url: x.url || x.api || ""}));
+    } else {
+      const arr = await (await fetch(FILE[tab])).json();
+      data[tab] = (arr || []).map(x => ({
+        name: x.bookSourceName || x.sourceName || x.name || "",
+        url: x.bookSourceUrl || x.sourceUrl || x.url || ""
+      }));
+    }
+  } catch (e) {
+    data[tab] = [];
+  }
+  renderTable(tab);
+}
+
+function esc(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function renderTable(tab) {
+  const q = (document.getElementById(`q-${tab}`)?.value || "").trim().toLowerCase();
+  const rows = data[tab].filter(r =>
+    !q || (r.name || "").toLowerCase().includes(q) || (r.url || "").toLowerCase().includes(q)
+  ).slice(0, 600);
+  document.getElementById(`tbl-${tab}`).innerHTML =
+    `<tr><th style="width:48px">#</th><th style="width:220px">${LABEL[tab]}名</th><th>地址</th></tr>` +
+    (rows.map((r, i) =>
+      `<tr><td class="tag">${i + 1}</td><td>${esc(r.name)}</td>` +
+      `<td><span class="tag">${esc(r.url)}</span>` +
+      `<button class="btn gray" style="padding:2px 8px;font-size:11px;margin-left:6px" ` +
+      `onclick="copy('${esc(r.url).replace(/'/g, "\\'")}','地址已复制')">复制</button></td></tr>`
+    ).join("") || `<tr><td colspan="3" class="tag">（暂无有效数据，先运行一次工作流）</td></tr>`);
+}
+
+function switchTab(tab) {
+  TABS.forEach(t => {
+    document.getElementById(`tab-${t}`).classList.toggle("hidden", t !== tab);
+    document.querySelector(`.tab[data-tab="${t}"]`).classList.toggle("active", t === tab);
+  });
+  load(tab);
+}
+
+function doImport(kind) {
+  const file = kind === "bookSource" ? "valid.json" : "valid_subscribe.json";
+  location.href = "legado://import/" + kind + "?src=" + encodeURIComponent(abs(file));
+}
+
+function copyAllContent(tab) {
+  fetch(FILE[tab]).then(r => r.text()).then(t => copy(t, "全部内容已复制")).catch(() => toast("加载失败"));
+}
+
+function showQR(url, title) {
+  const mask = document.createElement("div");
+  mask.className = "modal";
+  mask.onclick = (e) => { if (e.target === mask) mask.remove(); };
+  const box = document.createElement("div");
+  box.className = "box";
+  box.innerHTML = `<h3 style="margin:0 0 12px">${esc(title)}</h3><div id="qrbox"></div><p class="tag" style="margin-top:10px">${esc(url)}</p>`;
+  mask.appendChild(box);
+  document.body.appendChild(mask);
+  const qrbox = box.querySelector("#qrbox");
+  if (window.QRCode) {
+    new QRCode(qrbox, {text: url, width: 240, height: 240, correctLevel: QRCode.CorrectLevel.M});
+  } else {
+    const img = document.createElement("img");
+    img.src = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=" + encodeURIComponent(url);
+    img.alt = "QR";
+    qrbox.appendChild(img);
+  }
+}
+
+document.querySelectorAll(".tab").forEach(el =>
+  el.addEventListener("click", () => switchTab(el.dataset.tab)));
+
+(async () => {
+  try {
+    const s = await (await fetch("stats.json")).json();
+    document.getElementById("ts").textContent = s.updated_at || "-";
+    const items = [
+      ["书源", s.valid_book], ["订阅", s.valid_subscribe], ["TVBox", s.valid_tvbox],
+      ["IPTV", s.valid_iptv], ["采集", s.valid_collect], ["归档", s.archived],
+      ["上游", `${s.upstreams_alive}/${s.upstreams_total}`]
+    ];
+    document.getElementById("stats").innerHTML =
+      items.map(([k, v]) => `<div class="stat"><b>${v == null ? "-" : v}</b><span>${k}</span></div>`).join("");
+  } catch (e) { /* 首次运行前无数据 */ }
+
+  try {
+    const ups = await (await fetch("upstreams.json")).json();
+    const entries = Object.entries(ups);
+    document.getElementById("ups").innerHTML = entries.map(([name, st]) => {
+      const daily = st.daily ? " ·日验" : "";
+      const cnt = st.ok ? `${st.count}条${daily}` : (st.msg || "失败");
+      return `<div class="up"><span class="dot ${st.ok ? "" : "dead"}"></span>${esc(name)}<small>${esc(cnt)}</small></div>`;
+    }).join("") || "<div class='up'>暂无数据</div>";
+  } catch (e) {
+    document.getElementById("ups").innerHTML = "<div class='up'>先运行一次工作流</div>";
+  }
+
+  TABS.forEach(buildPanel);
+  switchTab("book");
+})();
+</script>
+</body>
+</html>

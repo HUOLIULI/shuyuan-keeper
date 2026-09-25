@@ -1,0 +1,91 @@
+name: update-and-deploy
+
+on:
+  schedule:
+    # 每天 4 班（UTC 01/07/13/19 = 北京时间 09/15/21/03）
+    - cron: "0 1,7,13,19 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "强制全量拉取上游（忽略 20 小时间隔）"
+        type: boolean
+        default: true
+      batch:
+        description: "本轮验证条数上限"
+        type: string
+        default: "800"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: shuyuan-keeper
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch upstreams
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force }}" = "true" ]; then
+            python scripts/keeper.py fetch --force
+          else
+            python scripts/keeper.py fetch
+          fi
+
+      - name: Validate sources
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python scripts/keeper.py validate --batch "${{ inputs.batch }}"
+          else
+            python scripts/keeper.py validate --batch 400
+          fi
+
+      - name: Export artifacts
+        run: python scripts/keeper.py export
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data docs
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "chore(data): auto refresh $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: update
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
