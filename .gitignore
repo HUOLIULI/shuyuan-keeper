@@ -23,6 +23,9 @@ data/valid_videosite.json
 data/valid_music.json
 data/valid_iptv.m3u
 
-# generated site payloads (deployed via artifact + FTP, not committed)
-docs/*.json
-docs/*.m3u
+# 有效导出物提交进 git（docs/ 下）；运行状态 data/ 仍靠 Actions cache 持久化
+# docs/valid*.json
+# docs/valid_iptv.m3u
+# docs/stats.json
+# docs/archive.json
+# docs/upstreams.json

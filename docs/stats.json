@@ -1,0 +1,16 @@
+{
+ "total": 18365,
+ "valid_book": 608,
+ "valid_subscribe": 14,
+ "valid_tvbox": 102,
+ "valid_iptv": 4687,
+ "valid_collect": 49,
+ "valid_videosite": 17,
+ "valid_music": 110,
+ "flaky": 14,
+ "archived": 2488,
+ "dead_removed": 0,
+ "upstreams_alive": 46,
+ "upstreams_total": 47,
+ "updated_at": "2026-09-25T17:17:04Z"
+}
