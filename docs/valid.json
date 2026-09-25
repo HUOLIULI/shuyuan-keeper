@@ -23848,6 +23848,20 @@
  },
  {
   "bookSourceGroup": "🎉 精选,发现,搜索链接规则为空",
+  "bookSourceName": "🎉八一中文网②",
+  "bookSourceType": 0,
+  "bookSourceUrl": "https://www.81zw.org",
+  "customOrder": 880,
+  "enabled": true,
+  "enabledCookieJar": true,
+  "enabledExplore": true,
+  "lastUpdateTime": 0,
+  "loginUrl": "",
+  "respondTime": 0,
+  "weight": 0
+ },
+ {
+  "bookSourceGroup": "🎉 精选,发现,搜索链接规则为空",
   "bookSourceName": "🎉博发小说网",
   "bookSourceType": 0,
   "bookSourceUrl": "http://www.8boo.com",
@@ -23952,6 +23966,19 @@
   "enabledExplore": true,
   "lastUpdateTime": 0,
   "loginUrl": "https://m.gzdushu.com/login.php",
+  "respondTime": 0,
+  "weight": 0
+ },
+ {
+  "bookSourceGroup": "💐 女频,发现,搜索链接规则为空",
+  "bookSourceName": "💐耽美小说",
+  "bookSourceType": 0,
+  "bookSourceUrl": "http://dmxs.me",
+  "customOrder": 904,
+  "enabled": true,
+  "enabledCookieJar": true,
+  "enabledExplore": true,
+  "lastUpdateTime": 0,
   "respondTime": 0,
   "weight": 0
  },
@@ -24230,6 +24257,66 @@
   "weight": 0
  },
  {
+  "bookSourceGroup": "合集0905",
+  "bookSourceName": "华曦小说",
+  "bookSourceType": 0,
+  "bookSourceUrl": "https://www.heag8.com/",
+  "customOrder": 971,
+  "enabled": true,
+  "enabledCookieJar": false,
+  "enabledExplore": true,
+  "exploreUrl": "@js:\nsort=[];\npush=(title,url,type)=> sort.push({\n\t\ttitle: title,\n\t\turl: url,\n\t\tstyle: {\n\t\t\t\tlayout_flexGrow: 1,\n\t\t\t\tlayout_flexBasisPercent: type\n\t\t\t}\n\t});\nstate=0;\n[[\"全部\",0],[\"現代言情\",101],[\"青春校園\",104],[\"恐怖靈異\",105],[\"懸疑推理\",107],[\"都市爽文\",108],[\"耽美BL\",109],[\"遊戲競技\",111],[\"穿越時空\",112],[\"玄幻奇幻\",114],[\"武俠仙俠\",118],[\"古代言情\",119],[\"科幻未來\",121],[\"重生異能\",122],[\"醫術\",123],[\"贅婿\",174],[\"總裁豪門\",176],[\"輕小說\",179],[\"軍事歷史\",181],[\"情色肉文\",182],[\"百合GL\",184],[\"衍生同人\",185],[\"經典文學\",186],[\"種田經商\",187],[\"宮鬥宅斗\",188],[\"短篇小說\",189],[\"影視原著\",191],[\"勵志人生\",192],[\"娛樂圈\",193],[\"穿書\",194],[\"ABO\",195],[\"甜文\",196],[\"系統\",198],[\"古風\",200],[\"強強\",201],[\"情有獨鐘\",202],[\"虐文\",203],[\"末世\",204],[\"復仇虐渣\",206],[\"醫生文\",209],[\"軍旅寵文\",211],[\"後宮文\",216],[\"動漫同人\",217],[\"官場文\",218],[\"商戰文\",219],[\"微小說合集\",220],[\"星際\",221],[\"真實故事\",229],[\"文學\",230],[\"社會科學\",232],[\"幻想言情\",233],[\"奇聞故事\",246],[\"沙雕搞笑\",247],[\"鄉村文\",248],[\"團寵\",249],[\"年代文\",250],[\"快穿文\",252]].map([title,tid]=>{\n\n//[\"[\"+title+\"]\",\"连载\",\"完本\"].map((title,state)=>{\npush(title,`/library?cid=0&tid=${tid}&pi={{page}\\}&type=0&state=${state}&letter=`,0.25);\n//});\n});\nJSON.stringify(sort);",
+  "lastUpdateTime": 1691835528288,
+  "respondTime": 11102,
+  "ruleBookInfo": {
+   "author": ".author.0@textNodes",
+   "coverUrl": ".cover.0@img.0@src",
+   "init": "",
+   "intro": ".desc.0@html",
+   "kind": ".title@span@text&&.state@text&&.tit@text\n## .*",
+   "lastChapter": ".lastchap@text",
+   "name": ".name.0@text",
+   "tocUrl": "#cp_1@a@onclick\n##.*\\((\\d+),(\\d+)\\)##/book/indexchapterlist?bookid=$1&pi=$2",
+   "wordCount": ".ratingnum@text##$##分"
+  },
+  "ruleContent": {
+   "content": "<js>\nz = \" 成阴唇淫洞根经交叫媒媚女肉乳物性穴血欲嘴虐童茎舔棍蜜兽液肏喉鸡巴奸尻慰熟殖潮感肛酥胸插验龟蒂射精颜缩爆菊幼恋伦轮缝密处肥操臀膜跨蹂躏洛鸦妓楼凤胴戳奶逼诱蒲荡骚偷露裸漏御嫩惑陰茎獸雞龜阳颜缩戀屍姦亂術輪遺縫處躪鴉凰侶誘蕩騷禦屄屌脫扒光膚裙她撫美豐腴揉撩粉腿胯禁摸享受褲襠内具亢奮伸入贴紧股動情擠身壓差澀嬌颤勃褻漬衣硬癢體碰觸色痞器官渴望粗摩擦挺呻吟豊絲襪肌捏搓柔软隐秘毛少溝汁愛透濕滑抽畿饑餓喘\";\n\n// (~~$2+2303).toString(16);\nresult.replace(\n\tnew RegExp(`<i class=(['\"])icon-(\\\\d+)\\\\1></i>`, 'gi'),\n\t($0,$1,$2)=>z[~~$2]\n);\n</js>\n.novelcontent@p@html",
+   "replaceRegex": "",
+   "title": ""
+  },
+  "ruleExplore": {
+   "author": ".author@text",
+   "bookList": ".nlist li",
+   "bookUrl": "a.0@href",
+   "coverUrl": "img.0@src",
+   "intro": ".desc@text",
+   "kind": ".tag@textNodes&&.status@textNodes",
+   "lastChapter": "em.0@text",
+   "name": ".name@text",
+   "wordCount": ".scpre@text##$##分"
+  },
+  "ruleReview": {},
+  "ruleSearch": {
+   "author": ".author@text",
+   "bookList": ".searchlist@li",
+   "bookUrl": "a@href",
+   "checkKeyWord": "--https://www.baidu.com/book/chapter/79238",
+   "coverUrl": "img@src",
+   "intro": ".desc@text",
+   "kind": ".tags@span@text",
+   "lastChapter": "[书籍状态] {{@@.txt@text}}",
+   "name": ".name@text"
+  },
+  "ruleToc": {
+   "chapterList": ".chapterlist@li",
+   "chapterName": "em@text",
+   "chapterUrl": "a@href",
+   "nextTocUrl": "@js:\nn = java.getElements('.chapterPage a').length+1;\nu = [];\nfor(i=2;i<n;i++)\nu.push(baseUrl.replace(/1$/,i));\nu"
+  },
+  "searchUrl": "/search?<,pi={{page}}&>query=%E6%88%91%E7%9A%84",
+  "weight": 0
+ },
+ {
   "bookSourceComment": "// Error: Timed out waiting for 60000 ms\n\n//搜索间隔30秒",
   "bookSourceGroup": "0905校验,校验超时",
   "bookSourceName": "顶点小说",
@@ -24388,6 +24475,48 @@
  },
  {
   "bookSourceComment": "",
+  "bookSourceGroup": "18-小说",
+  "bookSourceName": "🔞 懒人小说 🪜",
+  "bookSourceType": 0,
+  "bookSourceUrl": "https://m.lrxs.org",
+  "bookUrlPattern": "",
+  "customOrder": 1056,
+  "enabled": true,
+  "enabledCookieJar": true,
+  "enabledExplore": true,
+  "exploreUrl": "最近更新::https://m.lrxs.org/top/lastupdate_{{page}}/\n最新入库::https://m.lrxs.org/top/postdate_{{page}}/\n总点击榜::https://m.lrxs.org/top/allvisit_{{page}}/\n总收藏榜::https://m.lrxs.org/top/goodnum_{{page}}/\n总推荐榜::https://m.lrxs.org/top/allvote_{{page}}/\n总字数榜::https://m.lrxs.org/top/size_{{page}}/\n全本小说::https://m.lrxs.org/full/{{page}}/\n玄幻小说::https://m.lrxs.org/sort/1_{{page}}/\n修真小说::https://m.lrxs.org/sort/2_{{page}}/\n都市小说::https://m.lrxs.org/sort/3_{{page}}/\n历史穿越::https://m.lrxs.org/sort/4_{{page}}/\n精品小说::https://m.lrxs.org/sort/5_{{page}}/\n科幻小说::https://m.lrxs.org/sort/6_{{page}}/\n其他小说::https://m.lrxs.org/sort/7_{{page}}/",
+  "lastUpdateTime": 1678638844660,
+  "loginUrl": "",
+  "respondTime": 14454,
+  "ruleBookInfo": {
+   "coverUrl": "class.tu@img@src",
+   "intro": "class.jj@p@textNodes",
+   "lastChapter": "class.p3@a@text"
+  },
+  "ruleContent": {
+   "content": "class.novelcontent@html##.*本章未完，请点击下一.*",
+   "nextContentUrl": "text.下一页@href"
+  },
+  "ruleExplore": {},
+  "ruleSearch": {
+   "author": "tag.a.2@text",
+   "bookList": "class.search_box@p||class.fl_list@children||class.user_content@children",
+   "bookUrl": "class.content_link@tag.p.1@a@href||tag.a.0@href",
+   "coverUrl": "class.content_link@tag.p.1@a@href||tag.a.0@href##.*/(\\d+)_(\\d+)/##https://www.lrxs.org/files/article/image/$1/$2/$2s.jpg",
+   "kind": "class.content_link@tag.p.0@a@text||class.p2@text||tag.a.1@text##\\[|]",
+   "name": "class.content_link@tag.p.1@a@text||class.p1@a@text||tag.a.0@text"
+  },
+  "ruleToc": {
+   "chapterList": "class.info_chapters@tag.ul.1@li@a",
+   "chapterName": "text",
+   "chapterUrl": "href",
+   "nextTocUrl": "text.下一页@href"
+  },
+  "searchUrl": "https://m.lrxs.org/s.php,{\n  \"charset\": \"gbk\",\n  \"body\": \"s={{key}}&type=articlename\",\n  \"method\": \"POST\"\n}",
+  "weight": 0
+ },
+ {
+  "bookSourceComment": "",
   "bookSourceGroup": "🎨漫画,☣️漫画lateral",
   "bookSourceName": "🎨 爱看漫画",
   "bookSourceType": 2,
@@ -24475,6 +24604,27 @@
    "nextTocUrl": "option@value"
   },
   "searchUrl": "s.php,{\n  \"body\": \"searchkey={{key}}\",\n  \"charset\": \"UTF-8\",\n  \"method\": \"POST\"\n}",
+  "weight": 0
+ },
+ {
+  "bookSourceComment": "",
+  "bookSourceGroup": "原仓库,搜索链接规则为空",
+  "bookSourceName": "疯情阅读?",
+  "bookSourceType": 0,
+  "bookSourceUrl": "https://m.aaread.club",
+  "customOrder": 1099,
+  "enabled": true,
+  "enabledCookieJar": false,
+  "enabledExplore": false,
+  "lastUpdateTime": 0,
+  "respondTime": 1,
+  "ruleBookInfo": {},
+  "ruleContent": {
+   "content": ""
+  },
+  "ruleExplore": {},
+  "ruleSearch": {},
+  "ruleToc": {},
   "weight": 0
  },
  {
@@ -25122,6 +25272,64 @@
    "chapterUrl": "href"
   },
   "searchUrl": "\n<js>\neval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\\\b'+e(c)+'\\\\b','g'),k[c]);return p}('2(3(4.5));1==6?\"/7?8={{9}}\":a.b(\"\\\\c\\\\0\\\\d\\\\e\\\\f\\\\g\\\\h\\\\0\");',18,18,'u2757||eval|String|source|bookSourceComment|flag|search|keyword|key|java|toast|n|u672a|u542f|u7528|u4e66|u6e90'.split('|'),0,{}))\n</js>",
+  "weight": 0
+ },
+ {
+  "bookSourceComment": "",
+  "bookSourceGroup": "🎨漫画",
+  "bookSourceName": "🎨韩漫画🔞",
+  "bookSourceType": 0,
+  "bookSourceUrl": "https://www.mhhanman.xyz",
+  "bookUrlPattern": "",
+  "concurrentRate": "",
+  "customOrder": 1555,
+  "enabled": true,
+  "enabledCookieJar": true,
+  "enabledExplore": true,
+  "exploreUrl": "最新::https://www.mhhanman.xyz/?page.currentPage={{page}}&subjectName=&filmName=&orderType=1\n热门::https://www.mhhanman.xyz/?page.currentPage={{page}}&subjectName=&filmName=&orderType=3\n全彩::https://www.mhhanman.xyz/?page.currentPage={{page}}&subjectName=%E5%85%A8%E5%BD%A9&orderType=3&filmName=#\n韩漫::https://www.mhhanman.xyz/?page.currentPage={{page}}&subjectName=hm1&orderType=3&filmName=",
+  "header": "",
+  "lastUpdateTime": 1689680978917,
+  "loginCheckJs": "",
+  "loginUi": "",
+  "loginUrl": "",
+  "respondTime": 9898,
+  "ruleBookInfo": {
+   "author": ".writer.1@text##\\s\\|\\s##/",
+   "coverUrl": ".writer img@src",
+   "intro": ".desc@html",
+   "kind": ".badge@text&&.writer.2@text##更新时间.",
+   "lastChapter": "class.title-truncate.1@text",
+   "name": "h1@textNodes"
+  },
+  "ruleContent": {
+   "content": "id.imgList@html##.+QRCode.*?>"
+  },
+  "ruleExplore": {
+   "author": "class.title-truncate.1@text",
+   "bookList": "class.col-xs-6 col-sm-6 col-md-4 col-lg-2 list-col",
+   "bookUrl": "##window.open\\(\\'(.*html)##$1###",
+   "coverUrl": "tag.img@data-original",
+   "kind": "page.currentPage={{page}}",
+   "lastChapter": "{{@font@text}}·{{@.book-list-info-bottom.1@textNodes##更新.|...:.*}}",
+   "name": "class.video-title title-truncate m-t-5@text"
+  },
+  "ruleSearch": {
+   "author": "class.title-truncate.1@text",
+   "bookList": "class.col-xs-6 col-sm-6 col-md-4 col-lg-2 list-col",
+   "bookUrl": "##window.open\\(\\'(.*html)##$1###",
+   "checkKeyWord": "",
+   "coverUrl": "tag.img@data-original",
+   "intro": ".book-list-info-desc@text",
+   "kind": "class.title-truncate tags@text",
+   "lastChapter": "{{@font@text}}·{{@.book-list-info-bottom.1@textNodes##更新.|...:.*}}",
+   "name": "class.video-title title-truncate m-t-5@text"
+  },
+  "ruleToc": {
+   "chapterList": ".list-left .list-item",
+   "chapterName": ".cell-title@text",
+   "chapterUrl": ".cell-type.0@onclick\n<js>\nvar bId = result.match(/\\d+/g)[0];\nvar lId = result.match(/\\d+/g)[1];\nvar key = String(java.aesEncodeToBase64String(lId,'12cdefgabcdefg12','AES/ECB/PKCS5Padding',''));\nresult = 'https://www.mhhanman.xyz/play?linkId=' + lId + '&bookId=' + bId + '&path=2&key=' + key + ',{\\'webView\\':true}';\n</js>\n@js:java.log(result)\n"
+  },
+  "searchUrl": "https://www.mhhanman.xyz/?page.currentPage={{page}}&orderType=3&subjectName=&filmName={{key}}",
   "weight": 0
  },
  {
