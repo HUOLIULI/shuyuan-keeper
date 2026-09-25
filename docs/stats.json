@@ -1,12 +1,13 @@
 {
- "total": 15444,
+ "total": 16871,
  "valid_book": 424,
  "valid_subscribe": 14,
  "valid_tvbox": 10,
  "valid_iptv": 4651,
- "valid_collect": 1,
+ "valid_collect": 5,
+ "valid_videosite": 5,
  "archived": 1403,
- "upstreams_alive": 16,
- "upstreams_total": 17,
- "updated_at": "2026-09-25T00:29:55Z"
+ "upstreams_alive": 28,
+ "upstreams_total": 26,
+ "updated_at": "2026-09-25T06:52:09Z"
 }

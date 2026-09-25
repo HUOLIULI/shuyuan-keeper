@@ -1,114 +1,198 @@
 {
  "XIU2·书源": {
   "ok": true,
-  "last": "2026-09-24T14:19:38Z",
+  "last": "2026-09-25T06:49:24Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": true
  },
  "linux-doc·书源": {
   "ok": true,
-  "last": "2026-09-24T14:19:40Z",
+  "last": "2026-09-25T06:49:25Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": true
  },
  "aoaostar·全量": {
   "ok": true,
-  "last": "2026-09-24T14:19:43Z",
+  "last": "2026-09-25T06:49:28Z",
   "count": 3834,
   "msg": "+0/~0",
   "daily": false
  },
  "aoaostar·XIU2": {
   "ok": true,
-  "last": "2026-09-24T14:19:44Z",
+  "last": "2026-09-25T06:49:30Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": false
  },
  "Gladtbam·ALL": {
   "ok": true,
-  "last": "2026-09-24T14:19:47Z",
+  "last": "2026-09-25T06:49:31Z",
   "count": 0,
   "msg": "+0/~0",
   "daily": false
  },
  "订阅·APP源": {
   "ok": true,
-  "last": "2026-09-24T14:19:48Z",
+  "last": "2026-09-25T06:49:32Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "订阅·文档": {
   "ok": true,
-  "last": "2026-09-24T14:19:50Z",
+  "last": "2026-09-25T06:49:34Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "tvbox·多仓订阅": {
   "ok": true,
-  "last": "2026-09-24T14:19:51Z",
+  "last": "2026-09-25T06:49:35Z",
   "count": 0,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·单仓聚合": {
   "ok": true,
-  "last": "2026-09-24T14:19:52Z",
+  "last": "2026-09-25T06:49:37Z",
   "count": 167,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·xiaolong": {
   "ok": true,
-  "last": "2026-09-24T14:19:54Z",
+  "last": "2026-09-25T06:49:38Z",
   "count": 48,
   "msg": "+0/~0",
-  "daily": false
+  "daily": true
  },
  "iptv-org·全球": {
   "ok": true,
-  "last": "2026-09-24T14:19:56Z",
-  "count": 10906,
+  "last": "2026-09-25T06:49:41Z",
+  "count": 10916,
   "msg": "+0/~0",
   "daily": true
  },
  "Guovin·IPv4": {
   "ok": true,
-  "last": "2026-09-24T14:19:58Z",
+  "last": "2026-09-25T06:49:42Z",
   "count": 473,
   "msg": "+0/~0",
   "daily": true
  },
  "Guovin·IPv6": {
   "ok": true,
-  "last": "2026-09-24T14:19:59Z",
+  "last": "2026-09-25T06:49:43Z",
   "count": 1303,
   "msg": "+0/~0",
   "daily": true
  },
  "suxuang·IPv4": {
   "ok": true,
-  "last": "2026-09-24T14:20:01Z",
+  "last": "2026-09-25T06:49:45Z",
   "count": 1225,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·lziapi采集接口": {
   "ok": true,
-  "last": "2026-09-24T14:20:12Z",
+  "last": "2026-09-25T06:49:56Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·lziapi-xml采集": {
   "ok": true,
-  "last": "2026-09-24T14:20:13Z",
+  "last": "2026-09-25T06:49:58Z",
   "count": 1,
   "msg": "+0/~0",
+  "daily": false
+ },
+ "苹果CMS·爱坤": {
+  "ok": true,
+  "last": "2026-09-25T06:50:09Z",
+  "count": 1,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "苹果CMS·索尼": {
+  "ok": true,
+  "last": "2026-09-25T06:50:10Z",
+  "count": 1,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "苹果CMS·红牛": {
+  "ok": true,
+  "last": "2026-09-25T06:50:12Z",
+  "count": 1,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "苹果CMS·豪华": {
+  "ok": true,
+  "last": "2026-09-25T06:50:13Z",
+  "count": 1,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "tvbox·XYQ单仓": {
+  "ok": true,
+  "last": "2026-09-25T06:37:21Z",
+  "count": 0,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "tvbox·liu673cn合集": {
+  "ok": true,
+  "last": "2026-09-25T06:37:22Z",
+  "count": 0,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "tvbox·进恩哥": {
+  "ok": true,
+  "last": "2026-09-25T06:37:24Z",
+  "count": 0,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "影视直连·hccx规则·荷城茶秀": {
+  "ok": true,
+  "last": "2026-09-25T06:50:15Z",
+  "count": 1,
+  "msg": "+1/~0",
+  "daily": false
+ },
+ "影视直连·hccx规则·动漫巴士": {
+  "ok": true,
+  "last": "2026-09-25T06:50:16Z",
+  "count": 1,
+  "msg": "+1/~0",
+  "daily": false
+ },
+ "影视直连·hccx规则·好戏影视": {
+  "ok": true,
+  "last": "2026-09-25T06:50:18Z",
+  "count": 1,
+  "msg": "+1/~0",
+  "daily": false
+ },
+ "影视直连·hccx规则·黑狐影视": {
+  "ok": true,
+  "last": "2026-09-25T06:50:19Z",
+  "count": 1,
+  "msg": "+1/~0",
+  "daily": false
+ },
+ "影视直连·hccx规则·五五影视": {
+  "ok": true,
+  "last": "2026-09-25T06:50:20Z",
+  "count": 1,
+  "msg": "+1/~0",
   "daily": false
  }
 }

@@ -48,7 +48,7 @@ DEFAULTS = {
     "fail_limit": 3,
     "fetch_gap_hours": 20,
     "validate_minutes": 35,
-    "recheck_hours": {"book": 168, "subscribe": 168, "tvbox": 72, "iptv": 72, "collect": 72},
+    "recheck_hours": {"book": 168, "subscribe": 168, "tvbox": 72, "iptv": 72, "collect": 72, "videosite": 72},
     "upstreams": [],
     "yckceo_index": [],
     "yckceo_collect_index": [],
@@ -256,6 +256,23 @@ def parse_tvbox(text, origin):
                 "kind": site.get("type", 0),
             }
         )
+    return items
+
+
+def parse_videosite(text, origin):
+    """影视直连站：从 hccx 规则 JSON 的 `主页url` 字段抽出远端站点。"""
+    import re as _re
+    home = _re.findall(r'"主页url"\s*:\s*"([^"]+)"', text)
+    items = []
+    seen = set()
+    for u in home:
+        u = u.strip()
+        if not u.startswith(("http://", "https://")):
+            continue
+        if u in seen:
+            continue
+        seen.add(u)
+        items.append({"url": u, "name": origin, "raw": {"url": u, "name": origin}})
     return items
 
 
@@ -470,6 +487,8 @@ def cmd_fetch(force=False):
                     ]
                 else:
                     items = parse_collect(raw, up["name"])
+            elif up["type"] == "videosite":
+                items = parse_videosite(raw, up["name"])
         except Exception as exc:  # noqa: BLE001
             status.update(ok=False, last=now_iso(), count=0, msg=f"解析失败:{exc}",
                           daily=up.get("verify_daily", False))
@@ -572,12 +591,33 @@ def check_collect(rec):
         return False
 
 
+def check_videosite(rec):
+    """影视直连站：远端 http(s) 站点 200 即有效。"""
+    url = rec.get("url") or ""
+    if not url.startswith(("http://", "https://")):
+        return False
+    try:
+        resp = requests.head(url, headers={"User-Agent": UA}, timeout=8, allow_redirects=True)
+        if resp.status_code < 400:
+            return True
+    except Exception:  # noqa: BLE001
+        pass
+    try:
+        resp = requests.get(url, headers={"User-Agent": UA}, timeout=8, stream=True)
+        chunk = next(resp.iter_content(512), b"")
+        resp.close()
+        return resp.status_code == 200 and len(chunk) > 0
+    except Exception:  # noqa: BLE001
+        return False
+
+
 CHECKERS = {
     "book": check_book,
     "subscribe": check_book,
     "tvbox": check_tvbox,
     "iptv": check_iptv,
     "collect": check_collect,
+    "videosite": check_videosite,
 }
 
 
@@ -677,7 +717,7 @@ def build_tvbox_config(records):
 
 def cmd_export():
     store = load_store()
-    cats = {"book": [], "subscribe": [], "tvbox": [], "iptv": [], "collect": []}
+    cats = {"book": [], "subscribe": [], "tvbox": [], "iptv": [], "collect": [], "videosite": []}
     tvbox_records = []
     for rec in store["sources"]:
         if rec["status"] not in ("valid", "flaky"):
@@ -710,6 +750,7 @@ def cmd_export():
         "valid_tvbox": len(cats["tvbox"].get("sites", [])),
         "valid_iptv": len(seen_streams),
         "valid_collect": len(cats["collect"]),
+        "valid_videosite": len(cats["videosite"]),
         "archived": len(archived),
         "upstreams_alive": sum(1 for v in store["upstreams"].values() if v.get("ok")),
         "upstreams_total": len(UPSTREAMS) + 1,
@@ -725,6 +766,7 @@ def cmd_export():
             [c for c in cats["collect"] if isinstance(c, dict)],
             ensure_ascii=False, indent=1,
         ),
+        "valid_videosite.json": json.dumps(cats["videosite"], ensure_ascii=False, indent=1),
         "archive.json": json.dumps(archived, ensure_ascii=False, indent=1),
         "stats.json": json.dumps(stats, ensure_ascii=False, indent=1),
         "upstreams.json": json.dumps(store["upstreams"], ensure_ascii=False, indent=1),

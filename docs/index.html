@@ -57,6 +57,7 @@
     <div class="tab" data-tab="tvbox">TVBox</div>
     <div class="tab" data-tab="iptv">IPTV</div>
     <div class="tab" data-tab="collect">采集</div>
+    <div class="tab" data-tab="videosite">影视直连站</div>
   </div>
 
   <div class="panel" id="tab-book"></div>
@@ -64,6 +65,7 @@
   <div class="panel hidden" id="tab-tvbox"></div>
   <div class="panel hidden" id="tab-iptv"></div>
   <div class="panel hidden" id="tab-collect"></div>
+  <div class="panel hidden" id="tab-videosite"></div>
 
   <div class="panel">
     <h2>上游仓库监控</h2>
@@ -75,18 +77,19 @@
 
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
-const TABS = ["book", "subscribe", "tvbox", "iptv", "collect"];
+const TABS = ["book", "subscribe", "tvbox", "iptv", "collect", "videosite"];
 const FILE = {book: "valid.json", subscribe: "valid_subscribe.json", tvbox: "valid_tvbox.json",
-              iptv: "valid_iptv.m3u", collect: "valid_collect.json"};
-const LABEL = {book: "书源", subscribe: "订阅源", tvbox: "站点", iptv: "频道", collect: "采集接口"};
+              iptv: "valid_iptv.m3u", collect: "valid_collect.json", videosite: "valid_videosite.json"};
+const LABEL = {book: "书源", subscribe: "订阅源", tvbox: "站点", iptv: "频道", collect: "采集接口", videosite: "影视直连站"};
 const META = {
   book:      {title: "有效书源", desc: "阅读 Legado：书源管理 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "bookSource", extraBtn: ""},
   subscribe: {title: "有效订阅源", desc: "阅读 Legado：我的 → 订阅 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "rssSource", extraBtn: ""},
   tvbox:     {title: "TVBox 配置", desc: "TVBox / 影视仓：设置 → 配置地址 → 粘贴下面地址，每次启动自动刷新。", extraBtn: "copyAll"},
   iptv:      {title: "IPTV 直播源（M3U）", desc: "VLC / Kodi / DIYP / TVBox：播放列表或直播源设置里填下面 M3U 地址。", extraBtn: "copyAll"},
-  collect:   {title: "采集接口（苹果CMS）", desc: "苹果CMS / 空壳影视：采集接口配置里填下面 JSON 地址。", extraBtn: ""}
+  collect:   {title: "采集接口（苹果CMS）", desc: "苹果CMS / 空壳影视：采集接口配置里填下面 JSON 地址。", extraBtn: ""},
+  videosite: {title: "影视直连站", desc: "本地 drpy/HCCX 规则映射出的可直连影视站，浏览器可直接打开。", extraBtn: ""}
 };
-const data = {book: [], subscribe: [], tvbox: [], iptv: [], collect: []};
+const data = {book: [], subscribe: [], tvbox: [], iptv: [], collect: [], videosite: []};
 const loaded = {};
 
 const abs = (file) => new URL(file, location.href).href;
@@ -149,6 +152,9 @@ async function load(tab) {
     } else if (tab === "collect") {
       const arr = await (await fetch(FILE.collect)).json();
       data.collect = (arr || []).map(x => ({name: x.name || x.title || "", url: x.url || x.api || ""}));
+    } else if (tab === "videosite") {
+      const arr = await (await fetch(FILE.videosite)).json();
+      data.videosite = (arr || []).map(x => ({name: x.name || x.title || "", url: x.url || x.api || ""}));
     } else {
       const arr = await (await fetch(FILE[tab])).json();
       data[tab] = (arr || []).map(x => ({
@@ -228,7 +234,7 @@ document.querySelectorAll(".tab").forEach(el =>
     document.getElementById("ts").textContent = s.updated_at || "-";
     const items = [
       ["书源", s.valid_book], ["订阅", s.valid_subscribe], ["TVBox", s.valid_tvbox],
-      ["IPTV", s.valid_iptv], ["采集", s.valid_collect], ["归档", s.archived],
+      ["IPTV", s.valid_iptv], ["采集", s.valid_collect], ["影视直连", s.valid_videosite], ["归档", s.archived],
       ["上游", `${s.upstreams_alive}/${s.upstreams_total}`]
     ];
     document.getElementById("stats").innerHTML =

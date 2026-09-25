@@ -71,7 +71,7 @@
       "name": "tvbox·xiaolong",
       "url": "https://xiaolong69.github.io/tv/1.json",
       "type": "tvbox",
-      "verify_daily": false
+      "verify_daily": true
     },
     {
       "name": "iptv-org·全球",
@@ -107,6 +107,60 @@
       "name": "苹果CMS·lziapi-xml采集",
       "url": "https://cj.lziapi.com/api.php/provide/vod/at/xml/",
       "type": "collect",
+      "verify_daily": false
+    },
+    {
+      "name": "苹果CMS·爱坤",
+      "url": "https://ikunzyapi.com/api.php/provide/vod/",
+      "type": "collect",
+      "verify_daily": false
+    },
+    {
+      "name": "苹果CMS·索尼",
+      "url": "https://suoniapi.com/api.php/provide/vod/",
+      "type": "collect",
+      "verify_daily": false
+    },
+    {
+      "name": "苹果CMS·红牛",
+      "url": "https://www.hongniuzy2.com/api.php/provide/vod/",
+      "type": "collect",
+      "verify_daily": false
+    },
+    {
+      "name": "苹果CMS·豪华",
+      "url": "https://hhzyapi.com/api.php/provide/vod/",
+      "type": "collect",
+      "verify_daily": false
+    },
+    {
+      "name": "影视直连·hccx规则·荷城茶秀",
+      "url": "https://raw.githubusercontent.com/liu673cn/box/main/libs/hccx/555电影.json",
+      "type": "videosite",
+      "verify_daily": false
+    },
+    {
+      "name": "影视直连·hccx规则·动漫巴士",
+      "url": "https://raw.githubusercontent.com/liu673cn/box/main/libs/hccx/动漫巴士.json",
+      "type": "videosite",
+      "verify_daily": false
+    },
+    {
+      "name": "影视直连·hccx规则·好戏影视",
+      "url": "https://raw.githubusercontent.com/liu673cn/box/main/libs/hccx/好戏影视.json",
+      "type": "videosite",
+      "verify_daily": false
+    },
+    {
+      "name": "影视直连·hccx规则·黑狐影视",
+      "url": "https://raw.githubusercontent.com/liu673cn/box/main/libs/hccx/黑狐影视.json",
+      "type": "videosite",
+      "verify_daily": false
+    },
+    {
+      "name": "影视直连·hccx规则·五五影视",
+      "url": "https://raw.githubusercontent.com/liu673cn/box/main/libs/hccx/五五影视.json",
+      "type": "videosite",
       "verify_daily": false
     }
   ],

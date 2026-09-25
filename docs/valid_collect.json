@@ -2,5 +2,21 @@
  {
   "url": "https://cj.lziapi.com/api.php/provide/vod/",
   "name": "苹果CMS·lziapi采集接口"
+ },
+ {
+  "url": "https://ikunzyapi.com/api.php/provide/vod/",
+  "name": "苹果CMS·爱坤"
+ },
+ {
+  "url": "https://suoniapi.com/api.php/provide/vod/",
+  "name": "苹果CMS·索尼"
+ },
+ {
+  "url": "https://www.hongniuzy2.com/api.php/provide/vod/",
+  "name": "苹果CMS·红牛"
+ },
+ {
+  "url": "https://hhzyapi.com/api.php/provide/vod/",
+  "name": "苹果CMS·豪华"
  }
 ]
