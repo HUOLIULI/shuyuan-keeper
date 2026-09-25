@@ -856,6 +856,100 @@ def cmd_export():
     print(f"[done] {stats}")
 
 
+def cmd_ingest(submit_dir=None, types=None):
+    """入库用户上传条目：扫描 data/user_submit/{type}.json（或目录内所有 json）。
+
+    每个文件 = 该分类下用户上传的条目（结构同 parse_* 输出，或 [url, name] 数组）。
+    逐条按类型校验，标 valid/flaky/invalid，有效/flaky 并入 store，invalid 归档。
+    输出各条红黄绿结果 JSON 到 stdout，供页面 / Issue 草案复用。
+    """
+    base = Path(submit_dir) if submit_dir else (DATA / "user_submit")
+    store = load_store()
+    if not base.exists():
+        print(f"[warn] {base} 不存在，无用户上传条目")
+        results = []
+    else:
+        files = sorted(base.glob("*.json"))
+        if types:
+            files = [f for f in files if f.stem in types]
+        results = []
+        total_new = 0
+        for path in files:
+            stype = path.stem
+            if stype not in CHECKERS:
+                print(f"[skip] 未知分类 {stype}")
+                continue
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except Exception as exc:  # noqa: BLE001
+                print(f"[err]  {path.name}: {exc}")
+                continue
+            items = []
+            if isinstance(payload, dict):
+                for k in ("items", "sources", "list", "data", "sites"):
+                    if isinstance(payload.get(k), list):
+                        items = payload[k]
+                        break
+                else:
+                    items = [payload]
+            elif isinstance(payload, list):
+                items = payload
+            parsed = []
+            for it in items:
+                if isinstance(it, dict) and ("url" in it or "name" in it or "bookSourceUrl" in it or "api" in it):
+                    raw = it
+                    url = it.get("url") or it.get("api") or it.get("bookSourceUrl") or ""
+                    name = it.get("name") or it.get("title") or it.get("bookSourceName") or ""
+                    parsed.append({"url": url, "name": name, "raw": raw})
+                elif isinstance(it, str) and it.startswith(("http://", "https://")):
+                    parsed.append({"url": it, "name": domain_key(it), "raw": {"url": it}})
+            if not parsed:
+                print(f"[empty] {path.name}")
+                continue
+            new_n, upd_n = merge_items(store, parsed, stype, "user")
+            total_new += new_n
+            checked = []
+            for rec in store["sources"]:
+                if "user" not in rec.get("origins", []):
+                    continue
+                if rec["type"] != stype:
+                    continue
+                ok = bool(CHECKERS[stype](rec))
+                rec["last_check"] = now_iso()
+                if ok:
+                    rec["status"] = "valid"
+                    rec["fail_count"] = 0
+                    color = "green"
+                else:
+                    was_valid = rec.get("status") == "valid"
+                    rec["fail_count"] = rec.get("fail_count", 0) + 1
+                    if rec["fail_count"] >= FAIL_LIMIT:
+                        rec["status"] = "invalid"
+                        color = "red"
+                    elif was_valid:
+                        rec["status"] = "flaky"
+                        color = "yellow"
+                    else:
+                        rec["status"] = "pending"
+                        color = "yellow"
+                checked.append({
+                    "name": rec.get("name"), "url": rec.get("url"),
+                    "status": rec["status"], "color": color,
+                })
+            dead = [r for r in store["sources"] if r["status"] == "invalid" and "user" in r.get("origins", [])]
+            if dead:
+                store["archived"].extend(dead)
+                store["sources"] = [r for r in store["sources"] if r["status"] != "invalid"]
+            results.append({
+                "file": path.name, "type": stype,
+                "items": len(parsed), "new": new_n, "checked": checked,
+            })
+            print(f"  [ok] {path.name}({stype}): {len(parsed)}条, 新增{new_n}")
+        save_store(store)
+    print(f"[done] 用户上传入库完成, 新增 {total_new if base.exists() else 0}")
+    print(json.dumps(results, ensure_ascii=False, indent=1))
+
+
 def cmd_status():
     store = load_store()
     from collections import Counter
@@ -882,6 +976,9 @@ def main():
                             help="只验证指定类型，可多次传参（book/subscribe/tvbox/iptv/collect）")
     sub.add_parser("export")
     sub.add_parser("status")
+    p_ingest = sub.add_parser("ingest", help="入库用户上传条目")
+    p_ingest.add_argument("--dir", default=None, help="user_submit 目录（默认 data/user_submit）")
+    p_ingest.add_argument("--type", action="append", dest="itypes", help="只处理指定分类")
     args = parser.parse_args()
 
     if args.cmd == "fetch":
@@ -892,6 +989,8 @@ def main():
         cmd_export()
     elif args.cmd == "status":
         cmd_status()
+    elif args.cmd == "ingest":
+        cmd_ingest(args.dir, args.itypes or None)
 
 
 if __name__ == "__main__":

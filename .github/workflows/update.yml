@@ -59,6 +59,16 @@ jobs:
       - name: Export artifacts
         run: python scripts/keeper.py export
 
+      - name: Ingest user submissions
+        run: |
+          if [ -d data/user_submit ] && [ -n "$(ls -A data/user_submit/*.json 2>/dev/null)" ]; then
+            python scripts/keeper.py ingest
+          fi
+          if [ -d data/user_submit ]; then
+            git add data/user_submit
+            git commit -m "chore(user-submissions): auto-ingest pending items" || true
+          fi
+
       - name: Commit refreshed data
         run: |
           git config user.name "github-actions[bot]"
