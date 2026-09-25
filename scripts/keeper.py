@@ -963,14 +963,22 @@ def _age_hours(last_check):
 
 def cmd_validate(batch=400, types=None):
     store = load_store()
-    targets = []
+    # 按类型分桶后轮转取 batch 条：避免新入库的小类型（如 music）
+    # 排在 15000+ 条后面而永远进不了验证窗口
+    buckets = {}
     for rec in store["sources"]:
         if types and rec["type"] not in types:
             continue
         hours = RECHECK_HOURS.get(rec["type"], 168)
         if rec.get("status") == "pending" or _age_hours(rec.get("last_check")) >= hours:
-            targets.append(rec)
-    targets = targets[:batch]
+            buckets.setdefault(rec["type"], []).append(rec)
+    targets = []
+    while len(targets) < batch and any(buckets.values()):
+        for recs in buckets.values():
+            if recs:
+                targets.append(recs.pop(0))
+            if len(targets) >= batch:
+                break
     if not targets:
         print("[done] 无待验证条目")
         return
