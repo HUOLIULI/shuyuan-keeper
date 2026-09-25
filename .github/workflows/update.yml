@@ -2,8 +2,8 @@ name: update-and-deploy
 
 on:
   schedule:
-    # 每 22 小时拉取一次（UTC 00/22，近似 22h 间隔）
-    - cron: "0 0,22 * * *"
+    # 每天北京时间 18:01 拉取一次（GitHub Actions cron 按 UTC，18:01 CST = 10:01 UTC）
+    - cron: "1 10 * * *"
   workflow_dispatch:
     inputs:
       force:
