@@ -17,6 +17,13 @@
 - `site_alive()` 对国内证书链不完整站点做降级（verify=False、https→http 回退），避免误判为 dead
 - 上游总数统计统一用 `len(store["upstreams"])`
 
+### 音源(music)类型 + T4/猫源上游
+- 音源为独立 `music` 类型，导出 `valid_music.json`（[{name,url,version}]），LoXue/LX 与 MusicFree 插件都收
+- `parse_music` 按 `kind` 分派：musicfree(plugins.json 的 plugins:[])、lxreadme(README 提取 raw .js)、single(单个 .js)、lxtree(GitHub API 枚举仓库最新版 V* 目录下的 .js，去重全 URL)
+- T4 = TVBox 的 type:4 接口配置，直接并入 `tvbox` 类型（ediart/tvbox、tlswch/zzzgit_zzz 的 T4.json）；猫源/肥猫 = Lightconer/tvbox-ysc-config 的 output/feimao.json，并入 `tvbox`
+- 影视在线源 = 现有 `videosite` 批量（liu673cn/box 的 hccx 规则目录）
+- `loads_lenient` 能解析带 // 注释的 TVBox 配置；`dedup_key` 对 music 按全 URL 去重（同 CDN 多插件）
+
 ### 已知坑：agent 注入的 credential helper 500
 - 环境用 GIT_CONFIG_KEY_0 强制注入 /app/agent/bin/agent git-credential-helper，git push 时它返回 500 并覆盖 store helper，导致无法推送
 - 绕过方案：git remote set-url origin "https://x-access-token:<有效PAT>@github.com/..." 用 URL 内嵌 token，推后还原干净 URL

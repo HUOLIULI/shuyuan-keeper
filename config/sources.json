@@ -275,6 +275,12 @@
       "verify_daily": true
     },
     {
+      "name": "tvbox·猫源·肥猫",
+      "url": "https://raw.githubusercontent.com/Lightconer/tvbox-ysc-config/main/output/feimao.json",
+      "type": "tvbox",
+      "verify_daily": true
+    },
+    {
       "name": "tvbox·T4·ediart",
       "url": "https://raw.githubusercontent.com/ediart/tvbox/main/T4.json",
       "type": "tvbox",

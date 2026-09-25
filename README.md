@@ -8,12 +8,14 @@
 
 ---
 
-把社区已维护的聚合仓库作为上游，聚合 5 类资源，做二次验真后按类型导出，供各 App 直接订阅。
+把社区已维护的聚合仓库作为上游，聚合 7 类资源，做二次验真后按类型导出，供各 App 直接订阅。
 
 - 书源 / 订阅源：阅读 Legado
-- TVBox / 影视仓：单仓配置 JSON
+- TVBox / 影视仓：单仓配置 JSON（含 T4 接口配置、猫源/肥猫配置）
 - IPTV：M3U 播放列表（VLC / Kodi / DIYP / TVBox）
 - 采集接口：苹果CMS / 空壳影视
+- 影视直连站：drpy/HCCX 规则映射出的可直连影视站
+- 音源：洛雪 LX / MusicFree 音源（.js 插件订阅）
 
 ## 目录结构
 
@@ -75,6 +77,7 @@ python -m http.server 8080
 | TVBox / 影视仓 | `https://你的用户名.github.io/仓库/valid_tvbox.json` | 设置 → 配置地址 → 粘贴 | 每次启动或点「刷新配置」都会重新拉取 |
 | IPTV 播放器（VLC/Kodi/DIYP） | `https://你的用户名.github.io/仓库/valid_iptv.m3u` | 播放列表/直播源设置里填 M3U 地址 | 刷新播放列表时重新加载 |
 | 苹果CMS / 空壳影视 | `https://你的用户名.github.io/仓库/valid_collect.json` | 采集接口配置里填 JSON 地址 | 手动更新配置时重新拉取 |
+| 洛雪 LX / MusicFree | `https://你的用户名.github.io/仓库/valid_music.json` | 音源列表 / 插件订阅里填下面 JSON 地址 | 每次刷新音源列表时重新拉取 |
 
 GitHub Pages 首页地址：
 
@@ -82,7 +85,7 @@ GitHub Pages 首页地址：
 https://你的用户名.github.io/仓库/
 ```
 
-首页按 5 个标签页展示，每条链接支持复制、下载与二维码，书源与订阅源还带「一键导入阅读APP」按钮。
+首页按 7 个标签页展示，每条链接支持复制、下载与二维码，书源与订阅源还带「一键导入阅读APP」按钮。
 
 ## 国内访问加速
 
@@ -101,9 +104,13 @@ https://cdn.jsdelivr.net/gh/你的用户名/仓库@main/docs/valid_tvbox.json
 | 类型 | 检测方式 | 复验周期 |
 | --- | --- | --- |
 | book / subscribe | HTTP 可达 + searchUrl 探测 | 7 天 |
-| tvbox | 配置结构完整性；多仓子项探活 sourceUrl | 3 天 |
+| tvbox | 配置结构完整性；多仓子项探活 sourceUrl（T4 的 type:4 接口配置走同一逻辑） | 3 天 |
 | iptv | 流地址 HEAD / GET 可达 | 3 天 |
 | collect | `?ac=list` 返回 JSON | 3 天 |
+| videosite | 站点直连可达 | 3 天 |
+| music | 音源 .js 文件可达且非 HTML 错误页 | 7 天 |
+
+音源上游按来源形态分四种解析：MusicFree 插件订阅 JSON（`plugins:[]`）、洛雪聚合仓库 README 里的 raw .js 链接、单文件 .js、以及洛雪仓库最新版本目录（形如 `V260817`）下的全部 .js（走 GitHub API 枚举，Actions 里用 `GITHUB_TOKEN` 提高限额）。
 
 复验结果分三级：
 
