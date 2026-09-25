@@ -85,7 +85,7 @@
         <li>未经权利人许可，禁止：Fork / 克隆 / 镜像 / 搬运本仓库至其他平台；售卖、付费传播、引流变现等任何商业用途；二次分发、打包转载。</li>
         <li>本仓库随时可能无通知删除、清空或停止维护，不保证内容完整性、准确性与永久可用性。</li>
         <li>访问、下载或使用本仓库任何内容产生的风险与后果，由使用者自行承担；如相关内容在您所在地区不合法，请立即停止使用。</li>
-        <li>侵权反馈：通过仓库 <a href="https://github.com/HUOLIULI/shuyuan-keeper/issues" target="_blank">Issue</a> 提交（权利证明 + 侵权位置 + 有效联系方式），核实后删除。</li>
+        <li>侵权反馈：通过 <a href="mailto:shuyuan-keeper@example.com" target="_blank">邮件</a> 提交（权利证明 + 侵权位置 + 有效联系方式），核实后删除。</li>
       </ul>
     </div>
   </div>
@@ -111,8 +111,8 @@
   <div class="panel hidden" id="tab-upload"></div>
 
   <div class="panel" id="up-panel" style="display:none">
-    <h2>上传资源（本地校验 + 生成 Issue 草案）</h2>
-    <p class="hint">选择分类 → 粘贴内容（一行一个 URL，或合法 JSON 数组/对象）→ 本地校验看红黄绿 → 复制 Issue 草案提交到仓库，由定时工作流统一入库。</p>
+    <h2>上传资源（本地校验 + 生成反馈草案）</h2>
+    <p class="hint">选择分类 → 粘贴内容（一行一个 URL，或合法 JSON 数组/对象）→ 本地校验看红黄绿 → 复制反馈草案发送给站长邮箱即可。</p>
     <div class="upselect">
       <select id="up-type">
         <option value="collect">采集接口（苹果CMS）</option>
@@ -127,7 +127,7 @@
     <textarea id="up-content" placeholder="粘贴 URL（一行一个）或 JSON 数组 [{\"url\":\"...\",\"name\":\"...\"}]"></textarea>
     <div class="upbtns">
       <button class="btn" onclick="runLocalCheck()">本地校验（红/黄/绿）</button>
-      <button class="btn blue" onclick="makeIssueDraft()">生成 Issue 草案</button>
+      <button class="btn blue" onclick="makeIssueDraft()">生成反馈草案</button>
       <button class="btn gray" onclick="downloadSubmit()">导出 JSON</button>
     </div>
     <div id="up-legend" style="margin:8px 0;display:none">
@@ -308,7 +308,7 @@ function showQR(url, title) {
 document.querySelectorAll(".tab").forEach(el =>
   el.addEventListener("click", () => switchTab(el.dataset.tab)));
 
-// ---------------- 用户上传：本地校验（红黄绿）+ Issue 草案 ----------------
+// ---------------- 用户上传：本地校验（红黄绿）+ 反馈草案 ----------------
 const TYPE_LABEL = {collect:"采集接口", videosite:"影视直连站", book:"书源", subscribe:"订阅源", tvbox:"TVBox", iptv:"IPTV"};
 
 function parseUpload() {
@@ -421,8 +421,8 @@ function makeIssueDraft() {
     lines.push(`| ${ico} ${r.status} | ${r.name || "-"} | ${r.url} |`);
   });
   lines.push("");
-  lines.push("<!-- keeper ingest 提示：请落到 data/user_submit/" + type + ".json 后运行 python scripts/keeper.py ingest -->");
-  copy(lines.join("\n"), "Issue 草案已复制，去仓库新建 Issue 粘贴");
+  lines.push("<!-- 提示：可将下方 JSON 导出交给站长，由站长脚本统一入库 -->");
+  copy(lines.join("\n"), "反馈草案已复制，发送给站长邮箱即可");
 }
 
 function downloadSubmit() {

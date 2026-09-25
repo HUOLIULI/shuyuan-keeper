@@ -1,105 +1,105 @@
 {
  "XIU2·书源": {
   "ok": true,
-  "last": "2026-09-25T10:56:44Z",
+  "last": "2026-09-25T13:09:51Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": true
  },
  "linux-doc·书源": {
   "ok": true,
-  "last": "2026-09-25T10:56:45Z",
+  "last": "2026-09-25T13:09:53Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": true
  },
  "aoaostar·全量": {
   "ok": true,
-  "last": "2026-09-25T10:56:47Z",
+  "last": "2026-09-25T13:09:57Z",
   "count": 3834,
-  "msg": "+232/~63",
+  "msg": "+531/~232",
   "daily": false
  },
  "aoaostar·XIU2": {
   "ok": true,
-  "last": "2026-09-25T10:56:48Z",
+  "last": "2026-09-25T13:09:59Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": false
  },
  "Gladtbam·ALL": {
   "ok": true,
-  "last": "2026-09-25T10:56:49Z",
+  "last": "2026-09-25T13:10:00Z",
   "count": 0,
   "msg": "+0/~0",
   "daily": false
  },
  "订阅·APP源": {
   "ok": true,
-  "last": "2026-09-25T10:56:51Z",
+  "last": "2026-09-25T13:10:02Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "订阅·文档": {
   "ok": true,
-  "last": "2026-09-25T10:56:52Z",
+  "last": "2026-09-25T13:10:03Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "tvbox·多仓订阅": {
   "ok": true,
-  "last": "2026-09-25T10:56:53Z",
+  "last": "2026-09-25T13:10:05Z",
   "count": 0,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·单仓聚合": {
   "ok": true,
-  "last": "2026-09-25T10:56:54Z",
+  "last": "2026-09-25T13:10:06Z",
   "count": 167,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·xiaolong": {
   "ok": true,
-  "last": "2026-09-25T10:56:55Z",
+  "last": "2026-09-25T13:10:08Z",
   "count": 48,
   "msg": "+0/~0",
   "daily": true
  },
  "iptv-org·全球": {
   "ok": true,
-  "last": "2026-09-25T10:56:57Z",
+  "last": "2026-09-25T13:10:10Z",
   "count": 10916,
   "msg": "+0/~0",
   "daily": true
  },
  "Guovin·IPv4": {
   "ok": true,
-  "last": "2026-09-25T10:56:58Z",
+  "last": "2026-09-25T13:10:11Z",
   "count": 473,
   "msg": "+0/~0",
   "daily": true
  },
  "Guovin·IPv6": {
   "ok": true,
-  "last": "2026-09-25T10:56:59Z",
+  "last": "2026-09-25T13:10:13Z",
   "count": 1303,
   "msg": "+0/~0",
   "daily": true
  },
  "suxuang·IPv4": {
   "ok": true,
-  "last": "2026-09-25T10:57:00Z",
+  "last": "2026-09-25T13:10:14Z",
   "count": 1225,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·lziapi采集接口": {
   "ok": true,
-  "last": "2026-09-25T10:57:02Z",
+  "last": "2026-09-25T13:10:15Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
@@ -113,28 +113,28 @@
  },
  "苹果CMS·爱坤": {
   "ok": true,
-  "last": "2026-09-25T10:57:03Z",
+  "last": "2026-09-25T13:10:27Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·索尼": {
   "ok": true,
-  "last": "2026-09-25T10:57:11Z",
+  "last": "2026-09-25T13:11:13Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·红牛": {
   "ok": true,
-  "last": "2026-09-25T10:57:09Z",
+  "last": "2026-09-25T13:11:11Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·豪华": {
   "ok": true,
-  "last": "2026-09-25T10:57:08Z",
+  "last": "2026-09-25T13:10:58Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
@@ -197,30 +197,44 @@
  },
  "影视直连·hccx规则·荷城茶秀·全目录": {
   "ok": true,
-  "last": "2026-09-25T10:57:12Z",
-  "count": 0,
+  "last": "2026-09-25T13:12:06Z",
+  "count": 43,
   "msg": "+0/~0",
   "daily": false
  },
  "影视直连·hccx规则·xyq目录": {
   "ok": true,
-  "last": "2026-09-25T10:57:13Z",
+  "last": "2026-09-25T13:12:08Z",
   "count": 0,
   "msg": "+0/~0",
   "daily": false
  },
  "影视直连·hccx规则·c目录": {
   "ok": true,
-  "last": "2026-09-25T10:57:14Z",
+  "last": "2026-09-25T13:12:09Z",
   "count": 0,
   "msg": "+0/~0",
   "daily": false
  },
  "资源站监测·ziyuanzhan·在线": {
   "ok": true,
-  "last": "2026-09-25T10:57:15Z",
+  "last": "2026-09-25T13:12:11Z",
   "count": 62,
   "msg": "+0/~0",
+  "daily": true
+ },
+ "tvbox·wdzb海量py": {
+  "ok": true,
+  "last": "2026-09-25T13:12:12Z",
+  "count": 307,
+  "msg": "+22/~0",
+  "daily": true
+ },
+ "tvbox·wdzb海量采集": {
+  "ok": true,
+  "last": "2026-09-25T13:12:25Z",
+  "count": 282,
+  "msg": "+170/~0",
   "daily": true
  }
 }

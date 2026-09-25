@@ -5997,6 +5997,8 @@ https://fms.premio.link/fishingtv/playlist.m3u8
 https://proxystream.iteltv.com.ar/output/iteltv/playlist.m3u8
 #EXTINF:-1,ITV2 HD (1080p)
 https://xemzi.short.gy/1000012
+#EXTINF:-1,ITV (480p)
+https://cdn10.live-tv.cloud/itvrv/abr-lq/playlist.m3u8
 #EXTINF:-1,ITV Deportes (720p)
 https://thm-it-roku.otteravision.com/thm/it/it.m3u8
 #EXTINF:-1,iTV HD

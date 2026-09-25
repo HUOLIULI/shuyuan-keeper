@@ -259,6 +259,18 @@
       "url": "https://mylazily.github.io/ziyuanzhan/data/online.json",
       "type": "collect",
       "verify_daily": true
+    },
+    {
+      "name": "tvbox·wdzb海量py",
+      "url": "https://0.wdzb.eu.cc/tvbox/海量py聚合接口.json",
+      "type": "tvbox",
+      "verify_daily": true
+    },
+    {
+      "name": "tvbox·wdzb海量采集",
+      "url": "https://0.wdzb.eu.cc/tvbox/海量采集聚合接口.json",
+      "type": "tvbox",
+      "verify_daily": true
     }
   ],
   "yckceo_index": [
