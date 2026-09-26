@@ -37,11 +37,20 @@ cd shuyuan-keeper
 # 安装依赖
 pip install -r requirements.txt
 
-# 全量拉取上游
+# 拉取上游（每 8 天一次；窗口内自动跳过）
+python scripts/keeper.py fetch
+
+# 拉取且只收新增（已入库条目不重复合并，版本升级仍生效）
+python scripts/keeper.py fetch --skip-known
+
+# 强制全量拉取（绕过 8 天窗口）
 python scripts/keeper.py fetch --force
 
-# 验证（按类型差异化，默认上限 400 条）
+# 验证（按类型差异化，默认上限 400 条；有效期 15 天）
 python scripts/keeper.py validate --batch 800
+
+# 全量验证（无视 15 天有效期，所有条目重新探活）
+python scripts/keeper.py validate --all
 
 # 导出到 data/ 与 docs/
 python scripts/keeper.py export
@@ -101,14 +110,14 @@ https://cdn.jsdelivr.net/gh/你的用户名/仓库@main/docs/valid_tvbox.json
 
 上游仓库自身已完成每日验活，本仓库做二次复核，并按类型差异化检测：
 
-| 类型 | 检测方式 | 复验周期 |
+| 类型 | 检测方式 | 有效期 |
 | --- | --- | --- |
-| book / subscribe | HTTP 可达 + searchUrl 探测 | 7 天 |
-| tvbox | 配置结构完整性；多仓子项探活 sourceUrl（T4 的 type:4 接口配置走同一逻辑） | 3 天 |
-| iptv | 流地址 HEAD / GET 可达 | 3 天 |
-| collect | `?ac=list` 返回 JSON | 3 天 |
-| videosite | 站点直连可达 | 3 天 |
-| music | 音源 .js 文件可达且非 HTML 错误页 | 7 天 |
+| book / subscribe | HTTP 可达 + searchUrl 探测 | 15 天 |
+| tvbox | 配置结构完整性；多仓子项探活 sourceUrl（T4 的 type:4 接口配置走同一逻辑） | 15 天 |
+| iptv | 流地址 HEAD / GET 可达 | 15 天 |
+| collect | `?ac=list` 返回 JSON | 15 天 |
+| videosite | 站点直连可达 | 15 天 |
+| music | 音源 .js 文件可达且非 HTML 错误页 | 15 天 |
 
 音源上游按来源形态分四种解析：MusicFree 插件订阅 JSON（`plugins:[]`）、洛雪聚合仓库 README 里的 raw .js 链接、单文件 .js、以及洛雪仓库最新版本目录（形如 `V260817`）下的全部 .js（走 GitHub API 枚举，Actions 里用 `GITHUB_TOKEN` 提高限额）。
 
@@ -116,6 +125,13 @@ https://cdn.jsdelivr.net/gh/你的用户名/仓库@main/docs/valid_tvbox.json
 
 | 结果 | 含义 | 处理 |
 | --- | --- | --- |
-| 绿 valid | 规则与站点都正常 | 正常导出 |
+| 绿 valid | 规则与站点都正常 | 正常导出，15 天内不再重复检验 |
 | 黄 flaky | 站点还在，仅规则/接口失效 | 标黄保留，不计死亡 |
 | 红 dead | 站点整体不可达 | 连续 3 次后自动删除，并记墓碑防止再次入库 |
+
+## 调度节奏
+
+- **上游拉取**：每 8 天一次（`fetch_gap_days=8`），在窗口外自动跳过；拉取时默认 `--skip-known`，只收新增条目，已入库条目不重复合并（版本升级仍由 upstream status 记录体现）。
+- **校验窗口**：每天北京时间 18:00 触发（GitHub cron `0 10 * * *` UTC），窗口 18:00 至次日 05:50；**隔一天不校验**——用 `store.last_validate_day` 记录上次校验日期，与今天相隔 ≥ 2 天才再次进入校验。
+- **有效期**：valid 条目 15 天内不重复检验，到期后由下次校验重新探活（`recheck_hours=360`）。
+- **全量复核**：`validate --all` 无视 15 天有效期、所有条目重新探活，手动触发用于周期性彻底复核。

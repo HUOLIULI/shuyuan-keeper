@@ -1,27 +1,27 @@
 [
  {
-  "url": "https://55vid.shop",
-  "name": "影视直连·hccx规则·荷城茶秀"
- },
- {
-  "url": "https://dm84.tv/",
-  "name": "影视直连·hccx规则·动漫巴士"
- },
- {
-  "url": "https://haoxi.vip/",
-  "name": "影视直连·hccx规则·好戏影视"
- },
- {
-  "url": "http://fagmn.com/",
-  "name": "影视直连·hccx规则·黑狐影视"
- },
- {
-  "url": "https://www.55kan.com/",
-  "name": "影视直连·hccx规则·五五影视"
- },
- {
   "url": "https://348z.com/",
   "name": "348影视.json"
+ },
+ {
+  "url": "https://55vid.shop",
+  "name": "555电影.json"
+ },
+ {
+  "url": "https://www.freeok.vip",
+  "name": "Free影视.json"
+ },
+ {
+  "url": "https://www.eyy.cc",
+  "name": "eyy.json"
+ },
+ {
+  "url": "http://www.hanjulao.com",
+  "name": "hanjulao.json"
+ },
+ {
+  "url": "https://www.inmi.app/",
+  "name": "inmi.json"
  },
  {
   "url": "https://lkvod.us",
@@ -40,8 +40,24 @@
   "name": "七新影视.json"
  },
  {
+  "url": "https://www.9day.cc/",
+  "name": "七月影视.json"
+ },
+ {
+  "url": "https://www.55kan.com/",
+  "name": "五五影视.json"
+ },
+ {
   "url": "https://m.xiangdao.me/",
   "name": "农民影视.json"
+ },
+ {
+  "url": "https://dm84.tv/",
+  "name": "动漫巴士.json"
+ },
+ {
+  "url": "https://haoxi.vip/",
+  "name": "好戏影视.json"
  },
  {
   "url": "https://rebozj.pro/",
@@ -52,19 +68,43 @@
   "name": "爱看影视.json"
  },
  {
+  "url": "http://www.sharenice.net",
+  "name": "短视频聚合.json"
+ },
+ {
+  "url": "https://www.miai9.cc/",
+  "name": "米爱影视.json"
+ },
+ {
+  "url": "https://www.uiviki.com/",
+  "name": "维奇动漫.json"
+ },
+ {
   "url": "http://www.pg8090.com/",
   "name": "苹果影视.json"
+ },
+ {
+  "url": "https://www.dandanju.cc/",
+  "name": "蛋蛋影视.json"
+ },
+ {
+  "url": "http://www.dadagui.me/",
+  "name": "达达龟影视.json"
+ },
+ {
+  "url": "https://cj.lziapi.com/",
+  "name": "量子资源网.json"
  },
  {
   "url": "http://ffzy5.tv/",
   "name": "非凡资源网.json"
  },
  {
-  "url": "https://www.xsmp3.com",
-  "name": "相声.json"
+  "url": "https://saohuo.vip/",
+  "name": "骚火影视.json"
  },
  {
-  "url": "https://www.psmp3.com",
-  "name": "评书.json"
+  "url": "http://fagmn.com/",
+  "name": "黑狐影视.json"
  }
 ]

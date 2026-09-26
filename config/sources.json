@@ -3,16 +3,15 @@
   "timeout": 10,
   "workers": 12,
   "fail_limit": 3,
-  "fetch_gap_hours": 20,
   "validate_minutes": 35,
   "recheck_hours": {
-    "book": 168,
-    "subscribe": 168,
-    "tvbox": 72,
-    "iptv": 72,
-    "collect": 72,
-    "videosite": 72,
-    "music": 168
+    "book": 360,
+    "subscribe": 360,
+    "tvbox": 360,
+    "iptv": 360,
+    "collect": 360,
+    "videosite": 360,
+    "music": 360
   },
   "upstreams": [
     {
@@ -327,5 +326,7 @@
     "https://www.yckceo.com/yuedu/rsss/index.html",
     "https://www.yckceo.com/yuedu/rss/index.html"
   ],
-  "yckceo_collect_index": []
+  "yckceo_collect_index": [],
+  "fetch_gap_days": 8,
+  "validate_workers": 24
 }

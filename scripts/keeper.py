@@ -2,20 +2,22 @@
 # -*- coding: utf-8 -*-
 """shuyuan-keeper v3
 
-聚合 5 类资源（书源 / 订阅源 / TVBox / IPTV / 采集接口）。
+聚合 7 类资源（书源 / 订阅源 / TVBox / IPTV / 采集接口 / 影视直连站 / 音源）。
 
 上游 = 社区已经做过一轮每日验活的聚合仓库 + 发现型站点（yckceo）。
 本仓库在其基础上做二次验真，并按类型分别导出可直接被各 App 订阅的文件：
 
     docs/valid.json            阅读 Legado 书源
     docs/valid_subscribe.json  阅读 Legado 订阅源
-    docs/valid_tvbox.json      TVBox / 影视仓 单仓配置
+    docs/valid_tvbox.json      TVBox / 影视仓 单仓配置（含 T4 接口配置、猫源/肥猫）
     docs/valid_iptv.m3u        IPTV 播放列表（VLC / Kodi / DIYP / TVBox）
     docs/valid_collect.json    苹果CMS / 空壳影视 采集接口
+    docs/valid_videosite.json  drpy/HCCX 规则映射出的可直连影视站
+    docs/valid_music.json      洛雪 LX / MusicFree 音源（.js 插件订阅）
 
 CLI:
     python scripts/keeper.py fetch [--force]
-    python scripts/keeper.py validate [--batch 400]
+    python scripts/keeper.py validate [--batch 400] [--type music ...]
     python scripts/keeper.py export
     python scripts/keeper.py status
 """
@@ -25,6 +27,7 @@ import json
 import os
 import re
 import time
+from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
@@ -50,9 +53,9 @@ DEFAULTS = {
     "timeout": 10,
     "workers": 12,
     "fail_limit": 3,
-    "fetch_gap_hours": 20,
-    "validate_minutes": 35,
-    "recheck_hours": {"book": 168, "subscribe": 168, "tvbox": 72, "iptv": 72, "collect": 72, "videosite": 72, "music": 168},
+    "fetch_gap_days": 8,
+    "validate_workers": 16,
+    "recheck_hours": {"book": 360, "subscribe": 360, "tvbox": 360, "iptv": 360, "collect": 360, "videosite": 360, "music": 360},
     "upstreams": [],
     "yckceo_index": [],
     "yckceo_collect_index": [],
@@ -68,17 +71,25 @@ SEARCH_KEY = ""
 TIMEOUT = 10
 WORKERS = 12
 FAIL_LIMIT = 3
-FETCH_GAP = 20 * 3600
-VALIDATE_MINUTES = 35
+# 上游拉取周期（天）：每 8 天拉一次，窗口外的 schedule 运行只验证、不拉取
+FETCH_GAP_DAYS = 8
+# 拉取周期（秒）：默认 8 天，可由 config fetch_gap_days / fetch_gap_hours 覆盖
+FETCH_GAP = FETCH_GAP_DAYS * 86400
+# 校验并发数：URL 去重后的独立 URL 用线程池并发探活
+VALIDATE_WORKERS = 24
 RECHECK_HOURS = DEFAULTS["recheck_hours"]
+# 校验并发数：URL 去重后的独立 URL 用线程池并发探活
+VALIDATE_WORKERS = 24
 # 失效条目标墓碑后，多少天内不再重新入库；过期后允许上游再次带回来
 TOMBSTONE_DAYS = 30
+# 已验证 valid 的源有效期（天）：期内不重复检验，到期后由下次 validate 重新探活
+VALID_VALID_DAYS = 15
 
 
 def load_config():
     global CONF, UPSTREAMS, YCKCEO_INDEX, YCKCEO_COLLECT_INDEX
     global SEARCH_KEY, TIMEOUT, WORKERS
-    global FAIL_LIMIT, FETCH_GAP, VALIDATE_MINUTES, RECHECK_HOURS
+    global FAIL_LIMIT, FETCH_GAP, RECHECK_HOURS, VALIDATE_WORKERS
     cfg = dict(DEFAULTS)
     if CONFIG.exists():
         try:
@@ -94,9 +105,13 @@ def load_config():
     TIMEOUT = int(cfg.get("timeout", 10))
     WORKERS = int(cfg.get("workers", 12))
     FAIL_LIMIT = int(cfg.get("fail_limit", 3))
-    FETCH_GAP = int(cfg.get("fetch_gap_hours", 20)) * 3600
-    VALIDATE_MINUTES = int(cfg.get("validate_minutes", 35))
+    # 拉取周期：优先按天（fetch_gap_days），兼容旧的按小时（fetch_gap_hours）
+    if "fetch_gap_days" in cfg:
+        FETCH_GAP = int(cfg["fetch_gap_days"]) * 86400
+    else:
+        FETCH_GAP = int(cfg.get("fetch_gap_hours", FETCH_GAP_DAYS)) * 3600
     RECHECK_HOURS = cfg.get("recheck_hours", DEFAULTS["recheck_hours"])
+    VALIDATE_WORKERS = int(cfg.get("validate_workers", 24))
 
 
 # --------------------------------------------------------------------------- #
@@ -132,11 +147,13 @@ def load_store():
 
 
 def save_store(store):
+    """原子写：先写临时文件再 rename，避免验证中途崩溃时留下半截 store.json 污染 cache。"""
     DATA.mkdir(parents=True, exist_ok=True)
     store["updated_at"] = now_iso()
-    (DATA / "store.json").write_text(
-        json.dumps(store, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    target = DATA / "store.json"
+    tmp = DATA / "store.json.tmp"
+    tmp.write_text(json.dumps(store, ensure_ascii=False, indent=2), encoding="utf-8")
+    tmp.replace(target)
 
 
 def domain_key(url):
@@ -156,15 +173,39 @@ def origin_of(url):
     return f"{p.scheme}://{p.hostname}" + (f":{p.port}" if p.port else "")
 
 
-def site_alive(url):
+# site_alive 结果按 origin 缓存：同一轮验证里大量条目探同一主机，只真打一次
+_ALIVE_CACHE = {}
+
+# 这类域名永远"活着"（CDN/raw 静态托管）：它们上的 404 是文件没了、不是站点没了，
+# 不能据此判 alive → flaky，否则失效音源/T4 接口会被永久标黄而不删除
+_ALWAYS_ALIVE_HOSTS = (
+    "githubusercontent.com", "jsdelivr.net", "unpkg.com",
+    "fastly.net", "cloudflare.com", "akamai.com",
+)
+
+
+def _host_always_alive(url):
+    host = (urlparse(url or "").hostname or "").lower()
+    return any(host == h or host.endswith("." + h) for h in _ALWAYS_ALIVE_HOSTS)
+
+
+def site_alive(url, use_cache=True):
     """站点级存活：只要主机能建立连接并返回任意 HTTP 响应即算站点还在。
 
     对证书链不完整的国内站点做降级（verify=False / https→http 回退），
     用于区分「站点整个没了（dead）」和「站点还在、只是某条规则/接口失效（flaky）」。
+    结果按 origin 缓存，避免同一主机在大批量验证里被反复探活。
     """
     origin = origin_of(url)
     if not origin:
         return False
+    key = origin.lower()
+    if use_cache and key in _ALIVE_CACHE:
+        return _ALIVE_CACHE[key]
+    # CDN/raw 静态托管域名视为常活（其上的失效是文件级、不是站点级）
+    if _host_always_alive(origin):
+        _ALIVE_CACHE[key] = True
+        return True
     candidates = [origin]
     if origin.startswith("https://"):
         candidates.append("http://" + origin[len("https://"):])
@@ -174,9 +215,11 @@ def site_alive(url):
                 resp = requests.get(base, headers={"User-Agent": UA}, timeout=8,
                                     allow_redirects=True, stream=True, verify=verify)
                 resp.close()
+                _ALIVE_CACHE[key] = True
                 return True
             except Exception:  # noqa: BLE001
                 continue
+    _ALIVE_CACHE[key] = False
     return False
 
 
@@ -201,12 +244,12 @@ def active_tombstones(store):
     return set(fresh)
 
 
-def http_get(url, timeout=25, headers=None, allow_redirects=True):
+def http_get(url, timeout=8, headers=None, allow_redirects=True):
     try:
         resp = requests.get(
             url,
             headers=headers or {"User-Agent": UA},
-            timeout=(10, min(timeout, 25)),
+            timeout=(5, min(timeout, 8)),
             allow_redirects=allow_redirects,
         )
         if resp.status_code == 200:
@@ -530,7 +573,13 @@ def fetch_music_tree(repo_url, origin):
 # --------------------------------------------------------------------------- #
 # 合并入库
 # --------------------------------------------------------------------------- #
-def merge_items(store, items, stype, origin):
+def merge_items(store, items, stype, origin, skip_known=False):
+    """合并入库。
+
+    skip_known=True 时只收新增条目，已入库条目直接跳过（不做版本升级/重合并），
+    用于「只拉取新增部分，已拉取过的不再重复入库」。
+    版本升级由 upstream status 记录的 count 变化体现，不影响库存条目。
+    """
     existing = {dedup_key(r): r for r in store["sources"]}
     tombstones = active_tombstones(store)
     new_n = upd_n = 0
@@ -563,30 +612,36 @@ def merge_items(store, items, stype, origin):
             # 已被判定失效并删除，除非明显更新否则不再入库
             continue
         rec = existing.get(key)
-        if rec is None:
-            store["sources"].append(entry)
-            existing[key] = entry
-            new_n += 1
+        if rec is not None:
+            if skip_known:
+                # 已拉取过：只补 origins，不重合并、不覆盖、不重置校验状态
+                if origin not in rec["origins"]:
+                    rec["origins"].append(origin)
+                continue
+            # 非 skip 模式：版本升级或条目失效时重置为待验证
+            if origin not in rec["origins"]:
+                rec["origins"].append(origin)
+            old_v = coerce_version((rec.get("source") or {}).get("lastUpdateTime"))
+            new_v = coerce_version((entry.get("source") or {}).get("lastUpdateTime"))
+            if new_v > old_v or (rec.get("status") == "invalid" and new_v >= old_v):
+                origins = rec["origins"]
+                rec.update(entry)
+                rec["origins"] = origins
+                rec["status"] = "pending"
+                rec["fail_count"] = 0
+                upd_n += 1
             continue
-
-        if origin not in rec["origins"]:
-            rec["origins"].append(origin)
-        old_v = coerce_version((rec.get("source") or {}).get("lastUpdateTime"))
-        new_v = coerce_version((entry.get("source") or {}).get("lastUpdateTime"))
-        if new_v > old_v or (rec.get("status") == "invalid" and new_v >= old_v):
-            origins = rec["origins"]
-            rec.update(entry)
-            rec["origins"] = origins
-            rec["status"] = "pending"
-            rec["fail_count"] = 0
-            upd_n += 1
+        # 新条目入库
+        store["sources"].append(entry)
+        existing[key] = entry
+        new_n += 1
     return new_n, upd_n
 
 
 # --------------------------------------------------------------------------- #
 # fetch
 # --------------------------------------------------------------------------- #
-def fetch_yckceo_book(store):
+def fetch_yckceo_book(store, skip_known=False):
     """yckceo 书源/订阅源：index.html 里列出 /content/id/{id}.html，对应 /json/id/{id}.json。
 
     封顶 YCKCEO_PROBE_LIMIT 个发现项，避免反爬站点拖慢整体拉取。
@@ -616,13 +671,13 @@ def fetch_yckceo_book(store):
             continue
         items = parse_book(raw, "yckceo")
         stype = "subscribe" if "/yuedu/rss" in url else "book"
-        new_n, _ = merge_items(store, items, stype, "yckceo")
+        new_n, _ = merge_items(store, items, stype, "yckceo", skip_known=skip_known)
         total += new_n
         time.sleep(1)
     return total
 
 
-def fetch_yckceo_collect(store):
+def fetch_yckceo_collect(store, skip_known=False):
     """yckceo 采集源发现型站点：从索引页里提取 api.php 采集接口 URL。"""
     if not YCKCEO_COLLECT_INDEX:
         return 0
@@ -637,7 +692,7 @@ def fetch_yckceo_collect(store):
     total = 0
     for url in sorted(found)[:YCKCEO_PROBE_LIMIT]:
         items = [{"url": url, "name": domain_key(url), "raw": {"url": url, "name": domain_key(url)}}]
-        new_n, _ = merge_items(store, items, "collect", "yckceo")
+        new_n, _ = merge_items(store, items, "collect", "yckceo", skip_known=skip_known)
         total += new_n
         time.sleep(1)
     return total
@@ -699,24 +754,29 @@ def fetch_videosite_batch(dir_url, origin):
     return items
 
 
-def cmd_fetch(force=False):
+def cmd_fetch(force=False, skip_known=False):
+    """拉取上游。
+
+    - 非 force 时按 FETCH_GAP（8 天）判断是否跳过。
+    - skip_known：只入库新增条目，已拉取过的不再重复合并（版本升级仍生效）。
+    """
     store = load_store()
     gap = time.time() - (store.get("last_fetch") or 0)
     if not force and gap < FETCH_GAP:
-        print(f"[skip] 距上次拉取 {gap / 3600:.1f}h，跳过（--force 可强制）")
+        print(f"[skip] 距上次拉取 {gap / 86400:.1f}d，未到 {FETCH_GAP_DAYS} 天周期，跳过（--force 可强制）")
         return
-
+    mode = "只收新增" if skip_known else "全量"
     total_new = 0
-    print(f"[info] 上游 {len(UPSTREAMS)} 个 + yckceo 发现（书源 {len(YCKCEO_INDEX)} 页 / 采集 {len(YCKCEO_COLLECT_INDEX)} 页）")
+    print(f"[info] 上游 {len(UPSTREAMS)} 个 + yckceo 发现（{mode}模式，书源 {len(YCKCEO_INDEX)} 页 / 采集 {len(YCKCEO_COLLECT_INDEX)} 页）")
     for up in UPSTREAMS:
         # batch videosite 不依赖 raw（URL 是目录），单独处理
         if up["type"] == "videosite" and up.get("batch"):
             status = store["upstreams"].setdefault(up["name"], {})
             try:
                 items = fetch_videosite_batch(up["url"], up["name"])
-                new_n, upd_n = merge_items(store, items, "videosite", up["name"])
+                new_n, upd_n = merge_items(store, items, "videosite", up["name"], skip_known=skip_known)
                 status.update(ok=True, last=now_iso(), count=len(items),
-                             msg=f"+{new_n}/~{upd_n}", daily=up.get("verify_daily", False))
+                              msg=f"+{new_n}/~{upd_n}", daily=up.get("verify_daily", False))
                 total_new += new_n
                 print(f"  [ok]   {up['name']}(videosite·batch): {len(items)}条, 新增{new_n}")
                 time.sleep(1)
@@ -731,7 +791,7 @@ def cmd_fetch(force=False):
             status = store["upstreams"].setdefault(up["name"], {})
             try:
                 items = fetch_music_tree(up["url"], up["name"])
-                new_n, upd_n = merge_items(store, items, "music", up["name"])
+                new_n, upd_n = merge_items(store, items, "music", up["name"], skip_known=skip_known)
                 status.update(ok=bool(items), last=now_iso(), count=len(items),
                               msg=f"+{new_n}/~{upd_n}", daily=up.get("verify_daily", False))
                 total_new += new_n
@@ -752,6 +812,7 @@ def cmd_fetch(force=False):
             continue
 
         items = []
+
         try:
             if up["type"] in ("book", "subscribe"):
                 items = parse_book(raw, up["name"])
@@ -786,15 +847,15 @@ def cmd_fetch(force=False):
             print(f"  [err]  {up['name']}: {exc}")
             continue
 
-        new_n, upd_n = merge_items(store, items, up["type"], up["name"])
+        new_n, upd_n = merge_items(store, items, up["type"], up["name"], skip_known=skip_known)
         status.update(ok=True, last=now_iso(), count=len(items),
                       msg=f"+{new_n}/~{upd_n}", daily=up.get("verify_daily", False))
         total_new += new_n
         print(f"  [ok]   {up['name']}({up['type']}): {len(items)}条, 新增{new_n}")
         time.sleep(1)
 
-    total_new += fetch_yckceo_book(store)
-    total_new += fetch_yckceo_collect(store)
+    total_new += fetch_yckceo_book(store, skip_known=skip_known)
+    total_new += fetch_yckceo_collect(store, skip_known=skip_known)
     store["last_fetch"] = time.time()
     save_store(store)
     alive = sum(1 for v in store["upstreams"].values() if v.get("ok"))
@@ -845,6 +906,10 @@ def check_tvbox(rec):
         return "dead"
     if http_get(target, timeout=TIMEOUT) is not None:
         return "valid"
+    # CDN/raw 静态托管（jsdelivr/raw.githubusercontent 等）上探不到 = 资源本身没了，
+    # 不是"站点还在只是接口失效"，应判死以便自动删除，避免永久标黄
+    if _host_always_alive(target):
+        return "dead"
     return "flaky" if site_alive(target) else "dead"
 
 
@@ -853,14 +918,14 @@ def check_iptv(rec):
     if not url.startswith(("http://", "https://")):
         return "valid" if url.startswith(("rtmp://", "rtsp://", "rtp://", "udp://")) else "dead"
     try:
-        resp = requests.head(url, headers={"User-Agent": UA}, timeout=8,
+        resp = requests.head(url, headers={"User-Agent": UA}, timeout=(4, 4),
                              allow_redirects=True)
         if resp.status_code < 400:
             return "valid"
     except Exception:  # noqa: BLE001
         pass
     try:
-        resp = requests.get(url, headers={"User-Agent": UA}, timeout=8, stream=True)
+        resp = requests.get(url, headers={"User-Agent": UA}, timeout=(4, 4), stream=True)
         chunk = next(resp.iter_content(1024), b"")
         code = resp.status_code
         resp.close()
@@ -924,7 +989,7 @@ def check_music(rec):
     if not url.startswith(("http://", "https://")):
         return "dead"
     try:
-        resp = requests.get(url, headers={"User-Agent": UA}, timeout=TIMEOUT, stream=True,
+        resp = requests.get(url, headers={"User-Agent": UA}, timeout=(5, 8), stream=True,
                             verify=False)
         chunk = next(resp.iter_content(512), b"")
         code = resp.status_code
@@ -961,7 +1026,26 @@ def _age_hours(last_check):
         return 10 ** 9
 
 
-def cmd_validate(batch=400, types=None):
+# 同一次验证进程内，同一 URL 只真打一次网络（site_alive 已按 origin 缓存，
+# 这里是 URL 粒度去重，避免大量同域名条目重复请求），结果按 URL 复用。
+def _dedup_by_url(targets):
+    """targets 里同一 URL 只保留一条送探活；返回 (unique, url→idx) 供回写。"""
+    unique = []
+    url_map = {}
+    for idx, rec in enumerate(targets):
+        url = (rec.get("url") or "").strip()
+        if not url:
+            continue
+        if url in url_map:
+            continue
+        url_map[url] = idx
+        unique.append(rec)
+    return unique, url_map
+
+
+def cmd_validate(batch=400, types=None, all_=False):
+    global _ALIVE_CACHE
+    _ALIVE_CACHE = {}
     store = load_store()
     # 按类型分桶后轮转取 batch 条：避免新入库的小类型（如 music）
     # 排在 15000+ 条后面而永远进不了验证窗口
@@ -969,8 +1053,12 @@ def cmd_validate(batch=400, types=None):
     for rec in store["sources"]:
         if types and rec["type"] not in types:
             continue
-        hours = RECHECK_HOURS.get(rec["type"], 168)
-        if rec.get("status") == "pending" or _age_hours(rec.get("last_check")) >= hours:
+        hours = RECHECK_HOURS.get(rec["type"], 360)
+        if all_:
+            # 全量模式：无视 15 天有效期，所有条目都重新探活
+            buckets.setdefault(rec["type"], []).append(rec)
+        elif rec.get("status") == "pending" or _age_hours(rec.get("last_check")) >= hours:
+            # 正常模式：仅待验证或有效期（15 天）已到的条目
             buckets.setdefault(rec["type"], []).append(rec)
     targets = []
     while len(targets) < batch and any(buckets.values()):
@@ -983,41 +1071,56 @@ def cmd_validate(batch=400, types=None):
         print("[done] 无待验证条目")
         return
 
-    print(f"[info] 本轮 {len(targets)} 条")
+    print(f"[info] 本轮 {len(targets)} 条" + ("（全量）" if all_ else ""))
     started = time.time()
     ok_n = yellow_n = dead_n = 0
-    chunk_size = 60
-    for i in range(0, len(targets), chunk_size):
-        if time.time() - started > VALIDATE_MINUTES * 60:
-            print("[stop] 软时限到，剩余条目下轮继续")
-            break
-        chunk = targets[i:i + chunk_size]
-        with ThreadPoolExecutor(max_workers=WORKERS) as pool:
-            futures = [(rec, pool.submit(CHECKERS.get(rec["type"], check_book), rec))
-                       for rec in chunk]
-            for rec, future in futures:
-                try:
-                    verdict = future.result()
-                except Exception:  # noqa: BLE001
-                    verdict = "dead"
-                if verdict not in ("valid", "flaky", "dead"):
-                    verdict = "valid" if verdict else "dead"
-                rec["last_check"] = now_iso()
-                if verdict == "valid":
-                    rec["status"] = "valid"
-                    rec["fail_count"] = 0
-                    ok_n += 1
-                elif verdict == "flaky":
-                    # 站点还活着，只是规则/接口失效：标黄，不计死亡次数
-                    rec["status"] = "flaky"
-                    yellow_n += 1
-                else:  # dead：站点整个没了
-                    rec["fail_count"] = rec.get("fail_count", 0) + 1
-                    dead_n += 1
-                    if rec["fail_count"] >= FAIL_LIMIT:
-                        rec["status"] = "invalid"
-                    elif rec["status"] != "pending":
-                        rec["status"] = "flaky"
+    # 同一 URL 只真打一次网络：先按 URL 去重送探活，再用线程池并发探测，
+    # 把结果回写到同 URL 的所有条目。site_alive 已按 origin 缓存，
+    # 这里是 URL 粒度去重，避免大量同域名条目重复请求。
+    unique = _dedup_by_url(targets)[0]
+    url_verdicts = {}
+
+    def _probe(rec):
+        url = (rec.get("url") or "").strip()
+        try:
+            verdict = CHECKERS.get(rec["type"], check_book)(rec)
+        except Exception:  # noqa: BLE001
+            verdict = "dead"
+        if verdict not in ("valid", "flaky", "dead"):
+            verdict = "valid" if verdict else "dead"
+        return url, verdict
+
+    with ThreadPoolExecutor(max_workers=VALIDATE_WORKERS) as pool:
+        for url, verdict in pool.map(_probe, unique):
+            url_verdicts[url] = verdict
+
+    for rec in targets:
+        url = (rec.get("url") or "").strip()
+        verdict = url_verdicts.get(url)
+        if verdict is None:
+            # 无 url 条目（结构性条目）直接探
+            try:
+                verdict = CHECKERS.get(rec["type"], check_book)(rec)
+            except Exception:  # noqa: BLE001
+                verdict = "dead"
+            if verdict not in ("valid", "flaky", "dead"):
+                verdict = "valid" if verdict else "dead"
+        rec["last_check"] = now_iso()
+        if verdict == "valid":
+            rec["status"] = "valid"
+            rec["fail_count"] = 0
+            ok_n += 1
+        elif verdict == "flaky":
+            # 站点还活着，只是规则/接口失效：标黄，不计死亡次数
+            rec["status"] = "flaky"
+            yellow_n += 1
+        else:  # dead：站点整个没了
+            rec["fail_count"] = rec.get("fail_count", 0) + 1
+            dead_n += 1
+            if rec["fail_count"] >= FAIL_LIMIT:
+                rec["status"] = "invalid"
+            elif rec["status"] != "pending":
+                rec["status"] = "flaky"
 
     # 失效：自动删除（不再堆积归档），并记墓碑避免下次 fetch 又被重新拉进来
     dead = [r for r in store["sources"] if r["status"] == "invalid"]
@@ -1103,7 +1206,8 @@ def cmd_export():
         "valid_music": len(cats["music"]),
         "flaky": flaky_n,
         "archived": len(archived),
-        "dead_removed": len(store.get("dead") or []),
+        # 历史失效条目总数（含仍在 30 天保护期内的墓碑）
+        "dead_removed": len(store.get("dead") or {}),
         "upstreams_alive": sum(1 for v in store["upstreams"].values() if v.get("ok")),
         "upstreams_total": len(store["upstreams"]),
         "updated_at": now_iso(),
@@ -1255,10 +1359,14 @@ def main():
     sub = parser.add_subparsers(dest="cmd", required=True)
     p_fetch = sub.add_parser("fetch")
     p_fetch.add_argument("--force", action="store_true")
+    p_fetch.add_argument("--skip-known", dest="skip_known", action="store_true",
+                        help="只入库新增条目，已拉取过的不再重复合并")
     p_validate = sub.add_parser("validate")
     p_validate.add_argument("--batch", type=int, default=400)
     p_validate.add_argument("--type", action="append", dest="vtypes",
                             help="只验证指定类型，可多次传参（book/subscribe/tvbox/iptv/collect）")
+    p_validate.add_argument("--all", dest="validate_all", action="store_true",
+                            help="全量验证：无视 15 天有效期，所有条目重新探活")
     sub.add_parser("export")
     sub.add_parser("status")
     p_ingest = sub.add_parser("ingest", help="入库用户上传条目")
@@ -1267,9 +1375,9 @@ def main():
     args = parser.parse_args()
 
     if args.cmd == "fetch":
-        cmd_fetch(args.force)
+        cmd_fetch(args.force, args.skip_known)
     elif args.cmd == "validate":
-        cmd_validate(args.batch, args.vtypes or None)
+        cmd_validate(args.batch, args.vtypes or None, all_=args.validate_all)
     elif args.cmd == "export":
         cmd_export()
     elif args.cmd == "status":

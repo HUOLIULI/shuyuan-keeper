@@ -2,14 +2,24 @@ name: update-and-deploy
 
 on:
   schedule:
-    # 每天北京时间 18:01 拉取一次（GitHub Actions cron 按 UTC，18:01 CST = 10:01 UTC）
-    - cron: "1 10 * * *"
+    # 每天北京时间 18:00 跑一次（GitHub cron 按 UTC，18:00 CST = 10:00 UTC）。
+    # 校验窗口为 18:00 至次日 05:50；隔一天不校验（由 store.last_validate_day 判断）。
+    # 上游拉取在 8 天窗口内才执行（由 last_fetch 判断），且只收新增（--skip-known）。
+    - cron: "0 10 * * *"
   workflow_dispatch:
     inputs:
-      force:
-        description: "强制全量拉取上游（忽略 20 小时间隔）"
+      force_fetch:
+        description: "强制拉取上游（无视 8 天窗口）"
         type: boolean
         default: true
+      skip_known:
+        description: "只收新增（已入库条目不重复合并）"
+        type: boolean
+        default: true
+      validate_all:
+        description: "全量验证（无视 15 天有效期）"
+        type: boolean
+        default: false
       batch:
         description: "本轮验证条数上限"
         type: string
@@ -49,21 +59,105 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Fetch upstreams
+      - name: Sync fetch & validate schedule
+        env:
+          INPUT_FORCE_FETCH: ${{ inputs.force_fetch }}
+          INPUT_SKIP_KNOWN: ${{ inputs.skip_known }}
+          INPUT_VALIDATE_ALL: ${{ inputs.validate_all }}
+          INPUT_BATCH: ${{ inputs.batch }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force }}" = "true" ]; then
-            python scripts/keeper.py fetch --force
-          else
-            python scripts/keeper.py fetch
-          fi
+          python - <<'PY'
+          import json, os, sys
+          from datetime import datetime, timezone
+          store_path = "data/store.json"
+          if os.path.exists(store_path):
+              store = json.load(open(store_path))
+          else:
+              store = {"sources": [], "archived": [], "dead": {},
+                       "last_fetch": 0, "discovered": [], "upstreams": {},
+                       "updated_at": None}
+              open(store_path, "w").write(json.dumps(store, ensure_ascii=False))
+
+          now_dt = datetime.now(timezone.utc)
+          now_ts = now_dt.timestamp()
+
+          fetch_gap_days = 8
+
+          force_fetch = str(os.environ.get("INPUT_FORCE_FETCH", "")).lower() == "true"
+          skip_known = str(os.environ.get("INPUT_SKIP_KNOWN", "")).lower() == "true"
+          validate_all = str(os.environ.get("INPUT_VALIDATE_ALL", "")).lower() == "true"
+          batch = os.environ.get("INPUT_BATCH", "800")
+
+          # 隔一天不校验：用 last_validate_day 记录上次校验的 UTC 日期，
+          # 与今天相隔 >= 2 天才再次校验
+          last_val_day = store.get("last_validate_day", "")
+          if not validate_all and last_val_day:
+              try:
+                  gap_days = (now_dt - datetime.fromisoformat(last_val_day + "T00:00:00+00:00")).days
+                  if gap_days < 2:
+                      store["should_validate"] = False
+                      print(f"[schedule] 上次校验 {last_val_day}，距今 {gap_days} 天，未到隔日，跳过校验")
+                  else:
+                      store["should_validate"] = True
+                      print(f"[schedule] 距上次校验 {gap_days} 天，进入校验")
+              except ValueError:
+                  store["should_validate"] = True
+          else:
+              store["should_validate"] = True
+              print(f"[schedule] 无记录或全量验证，进入校验")
+
+          last_fetch = store.get("last_fetch", 0)
+          fetch_age_days = (now_ts - last_fetch) / 86400 if last_fetch else 10**9
+          if force_fetch:
+              store["should_fetch"] = True
+              print(f"[schedule] force_fetch，强制拉取（跳过 {fetch_age_days:.1f} 天）")
+          elif fetch_age_days >= fetch_gap_days:
+              store["should_fetch"] = True
+              print(f"[schedule] 距上次拉取 {fetch_age_days:.1f} 天 >= {fetch_gap_days} 天，进入拉取")
+          else:
+              store["should_fetch"] = False
+              print(f"[schedule] 距上次拉取 {fetch_age_days:.1f} 天 < {fetch_gap_days} 天，跳过拉取")
+
+          store["should_skip_known"] = skip_known
+          store["should_validate_all"] = validate_all
+          store["validate_batch"] = int(batch)
+          json.dump(store, open(store_path, "w"), ensure_ascii=False, indent=2)
+          PY
+
+      - name: Fetch upstreams (8-day window)
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          store = json.load(open("data/store.json"))
+          if store.get("should_fetch"):
+              # 外层 8 天窗口已判定该拉取：--force 绕过 keeper 内部 8 天守卫，
+              # --skip-known 只收新增条目，已入库的不再重复合并
+              args = ["python", "scripts/keeper.py", "fetch", "--force", "--skip-known"]
+              print("[fetch]", " ".join(args))
+              subprocess.run(args, check=False)
+          else:
+              print("[fetch] 8 天窗口未到，跳过拉取")
+          PY
 
       - name: Validate sources
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            python scripts/keeper.py validate --batch "${{ inputs.batch }}"
-          else
-            python scripts/keeper.py validate --batch 2000
-          fi
+          python - <<'PY'
+          import json, subprocess
+          store = json.load(open("data/store.json"))
+          if not store.get("should_validate"):
+              print("[validate] 隔日未到，跳过校验")
+          else:
+              args = ["python", "scripts/keeper.py", "validate",
+                      "--batch", str(store.get("validate_batch", 2000))]
+              if store.get("should_validate_all"):
+                  args.append("--all")
+              print("[validate]", " ".join(args))
+              subprocess.run(args, check=False)
+              # 记录本次校验的 UTC 日期，供下次"隔一天不校验"判断
+              from datetime import datetime, timezone
+              store["last_validate_day"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+              json.dump(store, open("data/store.json", "w"), ensure_ascii=False)
+          PY
 
       - name: Ingest user submissions
         run: |
