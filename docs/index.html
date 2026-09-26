@@ -80,16 +80,16 @@
   .hub-sub{font-size:11.5px;color:var(--muted);letter-spacing:.02em}
   .hub-sub span{color:var(--cyan)}
   /* 标签页：可横滑的 chips，每个标签自带有效数；全局统计(标黄/已删/上游)作为尾部信息格并入同一行 */
-  .tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0;scrollbar-width:thin;align-items:stretch}
-  .tabs::-webkit-scrollbar{height:6px}
-  .tabs::-webkit-scrollbar-thumb{background:var(--line2);border-radius:6px}
-  .tab{
-    position:relative;flex:none;
-    display:inline-flex;flex-direction:column;justify-content:center;gap:2px;
-    padding:9px 15px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(8px);
-    border-radius:11px;cursor:pointer;font-size:13px;user-select:none;color:var(--text);
-    transition:all .22s ease;letter-spacing:.02em;overflow:hidden;min-width:62px;
-  }
+   .tabs{display:flex;flex-wrap:wrap;gap:8px;padding:2px 0;align-items:stretch}
+   .tabs::-webkit-scrollbar{height:6px}
+   .tabs::-webkit-scrollbar-thumb{background:var(--line2);border-radius:6px}
+   .tab{
+     position:relative;flex:0 1 auto;min-width:0;
+     display:inline-flex;flex-direction:column;justify-content:center;gap:2px;
+     padding:9px 15px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(8px);
+     border-radius:11px;cursor:pointer;font-size:13px;user-select:none;color:var(--text);
+     transition:all .22s ease;letter-spacing:.02em;overflow:hidden;
+   }
   .tab::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
     background:var(--grad);opacity:0;transition:opacity .22s ease}
   .tab:hover{border-color:var(--line2);transform:translateY(-2px)}

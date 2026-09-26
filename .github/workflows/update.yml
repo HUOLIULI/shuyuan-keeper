@@ -153,6 +153,12 @@ jobs:
                   args.append("--all")
               print("[validate]", " ".join(args))
               subprocess.run(args, check=False)
+              # 常规校验后追加一轮 flaky 定向深修：把已复活的标黄源翻回 valid，
+              # 真失效的维持/转 dead（自动删除），让线上 store 的 flaky 持续收敛
+              flaky_args = ["python", "scripts/keeper.py", "validate",
+                            "--flaky", "--batch", "400"]
+              print("[validate --flaky]", " ".join(flaky_args))
+              subprocess.run(flaky_args, check=False)
               # 记录本次校验的 UTC 日期，供下次"隔一天不校验"判断
               from datetime import datetime, timezone
               store["last_validate_day"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
