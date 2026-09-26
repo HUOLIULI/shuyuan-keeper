@@ -195,6 +195,25 @@
   .dc a:hover{text-decoration:underline}
   .tsline{color:var(--muted);font-size:12px;margin-top:14px;line-height:1.7}
   .tsline span{color:var(--cyan)}
+  /* TVBox 分类 chips + 分类徽章 */
+  .cat-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:999px;
+    font-size:12.5px;cursor:pointer;user-select:none;border:1px solid var(--line);
+    background:rgba(8,10,24,.5);color:var(--muted);transition:all .2s ease;letter-spacing:.02em
+  }
+  .chip:hover{border-color:var(--line2);color:var(--text);transform:translateY(-1px)}
+  .chip.on{color:#fff;font-weight:700;box-shadow:0 0 14px rgba(91,140,255,.3);border-color:var(--cyan);
+    background:rgba(51,224,255,.14)}
+  .chip.cyan.on{border-color:var(--cyan);box-shadow:0 0 14px rgba(51,224,255,.4);background:rgba(51,224,255,.16)}
+  .chip.green.on{border-color:var(--green);box-shadow:0 0 14px rgba(45,255,155,.4);background:rgba(45,255,155,.14)}
+  .chip.purple.on{border-color:var(--purple);box-shadow:0 0 14px rgba(168,120,255,.4);background:rgba(168,120,255,.16)}
+  .chip.yellow.on{border-color:var(--yellow);box-shadow:0 0 14px rgba(255,210,63,.4);background:rgba(255,210,63,.14)}
+  .cat-badge{font-size:11px;padding:2px 9px;border-radius:9px;font-weight:700;letter-spacing:.03em;white-space:nowrap}
+  .cat-badge.cyan{background:rgba(51,224,255,.15);color:var(--cyan);border:1px solid rgba(51,224,255,.4)}
+  .cat-badge.green{background:rgba(45,255,155,.15);color:var(--green);border:1px solid rgba(45,255,155,.4)}
+  .cat-badge.purple{background:rgba(168,120,255,.15);color:var(--purple);border:1px solid rgba(168,120,255,.4)}
+  .cat-badge.yellow{background:rgba(255,210,63,.15);color:var(--yellow);border:1px solid rgba(255,210,63,.4)}
   @media (max-width:560px){
     h1{font-size:26px}
     .stat b{font-size:20px}
@@ -329,9 +348,13 @@ function buildPanel(tab) {
     ? `<button class="btn" onclick="doImport('${meta.importKind}')">一键导入阅读APP</button>` : "";
   const extraBtn = meta.extraBtn === "copyAll"
     ? `<button class="btn gray" onclick="copyAllContent('${tab}')">复制全部内容</button>` : "";
+  // TVBox 特有：分类（type）分组视图
+  const tvboxCats = tab === "tvbox"
+    ? `<div id="tvbox-cats" class="cat-chips"></div>` : "";
   document.getElementById(`tab-${tab}`).innerHTML = `
     <h2>${meta.title}</h2>
     <p class="hint">${meta.desc}</p>
+    ${tvboxCats}
     <p><code id="url-${tab}">${url}</code></p>
     ${importBtn}
     <button class="btn gray" onclick="copy('${url}','链接已复制')">复制链接</button>
@@ -342,13 +365,46 @@ function buildPanel(tab) {
     <div class="tblwrap"><table id="tbl-${tab}"></table></div>`;
 }
 
+// TVBox 分类：type → 分类名
+const TVBOX_TYPES = {
+  "3": {label: "py 爬虫源", color: "cyan"},
+  "1": {label: "常规源", color: "green"},
+  "4": {label: "T4 接口", color: "purple"},
+  "0": {label: "默认", color: "yellow"}
+};
+let tvboxCatFilter = ""; // 空=全部
+
+function renderTvboxCats() {
+  const cats = document.getElementById("tvbox-cats");
+  if (!cats) return;
+  const counts = {};
+  data.tvbox.forEach(r => { const k = r.type || "0"; counts[k] = (counts[k]||0)+1; });
+  const present = Object.keys(TVBOX_TYPES).filter(k => counts[k]);
+  cats.innerHTML =
+    `<div class="chip ${tvboxCatFilter===""?"on":""}" data-c="" onclick="setTvboxCat('')">全部 ${data.tvbox.length}</div>` +
+    present.map(k => {
+      const t = TVBOX_TYPES[k];
+      return `<div class="chip ${t.color} ${tvboxCatFilter===k?"on":""}" data-c="${k}" onclick="setTvboxCat('${k}')">${t.label} ${counts[k]}</div>`;
+    }).join("");
+}
+function setTvboxCat(k) {
+  tvboxCatFilter = k;
+  renderTvboxCats();
+  renderTable("tvbox");
+}
+
 async function load(tab) {
   if (loaded[tab]) return;
   loaded[tab] = true;
   try {
     if (tab === "tvbox") {
       const cfg = await (await fetch(FILE.tvbox)).json();
-      data.tvbox = (cfg.sites || []).map(s => ({name: s.name || s.key || "", url: s.api || s.searchUrl || ""}));
+      // 保留 type（分类）：3=py爬虫源 1=常规 0=默认 4=T4接口
+      data.tvbox = (cfg.sites || []).map(s => ({
+        name: s.name || s.key || "",
+        url: s.api || s.searchUrl || "",
+        type: s.type != null ? String(s.type) : ""
+      }));
     } else if (tab === "iptv") {
       const text = await (await fetch(FILE.iptv)).text();
       let name = "";
@@ -384,17 +440,26 @@ function esc(s) {
 
 function renderTable(tab) {
   const q = (document.getElementById(`q-${tab}`)?.value || "").trim().toLowerCase();
-  const rows = data[tab].filter(r =>
+  let rows = data[tab].filter(r =>
     !q || (r.name || "").toLowerCase().includes(q) || (r.url || "").toLowerCase().includes(q)
-  ).slice(0, 600);
+  );
+  if (tab === "tvbox" && tvboxCatFilter) rows = rows.filter(r => (r.type || "0") === tvboxCatFilter);
+  rows = rows.slice(0, 600);
+  const isTvbox = tab === "tvbox";
+  const headCat = isTvbox ? `<th style="width:110px">分类</th>` : "";
+  const bodyCat = isTvbox
+    ? (r => { const t = TVBOX_TYPES[r.type] || TVBOX_TYPES["0"];
+        return `<td><span class="cat-badge ${t.color}">${t.label}</span></td>`; })
+    : null;
   document.getElementById(`tbl-${tab}`).innerHTML =
-    `<tr><th style="width:48px">#</th><th style="width:220px">${LABEL[tab]}名</th><th>地址</th></tr>` +
+    `<tr><th style="width:48px">#</th><th style="width:${isTvbox?180:220}px">${LABEL[tab]}名</th>${headCat}<th>地址</th></tr>` +
     (rows.map((r, i) =>
-      `<tr><td class="tag">${i + 1}</td><td>${esc(r.name)}</td>` +
+      `<tr><td class="tag">${i + 1}</td><td>${esc(r.name)}</td>${bodyCat?bodyCat(r):""}` +
       `<td><span class="tag">${esc(r.url)}</span>` +
       `<button class="btn gray" style="padding:2px 8px;font-size:11px;margin-left:6px" ` +
       `onclick="copy('${esc(r.url).replace(/'/g, "\\'")}','地址已复制')">复制</button></td></tr>`
-    ).join("") || `<tr><td colspan="3" class="tag">（暂无有效数据，先运行一次工作流）</td></tr>`);
+    ).join("") || `<tr><td colspan="${isTvbox?4:3}" class="tag">（暂无有效数据，先运行一次工作流）</td></tr>`);
+  if (isTvbox) renderTvboxCats();
 }
 
 function switchTab(tab) {

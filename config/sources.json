@@ -318,6 +318,13 @@
       "type": "music",
       "kind": "single",
       "verify_daily": false
+    },
+    {
+      "name": "tvbox·moliys海量py",
+      "url": "http://tvbox.moliys.icu/海量py聚合接口.json",
+      "type": "tvbox",
+      "verify_daily": true,
+      "charset": "auto"
     }
   ],
   "yckceo_index": [

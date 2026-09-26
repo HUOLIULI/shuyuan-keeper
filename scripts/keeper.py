@@ -244,7 +244,7 @@ def active_tombstones(store):
     return set(fresh)
 
 
-def http_get(url, timeout=8, headers=None, allow_redirects=True):
+def http_get(url, timeout=8, headers=None, allow_redirects=True, binary=False):
     try:
         resp = requests.get(
             url,
@@ -253,11 +253,47 @@ def http_get(url, timeout=8, headers=None, allow_redirects=True):
             allow_redirects=allow_redirects,
         )
         if resp.status_code == 200:
+            if binary:
+                return resp.content
             resp.encoding = resp.apparent_encoding or "utf-8"
             return resp.text
     except Exception:  # noqa: BLE001
         pass
     return None
+
+
+def fetch_json_text(url, timeout=40):
+    """拉取上游 JSON/文本，做 charset 兜底解码（UTF-8 / GBK / 其他）。
+
+    返回文本；拉取失败返回 None。二进制安全：先读 content，再按 Content-Type
+    声明的 charset 依次兜底解码，彻底避免 GBK 等非 UTF-8 上游 JSON 解析失败。
+    """
+    try:
+        resp = requests.get(url, headers={"User-Agent": UA},
+                            timeout=(5, min(timeout, 30)), allow_redirects=True)
+        if resp.status_code != 200:
+            return None
+        charset = (resp.encoding or "").strip()
+        if not charset:
+            ct = (resp.headers.get("Content-Type") or "").lower()
+            charset = ct.split("charset=")[-1].strip() if "charset=" in ct else ""
+        encodings = []
+        if charset and charset.lower() not in ("utf-8", "utf8"):
+            encodings.append(charset.lower().replace("_", "-"))
+        encodings += ["utf-8", "utf-8-sig", "gbk", "latin-1"]
+        seen = set()
+        for enc in encodings:
+            key = enc.lower().replace("_", "-")
+            if key in seen:
+                continue
+            seen.add(key)
+            try:
+                return resp.content.decode(enc)
+            except (UnicodeDecodeError, LookupError):
+                continue
+        return resp.content.decode("latin-1", "replace")
+    except Exception:  # noqa: BLE001
+        return None
 
 
 def gh_api(url):
@@ -301,6 +337,16 @@ def loads_lenient(text):
     """尽量解析 JSON；失败时先去注释再试。"""
     if isinstance(text, (dict, list)):
         return text
+    if isinstance(text, (bytes, bytearray)):
+        # 上游可能返回非 UTF-8（如 GBK）或二进制：逐编码兜底
+        for enc in ("utf-8", "utf-8-sig", "gbk", "latin-1"):
+            try:
+                text = text.decode(enc)
+                break
+            except UnicodeDecodeError:
+                continue
+        else:
+            text = text.decode("latin-1", "replace")
     try:
         return json.loads(text)
     except Exception:  # noqa: BLE001
@@ -803,7 +849,8 @@ def cmd_fetch(force=False, skip_known=False):
                 print(f"  [err]  {up['name']}: {exc}")
             continue
 
-        raw = http_get(up["url"], timeout=40)
+        # 二进制安全拉取并做 charset 兜底解码，避免非 UTF-8（GBK 等）上游 JSON 解析失败
+        raw = fetch_json_text(up["url"], timeout=40)
         status = store["upstreams"].setdefault(up["name"], {})
         if not raw:
             status.update(ok=False, last=now_iso(), count=0, msg="HTTP失败",
