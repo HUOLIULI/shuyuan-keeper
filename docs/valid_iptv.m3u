@@ -1189,6 +1189,8 @@ https://live-anandtv.anandmedia.net/anandtvapp/anandtv/index.m3u8
 https://mumt03.tangotv.in/Dsly5z3HANANDWARITV/index.m3u8
 #EXTINF:-1,Ananda Barta (720p)
 https://account19.livebox.co.in/Anandabarta2hls/live.m3u8
+#EXTINF:-1,ANB News (720p)
+https://server.livelegitpro.in:9899/anbnews/anbnews/index.m3u8
 #EXTINF:-1,ANC Television (720p)
 https://live.amelbatv.co:81/anctvlive/index.m3u8
 #EXTINF:-1,Andes Television (720p)
@@ -1417,3 +1419,43 @@ http://stream.mcquack.net/123/index.m3u8
 http://stream.mcquack.net/175/index.m3u8
 #EXTINF:-1,Army TV (1080p)
 https://api-tv.ipnet.ua/api/v1/manifest/2118742632.m3u8
+#EXTINF:-1,Arpegio TV (720p)
+https://live-evg8.tv360.bitel.com.pe/bitel/arpegioSRT/playlist.m3u8
+#EXTINF:-1,Arputhar Yesu TV (576p)
+https://account33.livebox.co.in/jesushelpshls/live.m3u8
+#EXTINF:-1,Arryadia
+http://149.100.11.252:8000/play/a065/index.m3u8
+#EXTINF:-1,Arsenal (576p)
+https://stream8.cinerama.uz/1414/tracks-v1a1/mono.m3u8
+#EXTINF:-1,ART (Russia) (576p)
+http://89.104.114.24:8080/art/index.m3u8
+#EXTINF:-1,ART TV
+https://rtmp.win:3696/live/arttvgrlive.m3u8
+#EXTINF:-1,Arte 1 (720p)
+http://45.162.64.114/ARTE1/index.m3u8
+#EXTINF:-1,arte (France) (720p)
+http://145.239.5.177/300/index.m3u8
+#EXTINF:-1,arte (Germany) (720p) [Geo-blocked]
+https://artesimulcast.akamaized.net/hls/live/2030993/artelive_de/index.m3u8
+#EXTINF:-1,arte (Germany) HD
+https://dash4.antik.sk/live/test_arte_avc_25p/playlist.m3u8
+#EXTINF:-1,ARTFLIX Movie Classics (720p)
+https://amogonetworx-artflix-1-nl.samsung.wurl.tv/playlist.m3u8
+#EXTINF:-1,ARTN TV (1080p) [Not 24/7]
+https://streamer1.connectto.com/ARTN_mobile/index.m3u8
+#EXTINF:-1,ARTV (Chile) (720p)
+http://45.162.193.35/ARTV/index.m3u8
+#EXTINF:-1,ARTV (Portugal) (720p) [Not 24/7]
+https://playout172.livextend.cloud/liveiframe/_definst_/liveartvabr/playlist.m3u8
+#EXTINF:-1,Aruba.TV (1080p)
+https://cdn01.setar.aw/Canal49/canal49/playlist.m3u8
+#EXTINF:-1,ArubaTV +
+https://rtmpcontrol.com:1936/atvplus/ngrp:atvplus_all/playlist.m3u8
+#EXTINF:-1,Arvan TV
+https://arvhls.wns.live/hls/stream.m3u8
+#EXTINF:-1,ARY Musik (1080p)
+https://arymusik.aryzap.com/3fd38b2c62d0c3bbd74aedabb533c03a/6459fa78/v1/01847ac7a4930b8ed5aa6ed04aba/01847ac8f5f70b8ed5aa6ed04abd/main.m3u8
+#EXTINF:-1,ARY News
+https://cdn07lhr.tamashaweb.com:8087/jazzauth/vsat-arynews-abr/live/vsat-arynews-H/chunks_dvr_timeshift-0-3600.m3u8
+#EXTINF:-1,Aryan TV National (576p)
+https://mumt04.tangotv.in/m18aqlK4ARYANTVNATIONAL/index.m3u8

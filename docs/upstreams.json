@@ -1,254 +1,359 @@
 {
  "XIU2·书源": {
   "ok": true,
-  "last": "2026-09-26T02:49:36Z",
+  "last": "2026-09-26T06:40:41Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": true
  },
  "linux-doc·书源": {
   "ok": true,
-  "last": "2026-09-26T02:49:37Z",
+  "last": "2026-09-26T06:40:42Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": true
  },
  "aoaostar·全量": {
   "ok": true,
-  "last": "2026-09-26T02:49:40Z",
+  "last": "2026-09-26T06:40:45Z",
   "count": 3834,
   "msg": "+0/~0",
   "daily": false
  },
  "aoaostar·XIU2": {
   "ok": true,
-  "last": "2026-09-26T02:49:42Z",
+  "last": "2026-09-26T06:40:46Z",
   "count": 22,
   "msg": "+0/~0",
   "daily": false
  },
  "Gladtbam·ALL": {
   "ok": true,
-  "last": "2026-09-26T02:49:43Z",
+  "last": "2026-09-26T06:40:48Z",
   "count": 0,
   "msg": "+0/~0",
   "daily": false
  },
  "订阅·APP源": {
   "ok": true,
-  "last": "2026-09-26T02:49:45Z",
+  "last": "2026-09-26T06:40:49Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "订阅·文档": {
   "ok": true,
-  "last": "2026-09-26T02:49:46Z",
+  "last": "2026-09-26T06:40:51Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "tvbox·多仓订阅": {
   "ok": true,
-  "last": "2026-09-26T02:49:48Z",
+  "last": "2026-09-26T06:40:52Z",
   "count": 0,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·单仓聚合": {
   "ok": true,
-  "last": "2026-09-26T02:49:49Z",
+  "last": "2026-09-26T06:40:54Z",
   "count": 167,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·xiaolong": {
   "ok": true,
-  "last": "2026-09-26T02:49:50Z",
+  "last": "2026-09-26T06:40:55Z",
   "count": 48,
   "msg": "+0/~0",
   "daily": true
  },
  "iptv-org·全球": {
   "ok": true,
-  "last": "2026-09-26T02:49:53Z",
+  "last": "2026-09-26T06:40:57Z",
   "count": 10922,
-  "msg": "+10/~0",
+  "msg": "+0/~0",
   "daily": true
  },
  "Guovin·IPv4": {
   "ok": true,
-  "last": "2026-09-26T02:49:54Z",
+  "last": "2026-09-26T06:40:59Z",
   "count": 473,
   "msg": "+0/~0",
   "daily": true
  },
  "Guovin·IPv6": {
-  "ok": true,
-  "last": "2026-09-26T02:49:55Z",
-  "count": 1303,
-  "msg": "+0/~0",
+  "ok": false,
+  "last": "2026-09-26T06:41:00Z",
+  "count": 0,
+  "msg": "HTTP失败",
   "daily": true
  },
  "suxuang·IPv4": {
   "ok": true,
-  "last": "2026-09-26T02:49:57Z",
+  "last": "2026-09-26T06:41:00Z",
   "count": 1225,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·lziapi采集接口": {
   "ok": true,
-  "last": "2026-09-26T02:49:58Z",
+  "last": "2026-09-26T06:41:07Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·爱坤": {
   "ok": true,
-  "last": "2026-09-26T02:49:59Z",
+  "last": "2026-09-26T06:41:13Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·索尼(suoniapi)": {
   "ok": true,
-  "last": "2026-09-26T02:50:06Z",
+  "last": "2026-09-26T06:41:21Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·红牛(hongniuzy2)": {
   "ok": true,
-  "last": "2026-09-26T02:50:12Z",
+  "last": "2026-09-26T06:41:28Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·豪华(hhzyapi)": {
   "ok": true,
-  "last": "2026-09-26T02:50:14Z",
+  "last": "2026-09-26T06:41:34Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·豪华(haohuazy)": {
   "ok": true,
-  "last": "2026-09-26T02:50:15Z",
+  "last": "2026-09-26T06:41:40Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·红牛(hsckzy888)": {
   "ok": true,
-  "last": "2026-09-26T02:50:17Z",
+  "last": "2026-09-26T06:41:42Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "苹果CMS·索尼(suonizy)": {
   "ok": true,
-  "last": "2026-09-26T02:50:19Z",
+  "last": "2026-09-26T06:41:49Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "影视直连·hccx规则·荷城茶秀·全目录": {
   "ok": true,
-  "last": "2026-09-26T02:51:10Z",
-  "count": 43,
+  "last": "2026-09-26T06:41:50Z",
+  "count": 0,
   "msg": "+0/~0",
   "daily": false
  },
  "影视直连·hccx规则·xyq目录": {
   "ok": true,
-  "last": "2026-09-26T02:51:17Z",
+  "last": "2026-09-26T06:41:51Z",
   "count": 0,
   "msg": "+0/~0",
   "daily": false
  },
  "影视直连·hccx规则·c目录": {
   "ok": true,
-  "last": "2026-09-26T02:51:26Z",
-  "count": 6,
+  "last": "2026-09-26T06:41:53Z",
+  "count": 0,
   "msg": "+0/~0",
   "daily": false
  },
  "资源站监测·ziyuanzhan·在线": {
   "ok": true,
-  "last": "2026-09-26T02:51:28Z",
+  "last": "2026-09-26T06:41:54Z",
   "count": 61,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·wdzb海量py": {
   "ok": true,
-  "last": "2026-09-26T02:51:30Z",
+  "last": "2026-09-26T06:41:56Z",
   "count": 307,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·wdzb海量采集": {
   "ok": true,
-  "last": "2026-09-26T02:51:31Z",
+  "last": "2026-09-26T06:41:57Z",
   "count": 282,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·猫源·肥猫": {
   "ok": true,
-  "last": "2026-09-26T02:51:33Z",
+  "last": "2026-09-26T06:41:58Z",
   "count": 39,
   "msg": "+0/~0",
   "daily": true
  },
  "tvbox·T4·ediart": {
   "ok": true,
-  "last": "2026-09-26T02:51:34Z",
+  "last": "2026-09-26T06:41:59Z",
   "count": 59,
   "msg": "+0/~0",
   "daily": false
  },
  "tvbox·T4·tlswch": {
   "ok": true,
-  "last": "2026-09-26T02:51:36Z",
+  "last": "2026-09-26T06:42:01Z",
   "count": 4,
   "msg": "+0/~0",
   "daily": false
  },
  "音源·MusicFree·qwerwhr": {
   "ok": true,
-  "last": "2026-09-26T02:51:37Z",
+  "last": "2026-09-26T06:42:02Z",
   "count": 76,
   "msg": "+0/~0",
   "daily": true
  },
  "音源·洛雪·pdone": {
   "ok": true,
-  "last": "2026-09-26T02:51:39Z",
+  "last": "2026-09-26T06:42:03Z",
   "count": 10,
   "msg": "+0/~0",
   "daily": false
  },
  "音源·洛雪·ikun": {
-  "ok": true,
-  "last": "2026-09-26T02:51:41Z",
-  "count": 23,
-  "msg": "+23/~0",
+  "ok": false,
+  "last": "2026-09-26T06:42:04Z",
+  "count": 0,
+  "msg": "+0/~0",
   "daily": false
  },
  "音源·洛雪·星海": {
   "ok": true,
-  "last": "2026-09-26T02:51:42Z",
+  "last": "2026-09-26T06:42:05Z",
   "count": 1,
   "msg": "+0/~0",
   "daily": false
  },
  "tvbox·moliys海量py": {
   "ok": true,
-  "last": "2026-09-26T02:51:43Z",
+  "last": "2026-09-26T06:42:07Z",
   "count": 307,
   "msg": "+0/~0",
   "daily": true
+ },
+ "tvbox·肥猫·4k": {
+  "ok": true,
+  "last": "2026-09-26T06:42:08Z",
+  "count": 53,
+  "msg": "+0/~0",
+  "daily": true
+ },
+ "tvbox·肥猫·讴歌": {
+  "ok": true,
+  "last": "2026-09-26T06:42:10Z",
+  "count": 12,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "tvbox·肥猫·王二小": {
+  "ok": true,
+  "last": "2026-09-26T06:42:11Z",
+  "count": 63,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "在线观看·zhuiju": {
+  "ok": true,
+  "last": "2026-09-26T06:42:12Z",
+  "count": 52,
+  "msg": "+52/~0",
+  "daily": true
+ },
+ "磁力·zhuiju·BT聚合": {
+  "ok": true,
+  "last": "2026-09-26T06:42:14Z",
+  "count": 16,
+  "msg": "+16/~0",
+  "daily": true
+ },
+ "磁力·zhuiju·网盘搜索": {
+  "ok": true,
+  "last": "2026-09-26T06:42:15Z",
+  "count": 4,
+  "msg": "+4/~0",
+  "daily": false
+ },
+ "影视解析·肥猫4k": {
+  "ok": true,
+  "last": "2026-09-26T06:42:16Z",
+  "count": 4,
+  "msg": "+0/~0",
+  "daily": true
+ },
+ "影视解析·肥猫讴歌": {
+  "ok": true,
+  "last": "2026-09-26T06:42:18Z",
+  "count": 4,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "影视解析·肥猫王二小": {
+  "ok": true,
+  "last": "2026-09-26T06:42:19Z",
+  "count": 4,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "音乐解析·guoyue洛雪": {
+  "ok": false,
+  "last": "2026-09-26T06:42:21Z",
+  "count": 0,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "音乐解析·wzh·flat": {
+  "ok": false,
+  "last": "2026-09-26T06:42:22Z",
+  "count": 0,
+  "msg": "解析失败:GitHub API 不可用",
+  "daily": false
+ },
+ "音乐解析·Huibq·MusicFree": {
+  "ok": true,
+  "last": "2026-09-26T06:42:22Z",
+  "count": 15,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "本地包·夸克搜": {
+  "ok": true,
+  "last": "2026-09-26T06:42:24Z",
+  "count": 1,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "本地包·追剧吧": {
+  "ok": true,
+  "last": "2026-09-26T06:42:27Z",
+  "count": 1,
+  "msg": "+0/~0",
+  "daily": false
+ },
+ "本地包·谷哥搜": {
+  "ok": true,
+  "last": "2026-09-26T06:42:30Z",
+  "count": 1,
+  "msg": "+0/~0",
+  "daily": false
  }
 }

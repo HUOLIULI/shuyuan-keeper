@@ -1,0 +1,23 @@
+[
+ {
+  "name": "本地包·夸克搜",
+  "url": "https://kkso.net/",
+  "subcat": "cloud_search",
+  "origin": "本地包·夸克搜",
+  "flags": null
+ },
+ {
+  "name": "本地包·追剧吧",
+  "url": "https://www.zhuiju.us/",
+  "subcat": "cloud_search",
+  "origin": "本地包·追剧吧",
+  "flags": null
+ },
+ {
+  "name": "本地包·谷哥搜",
+  "url": "https://gugeso.com/",
+  "subcat": "cloud_search",
+  "origin": "本地包·谷哥搜",
+  "flags": null
+ }
+]

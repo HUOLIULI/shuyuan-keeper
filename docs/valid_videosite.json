@@ -1,110 +1,794 @@
 [
  {
   "url": "https://348z.com/",
-  "name": "348影视.json"
+  "name": "348影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://55vid.shop",
-  "name": "555电影.json"
+  "name": "555电影.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://www.freeok.vip",
-  "name": "Free影视.json"
+  "name": "Free影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://www.eyy.cc",
-  "name": "eyy.json"
+  "name": "eyy.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "http://www.hanjulao.com",
-  "name": "hanjulao.json"
+  "name": "hanjulao.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://www.inmi.app/",
-  "name": "inmi.json"
+  "name": "inmi.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://lkvod.us",
-  "name": "lkvod.json"
+  "name": "lkvod.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://nkdyw.us",
-  "name": "nkdyw.json"
+  "name": "nkdyw.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://www.zxzjhd.com",
-  "name": "zxzj.json"
+  "name": "zxzj.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "http://www.7xdy.com/",
-  "name": "七新影视.json"
+  "name": "七新影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://www.9day.cc/",
-  "name": "七月影视.json"
+  "name": "七月影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://www.55kan.com/",
-  "name": "五五影视.json"
+  "name": "五五影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://m.xiangdao.me/",
-  "name": "农民影视.json"
+  "name": "农民影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://dm84.tv/",
-  "name": "动漫巴士.json"
+  "name": "动漫巴士.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://haoxi.vip/",
-  "name": "好戏影视.json"
+  "name": "好戏影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://rebozj.pro/",
-  "name": "热播之家.json"
+  "name": "热播之家.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://www.3wyy.com/",
-  "name": "爱看影视.json"
+  "name": "爱看影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "http://www.sharenice.net",
-  "name": "短视频聚合.json"
+  "name": "短视频聚合.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://www.miai9.cc/",
-  "name": "米爱影视.json"
+  "name": "米爱影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://www.uiviki.com/",
-  "name": "维奇动漫.json"
+  "name": "维奇动漫.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "http://www.pg8090.com/",
-  "name": "苹果影视.json"
+  "name": "苹果影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://www.dandanju.cc/",
-  "name": "蛋蛋影视.json"
+  "name": "蛋蛋影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "http://www.dadagui.me/",
-  "name": "达达龟影视.json"
+  "name": "达达龟影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://cj.lziapi.com/",
-  "name": "量子资源网.json"
+  "name": "量子资源网.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "http://ffzy5.tv/",
-  "name": "非凡资源网.json"
+  "name": "非凡资源网.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "https://saohuo.vip/",
-  "name": "骚火影视.json"
+  "name": "骚火影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
   "url": "http://fagmn.com/",
-  "name": "黑狐影视.json"
+  "name": "黑狐影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
+ },
+ {
+  "url": "https://www.xsmp3.com",
+  "name": "相声.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·c目录"
+ },
+ {
+  "url": "https://www.psmp3.com",
+  "name": "评书.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·c目录"
+ },
+ {
+  "name": "No影视",
+  "url": "https://novipnoad.org/",
+  "category": "online_video",
+  "summary": "主打海外影视剧资源的在线影视站。",
+  "tags": [
+   "在线影视",
+   "海外剧",
+   "中文"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "注视影视",
+  "url": "https://gaze.red/",
+  "category": "online_video",
+  "summary": "主打国内海外影视剧资源的在线影视站，访问可能需要代理网络。",
+  "tags": [
+   "在线影视",
+   "国内剧",
+   "海外剧",
+   "需梯子"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "搜TV啦",
+  "url": "https://www.sotvla.cc/",
+  "category": "online_video",
+  "summary": "主打国内海外高清影视剧资源的在线影视站。",
+  "tags": [
+   "在线影视",
+   "高清影视",
+   "国内剧",
+   "海外剧"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "雪落影视",
+  "url": "https://xlys.me/",
+  "category": "online_video",
+  "summary": "主打国内海外影视剧资源的在线影视站。",
+  "tags": [
+   "在线影视",
+   "国内剧",
+   "海外剧",
+   "中文"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "白嫖者联盟",
+  "url": "https://www.tdgo.shop",
+  "category": "online_video",
+  "summary": "热门热播剧，页面无广告，访问速度快（需梯子）。",
+  "tags": [
+   "在线影视",
+   "热播剧",
+   "无广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "蛋蛋魔法",
+  "url": "https://ddmf.net",
+  "category": "online_video",
+  "summary": "国内外热播剧，有福利伦理片（需梯子）。",
+  "tags": [
+   "在线影视",
+   "热播剧",
+   "中文"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "青空次元",
+  "url": "https://www.sorani.net",
+  "category": "online_video",
+  "summary": "网友称最夯动漫在线站。",
+  "tags": [
+   "在线影视",
+   "动漫",
+   "在线看"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "APP影院",
+  "url": "https://www.appmovie.art",
+  "category": "online_video",
+  "summary": "国内外热播剧，纯净无广告。",
+  "tags": [
+   "在线影视",
+   "热播剧",
+   "无广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "爱电影",
+  "url": "https://kuhh4jo.com",
+  "category": "online_video",
+  "summary": "最新热门电影/电视剧。",
+  "tags": [
+   "在线影视",
+   "电影",
+   "电视剧"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "金牌影视",
+  "url": "https://www.vv3nwjk.com",
+  "category": "online_video",
+  "summary": "全网VIP资源（可访问需梯子）",
+  "tags": [
+   "在线影视",
+   "VIP资源",
+   "中文"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "937影视",
+  "url": "https://www.937tv.vip",
+  "category": "online_video",
+  "summary": "看全网影视剧。",
+  "tags": [
+   "在线影视",
+   "影视剧",
+   "中文"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "爱壹帆",
+  "url": "https://iyf.tv",
+  "category": "online_video",
+  "summary": "海外华人影视站（需梯子/有VIP限制）。",
+  "tags": [
+   "在线影视",
+   "海外华人",
+   "需梯子"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "LIBVIO",
+  "url": "https://libviobd.com",
+  "category": "online_video",
+  "summary": "海外影视的老牌网站，发布页 www.libvio.app。",
+  "tags": [
+   "在线影视",
+   "海外影视",
+   "发布页"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "Auete影视",
+  "url": "https://www.aeete.com",
+  "category": "online_video",
+  "summary": "蓝光超清精品影视，发布页 https://auete.pro。",
+  "tags": [
+   "在线影视",
+   "高清影视",
+   "发布页"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "电影人生",
+  "url": "https://dyrs.tv",
+  "category": "online_video",
+  "summary": "高清电影在线观看。",
+  "tags": [
+   "在线影视",
+   "电影",
+   "高清影视"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "黑夜影院",
+  "url": "https://darkvod.com",
+  "category": "online_video",
+  "summary": "综合影视资源较多，页面无广告。",
+  "tags": [
+   "在线影视",
+   "综合影视",
+   "无广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "奈飞工厂",
+  "url": "https://www.netflixgc.com",
+  "category": "online_video",
+  "summary": "主打最新美剧资源，页面无广告（需梯子）。",
+  "tags": [
+   "在线影视",
+   "美剧",
+   "无广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "奈菲影视",
+  "url": "https://www.nfyingshi.com",
+  "category": "online_video",
+  "summary": "热门美剧（需梯子/有VIP限制）。",
+  "tags": [
+   "在线影视",
+   "美剧",
+   "无广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "泥视频",
+  "url": "https://www.nivod.vip",
+  "category": "online_video",
+  "summary": "热门国剧资源，更新较快，无广告。",
+  "tags": [
+   "在线影视",
+   "国剧",
+   "无广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "PPnix",
+  "url": "https://www.ppnix.com/cn/",
+  "category": "online_video",
+  "summary": "热门在线影视，速度快，纯净无广告。",
+  "tags": [
+   "在线影视",
+   "热门影视",
+   "无广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "独播库",
+  "url": "https://www.dbku.tv",
+  "category": "online_video",
+  "summary": "页面无广告，体验较纯净。",
+  "tags": [
+   "在线影视",
+   "纯净",
+   "无广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "布布追剧",
+  "url": "https://bubuzhuiju.com",
+  "category": "online_video",
+  "summary": "速度快，有广告能接受。",
+  "tags": [
+   "在线影视",
+   "追剧",
+   "有广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "影猫仓库",
+  "url": "https://www.ymck.pro",
+  "category": "online_video",
+  "summary": "热门影视剧，有广告能接受。",
+  "tags": [
+   "在线影视",
+   "热门影视",
+   "有广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "爱看机器人",
+  "url": "https://www1.aikanbot.com",
+  "category": "online_video",
+  "summary": "热门电影电视剧（有跳转广告）。",
+  "tags": [
+   "在线影视",
+   "电影",
+   "电视剧",
+   "有广告",
+   "跳转广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "91毒舌",
+  "url": "https://www.duse0.com/",
+  "category": "online_video",
+  "summary": "最新Netflix新剧、4K高清（可访问）。",
+  "tags": [
+   "在线影视",
+   "Netflix",
+   "4K",
+   "高清影视"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "光速影视",
+  "url": "https://www.yingshiso.link/",
+  "category": "online_video",
+  "summary": "作为备选，纯净无广告。",
+  "tags": [
+   "在线影视",
+   "备选",
+   "无广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "IFN",
+  "url": "https://ifn.watch/register?code=8B1EF6",
+  "category": "online_video",
+  "summary": "为数不多的真4K，部分免费。",
+  "tags": [
+   "在线影视",
+   "4K",
+   "部分免费"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "4k影视",
+  "url": "https://www.4kvm.cc/",
+  "category": "online_video",
+  "summary": "有广告能接受（需梯子/VIP限制）。",
+  "tags": [
+   "在线影视",
+   "有广告",
+   "需梯子",
+   "VIP限制"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "饭搭子影视",
+  "url": "https://fdzys.com",
+  "category": "online_video",
+  "summary": "最新热门电影电视剧动漫综艺。",
+  "tags": [
+   "在线影视",
+   "电影",
+   "电视剧",
+   "动漫",
+   "综艺"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "SA视频",
+  "url": "https://www.lsjys11.com/",
+  "category": "online_video",
+  "summary": "最新电影电视剧动漫综艺。",
+  "tags": [
+   "在线影视",
+   "电影",
+   "电视剧",
+   "动漫",
+   "综艺"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "奈飞工厂",
+  "url": "https://naifei.fyi/",
+  "category": "online_video",
+  "summary": "国区可访问，资源无广",
+  "tags": [
+   "在线影视"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "剧OK",
+  "url": "https://juok3.top/",
+  "category": "online_video",
+  "summary": "最新电视剧、最新电影。",
+  "tags": [
+   "在线影视",
+   "电影",
+   "电视剧"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "蛋蛋奇",
+  "url": "https://www.dandanqi.cc/",
+  "category": "online_video",
+  "summary": "最新电视剧、电影，无广告。",
+  "tags": [
+   "在线影视",
+   "电影",
+   "电视剧",
+   "无广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "宅男影视",
+  "url": "https://zndy.top/",
+  "category": "online_video",
+  "summary": "想看就看。",
+  "tags": [
+   "在线影视"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "影视大全",
+  "url": "https://yingshidaquan.top/",
+  "category": "online_video",
+  "summary": "在线搜索播放、官解无广。",
+  "tags": [
+   "在线影视",
+   "搜索",
+   "无广告"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "剧踪影院",
+  "url": "https://www.juzong01.me/",
+  "category": "online_video",
+  "summary": "海内外 SVIP 超前更新。",
+  "tags": [
+   "在线影视",
+   "海内外影视",
+   "SVIP"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "简云影视",
+  "url": "https://jianyunys.com/",
+  "category": "online_video",
+  "summary": "纯净无广告，1080P 高清秒播。",
+  "tags": [
+   "在线影视",
+   "无广告",
+   "1080P",
+   "秒播"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "片库",
+  "url": "https://4k01.pianku.online/",
+  "category": "online_video",
+  "summary": "纯净无广告，1080P 高清秒播。",
+  "tags": [
+   "在线影视",
+   "无广告",
+   "1080P",
+   "秒播"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "66 大片网",
+  "url": "https://www.77dpw.vip/",
+  "category": "online_video",
+  "summary": "免费电影在线观看。",
+  "tags": [
+   "在线影视",
+   "电影",
+   "免费"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "嘀嗒影视",
+  "url": "https://www.didahd.xyz/",
+  "category": "online_video",
+  "summary": "高分电影聚集地，超清秒播。",
+  "tags": [
+   "在线影视",
+   "电影",
+   "超清",
+   "秒播"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "追影",
+  "url": "https://zhuiying3.cc/",
+  "category": "online_video",
+  "summary": "蓝光高清，无广告免费在线秒播。",
+  "tags": [
+   "在线影视",
+   "蓝光",
+   "高清",
+   "无广告",
+   "秒播"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "开心影院",
+  "url": "https://www.kxyy1.cc/",
+  "category": "online_video",
+  "summary": "最新电影、热播电视剧。",
+  "tags": [
+   "在线影视",
+   "电影",
+   "电视剧"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "豆花电影网",
+  "url": "https://dhvideo.cc/",
+  "category": "online_video",
+  "summary": "最新免费电影在线观看。",
+  "tags": [
+   "在线影视",
+   "电影",
+   "免费"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "ZIP0",
+  "url": "https://zip0.com/?r=KBDIG8",
+  "category": "online_video",
+  "summary": "在线影视搜索与播放。",
+  "tags": [
+   "在线影视",
+   "搜索",
+   "在线播放"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "爱盼",
+  "url": "https://www.aipan.me/",
+  "category": "online_video",
+  "summary": "4K影视资源聚合站",
+  "tags": [
+   "在线影视"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "可可影视",
+  "url": "https://www.kkys14.com/",
+  "category": "online_video",
+  "summary": "最新Netflix新剧_韩国电影",
+  "tags": [
+   "在线影视"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
+ },
+ {
+  "name": "樱之空",
+  "url": "https://skr.skr1.cc:666/",
+  "category": "online_video",
+  "summary": "国内外各种动漫都比较齐全",
+  "tags": [
+   "在线影视"
+  ],
+  "subcat": "online_video",
+  "origin": "在线观看·zhuiju"
  }
 ]

@@ -7,12 +7,15 @@
   "recheck_hours": {
     "book": 360,
     "subscribe": 360,
-    "tvbox": 360,
-    "iptv": 360,
-    "collect": 360,
-    "videosite": 360,
-    "music": 360
-  },
+      "tvbox": 360,
+      "iptv": 360,
+      "collect": 360,
+      "videosite": 360,
+      "music": 360,
+      "magnet": 360,
+      "vparse": 360,
+      "localpkg": 360
+    },
   "upstreams": [
     {
       "name": "XIU2·书源",
@@ -325,6 +328,106 @@
       "type": "tvbox",
       "verify_daily": true,
       "charset": "auto"
+    },
+    {
+      "name": "tvbox·肥猫·4k",
+      "url": "https://raw.githubusercontent.com/Lightconer/tvbox-ysc-config/main/output/4k.json",
+      "type": "tvbox",
+      "verify_daily": true
+    },
+    {
+      "name": "tvbox·肥猫·讴歌",
+      "url": "https://raw.githubusercontent.com/Lightconer/tvbox-ysc-config/main/output/ouge.json",
+      "type": "tvbox",
+      "verify_daily": false
+    },
+    {
+      "name": "tvbox·肥猫·王二小",
+      "url": "https://raw.githubusercontent.com/Lightconer/tvbox-ysc-config/main/output/wangerxiao.json",
+      "type": "tvbox",
+      "verify_daily": false
+    },
+    {
+      "name": "在线观看·zhuiju",
+      "url": "https://raw.githubusercontent.com/laoma2053/awesome-zhuiju-free/main/resources/resources.json",
+      "type": "videosite",
+      "kind": "online_video",
+      "verify_daily": true
+    },
+    {
+      "name": "磁力·zhuiju·BT聚合",
+      "url": "https://raw.githubusercontent.com/laoma2053/awesome-zhuiju-free/main/resources/resources.json",
+      "type": "magnet",
+      "kind": "magnet_search",
+      "verify_daily": true
+    },
+    {
+      "name": "磁力·zhuiju·网盘搜索",
+      "url": "https://raw.githubusercontent.com/laoma2053/awesome-zhuiju-free/main/resources/resources.json",
+      "type": "magnet",
+      "kind": "cloud_search",
+      "verify_daily": false
+    },
+    {
+      "name": "影视解析·肥猫4k",
+      "url": "https://raw.githubusercontent.com/Lightconer/tvbox-ysc-config/main/output/4k.json",
+      "type": "vparse",
+      "verify_daily": true
+    },
+    {
+      "name": "影视解析·肥猫讴歌",
+      "url": "https://raw.githubusercontent.com/Lightconer/tvbox-ysc-config/main/output/ouge.json",
+      "type": "vparse",
+      "verify_daily": false
+    },
+    {
+      "name": "影视解析·肥猫王二小",
+      "url": "https://raw.githubusercontent.com/Lightconer/tvbox-ysc-config/main/output/wangerxiao.json",
+      "type": "vparse",
+      "verify_daily": false
+    },
+    {
+      "name": "音乐解析·guoyue洛雪",
+      "url": "https://github.com/guoyue2010/lxmusic-",
+      "type": "music",
+      "kind": "lxtree",
+      "dir_filter": "V260907",
+      "verify_daily": false
+    },
+    {
+      "name": "音乐解析·wzh·flat",
+      "url": "https://github.com/wzh15802/lxmusic",
+      "type": "music",
+      "kind": "musicflat",
+      "verify_daily": false
+    },
+    {
+      "name": "音乐解析·Huibq·MusicFree",
+      "url": "https://raw.githubusercontent.com/Huibq/keep-alive/master/Music_Free/allPlugins.json",
+      "type": "music",
+      "kind": "musicfree",
+      "verify_daily": false
+    },
+    {
+      "name": "本地包·夸克搜",
+      "url": "https://kkso.net/",
+      "type": "localpkg",
+      "kind": "site_alive",
+      "verify_daily": false
+    },
+    {
+      "name": "本地包·追剧吧",
+      "url": "https://www.zhuiju.us/",
+      "type": "localpkg",
+      "kind": "site_alive",
+      "verify_daily": false
+    },
+    {
+      "name": "本地包·谷哥搜",
+      "url": "https://gugeso.com/",
+      "type": "localpkg",
+      "kind": "site_alive",
+      "verify_daily": false
     }
   ],
   "yckceo_index": [

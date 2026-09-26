@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 """shuyuan-keeper v3
 
-聚合 7 类资源（书源 / 订阅源 / TVBox / IPTV / 采集接口 / 影视直连站 / 音源）。
+聚合 10 类资源（书源 / 订阅源 / TVBox / IPTV / 采集接口 / 影视直连站 / 音源 /
+磁力影视 / 影视解析 / 影视本地包）。
 
-上游 = 社区已经做过一轮每日验活的聚合仓库 + 发现型站点（yckceo）。
+上游 = 社区已经做过一轮每日验活的聚合仓库 + 发现型站点（yckceo）+
+zhuiju 追剧指南（在线观看/磁力/网盘）+ 肥猫 TVBox 仓（影视解析 parses）+
+洛雪/MusicFree 音源聚合（音乐解析）。
+
 本仓库在其基础上做二次验真，并按类型分别导出可直接被各 App 订阅的文件：
 
     docs/valid.json            阅读 Legado 书源
@@ -12,14 +16,11 @@
     docs/valid_tvbox.json      TVBox / 影视仓 单仓配置（含 T4 接口配置、猫源/肥猫）
     docs/valid_iptv.m3u        IPTV 播放列表（VLC / Kodi / DIYP / TVBox）
     docs/valid_collect.json    苹果CMS / 空壳影视 采集接口
-    docs/valid_videosite.json  drpy/HCCX 规则映射出的可直连影视站
-    docs/valid_music.json      洛雪 LX / MusicFree 音源（.js 插件订阅）
-
-CLI:
-    python scripts/keeper.py fetch [--force]
-    python scripts/keeper.py validate [--batch 400] [--type music ...]
-    python scripts/keeper.py export
-    python scripts/keeper.py status
+    docs/valid_videosite.json  drpy/HCCX 规则映射出的可直连影视站（含在线观看站）
+    docs/valid_music.json      洛雪 LX / MusicFree 音源（.js 插件订阅，含音乐解析）
+    docs/valid_magnet.json    磁力/BT 聚合搜索站 + 网盘搜索站（影视本地包入口）
+    docs/valid_vparse.json    TVBox 影视解析接口（parses，按 flag 聚合）
+    docs/valid_localpkg.json  影视本地包获取入口（网盘搜索 / 离线包仓库）
 """
 
 import argparse
@@ -55,7 +56,11 @@ DEFAULTS = {
     "fail_limit": 3,
     "fetch_gap_days": 8,
     "validate_workers": 16,
-    "recheck_hours": {"book": 360, "subscribe": 360, "tvbox": 360, "iptv": 360, "collect": 360, "videosite": 360, "music": 360},
+    "recheck_hours": {
+        "book": 360, "subscribe": 360, "tvbox": 360, "iptv": 360,
+        "collect": 360, "videosite": 360, "music": 360,
+        "magnet": 360, "vparse": 360, "localpkg": 360,
+    },
     "upstreams": [],
     "yckceo_index": [],
     "yckceo_collect_index": [],
@@ -133,6 +138,29 @@ def now_iso():
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
 
+def _legacy_subcat(rec):
+    """老库存条目缺 subcat 时的按类型/来源兜底（仅补空，不覆盖已有值）。"""
+    if rec.get("subcat"):
+        return rec.get("subcat")
+    stype = rec.get("type") or ""
+    src = rec.get("source") or {}
+    origin = (rec.get("origins") or [""])[0]
+    if stype == "videosite":
+        if "zhuiju" in origin:
+            return "online_video"
+        return "hccx_rule"
+    if stype == "music":
+        origin_s = origin or ""
+        if "音源" in origin_s or "lx" in origin_s.lower():
+            return "music_source"
+        return "music_parse"
+    if stype in ("magnet", "localpkg"):
+        return "cloud_search"
+    if stype == "vparse":
+        return "parse_iface"
+    return ""
+
+
 def load_store():
     path = DATA / "store.json"
     store = empty_store()
@@ -143,6 +171,10 @@ def load_store():
             print(f"[warn] store.json 损坏，重建：{exc}")
     for key, val in empty_store().items():
         store.setdefault(key, val)
+    # 老库存迁移：为缺 subcat 的新类型条目按来源补分类细分（幂等）
+    for rec in store.get("sources", []):
+        if rec.get("type") in ("videosite", "music", "magnet", "vparse", "localpkg"):
+            rec["subcat"] = _legacy_subcat(rec)
     return store
 
 
@@ -312,8 +344,9 @@ def gh_api(url):
 
 
 def dedup_key(rec):
-    """iptv / music 用完整 URL 去重（同域名多频道、同 CDN 多插件），其余用域名去重。"""
-    if rec["type"] in ("iptv", "music"):
+    """iptv / music / magnet / vparse / localpkg 用完整 URL 去重
+    （同域名多频道、同 CDN 多插件、同站多 flag），其余用域名去重。"""
+    if rec["type"] in ("iptv", "music", "magnet", "vparse", "localpkg"):
         return (rec["url"], rec["type"])
     return (rec["domain"], rec["type"])
 
@@ -458,7 +491,8 @@ def parse_videosite(text, origin):
         if u in seen:
             continue
         seen.add(u)
-        items.append({"url": u, "name": origin, "raw": {"url": u, "name": origin}})
+        items.append({"url": u, "name": origin, "raw": {"url": u, "name": origin},
+                      "subcat": "hccx_rule"})
     return items
 
 
@@ -523,11 +557,13 @@ def parse_collect(text, origin):
 
 
 def parse_music(raw, up):
-    """音源上游解析，按 up.kind 分派：
+    """音源/音乐解析上游解析，按 up.kind 分派：
 
     - musicfree：MusicFree 插件订阅 JSON（{plugins:[{name,url,...}]}）
     - lxreadme ：markdown 里提取 raw .js 音源链接（洛雪聚合仓库 README）
     - single   ：上游 URL 本身就是一个 .js 音源
+    - musicflat：GitHub 仓库根目录平铺 .js（up.url 指向单文件时走 single；
+                  指向仓库时由 fetch 侧调 git tree 枚举，本函数处理 raw 文件）
     """
     kind = up.get("kind") or "single"
     origin = up.get("name") or "音源"
@@ -535,6 +571,7 @@ def parse_music(raw, up):
     items = []
 
     if kind == "musicfree":
+        # MusicFree 插件订阅：音乐解析类（subcat=music_parse）
         data = loads_lenient(raw)
         if isinstance(data, dict):
             plugins = data.get("plugins") or data.get("data") or []
@@ -551,11 +588,13 @@ def parse_music(raw, up):
             name = p.get("name") or domain_key(purl)
             items.append(
                 {"url": purl, "name": name,
-                 "raw": {"name": name, "url": purl, "version": p.get("version") or ""}}
+                 "raw": {"name": name, "url": purl, "version": p.get("version") or ""},
+                 "subcat": "music_parse"}
             )
         return items
 
     if kind == "lxreadme":
+        # 洛雪聚合 README 提取的 .js 音源：音乐解析类（subcat=music_parse）
         name = origin
         seen = set()
         for line in (raw or "").splitlines():
@@ -566,17 +605,106 @@ def parse_music(raw, up):
                 if u in seen:
                     continue
                 seen.add(u)
-                items.append({"url": u, "name": name, "raw": {"name": name, "url": u}})
+                items.append({"url": u, "name": name, "raw": {"name": name, "url": u},
+                              "subcat": "music_parse"})
         return items
 
-    # single：URL 即一个音源文件
+    # single：URL 即一个音源文件（subcat=music_source）
     if src_url.startswith(("http://", "https://")):
         name = origin
         m = re.search(r"/([^/]+)\.js(?:\?|$)", src_url)
         if m:
             name = f"{origin}·{m.group(1)}"
-        items.append({"url": src_url, "name": name, "raw": {"name": name, "url": src_url}})
+        items.append({"url": src_url, "name": name, "raw": {"name": name, "url": src_url},
+                      "subcat": "music_source"})
     return items
+
+
+def parse_zhuiju(raw, up):
+    """zhuiju 追剧指南 resources.json：{resources:[{id,name,url,category,tags[]}] }。
+
+    按 up.kind（形如 "online_video" / "magnet_search" / "cloud_search"）过滤，
+    并把 subcat 写到条目上供 UI 分类细分。
+    """
+    data = loads_lenient(raw)
+    if not isinstance(data, dict):
+        return []
+    res = data.get("resources")
+    if not isinstance(res, list):
+        return []
+    want_cat = up.get("kind") or ""
+    # kind 形如 "zhuiju·online_video"：取 · 后的真实 category 值
+    if want_cat.startswith("zhuiju·"):
+        want_cat = want_cat.split("·", 1)[1]
+    origin = up.get("name") or "zhuiju"
+    items = []
+    for r in res:
+        if not isinstance(r, dict):
+            continue
+        if want_cat and r.get("category") != want_cat:
+            continue
+        url = r.get("url") or ""
+        if not str(url).startswith(("http://", "https://")):
+            continue
+        name = r.get("name") or domain_key(url)
+        items.append({
+            "url": url,
+            "name": name,
+            "raw": {
+                "name": name, "url": url,
+                "category": r.get("category") or "",
+                "summary": r.get("summary") or r.get("summary_short") or "",
+                "tags": r.get("tags") or [],
+            },
+            "subcat": r.get("category") or want_cat or "",
+        })
+    return items
+
+
+def parse_tvbox_parses(raw, up):
+    """TVBox 配置仓的 parses[]：取 type:1 且 url 非 Demo/Web 占位的真实解析接口。"""
+    data = loads_lenient(raw)
+    if not isinstance(data, dict):
+        return []
+    origin = up.get("name") or "tvbox_parses"
+    items = []
+    seen = set()
+    for p in data.get("parses") or []:
+        if not isinstance(p, dict):
+            continue
+        purl = str(p.get("url") or "")
+        # 跳过 TVBox 内置占位（Demo/Web 聚合）与非 http(s) 值
+        if p.get("type") in (0, 3) or purl in ("", "Demo", "Web"):
+            continue
+        if not purl.startswith(("http://", "https://")):
+            continue
+        if purl in seen:
+            continue
+        seen.add(purl)
+        flags = (p.get("ext") or {}).get("flag") if isinstance(p.get("ext"), dict) else None
+        name = p.get("name") or "解析"
+        items.append({
+            "url": purl,
+            "name": f"{origin}·{name}" if flags else name,
+            "raw": {"name": name, "url": purl, "flags": flags or [], "origin": origin},
+            "subcat": "parse_iface",
+        })
+    return items
+
+
+def parse_localpkg(raw, up):
+    """影视本地包获取入口：up.url 本身即一个搜索/聚合站 URL。"""
+    url = up.get("url") or ""
+    if not url.startswith(("http://", "https://")):
+        return []
+    # 网盘搜索/聚合站入口统一 subcat=cloud_search，供 UI 细分
+    return [{
+        "url": url,
+        "name": up.get("name") or domain_key(url),
+        "raw": {"name": up.get("name") or domain_key(url), "url": url,
+                "subcat": "cloud_search"},
+        "subcat": "cloud_search",
+    }]
 
 
 def _ver_num(text):
@@ -584,8 +712,12 @@ def _ver_num(text):
     return int(m.group(1)) if m else -1
 
 
-def fetch_music_tree(repo_url, origin):
-    """从 GitHub 仓库枚举音源：只取最新版本目录（形如 V260817）下的 *.js。"""
+def fetch_music_tree(repo_url, origin, dir_filter=None):
+    """从 GitHub 仓库枚举音源：取指定顶层目录（或自动取最新 V* 目录）下的 *.js。
+
+    dir_filter: 可选，指定要取的顶层目录名（如 "V260907"）；不传时自动取
+    版本号最大的 V* 目录。仓库根目录平铺 .js（无 V* 目录）则全收。
+    """
     m = re.match(r"https?://github\.com/([\w.-]+)/([\w.-]+?)(?:\.git)?/?$", repo_url or "")
     if not m:
         print(f"  [warn] {origin}: 不是 GitHub 仓库地址，跳过")
@@ -603,16 +735,24 @@ def fetch_music_tree(repo_url, origin):
              if t.get("type") == "blob" and t["path"].endswith(".js")]
     if not blobs:
         return []
-    tops = {b["path"].split("/")[0] for b in blobs}
-    vers = sorted([t for t in tops if _ver_num(t) >= 0], key=_ver_num)
-    if vers:
-        newest = vers[-1]
-        blobs = [b for b in blobs if b["path"].split("/")[0] == newest]
+    if dir_filter:
+        blobs = [b for b in blobs if b["path"].split("/")[0] == dir_filter]
+        if not blobs:
+            print(f"  [warn] {origin}: 目录 {dir_filter} 无 .js，跳过")
+            return []
+    else:
+        tops = {b["path"].split("/")[0] for b in blobs}
+        vers = sorted([t for t in tops if _ver_num(t) >= 0], key=_ver_num)
+        if vers:
+            newest = vers[-1]
+            blobs = [b for b in blobs if b["path"].split("/")[0] == newest]
     items = []
     for b in blobs:
         raw = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{b['path']}"
         label = b["path"].rsplit("/", 1)[-1][:-3]
-        items.append({"url": raw, "name": f"{origin}·{label}", "raw": {"name": label, "url": raw}})
+        items.append({"url": raw, "name": f"{origin}·{label}",
+                      "raw": {"name": label, "url": raw},
+                      "subcat": "music_parse"})
     return items
 
 
@@ -622,7 +762,7 @@ def fetch_music_tree(repo_url, origin):
 def merge_items(store, items, stype, origin, skip_known=False):
     """合并入库。
 
-    skip_known=True 时只收新增条目，已入库条目直接跳过（不做版本升级/重合并），
+    skip_known=True 时只收新增条目，已拉取过的不再重复合并（版本升级仍生效），
     用于「只拉取新增部分，已拉取过的不再重复入库」。
     版本升级由 upstream status 记录的 count 变化体现，不影响库存条目。
     """
@@ -647,7 +787,7 @@ def merge_items(store, items, stype, origin, skip_known=False):
             "last_check": None,
             "origins": [origin],
         }
-        extra = {k: item[k] for k in ("spider", "sub_config", "kind") if k in item}
+        extra = {k: item[k] for k in ("spider", "sub_config", "kind", "subcat") if k in item}
         entry.update(extra)
 
         if not entry["domain"] and stype != "iptv":
@@ -763,6 +903,7 @@ def fetch_videosite_batch(dir_url, origin):
                 continue
             seen.add(url)
             home["name"] = f"{origin}·{label}"
+            home.setdefault("subcat", "hccx_rule")
             items.append(home)
         _time.sleep(0.2)
 
@@ -836,12 +977,47 @@ def cmd_fetch(force=False, skip_known=False):
         if up["type"] == "music" and up.get("kind") == "lxtree":
             status = store["upstreams"].setdefault(up["name"], {})
             try:
-                items = fetch_music_tree(up["url"], up["name"])
+                # dir_filter：指定要取的顶层目录（如 V260907）；不传则自动取最新 V* 目录
+                items = fetch_music_tree(up["url"], up["name"], dir_filter=up.get("dir_filter"))
                 new_n, upd_n = merge_items(store, items, "music", up["name"], skip_known=skip_known)
                 status.update(ok=bool(items), last=now_iso(), count=len(items),
                               msg=f"+{new_n}/~{upd_n}", daily=up.get("verify_daily", False))
                 total_new += new_n
-                print(f"  [ok]   {up['name']}(music·tree): {len(items)}条, 新增{new_n}")
+                print(f"  [ok]   {up['name']}(music·tree{up.get('dir_filter','')}): {len(items)}条, 新增{new_n}")
+                time.sleep(1)
+            except Exception as exc:  # noqa: BLE001
+                status.update(ok=False, last=now_iso(), count=0, msg=f"解析失败:{exc}",
+                              daily=up.get("verify_daily", False))
+                print(f"  [err]  {up['name']}: {exc}")
+            continue
+
+        # music musicflat：GitHub 仓库根目录平铺 .js，用 contents API 枚举
+        if up["type"] == "music" and up.get("kind") == "musicflat":
+            status = store["upstreams"].setdefault(up["name"], {})
+            try:
+                m = re.match(r"https?://github\.com/([\w.-]+)/([\w.-]+?)(?:\.git)?/?$", up.get("url") or "")
+                if not m:
+                    raise ValueError("musicflat 需指向 GitHub 仓库地址")
+                owner, repo = m.groups()
+                info = gh_api(f"https://api.github.com/repos/{owner}/{repo}")
+                if not info:
+                    raise ValueError("GitHub API 不可用")
+                branch = info.get("default_branch", "main")
+                contents = gh_api(f"https://api.github.com/repos/{owner}/{repo}/contents/?ref={branch}")
+                items = []
+                for f in contents or []:
+                    if isinstance(f, dict) and f.get("name", "").endswith(".js"):
+                        curl_ = f.get("download_url") or ""
+                        if curl_.startswith("http"):
+                            items.append({"url": curl_,
+                                          "name": f"{up['name']}·{f['name'][:-3]}",
+                                          "raw": {"name": f["name"][:-3], "url": curl_},
+                                          "subcat": "music_parse"})
+                new_n, upd_n = merge_items(store, items, "music", up["name"], skip_known=skip_known)
+                status.update(ok=bool(items), last=now_iso(), count=len(items),
+                              msg=f"+{new_n}/~{upd_n}", daily=up.get("verify_daily", False))
+                total_new += new_n
+                print(f"  [ok]   {up['name']}(music·flat): {len(items)}条, 新增{new_n}")
                 time.sleep(1)
             except Exception as exc:  # noqa: BLE001
                 status.update(ok=False, last=now_iso(), count=0, msg=f"解析失败:{exc}",
@@ -881,13 +1057,23 @@ def cmd_fetch(force=False, skip_known=False):
                 else:
                     items = parse_collect(raw, up["name"])
             elif up["type"] == "videosite":
-                if up.get("batch"):
+                if up.get("kind") == "online_video":
+                    # 在线观看站（zhuiju online_video）：并入 videosite，subcat=online
+                    items = parse_zhuiju(raw, up)
+                elif up.get("batch"):
                     # 批量模式：上游 URL 指向 hccx 规则目录，自动枚举目录下 json 规则
                     items = fetch_videosite_batch(up["url"], up["name"])
                 else:
                     items = parse_videosite(raw, up["name"])
             elif up["type"] == "music":
                 items = parse_music(raw, up)
+            elif up["type"] == "magnet":
+                # 磁力/BT/网盘搜索（zhuiju magnet_search / cloud_search）
+                items = parse_zhuiju(raw, up)
+            elif up["type"] == "vparse":
+                items = parse_tvbox_parses(raw, up)
+            elif up["type"] == "localpkg":
+                items = parse_localpkg(raw, up)
         except Exception as exc:  # noqa: BLE001
             status.update(ok=False, last=now_iso(), count=0, msg=f"解析失败:{exc}",
                           daily=up.get("verify_daily", False))
@@ -1050,6 +1236,39 @@ def check_music(rec):
     return "dead"
 
 
+def check_vparse(rec):
+    """影视解析接口：对 URL 尾部拼一个测试 URL 做 http_get，返回 200 即有效。
+
+    解析接口形如 http://xxx/json/qingfeng.php?url= 或 https://xxx/api/?key=xx&url=，
+    直接 GET 末尾 url= 即可验证接口是否还活着。
+    """
+    url = (rec.get("url") or "")
+    if not url.startswith(("http://", "https://")):
+        return "dead"
+    # 接口若已自带 ?url= 参数则直接 GET；否则拼上占位
+    probe = url if "?" in url or url.endswith("=") else url + "?url="
+    if http_get(probe, timeout=10) is not None:
+        return "valid"
+    # 主机还在但接口 404/5xx = 规则失效（flaky）；主机没了 = dead
+    return "flaky" if site_alive(url) else "dead"
+
+
+def check_magnet(rec):
+    """磁力/BT/网盘搜索聚合站：站点可达即有效（无独立规则层）。"""
+    url = (rec.get("url") or "")
+    if not url.startswith(("http://", "https://")):
+        return "dead"
+    return "valid" if site_alive(url) else "dead"
+
+
+def check_localpkg(rec):
+    """影视本地包获取入口（网盘搜索/离线包仓库）：站点可达即有效。"""
+    url = (rec.get("url") or "")
+    if not url.startswith(("http://", "https://")):
+        return "dead"
+    return "valid" if site_alive(url) else "dead"
+
+
 CHECKERS = {
     "book": check_book,
     "subscribe": check_book,
@@ -1058,6 +1277,9 @@ CHECKERS = {
     "collect": check_collect,
     "videosite": check_videosite,
     "music": check_music,
+    "vparse": check_vparse,
+    "magnet": check_magnet,
+    "localpkg": check_localpkg,
 }
 
 
@@ -1213,9 +1435,37 @@ def build_tvbox_config(records):
     return config
 
 
+def build_flat_config(records):
+    """扁平导出：每条输出 {name, url, subcat, origin, flags}（磁力/本地包/解析通用）。
+
+    subcat 优先取条目自带值；本地包/磁力上游未细分时统一归到 cloud_search。
+    """
+    out = []
+    seen = set()
+    for rec in records:
+        subcat = rec.get("subcat") or "cloud_search"
+        # 旧库存 localpkg 用过 site_alive 细分，统一归并到 cloud_search（网盘搜索入口）
+        if subcat in ("site_alive", ""):
+            subcat = "cloud_search"
+        key = (rec.get("url") or "", subcat)
+        if key in seen:
+            continue
+        seen.add(key)
+        src = rec.get("source") or {}
+        out.append({
+            "name": rec.get("name") or domain_key(rec.get("url") or ""),
+            "url": rec.get("url") or "",
+            "subcat": subcat,
+            "origin": (rec.get("origins") or [""])[0],
+            "flags": src.get("flags") if isinstance(src, dict) else [],
+        })
+    return out
+
+
 def cmd_export():
     store = load_store()
-    cats = {"book": [], "subscribe": [], "tvbox": [], "iptv": [], "collect": [], "videosite": [], "music": []}
+    cats = {"book": [], "subscribe": [], "tvbox": [], "iptv": [], "collect": [],
+            "videosite": [], "music": [], "magnet": [], "vparse": [], "localpkg": []}
     tvbox_records = []
     for rec in store["sources"]:
         if rec["status"] not in ("valid", "flaky"):
@@ -1225,9 +1475,34 @@ def cmd_export():
             cats["iptv"].append({"name": rec["name"], "url": rec["url"]})
         elif stype == "tvbox":
             tvbox_records.append(rec)
+        elif stype in ("magnet", "vparse", "localpkg", "videosite", "music"):
+            cats[stype].append(rec)
         else:
             cats[stype].append(rec.get("source"))
     cats["tvbox"] = build_tvbox_config(tvbox_records)
+    cats["magnet"] = build_flat_config(cats["magnet"])
+    cats["vparse"] = build_flat_config(cats["vparse"])
+    cats["localpkg"] = build_flat_config(cats["localpkg"])
+
+    def _flat(rec):
+        """videosite/music 扁平化：展开原始 source 字段 + subcat（缺省按类型兜底）。"""
+        src = rec.get("source") or {}
+        # 展开 source 原始字段（name/url/version/bookSourceUrl...），去掉内部 raw 包裹
+        out = {}
+        if isinstance(src, dict):
+            for k, v in src.items():
+                if k != "raw":
+                    out[k] = v
+        out.setdefault("name", rec.get("name") or domain_key(rec.get("url") or ""))
+        out.setdefault("url", rec.get("url") or "")
+        sub = rec.get("subcat") or src.get("subcat") or (
+            "music_source" if rec.get("type") == "music" else "hccx_rule")
+        out["subcat"] = sub
+        out["origin"] = (rec.get("origins") or [""])[0]
+        return out
+
+    cats["videosite"] = [_flat(r) for r in cats["videosite"]]
+    cats["music"] = [_flat(r) for r in cats["music"]]
 
     # iptv → m3u
     m3u_lines = ["#EXTM3U"]
@@ -1251,6 +1526,9 @@ def cmd_export():
         "valid_collect": len(cats["collect"]),
         "valid_videosite": len(cats["videosite"]),
         "valid_music": len(cats["music"]),
+        "valid_magnet": len(cats["magnet"]),
+        "valid_vparse": len(cats["vparse"]),
+        "valid_localpkg": len(cats["localpkg"]),
         "flaky": flaky_n,
         "archived": len(archived),
         # 历史失效条目总数（含仍在 30 天保护期内的墓碑）
@@ -1271,6 +1549,9 @@ def cmd_export():
         ),
         "valid_videosite.json": json.dumps(cats["videosite"], ensure_ascii=False, indent=1),
         "valid_music.json": json.dumps(cats["music"], ensure_ascii=False, indent=1),
+        "valid_magnet.json": json.dumps(cats["magnet"], ensure_ascii=False, indent=1),
+        "valid_vparse.json": json.dumps(cats["vparse"], ensure_ascii=False, indent=1),
+        "valid_localpkg.json": json.dumps(cats["localpkg"], ensure_ascii=False, indent=1),
         "archive.json": json.dumps(archived, ensure_ascii=False, indent=1),
         "stats.json": json.dumps(stats, ensure_ascii=False, indent=1),
         "upstreams.json": json.dumps(store["upstreams"], ensure_ascii=False, indent=1),

@@ -21,6 +21,9 @@ data/valid_tvbox.json
 data/valid_collect.json
 data/valid_videosite.json
 data/valid_music.json
+data/valid_magnet.json
+data/valid_vparse.json
+data/valid_localpkg.json
 data/valid_iptv.m3u
 
 # 有效导出物提交进 git（docs/ 下）；运行状态 data/ 仍靠 Actions cache 持久化

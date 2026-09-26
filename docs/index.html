@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>资源聚合仓库 · 书源 / 订阅 / TVBox / IPTV / 采集</title>
+<title>资源聚合仓库 · 书源 / TVBox / IPTV / 磁力 / 解析 / 音源</title>
 <style>
   :root{
     --bg:#05060f;
@@ -86,10 +86,13 @@
   .stat span{font-size:12px;color:var(--muted);letter-spacing:.05em}
   .tabs{display:flex;gap:8px;margin:22px 0 4px;flex-wrap:wrap}
   .tab{
+    position:relative;
     padding:9px 16px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(8px);
     border-radius:10px;cursor:pointer;font-size:14px;user-select:none;color:var(--text);
-    transition:all .22s ease;letter-spacing:.02em;
+    transition:all .22s ease;letter-spacing:.02em;overflow:hidden;
   }
+  .tab::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:var(--grad);opacity:0;transition:opacity .22s ease}
   .tab:hover{border-color:var(--line2);transform:translateY(-2px)}
   .tab.active{
     background:linear-gradient(135deg,rgba(51,224,255,.22),rgba(168,120,255,.22));
@@ -97,10 +100,12 @@
     box-shadow:0 0 0 1px rgba(51,224,255,.4),0 6px 24px rgba(51,224,255,.25),inset 0 0 18px rgba(51,224,255,.12);
     text-shadow:0 0 10px rgba(51,224,255,.6);
   }
+  .tab.active::before{opacity:1}
   .tab[data-tab=upload].active{
     background:linear-gradient(135deg,rgba(45,255,155,.20),rgba(51,224,255,.20));
     border-color:var(--green);box-shadow:0 6px 24px rgba(45,255,155,.25);text-shadow:0 0 10px rgba(45,255,155,.6);
   }
+  .tab[data-tab=upload].active::before{background:var(--grad2);opacity:1}
   .panel{
     position:relative;background:var(--card);backdrop-filter:blur(14px);
     border:1px solid var(--line);border-radius:18px;padding:22px 24px;margin:18px 0;
@@ -141,7 +146,12 @@
   th{background:rgba(91,140,255,.10);position:sticky;top:0;z-index:1;color:#cfd6ff;font-weight:600;letter-spacing:.04em;
     backdrop-filter:blur(6px);border-bottom:1px solid var(--line2)}
   td .tag{color:var(--muted)}
-  tr:hover td{background:rgba(91,140,255,.06)}
+  tr{transition:background .15s ease}
+  tr:hover td{background:rgba(91,140,255,.09)}
+  td .btn.gray{transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+  tr:hover td .btn.gray{transform:scale(1.06);box-shadow:0 3px 10px rgba(51,224,255,.3);border-color:var(--cyan)}
+  .tbl-foot{display:flex;justify-content:flex-end;margin-top:8px}
+  .tbl-count{font-size:12px;color:var(--muted);letter-spacing:.03em}
   .tag{color:var(--muted);font-size:12px}
   .hidden{display:none}
   .ups{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;font-size:12.5px}
@@ -195,8 +205,9 @@
   .dc a:hover{text-decoration:underline}
   .tsline{color:var(--muted);font-size:12px;margin-top:14px;line-height:1.7}
   .tsline span{color:var(--cyan)}
-  /* TVBox 分类 chips + 分类徽章 */
-  .cat-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+  /* 分类 chips + 分类徽章：双维度（类别 / 源格式）通用 */
+  .dim-label{font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:4px 0 4px;user-select:none}
+  .cat-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}
   .chip{
     display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:999px;
     font-size:12.5px;cursor:pointer;user-select:none;border:1px solid var(--line);
@@ -209,15 +220,21 @@
   .chip.green.on{border-color:var(--green);box-shadow:0 0 14px rgba(45,255,155,.4);background:rgba(45,255,155,.14)}
   .chip.purple.on{border-color:var(--purple);box-shadow:0 0 14px rgba(168,120,255,.4);background:rgba(168,120,255,.16)}
   .chip.yellow.on{border-color:var(--yellow);box-shadow:0 0 14px rgba(255,210,63,.4);background:rgba(255,210,63,.14)}
+  .chip.orange.on{border-color:#ff8a4d;box-shadow:0 0 14px rgba(255,138,77,.4);background:rgba(255,138,77,.14)}
+  .chip.pink.on{border-color:#ff7ab8;box-shadow:0 0 14px rgba(255,122,184,.4);background:rgba(255,122,184,.14)}
   .cat-badge{font-size:11px;padding:2px 9px;border-radius:9px;font-weight:700;letter-spacing:.03em;white-space:nowrap}
   .cat-badge.cyan{background:rgba(51,224,255,.15);color:var(--cyan);border:1px solid rgba(51,224,255,.4)}
   .cat-badge.green{background:rgba(45,255,155,.15);color:var(--green);border:1px solid rgba(45,255,155,.4)}
   .cat-badge.purple{background:rgba(168,120,255,.15);color:var(--purple);border:1px solid rgba(168,120,255,.4)}
   .cat-badge.yellow{background:rgba(255,210,63,.15);color:var(--yellow);border:1px solid rgba(255,210,63,.4)}
+  .cat-badge.orange{background:rgba(255,138,77,.15);color:#ff8a4d;border:1px solid rgba(255,138,77,.4)}
+  .cat-badge.pink{background:rgba(255,122,184,.15);color:#ff7ab8;border:1px solid rgba(255,122,184,.4)}
   @media (max-width:560px){
     h1{font-size:26px}
     .stat b{font-size:20px}
     .panel{padding:16px}
+    .cat-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px}
+    .chip{flex:none}
   }
 </style>
 </head>
@@ -226,7 +243,7 @@
   <div class="hero">
     <div class="badge"><span class="pulse"></span> SHUYUAN · LIVING RESOURCE HUB</div>
     <h1>资源聚合仓库</h1>
-    <p class="sub">书源 · 订阅源 · TVBox · IPTV · 采集接口 · 影视直连 · 洛雪音源<br>上游日验 + 本仓二次复核 · 失效自动删除 · 隔日交替检验</p>
+    <p class="sub">      书源 · 订阅源 · TVBox · IPTV · 采集接口 · 影视直连 · 洛雪音源 · 磁力影视 · 影视解析 · 本地包<br>上游日验 + 本仓二次复核 · 失效自动删除 · 隔日交替检验</p>
   </div>
 
   <div class="dc" id="dc" onclick="this.classList.toggle('open')">
@@ -250,8 +267,11 @@
     <div class="tab" data-tab="tvbox">TVBox</div>
     <div class="tab" data-tab="iptv">IPTV</div>
     <div class="tab" data-tab="collect">采集</div>
-    <div class="tab" data-tab="videosite">影视直连站</div>
+    <div class="tab" data-tab="videosite">影视直连</div>
     <div class="tab" data-tab="music">音源</div>
+    <div class="tab" data-tab="magnet">磁力</div>
+    <div class="tab" data-tab="vparse">影视解析</div>
+    <div class="tab" data-tab="localpkg">本地包</div>
     <div class="tab" data-tab="upload" style="border-color:var(--green);color:var(--green)">+ 用户上传</div>
   </div>
 
@@ -262,6 +282,9 @@
   <div class="panel hidden" id="tab-collect"></div>
   <div class="panel hidden" id="tab-videosite"></div>
   <div class="panel hidden" id="tab-music"></div>
+  <div class="panel hidden" id="tab-magnet"></div>
+  <div class="panel hidden" id="tab-vparse"></div>
+  <div class="panel hidden" id="tab-localpkg"></div>
   <div class="panel hidden" id="tab-upload"></div>
 
   <div class="panel" id="up-panel" style="display:none">
@@ -271,6 +294,9 @@
       <select id="up-type">
         <option value="collect">采集接口（苹果CMS）</option>
         <option value="videosite">影视直连站</option>
+        <option value="magnet">磁力/BT 聚合站</option>
+        <option value="vparse">影视解析接口</option>
+        <option value="localpkg">影视本地包入口</option>
         <option value="music">音源（洛雪/MusicFree）</option>
         <option value="book">书源（Legado）</option>
         <option value="subscribe">订阅源</option>
@@ -303,22 +329,79 @@
 
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
-const TABS = ["book", "subscribe", "tvbox", "iptv", "collect", "videosite", "music", "upload"];
+const TABS = ["book", "subscribe", "tvbox", "iptv", "collect", "videosite", "music",
+             "magnet", "vparse", "localpkg", "upload"];
 const FILE = {book: "valid.json", subscribe: "valid_subscribe.json", tvbox: "valid_tvbox.json",
               iptv: "valid_iptv.m3u", collect: "valid_collect.json", videosite: "valid_videosite.json",
-              music: "valid_music.json"};
-const LABEL = {book: "书源", subscribe: "订阅源", tvbox: "站点", iptv: "频道", collect: "采集接口", videosite: "影视直连站", music: "音源"};
+              music: "valid_music.json", magnet: "valid_magnet.json",
+              vparse: "valid_vparse.json", localpkg: "valid_localpkg.json"};
+const LABEL = {book: "书源", subscribe: "订阅源", tvbox: "站点", iptv: "频道", collect: "采集接口",
+               videosite: "影视站", music: "音源", magnet: "磁力站", vparse: "解析接口", localpkg: "本地包"};
 const META = {
    book:      {title: "有效书源", desc: "阅读 Legado：书源管理 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "bookSource", extraBtn: ""},
    subscribe: {title: "有效订阅源", desc: "阅读 Legado：我的 → 订阅 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "rssSource", extraBtn: ""},
    tvbox:     {title: "TVBox 配置", desc: "TVBox / 影视仓：设置 → 配置地址 → 粘贴下面地址，每次启动自动刷新。", extraBtn: "copyAll"},
    iptv:      {title: "IPTV 直播源（M3U）", desc: "VLC / Kodi / DIYP / TVBox：播放列表或直播源设置里填下面 M3U 地址。", extraBtn: "copyAll"},
    collect:   {title: "采集接口（苹果CMS）", desc: "苹果CMS / 空壳影视：采集接口配置里填下面 JSON 地址。", extraBtn: ""},
-   videosite: {title: "影视直连站", desc: "本地 drpy/HCCX 规则映射出的可直连影视站，浏览器可直接打开。", extraBtn: ""},
-   music:     {title: "有效音源", desc: "洛雪 LX / MusicFree 音源（.js）：复制下面地址作为插件订阅源导入。", extraBtn: "copyAll"}
+   videosite: {title: "影视直连站", desc: "HCCX 规则映射出的可直连影视站 + 在线观影站（zhuiju），浏览器可直接打开。", extraBtn: ""},
+   music:     {title: "有效音源", desc: "洛雪 LX / MusicFree 音源（.js）：复制下面地址作为插件订阅源导入。", extraBtn: "copyAll"},
+   magnet:    {title: "磁力/BT 聚合站", desc: "磁力、BT、网盘搜索聚合入口（zhuiju 追剧指南），浏览器直接打开搜资源。", extraBtn: "copyAll"},
+   vparse:    {title: "影视解析接口", desc: "TVBox parses 解析接口（爱腾芒/优酷等 flag 聚合），TVBox 设置 → 解析接口里填。", extraBtn: "copyAll"},
+   localpkg:  {title: "影视本地包入口", desc: "网盘搜索 / 离线包仓库（夸克搜、追剧吧、谷哥搜等），浏览器直接打开。", extraBtn: ""}
 };
-const data = {book: [], subscribe: [], tvbox: [], iptv: [], collect: [], videosite: [], music: []};
+const data = {book: [], subscribe: [], tvbox: [], iptv: [], collect: [], videosite: [],
+              music: [], magnet: [], vparse: [], localpkg: []};
 const loaded = {};
+
+/* ---- 双维度分类（类别 subcat × 源格式 fmt）---- */
+const CATMAP = {
+  // 类别
+  tvbox_py:      {label: "py 爬虫",    color: "green"},
+  tvbox_site:    {label: "常规站点",    color: "cyan"},
+  tvbox_t4:      {label: "T4 接口",     color: "purple"},
+  tvbox_default: {label: "默认源",      color: "yellow"},
+  online_video:  {label: "在线观看",    color: "cyan"},
+  hccx_rule:     {label: "直连规则",    color: "green"},
+  magnet_search: {label: "磁力/BT",     color: "orange"},
+  cloud_search:  {label: "网盘搜索",    color: "purple"},
+  parse_iface:   {label: "解析接口",    color: "pink"},
+  music_source:  {label: "常规音源",    color: "green"},
+  music_parse:   {label: "音乐解析",    color: "purple"},
+  // 源格式
+  js_plugin:     {label: ".js 插件",    color: "green"},
+  m3u_live:      {label: "M3U 直播",    color: "cyan"},
+  url_list:      {label: "URL 列表",    color: "yellow"}
+};
+const FILTERS = {}; // FILTERS[tab] = {subcat:"", fmt:""}
+
+function subcatOf(tab, r) {
+  if (tab === "tvbox") {
+    const t = String(r.type || "0");
+    if (t === "3") return "tvbox_py";
+    if (t === "4") return "tvbox_t4";
+    if (t === "1") return "tvbox_site";
+    return "tvbox_default";
+  }
+  if (r.subcat) return r.subcat;
+  // 按标签页兜底：videosite 全为 HCCX 直连规则（在线观影站后续接入才分 online_video）
+  if (tab === "videosite") return "hccx_rule";
+  if (tab === "magnet") return "magnet_search";
+  if (tab === "vparse") return "parse_iface";
+  if (tab === "localpkg") return "cloud_search";
+  return "cloud_search";
+}
+function fmtOf(r) {
+  const u = (r.url || "");
+  if (r._type === "iptv" || u.includes("m3u")) return "m3u_live";
+  if (u.includes(".js")) return "js_plugin";
+  return "url_list";
+}
+// 每个标签页维度：tvbox/vod/magnet 为「类别+源格式」双维，其余单「类别」维
+const DIMS = {
+  tvbox: ["subcat", "fmt"], videosite: ["subcat", "fmt"], music: ["subcat", "fmt"],
+    magnet: ["subcat"], vparse: ["subcat"], localpkg: ["subcat"],
+  book: [], subscribe: [], iptv: ["fmt"], collect: []
+};
 
 const abs = (file) => new URL(file, location.href).href;
 
@@ -348,49 +431,54 @@ function buildPanel(tab) {
     ? `<button class="btn" onclick="doImport('${meta.importKind}')">一键导入阅读APP</button>` : "";
   const extraBtn = meta.extraBtn === "copyAll"
     ? `<button class="btn gray" onclick="copyAllContent('${tab}')">复制全部内容</button>` : "";
-  // TVBox 特有：分类（type）分组视图
-  const tvboxCats = tab === "tvbox"
-    ? `<div id="tvbox-cats" class="cat-chips"></div>` : "";
+  const dims = DIMS[tab];
+  const dimsHtml = dims && dims.length
+    ? dims.map((dim, i) =>
+        `<div class="dim-label">${i === 0 ? "类别" : "源格式"}</div>` +
+        `<div id="${tab}-dim${i}" class="cat-chips"></div>`
+      ).join("")
+    : "";
   document.getElementById(`tab-${tab}`).innerHTML = `
     <h2>${meta.title}</h2>
     <p class="hint">${meta.desc}</p>
-    ${tvboxCats}
+    ${dimsHtml}
     <p><code id="url-${tab}">${url}</code></p>
     ${importBtn}
     <button class="btn gray" onclick="copy('${url}','链接已复制')">复制链接</button>
     ${extraBtn}
     <button class="btn gray" onclick="showQR('${url}','${meta.title}')">二维码</button>
     <a class="btn gray" href="${FILE[tab]}" download>下载</a>
-    <input type="search" id="q-${tab}" placeholder="搜索名称或地址…" oninput="renderTable('${tab}')">
-    <div class="tblwrap"><table id="tbl-${tab}"></table></div>`;
+    <input type="search" id="q-${tab}" placeholder="搜索名称 / 地址 / 类别…" oninput="renderTable('${tab}')">
+    <div class="tblwrap"><table id="tbl-${tab}"></table></div>
+    <div class="tbl-foot"><span id="cnt-${tab}" class="tbl-count"></span></div>`;
 }
 
-// TVBox 分类：type → 分类名
-const TVBOX_TYPES = {
-  "3": {label: "py 爬虫源", color: "cyan"},
-  "1": {label: "常规源", color: "green"},
-  "4": {label: "T4 接口", color: "purple"},
-  "0": {label: "默认", color: "yellow"}
-};
-let tvboxCatFilter = ""; // 空=全部
+// ---- 双维度分类渲染（类别 × 源格式）----
 
-function renderTvboxCats() {
-  const cats = document.getElementById("tvbox-cats");
-  if (!cats) return;
+function renderChips(tab, dimIdx, keyFn, allLabel) {
+  const el = document.getElementById(`${tab}-dim${dimIdx}`);
+  if (!el) return;
+  FILTERS[tab] = FILTERS[tab] || {subcat:"", fmt:""};
+  const cur = dimIdx === 0 ? FILTERS[tab].subcat : FILTERS[tab].fmt;
   const counts = {};
-  data.tvbox.forEach(r => { const k = r.type || "0"; counts[k] = (counts[k]||0)+1; });
-  const present = Object.keys(TVBOX_TYPES).filter(k => counts[k]);
-  cats.innerHTML =
-    `<div class="chip ${tvboxCatFilter===""?"on":""}" data-c="" onclick="setTvboxCat('')">全部 ${data.tvbox.length}</div>` +
+  data[tab].forEach(r => { const k = keyFn(r); counts[k] = (counts[k]||0)+1; });
+  const present = Object.keys(CATMAP).filter(k => counts[k]);
+  const total = data[tab].length;
+  el.innerHTML =
+    `<div class="chip ${cur===""?"on":""}" data-c="" onclick="setDim('${tab}',${dimIdx},'')">${allLabel} ${total}</div>` +
     present.map(k => {
-      const t = TVBOX_TYPES[k];
-      return `<div class="chip ${t.color} ${tvboxCatFilter===k?"on":""}" data-c="${k}" onclick="setTvboxCat('${k}')">${t.label} ${counts[k]}</div>`;
+      const c = CATMAP[k].color || "cyan";
+      return `<div class="chip ${c} ${cur===k?"on":""}" data-c="${k}" onclick="setDim('${tab}',${dimIdx},'${k}')">${CATMAP[k].label} ${counts[k]}</div>`;
     }).join("");
 }
-function setTvboxCat(k) {
-  tvboxCatFilter = k;
-  renderTvboxCats();
-  renderTable("tvbox");
+
+function setDim(tab, dimIdx, key) {
+  FILTERS[tab] = FILTERS[tab] || {subcat:"", fmt:""};
+  if (dimIdx === 0) FILTERS[tab].subcat = key; else FILTERS[tab].fmt = key;
+  const dims = DIMS[tab] || [];
+  if (dims.includes("subcat")) renderChips(tab, 0, subcatOf, "全部类别");
+  if (dims.includes("fmt")) renderChips(tab, 1, fmtOf, "全部格式");
+  renderTable(tab);
 }
 
 async function load(tab) {
@@ -412,19 +500,18 @@ async function load(tab) {
       text.split("\n").forEach(line => {
         line = line.trim();
         if (line.startsWith("#EXTINF")) name = (line.split(",").pop() || "").trim();
-        else if (line.startsWith("http")) data.iptv.push({name, url: line});
+        else if (line.startsWith("http")) data.iptv.push({name, url: line, _type: "iptv"});
       });
     } else if (tab === "collect") {
       const arr = await (await fetch(FILE.collect)).json();
       data.collect = (arr || []).map(x => ({name: x.name || x.title || "", url: x.url || x.api || ""}));
-    } else if (tab === "videosite") {
-      const arr = await (await fetch(FILE.videosite)).json();
-      data.videosite = (arr || []).map(x => ({name: x.name || x.title || "", url: x.url || x.api || ""}));
     } else {
       const arr = await (await fetch(FILE[tab])).json();
       data[tab] = (arr || []).map(x => ({
         name: x.bookSourceName || x.sourceName || x.name || "",
-        url: x.bookSourceUrl || x.sourceUrl || x.url || ""
+        url: x.bookSourceUrl || x.sourceUrl || x.url || "",
+        subcat: x.subcat || "",
+        _type: tab
       }));
     }
   } catch (e) {
@@ -440,42 +527,57 @@ function esc(s) {
 
 function renderTable(tab) {
   const q = (document.getElementById(`q-${tab}`)?.value || "").trim().toLowerCase();
+  FILTERS[tab] = FILTERS[tab] || {subcat:"", fmt:""};
   let rows = data[tab].filter(r =>
     !q || (r.name || "").toLowerCase().includes(q) || (r.url || "").toLowerCase().includes(q)
+      || subcatOf(tab, r).toLowerCase().includes(q)
   );
-  if (tab === "tvbox" && tvboxCatFilter) rows = rows.filter(r => (r.type || "0") === tvboxCatFilter);
-  rows = rows.slice(0, 600);
-  const isTvbox = tab === "tvbox";
-  const headCat = isTvbox ? `<th style="width:110px">分类</th>` : "";
-  const bodyCat = isTvbox
-    ? (r => { const t = TVBOX_TYPES[r.type] || TVBOX_TYPES["0"];
-        return `<td><span class="cat-badge ${t.color}">${t.label}</span></td>`; })
+  const f = FILTERS[tab];
+  if (f.subcat) rows = rows.filter(r => subcatOf(tab, r) === f.subcat);
+  if (f.fmt) rows = rows.filter(r => fmtOf(r) === f.fmt);
+  rows = rows.slice(0, 800);
+  const dims = DIMS[tab] || [];
+  const headSubcat = dims.includes("subcat") ? `<th style="width:100px">类别</th>` : "";
+  const headFmt = dims.includes("fmt") ? `<th style="width:100px">格式</th>` : "";
+  const bodySubcat = dims.includes("subcat")
+    ? (r => { const k = subcatOf(tab, r); const c = CATMAP[k] || {label: k, color: "cyan"};
+        return `<td><span class="cat-badge ${c.color}">${c.label}</span></td>`; })
+    : null;
+  const bodyFmt = dims.includes("fmt")
+    ? (r => { const k = fmtOf(r); const c = CATMAP[k] || {label: k, color: "yellow"};
+        return `<td><span class="cat-badge ${c.color}">${c.label}</span></td>`; })
     : null;
   document.getElementById(`tbl-${tab}`).innerHTML =
-    `<tr><th style="width:48px">#</th><th style="width:${isTvbox?180:220}px">${LABEL[tab]}名</th>${headCat}<th>地址</th></tr>` +
+    `<tr><th style="width:48px">#</th><th style="width:200px">${LABEL[tab]}</th>${headSubcat}${headFmt}<th>地址</th></tr>` +
     (rows.map((r, i) =>
-      `<tr><td class="tag">${i + 1}</td><td>${esc(r.name)}</td>${bodyCat?bodyCat(r):""}` +
+      `<tr><td class="tag">${i + 1}</td><td>${esc(r.name)}</td>${bodySubcat?bodySubcat(r):""}${bodyFmt?bodyFmt(r):""}` +
       `<td><span class="tag">${esc(r.url)}</span>` +
       `<button class="btn gray" style="padding:2px 8px;font-size:11px;margin-left:6px" ` +
       `onclick="copy('${esc(r.url).replace(/'/g, "\\'")}','地址已复制')">复制</button></td></tr>`
-    ).join("") || `<tr><td colspan="${isTvbox?4:3}" class="tag">（暂无有效数据，先运行一次工作流）</td></tr>`);
-  if (isTvbox) renderTvboxCats();
+    ).join("") || `<tr><td colspan="${dims.length+3}" class="tag">（暂无有效数据，先运行一次工作流）</td></tr>`);
+  // 右下角「共 N 条」计数
+  const total = data[tab].length;
+  let cnt = `<span class="tbl-count">共 ${total} 条</span>`;
+  if (total !== rows.length) cnt += `（当前筛选 ${rows.length}）`;
+  const countEl = document.getElementById(`cnt-${tab}`);
+  if (countEl) countEl.innerHTML = cnt;
+  const dims2 = DIMS[tab] || [];
+  if (dims2.includes("subcat")) renderChips(tab, 0, subcatOf, "全部类别");
+  if (dims2.includes("fmt")) renderChips(tab, 1, fmtOf, "全部格式");
 }
 
 function switchTab(tab) {
-  TABS.forEach(t => {
-    document.getElementById(`tab-${t}`).classList.toggle("hidden", t !== tab);
-    document.querySelector(`.tab[data-tab="${t}"]`).classList.toggle("active", t === tab);
+  const isUpload = tab === "upload";
+  document.querySelectorAll(".tab").forEach(el =>
+    el.classList.toggle("active", el.dataset.tab === (isUpload ? "upload" : tab)));
+  document.querySelectorAll(".panel").forEach(el => {
+    const id = el.id;
+    const name = id.replace("tab-", "");
+    const hide = isUpload ? name !== "upload" : name !== tab;
+    el.classList.toggle("hidden", hide);
   });
-  document.getElementById("up-panel").style.display = (tab === "upload") ? "" : "none";
-  document.querySelectorAll(".tab[data-tab='upload']").forEach(el =>
-    el.classList.toggle("active", tab === "upload"));
-  if (tab === "upload") {
-    document.querySelectorAll(".tab").forEach(el => {
-      el.classList.toggle("active", el.dataset.tab === "upload");
-    });
-  }
-  if (tab === "upload") return;
+  document.getElementById("up-panel").style.display = isUpload ? "" : "none";
+  if (isUpload) return;
   load(tab);
 }
 
@@ -512,7 +614,8 @@ document.querySelectorAll(".tab").forEach(el =>
   el.addEventListener("click", () => switchTab(el.dataset.tab)));
 
 // ---------------- 用户上传：本地校验（红黄绿）+ 反馈草案 ----------------
-const TYPE_LABEL = {collect:"采集接口", videosite:"影视直连站", book:"书源", subscribe:"订阅源", tvbox:"TVBox", iptv:"IPTV"};
+const TYPE_LABEL = {collect:"采集接口", videosite:"影视直连站", book:"书源", subscribe:"订阅源", tvbox:"TVBox", iptv:"IPTV",
+                    magnet:"磁力/BT", vparse:"影视解析", localpkg:"本地包", music:"音源"};
 
 function parseUpload() {
   const type = document.getElementById("up-type").value;
@@ -656,7 +759,7 @@ function downloadSubmit() {
     const items = [
       ["书源", s.valid_book], ["订阅", s.valid_subscribe], ["TVBox", s.valid_tvbox],
       ["IPTV", s.valid_iptv], ["采集", s.valid_collect], ["影视直连", s.valid_videosite],
-      ["音源", s.valid_music],
+      ["音源", s.valid_music], ["磁力", s.valid_magnet], ["解析", s.valid_vparse], ["本地包", s.valid_localpkg],
       ["标黄", s.flaky], ["已删除", s.dead_removed],
       ["上游", `${s.upstreams_alive}/${s.upstreams_total}`]
     ];

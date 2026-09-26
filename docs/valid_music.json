@@ -2,211 +2,1101 @@
  {
   "name": "5sing",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/5sing.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "CCTV听音",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/CCTV听音.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "GD音乐台",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/GD音乐台.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "GitCode",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/GitCode.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "Navidrome",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/Navidrome.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "QQ Vip",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/QQ Vip.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "QQ_念心",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/QQ_念心.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "QQ_猫",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/QQ_猫.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "QQ_竹玥",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/QQ_竹玥.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "QQ歌词",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/QQ歌词.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "QQ音乐 （非VIP）",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/QQ音乐 （非VIP）.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "Q音",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/Q音.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "WebDAV",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/WebDAV.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "WebDav_lrc",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/WebDav_lrc.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "Youtube",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/Youtube.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "bilibili",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/bilibili.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "suno",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/suno.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "udio",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/udio.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "书音FM",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/书音FM.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "云云音乐",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/云云音乐.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "云音乐 （酷我非VIP）",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/云音乐 （酷我非VIP）.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "元力KG",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/元力KG.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "元力KW",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/元力KW.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "元力MG",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/元力MG.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "元力QQ",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/元力QQ.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "元力WY",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/元力WY.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "千千",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/千千.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "哔哩哔哩",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/哔哩哔哩.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "哔哩哔哩_Cookie",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/哔哩哔哩_Cookie.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "喜马拉雅_竹侣",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/喜马拉雅_竹侣.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "喜马拉雅_笭鬼鬼",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/喜马拉雅_笭鬼鬼.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "好听轻音乐",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/好听轻音乐.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "小枸音乐",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/小枸音乐.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "小蜗音乐",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/小蜗音乐.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "开心汽水",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/开心汽水.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "弥音QQ",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/弥音QQ.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "歌曲宝",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/歌曲宝.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "歌词千寻",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/歌词千寻.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "汽水qishui音乐",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/汽水qishui音乐.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "汽水vip",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/汽水vip.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "溯音网易",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/溯音网易.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "爱听",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/爱听.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "猫耳FM",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/猫耳FM.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
  },
  {
   "name": "碳酸歌词",
   "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/碳酸歌词.js",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "碳酸氢钠",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/碳酸氢钠.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "种子",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/种子.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "网易Ciallo～(∠・ω_ )⌒☆",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/网易Ciallo～(∠・ω_ )⌒☆.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "网易_念心",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/网易_念心.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "网易_猫",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/网易_猫.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "网易_竹玥",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/网易_竹玥.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "网易_笭鬼鬼",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/网易_笭鬼鬼.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "网易bimiao",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/网易bimiao.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "网易专辑",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/网易专辑.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "网易云",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/网易云.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "网易云电台",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/网易云电台.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "网易云音乐 （非VIP）",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/网易云音乐 （非VIP）.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "网易音乐",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/网易音乐.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "腾讯音乐",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/腾讯音乐.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "落月QQ",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/落月QQ.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "西瓜糖QQ",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/西瓜糖QQ.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "迟言QQ",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/迟言QQ.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷我",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷我.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷我Fish",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷我Fish.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷我JHMS",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷我JHMS.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷我_念心",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷我_念心.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷我_猫",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷我_猫.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷我_竹侣",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷我_竹侣.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷我_竹玥",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷我_竹玥.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷我音乐Thomas",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷我音乐Thomas.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷狗",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷狗.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷狗JHMS",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷狗JHMS.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷狗Thomas",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷狗Thomas.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷狗_念心",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷狗_念心.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷狗_竹玥",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷狗_竹玥.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "酷狗简云",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/酷狗简云.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "闻音酷我",
+  "url": "https://cdn.jsdelivr.net/gh/qwerwhr/musicfree-plugins@main/闻音酷我.js",
+  "version": "1.0.0",
+  "subcat": "music_source",
+  "origin": "音源·MusicFree·qwerwhr"
+ },
+ {
+  "name": "SixYin",
+  "url": "https://raw.githubusercontent.com/pdone/lx-music-source/main/sixyin/latest.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·pdone"
+ },
+ {
+  "name": "Huibq",
+  "url": "https://raw.githubusercontent.com/pdone/lx-music-source/main/huibq/latest.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·pdone"
+ },
+ {
+  "name": "Flower",
+  "url": "https://raw.githubusercontent.com/pdone/lx-music-source/main/flower/latest.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·pdone"
+ },
+ {
+  "name": "LX",
+  "url": "https://raw.githubusercontent.com/pdone/lx-music-source/main/lx/latest.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·pdone"
+ },
+ {
+  "name": "ChangQing",
+  "url": "https://raw.githubusercontent.com/pdone/lx-music-source/main/changqing/latest.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·pdone"
+ },
+ {
+  "name": "HuanYin",
+  "url": "https://raw.githubusercontent.com/pdone/lx-music-source/main/huanyin/latest.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·pdone"
+ },
+ {
+  "name": "ikun",
+  "url": "https://raw.githubusercontent.com/pdone/lx-music-source/main/ikun/latest.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·pdone"
+ },
+ {
+  "name": "Grass",
+  "url": "https://raw.githubusercontent.com/pdone/lx-music-source/main/grass/latest.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·pdone"
+ },
+ {
+  "name": "JuheApi",
+  "url": "https://raw.githubusercontent.com/pdone/lx-music-source/main/juhe/latest.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·pdone"
+ },
+ {
+  "name": "QDY",
+  "url": "https://raw.githubusercontent.com/pdone/lx-music-source/main/qdy/latest.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·pdone"
+ },
+ {
+  "name": "音源·洛雪·星海·xinghai-music-source",
+  "url": "https://raw.githubusercontent.com/cdyUuu/lx-music-xinghai-source/main/xinghai-music-source.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·星海"
+ },
+ {
+  "name": "(推荐)裤佬SVIP音源（酷狗挂了）",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/(推荐)裤佬SVIP音源（酷狗挂了）.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "Hei Music1.3.1 (1)",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/Hei Music1.3.1 (1).js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "gdstudio音乐源 v1.0.1（仅支持网易）",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/gdstudio音乐源 v1.0.1（仅支持网易）.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "全豆要-聚合音源-V4.1（酷狗挂了）",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/全豆要-聚合音源-V4.1（酷狗挂了）.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "念心音源 v1.0.2",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/念心音源 v1.0.2.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "收集の聚合接口",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/收集の聚合接口.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "星澜",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/星澜.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "溯音音源_v1",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/溯音音源_v1.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "稳定版音源 v1.0.3",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/稳定版音源 v1.0.3.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "统一音乐源",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/统一音乐源.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "聚合API接口 (CF) v3",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/聚合API接口 (CF) v3.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "西瓜聚合",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/西瓜聚合.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "非常刀 v5",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/非常刀 v5.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "𝖧౿ᥣᥣ𝗈 Ԝ𝗈𝗋ᥣᑯ260809",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/其他/𝖧౿ᥣᥣ𝗈 Ԝ𝗈𝗋ᥣᑯ260809.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "HYWmusic_beta_公益测试",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/推荐/HYWmusic_beta_公益测试.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "K×H测试 v1.7.17",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/推荐/K×H测试 v1.7.17.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "lx-玉宁熙V1.2.2",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/推荐/lx-玉宁熙V1.2.2.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "xinghai-music-sourcev2.3.11",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/推荐/xinghai-music-sourcev2.3.11.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "墨澜聚合音源 v2.0.0",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/推荐/墨澜聚合音源 v2.0.0.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "屿溪-终章",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/推荐/屿溪-终章.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "独家音源V5",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/推荐/独家音源V5.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "野花音源_",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/未测试/野花音源_.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "野草音源",
+  "url": "https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/未测试/野草音源.js",
+  "subcat": "music_source",
+  "origin": "音源·洛雪·ikun"
+ },
+ {
+  "name": "(推荐)裤佬SVIP音源（酷狗挂了）",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/(推荐)裤佬SVIP音源（酷狗挂了）.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "gdstudio音乐源 v1.0.1（仅支持网易）",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/gdstudio音乐源 v1.0.1（仅支持网易）.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "lx-玉宁熙V1.2.2",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/lx-玉宁熙V1.2.2.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "stellarwave-v3.2.0",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/stellarwave-v3.2.0.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "全豆要-聚合音源-V4.1（酷狗挂了）",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/全豆要-聚合音源-V4.1（酷狗挂了）.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "墨澜音乐源v2.3.0",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/墨澜音乐源v2.3.0.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "屿溪-终章",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/屿溪-终章.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "幻音音源 v3",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/幻音音源 v3.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "念心音源 v1.0.2",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/念心音源 v1.0.2.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "收集の聚合接口",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/收集の聚合接口.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "溯音音源_v1",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/溯音音源_v1.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "独家音源V5",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/独家音源V5.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "稳定版音源 v1.0.3",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/稳定版音源 v1.0.3.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "统一音乐源",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/统一音乐源.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "聚合API接口 (CF) v3",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/聚合API接口 (CF) v3.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "西瓜聚合",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/西瓜聚合.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "非常刀 v5",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/非常刀 v5.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "𝖧౿ᥣᥣ𝗈 Ԝ𝗈𝗋ᥣᑯ260809",
+  "url": "https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/𝖧౿ᥣᥣ𝗈 Ԝ𝗈𝗋ᥣᑯ260809.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·guoyue洛雪"
+ },
+ {
+  "name": "GD音乐台-v1.0.0",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/GD音乐台-v1.0.0.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "HYWmusic_beta_公益测试 v0.74.0",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/HYWmusic_beta_公益测试 v0.74.0.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "Huibq",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/Huibq.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "K×H测试+v1.7.17",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/K×H测试+v1.7.17.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "flower-v1",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/flower-v1.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "flower音源_1.0.0",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/flower音源_1.0.0.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "grass-v1",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/grass-v1.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "grass音源_仅支持酷我",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/grass音源_仅支持酷我.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "ikun-source",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/ikun-source.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "ikun音源-HK",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/ikun音源-HK.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "lx-music-source-free",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/lx-music-source-free.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "lx-music-source-v5",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/lx-music-source-v5.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "lx-music-source",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/lx-music-source.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "nya",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/nya.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "sixyin-music-source-v1.0.6",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/sixyin-music-source-v1.0.6.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "sixyin-music-source-v1.0.7",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/sixyin-music-source-v1.0.7.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "sixyin-music-source-v1.0.7_支持新版",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/sixyin-music-source-v1.0.7_支持新版.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "sixyin-music-source-v1.1.0",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/sixyin-music-source-v1.1.0.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "sixyin-music-source-v1.2.0-encrypt",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/sixyin-music-source-v1.2.0-encrypt.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "sixyin-music-source-v1.2.1-encrypt",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/sixyin-music-source-v1.2.1-encrypt.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "全豆要[聚合音源]v9.3",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/全豆要[聚合音源]v9.3.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "星海音乐源 v2.3.13",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/星海音乐源 v2.3.13.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "梓橙公益音源2代",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/梓橙公益音源2代.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "梓澄qwq的音源（网易云不保证稳定性)",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/梓澄qwq的音源（网易云不保证稳定性).js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "梓澄公益音源",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/梓澄公益音源.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "聚合API接口",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/聚合API接口.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "肥猫不肥",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/肥猫不肥.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "野花音源",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/野花音源.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "野草音源",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/野草音源.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "长青SVIP音源(二改修复版) v1.2.0",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/长青SVIP音源(二改修复版) v1.2.0.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "长青SVIP音源v1.2.0（全平台支持无损）",
+  "url": "https://raw.githubusercontent.com/wzh15802/lxmusic/main/长青SVIP音源v1.2.0（全平台支持无损）.js",
+  "subcat": "music_parse",
+  "origin": "音乐解析·wzh·flat"
+ },
+ {
+  "name": "Audiomack",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/audiomack/index.js",
+  "version": "0.0.2",
+  "subcat": "music_parse",
+  "origin": "音乐解析·Huibq·MusicFree"
+ },
+ {
+  "name": "bilibili",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/bilibili/index.js",
+  "version": "0.1.15",
+  "subcat": "music_parse",
+  "origin": "音乐解析·Huibq·MusicFree"
+ },
+ {
+  "name": "歌词网",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/geciwang/index.js",
+  "version": "0.0.0",
+  "subcat": "music_parse",
+  "origin": "音乐解析·Huibq·MusicFree"
+ },
+ {
+  "name": "歌词千寻",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/geciqianxun/index.js",
+  "version": "0.0.0",
+  "subcat": "music_parse",
+  "origin": "音乐解析·Huibq·MusicFree"
+ },
+ {
+  "name": "快手",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/kuaishou/index.js",
+  "version": "0.0.1",
+  "subcat": "music_parse",
+  "origin": "音乐解析·Huibq·MusicFree"
+ },
+ {
+  "name": "猫耳FM",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/maoerfm/index.js",
+  "version": "0.1.4",
+  "subcat": "music_parse",
+  "origin": "音乐解析·Huibq·MusicFree"
+ },
+ {
+  "name": "Navidrome",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/navidrome/index.js",
+  "version": "0.0.0",
+  "subcat": "music_parse",
+  "origin": "音乐解析·Huibq·MusicFree"
+ },
+ {
+  "name": "音悦台",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/yinyuetai/index.js",
+  "version": "0.0.1",
+  "subcat": "music_parse",
+  "origin": "音乐解析·Huibq·MusicFree"
+ },
+ {
+  "name": "WebDAV",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/webdav/index.js",
+  "version": "0.0.2",
+  "subcat": "music_parse",
+  "origin": "音乐解析·Huibq·MusicFree"
+ },
+ {
+  "name": "Youtube",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/youtube/index.js",
+  "version": "0.0.1",
+  "subcat": "music_parse",
+  "origin": "音乐解析·Huibq·MusicFree"
  }
 ]
