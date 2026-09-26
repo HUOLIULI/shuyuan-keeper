@@ -30,6 +30,9 @@ data/peek_tvbox_multi.json
 data/peek_music.json
 data/peek_music_urls.txt
 data/peek_iptv.txt
+data/peek_manga.json
+data/peek_novel.json
+data/peek_drama.json
 
 # 有效导出物提交进 git（docs/ 下）；运行状态 data/ 仍靠 Actions cache 持久化
 # docs/valid*.json

@@ -243,13 +243,15 @@ def site_alive(url, use_cache=True):
     if _host_always_alive(origin):
         _ALIVE_CACHE[key] = True
         return True
+    # CI 环境海外访问国内站慢，放宽超时
+    alive_to = int(os.environ.get("KEEPER_ALIVE_TIMEOUT", 8))
     candidates = [origin]
     if origin.startswith("https://"):
         candidates.append("http://" + origin[len("https://"):])
     for base in candidates:
         for verify in (True, False):
             try:
-                resp = requests.get(base, headers={"User-Agent": UA}, timeout=8,
+                resp = requests.get(base, headers={"User-Agent": UA}, timeout=alive_to,
                                     allow_redirects=True, stream=True, verify=verify)
                 resp.close()
                 _ALIVE_CACHE[key] = True
@@ -282,11 +284,13 @@ def active_tombstones(store):
 
 
 def http_get(url, timeout=8, headers=None, allow_redirects=True, binary=False):
+    # CI（GitHub runner 海外）访问国内站慢，放宽读超时上限
+    read_cap = int(os.environ.get("KEEPER_READ_TIMEOUT", 8))
     try:
         resp = requests.get(
             url,
             headers=headers or {"User-Agent": UA},
-            timeout=(5, min(timeout, 8)),
+            timeout=(5, min(timeout, read_cap)),
             allow_redirects=allow_redirects,
         )
         if resp.status_code == 200:
@@ -1685,6 +1689,26 @@ def sanitize_peek_tvbox(config):
     return out
 
 
+# 专区关键词：按站源名称归类（羊壳内 TAB 自动分类的补充，方便单类源订阅）
+PEEK_CATEGORY_RULES = {
+    "manga": ["漫画", "动漫", "comic", "manga", "banana", "漫", "番"],
+    "novel": ["小说", "阅读", "书源", "book", "novel", "阅读", "笔趣", "小说"],
+    "drama": ["短剧", "drama", "short", "短剧", "微短剧", "爽文"],
+}
+
+
+def filter_tvbox_by_category(config, keywords):
+    """按站源名称关键词筛选，生成子分类单仓。"""
+    sites = []
+    for s in config.get("sites", []):
+        name = (s.get("name") or "").lower()
+        if any(kw.lower() in name for kw in keywords):
+            sites.append(s)
+    out = dict(config)
+    out["sites"] = sites
+    return out
+
+
 def cmd_export():
     store = load_store()
     cats = {"book": [], "subscribe": [], "tvbox": [], "iptv": [], "collect": [],
@@ -1749,6 +1773,10 @@ def cmd_export():
     peek_music = build_peek_music(cats["music"])
     peek_music_urls = "\n".join(m["url"] for m in peek_music) + "\n"
     peek_iptv_txt = build_peek_iptv_txt(cats["iptv"])
+    # 专区分类：从单仓按名称关键词筛出漫画/小说/短剧子配置
+    peek_manga = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["manga"])
+    peek_novel = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["novel"])
+    peek_drama = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["drama"])
 
     archived = [r.get("source") for r in store["archived"]]
     flaky_n = sum(1 for r in store["sources"] if r.get("status") == "flaky")
@@ -1767,6 +1795,9 @@ def cmd_export():
         "peek_tvbox": len(peek_tvbox.get("sites", [])),
         "peek_multi": len(peek_multi["storeHouse"]),
         "peek_music": len(peek_music),
+        "peek_manga": len(peek_manga.get("sites", [])),
+        "peek_novel": len(peek_novel.get("sites", [])),
+        "peek_drama": len(peek_drama.get("sites", [])),
         "flaky": flaky_n,
         "archived": len(archived),
         # 历史失效条目总数（含仍在 30 天保护期内的墓碑）
@@ -1795,6 +1826,9 @@ def cmd_export():
         "peek_music.json": json.dumps(peek_music, ensure_ascii=False, indent=1),
         "peek_music_urls.txt": peek_music_urls,
         "peek_iptv.txt": peek_iptv_txt,
+        "peek_manga.json": json.dumps(peek_manga, ensure_ascii=False, indent=1),
+        "peek_novel.json": json.dumps(peek_novel, ensure_ascii=False, indent=1),
+        "peek_drama.json": json.dumps(peek_drama, ensure_ascii=False, indent=1),
         "archive.json": json.dumps(archived, ensure_ascii=False, indent=1),
         "stats.json": json.dumps(stats, ensure_ascii=False, indent=1),
         "upstreams.json": json.dumps(store["upstreams"], ensure_ascii=False, indent=1),

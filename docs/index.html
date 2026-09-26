@@ -213,12 +213,24 @@
   .dc a:hover{text-decoration:underline}
   /* PeekPro 羊壳订阅面板 */
   .peek-wrap{margin-top:12px}
+  .peek-stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .peek-stat{flex:1;min-width:90px;background:rgba(8,10,24,.6);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-align:center}
+  .peek-stat b{display:block;font-size:20px;line-height:1.2}
+  .peek-stat span{font-size:11px;color:var(--muted)}
+  .peek-stat.vod b{color:var(--cyan)}
+  .peek-stat.live b{color:var(--green)}
+  .peek-stat.music b{color:var(--purple)}
+  .peek-stat.manga b{color:#ff7ab8}
+  .peek-stat.novel b{color:var(--yellow)}
+  .peek-stat.drama b{color:#ff8a4d}
   .peek-wrap table{width:100%;border-collapse:collapse}
   .peek-wrap th{width:90px;background:rgba(45,255,155,.08);color:#9fe8c8}
   .peek-wrap td{font-size:12.5px}
   .peek-wrap code{width:100%;box-sizing:border-box}
   .peek-wrap .btn{white-space:nowrap}
-  .peek-note{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.7}
+  .peek-note{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.8}
+  .peek-note b{color:var(--text)}
+  .peek-step{display:inline-block;background:rgba(51,224,255,.12);color:var(--cyan);border-radius:6px;padding:1px 7px;font-size:11px;font-weight:700;margin-right:4px}
   /* 分类 chips + 分类徽章：双维度（类别 / 源格式）通用 */
   .dim-label{font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:4px 0 4px;user-select:none}
   .cat-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}
@@ -284,26 +296,49 @@
   <div class="hub" id="peek-hub">
     <div class="hub-hd">
       <span class="hub-badge">PeekPro 羊壳订阅</span>
-      <span class="hub-sub">点播 · 直播 · 音乐 · 漫画/小说/短剧（点播内自动分 Tab）</span>
+      <span class="hub-sub">点播 · 直播 · 音乐 · 漫画 · 小说 · 短剧</span>
     </div>
     <div class="peek-wrap">
+      <div class="peek-stats" id="peek-stats">
+        <div class="peek-stat vod"><b id="ps-vod">—</b><span>点播站点</span></div>
+        <div class="peek-stat live"><b id="ps-live">—</b><span>直播频道</span></div>
+        <div class="peek-stat music"><b id="ps-music">—</b><span>音乐音源</span></div>
+        <div class="peek-stat manga"><b id="ps-manga">—</b><span>漫画站</span></div>
+        <div class="peek-stat novel"><b id="ps-novel">—</b><span>小说站</span></div>
+        <div class="peek-stat drama"><b id="ps-drama">—</b><span>短剧站</span></div>
+      </div>
       <table>
         <tr><th>模块</th><th>订阅地址</th><th>操作</th></tr>
-        <tr><td>点播接口</td><td><code data-peek-code="peek_tvbox.json">peek_tvbox.json</code></td>
+        <tr><td><span class="cat-badge cyan">点播</span></td>
+            <td><code data-peek-code="peek_tvbox.json">peek_tvbox.json</code></td>
             <td><button class="btn gray" data-peek="peek_tvbox.json">复制</button>
                 <a class="btn gray" href="peek_tvbox.json" download>下载</a></td></tr>
-        <tr><td>直播源</td><td><code data-peek-code="peek_iptv.txt">peek_iptv.txt</code></td>
+        <tr><td><span class="cat-badge green">直播</span></td>
+            <td><code data-peek-code="peek_iptv.txt">peek_iptv.txt</code></td>
             <td><button class="btn gray" data-peek="peek_iptv.txt">复制</button>
                 <a class="btn gray" href="peek_iptv.txt" download>下载</a></td></tr>
-        <tr><td>音乐脚本清单</td><td><code data-peek-code="peek_music.json">peek_music.json</code></td>
+        <tr><td><span class="cat-badge purple">音乐</span></td>
+            <td><code data-peek-code="peek_music.json">peek_music.json</code></td>
             <td><button class="btn gray" data-peek="peek_music.json">复制</button>
                 <a class="btn gray" href="peek_music.json" download>下载</a></td></tr>
+        <tr><td><span class="cat-badge pink">漫画</span></td>
+            <td><code data-peek-code="peek_manga.json">peek_manga.json</code></td>
+            <td><button class="btn gray" data-peek="peek_manga.json">复制</button>
+                <a class="btn gray" href="peek_manga.json" download>下载</a></td></tr>
+        <tr><td><span class="cat-badge yellow">小说</span></td>
+            <td><code data-peek-code="peek_novel.json">peek_novel.json</code></td>
+            <td><button class="btn gray" data-peek="peek_novel.json">复制</button>
+                <a class="btn gray" href="peek_novel.json" download>下载</a></td></tr>
+        <tr><td><span class="cat-badge orange">短剧</span></td>
+            <td><code data-peek-code="peek_drama.json">peek_drama.json</code></td>
+            <td><button class="btn gray" data-peek="peek_drama.json">复制</button>
+                <a class="btn gray" href="peek_drama.json" download>下载</a></td></tr>
       </table>
       <p class="peek-note">
-        <b>点播</b>：设置 → 接口配置 → 右上角 + → 名称随意，粘贴 <b>peek_tvbox.json</b> 地址（单仓 TVBox 格式，漫画/小说/短剧在壳内按站源自动分 Tab，无需单独订阅）。<br>
-        <b>直播</b>：直播 → 直播源 → 添加，粘贴 <b>peek_iptv.txt</b> 地址（FM 格式：频道名,地址，已按央视/卫视/体育等分组）。<br>
-        <b>音乐</b>：音乐板块 → 设置 → 导入脚本 → 在线链接；先打开 <b>peek_music.json</b>，复制其中任意一条 <b>.js</b> 地址粘贴进去（洛雪格式，一次导入一个音源；MusicFree 插件不互通）。<br>
-        <span style="opacity:.7">注：peek_tvbox_multi.json 为影视仓/宝盒多仓格式，羊壳不支持 storeHouse，勿填。</span>
+        <span class="peek-step">1</span><b>点播</b>：设置 → 接口配置 → 右上角 + → 名称随意 → 粘贴 <b>peek_tvbox.json</b> 地址（漫画/小说/短剧在壳内自动分 Tab，也可单独订阅专区文件）。<br>
+        <span class="peek-step">2</span><b>直播</b>：直播 → 直播源 → 添加 → 粘贴 <b>peek_iptv.txt</b> 地址（FM 格式，已按央视/卫视/体育分组）。<br>
+        <span class="peek-step">3</span><b>音乐</b>：音乐板块 → 设置 → 导入脚本 → 在线链接；先打开 <b>peek_music.json</b>，复制其中一条 <b>.js</b> 地址粘贴（一次一个音源，洛雪格式）。<br>
+        <span style="opacity:.65">注：peek_tvbox_multi.json 为影视仓/宝盒多仓格式，羊壳不支持 storeHouse，勿填。</span>
       </p>
     </div>
   </div>
@@ -839,6 +874,16 @@ function downloadSubmit() {
     const url = abs(f);
     el.addEventListener("click", () => copy(url, "链接已复制"));
   });
+  // 实时统计：从 stats.json 读取
+  fetch(abs("stats.json")).then(r => r.json()).then(s => {
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v ?? "—"; };
+    set("ps-vod", s.peek_tvbox);
+    set("ps-live", s.valid_iptv);
+    set("ps-music", s.peek_music);
+    set("ps-manga", s.peek_manga);
+    set("ps-novel", s.peek_novel);
+    set("ps-drama", s.peek_drama);
+  }).catch(() => {});
 })();
 </script>
 </body>
