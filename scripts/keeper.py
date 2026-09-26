@@ -1619,7 +1619,9 @@ def build_peek_music(records):
 
 
 def build_peek_iptv_txt(streams):
-    """羊壳直播源：DIYP/TVBox txt 格式（#genre# 分组 + `url,name` 行），兼容面最广。"""
+    """羊壳(PeekPro/FM二开)直播源：FM txt 格式——`#genre#分组` + `频道名,url`（name 在前）。
+    与 zbds/游魂等 FM 系在线源一致；不要 #EXTM3U 头，不要 url,name（那是 DIYP 格式，FM 不认）。
+    """
     rules = [
         ("央视", lambda n: "CCTV" in n or "中央" in n),
         ("卫视", lambda n: "卫视" in n),
@@ -1640,15 +1642,47 @@ def build_peek_iptv_txt(streams):
                 g = label
                 break
         groups[g].append((name, st.get("url") or ""))
-    lines = ["#EXTM3U"]
+    lines = []
     for g in ("央视", "卫视", "港澳台", "体育", "电影", "少儿/动画",
               "新闻", "音乐", "纪录/纪实", "其他"):
         if not groups.get(g):
             continue
         lines.append(f"#genre#{g}")
         for name, url in groups[g]:
-            lines.append(f"{url},{name}")
+            lines.append(f"{name},{url}")
     return "\n".join(lines) + "\n"
+
+
+def sanitize_peek_tvbox(config):
+    """羊壳单仓清洗：去掉缺 key/api 的废站、去掉重复、确保字段齐全。
+    羊壳(T4)按 TVBox 单仓结构解析，遇到缺字段的站源可能整仓报错。
+    """
+    sites = []
+    seen = set()
+    for s in config.get("sites", []):
+        if not isinstance(s, dict):
+            continue
+        key = s.get("key") or ""
+        api = s.get("api") or s.get("searchUrl") or ""
+        if not key or not api:
+            continue
+        if key in seen:
+            continue
+        seen.add(key)
+        # 羊壳要求的字段兜底
+        s.setdefault("name", key)
+        s.setdefault("type", 3)
+        s.setdefault("searchable", 1)
+        s.setdefault("quickSearch", 0)
+        s.setdefault("filterable", 0)
+        s.setdefault("changeable", 0)
+        sites.append(s)
+    out = dict(config)
+    out["sites"] = sites
+    # lives/parses 去空
+    out["lives"] = [l for l in config.get("lives", []) if isinstance(l, (str, dict))]
+    out["parses"] = [p for p in config.get("parses", []) if isinstance(p, (str, dict))]
+    return out
 
 
 def cmd_export():
@@ -1704,8 +1738,13 @@ def cmd_export():
         m3u_lines.append(stream["url"])
     m3u_text = "\n".join(m3u_lines) + "\n"
 
-    # peekPro（羊壳）适配导出：单仓 / 多仓 / 直播 txt / 洛雪音源直链
-    peek_tvbox = cats["tvbox"]                       # 单仓，与 valid_tvbox 同构
+    # peekPro（羊壳）适配导出：
+    #   - peek_tvbox.json     单仓 TVBox 接口（羊壳点播主用，已清洗）
+    #   - peek_tvbox_multi.json 多仓 storeHouse（仅影视仓/宝盒，羊壳不支持）
+    #   - peek_iptv.txt       FM 格式直播（频道名,url）
+    #   - peek_music.json     洛雪音源清单（浏览后复制单个 .js 导入）
+    #   - peek_music_urls.txt 洛雪音源直链（每行一个 .js）
+    peek_tvbox = sanitize_peek_tvbox(cats["tvbox"])
     peek_multi = build_peek_multi_config(tvbox_records)
     peek_music = build_peek_music(cats["music"])
     peek_music_urls = "\n".join(m["url"] for m in peek_music) + "\n"
@@ -1725,7 +1764,8 @@ def cmd_export():
         "valid_magnet": len(cats["magnet"]),
         "valid_vparse": len(cats["vparse"]),
         "valid_localpkg": len(cats["localpkg"]),
-        "peek_tvbox": len(peek_multi["storeHouse"]),
+        "peek_tvbox": len(peek_tvbox.get("sites", [])),
+        "peek_multi": len(peek_multi["storeHouse"]),
         "peek_music": len(peek_music),
         "flaky": flaky_n,
         "archived": len(archived),

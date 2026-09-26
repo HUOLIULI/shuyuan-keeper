@@ -284,31 +284,27 @@
   <div class="hub" id="peek-hub">
     <div class="hub-hd">
       <span class="hub-badge">PeekPro 羊壳订阅</span>
-      <span class="hub-sub">点播 · 直播 · 音乐 · 书源，填到壳子对应位置即可</span>
+      <span class="hub-sub">点播 · 直播 · 音乐 · 漫画/小说/短剧（点播内自动分 Tab）</span>
     </div>
     <div class="peek-wrap">
       <table>
         <tr><th>模块</th><th>订阅地址</th><th>操作</th></tr>
-        <tr><td>点播（单仓）</td><td><code data-peek-code="peek_tvbox.json">peek_tvbox.json</code></td>
+        <tr><td>点播接口</td><td><code data-peek-code="peek_tvbox.json">peek_tvbox.json</code></td>
             <td><button class="btn gray" data-peek="peek_tvbox.json">复制</button>
                 <a class="btn gray" href="peek_tvbox.json" download>下载</a></td></tr>
-        <tr><td>点播（多仓）</td><td><code data-peek-code="peek_tvbox_multi.json">peek_tvbox_multi.json</code></td>
-            <td><button class="btn gray" data-peek="peek_tvbox_multi.json">复制</button>
-                <a class="btn gray" href="peek_tvbox_multi.json" download>下载</a></td></tr>
-        <tr><td>直播（txt）</td><td><code data-peek-code="peek_iptv.txt">peek_iptv.txt</code></td>
+        <tr><td>直播源</td><td><code data-peek-code="peek_iptv.txt">peek_iptv.txt</code></td>
             <td><button class="btn gray" data-peek="peek_iptv.txt">复制</button>
                 <a class="btn gray" href="peek_iptv.txt" download>下载</a></td></tr>
-        <tr><td>音乐（洛雪）</td><td><code data-peek-code="peek_music.json">peek_music.json</code></td>
+        <tr><td>音乐脚本清单</td><td><code data-peek-code="peek_music.json">peek_music.json</code></td>
             <td><button class="btn gray" data-peek="peek_music.json">复制</button>
                 <a class="btn gray" href="peek_music.json" download>下载</a></td></tr>
-        <tr><td>音乐（直链清单）</td><td><code data-peek-code="peek_music_urls.txt">peek_music_urls.txt</code></td>
-            <td><button class="btn gray" data-peek="peek_music_urls.txt">复制</button>
-                <a class="btn gray" href="peek_music_urls.txt" download>下载</a></td></tr>
-        <tr><td>书源（Legado）</td><td><code data-peek-code="valid.json">valid.json</code></td>
-            <td><button class="btn gray" data-peek="valid.json">复制</button>
-                <a class="btn gray" href="valid.json" download>下载</a></td></tr>
       </table>
-      <p class="peek-note">填法：设置 → 接口配置 → 粘贴点播地址（多仓不支持就换单仓）；直播源填第二行 txt；音乐板块 → 导入脚本 → 在线链接，逐个粘贴 <b>peek_music.json</b> 里的 .js 直链（洛雪格式，MusicFree 插件不互通）；书源在阅读模块网络导入。</p>
+      <p class="peek-note">
+        <b>点播</b>：设置 → 接口配置 → 右上角 + → 名称随意，粘贴 <b>peek_tvbox.json</b> 地址（单仓 TVBox 格式，漫画/小说/短剧在壳内按站源自动分 Tab，无需单独订阅）。<br>
+        <b>直播</b>：直播 → 直播源 → 添加，粘贴 <b>peek_iptv.txt</b> 地址（FM 格式：频道名,地址，已按央视/卫视/体育等分组）。<br>
+        <b>音乐</b>：音乐板块 → 设置 → 导入脚本 → 在线链接；先打开 <b>peek_music.json</b>，复制其中任意一条 <b>.js</b> 地址粘贴进去（洛雪格式，一次导入一个音源；MusicFree 插件不互通）。<br>
+        <span style="opacity:.7">注：peek_tvbox_multi.json 为影视仓/宝盒多仓格式，羊壳不支持 storeHouse，勿填。</span>
+      </p>
     </div>
   </div>
 

@@ -97,21 +97,20 @@ https://你的用户名.github.io/仓库/
 首页按 7 个标签页展示，每条链接支持复制、下载与二维码，书源与订阅源还带「一键导入阅读APP」按钮。
 
 ### PeekPro（羊壳）订阅
-羊壳 = FM 二开的 TVBox 系壳，`export` 阶段会额外生成一套 `peek_*` 专用文件（点播 / 直播 / 音乐 / 书源），地址如下：
+羊壳 = FM 二开的 TVBox 系壳（Flutter），`export` 阶段生成 `peek_*` 专用文件。经反编译 v1.5.8 确认：羊壳**只认单仓 TVBox JSON**（不支持 storeHouse 多仓）、直播 txt 为 `频道名,url` 格式、音乐按洛雪 `.js` 脚本逐个导入。
 
 | 模块 | 使用的链接 | 在羊壳里怎么填 |
 | --- | --- | --- |
-| 点播（单仓） | `https://你的用户名.github.io/仓库/peek_tvbox.json` | 设置 → 接口配置 → 右上角 + → 粘贴（站点全量聚合，兼容性最好） |
-| 点播（多仓） | `https://你的用户名.github.io/仓库/peek_tvbox_multi.json` | 同上；若壳支持 storeHouse 多仓，一个地址订阅全部仓库（推荐） |
-| 直播 | `https://你的用户名.github.io/仓库/peek_iptv.txt` | 接口配置第二行（直播源）填 txt 地址；VLC/Kodi 等也可用 `valid_iptv.m3u` |
-| 音乐 | `https://你的用户名.github.io/仓库/peek_music.json` | 音乐板块 → 导入脚本 → 在线链接，逐个粘贴里面的 .js 直链（洛雪格式） |
-| 音乐（纯链接清单） | `https://你的用户名.github.io/仓库/peek_music_urls.txt` | 每行一个洛雪 .js 直链，方便复制导入 |
-| 书源 | `https://你的用户名.github.io/仓库/valid.json` | 阅读模块 → 书源 → 网络导入 → 粘贴（Legado 格式） |
+| 点播接口 | `https://你的用户名.github.io/仓库/peek_tvbox.json` | 设置 → 接口配置 → 右上角 + → 名称随意 → 粘贴此地址（单仓 TVBox 格式，已清洗；漫画/小说/短剧在壳内按站源自动分 Tab） |
+| 直播源 | `https://你的用户名.github.io/仓库/peek_iptv.txt` | 直播 → 直播源 → 添加 → 粘贴此地址（FM 格式：`频道名,url`，已按央视/卫视/体育等分组） |
+| 音乐脚本清单 | `https://你的用户名.github.io/仓库/peek_music.json` | 音乐板块 → 设置 → 导入脚本 → 在线链接；**先打开此清单，复制其中任意一条 `.js` 地址**粘贴进去（一次一个音源，洛雪格式） |
 
 > 说明：
-> - `peek_music.json` / `peek_music_urls.txt` 只含**洛雪系** .js 音源（羊壳音乐按洛雪格式导入）；MusicFree 插件脚本 API 与其不互通，MusicFree App 继续用 `valid_music.json`。
-> - 羊壳若提示「多仓不支持」，换用单仓 `peek_tvbox.json` 即可。
-> - 以上文件在每次工作流运行后由 `export` 重新生成，并自动提交进 git（jsDelivr 镜像同 `valid_*` 规则：`https://cdn.jsdelivr.net/gh/你的用户名/仓库@main/docs/peek_tvbox_multi.json`）。
+> - **不要填 `peek_tvbox_multi.json`**：那是 storeHouse 多仓格式，羊壳不支持（反编译确认无 storeHouse 代码），填了会报「格式失败」。该文件仅供影视仓/宝盒使用。
+> - `peek_music.json` 是**清单**不是脚本：打开它，挑一个音源复制 `.js` 直链，再到音乐→导入脚本→在线链接粘贴。MusicFree 插件不互通，已自动排除。
+> - 直播也可用 `valid_iptv.m3u`（标准 M3U，VLC/支持 M3U 的壳通用）。
+> - 漫画/小说/短剧不需要单独订阅：它们是点播接口里的站源分类，羊壳在「TAB 自定义」里自动归类。
+> - 以上文件每次工作流运行后自动重新生成并提交（jsDelivr 镜像同 `valid_*` 规则）。
 
 ## 国内访问加速
 
