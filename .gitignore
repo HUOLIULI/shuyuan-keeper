@@ -25,6 +25,11 @@ data/valid_magnet.json
 data/valid_vparse.json
 data/valid_localpkg.json
 data/valid_iptv.m3u
+data/peek_tvbox.json
+data/peek_tvbox_multi.json
+data/peek_music.json
+data/peek_music_urls.txt
+data/peek_iptv.txt
 
 # 有效导出物提交进 git（docs/ 下）；运行状态 data/ 仍靠 Actions cache 持久化
 # docs/valid*.json

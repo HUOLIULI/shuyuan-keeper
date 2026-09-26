@@ -1566,6 +1566,91 @@ def build_flat_config(records):
     return out
 
 
+# --------------------------------------------------------------------------- #
+# peekPro（羊壳）适配导出
+# 羊壳 = FM 二开的 TVBox 系壳，各模块订阅格式：
+#   点播：TVBox 单仓 JSON（spider/sites/lives/parses）或 storeHouse 多仓 JSON
+#   直播：DIYP/TVBox txt（#genre# 分组 + `url,name` 行）或 M3U
+#   音乐：洛雪系 .js 音源直链（在线链接逐个导入；MusicFree 插件脚本 API 与其不互通）
+#   书源：Legado 书源 JSON（阅读模块网络导入，复用 valid.json）
+# --------------------------------------------------------------------------- #
+def build_peek_multi_config(records):
+    """羊壳多仓：把可独立订阅的仓库地址（http(s) 的 url / sub_config）聚合为 storeHouse，
+    一个地址即可订阅全部点播仓库；csp_/py_/jar 等结构性条目不进入多仓（仍在单仓里）。
+    """
+    house = []
+    seen = set()
+    for rec in records:
+        src = rec.get("source") or {}
+        url = rec.get("sub_config") or src.get("sourceUrl") or rec.get("url") or ""
+        if not isinstance(url, str) or not url.startswith(("http://", "https://")):
+            continue
+        if url in seen:
+            continue
+        seen.add(url)
+        name = rec.get("name") or src.get("name") or src.get("key") or domain_key(url)
+        house.append({"sourceName": name, "sourceUrl": url})
+    return {"storeHouse": house}
+
+
+def build_peek_music(records):
+    """羊壳音乐：只保留洛雪系 .js 音源（排除 MusicFree 插件——二者脚本 API 不互通，
+    羊壳音乐模块按洛雪格式导入）。按 url 去重。
+    """
+    out = []
+    seen = set()
+    for rec in records:
+        url = rec.get("url") or ""
+        if not isinstance(url, str) or not url.startswith(("http://", "https://")):
+            continue
+        origin = rec.get("origin") or (rec.get("origins") or [""])[0] or ""
+        if "musicfree" in origin.lower():
+            continue
+        if url in seen:
+            continue
+        seen.add(url)
+        out.append({
+            "name": rec.get("name") or domain_key(url),
+            "url": url,
+            "version": (rec.get("source") or {}).get("version") or "",
+            "origin": origin,
+        })
+    return out
+
+
+def build_peek_iptv_txt(streams):
+    """羊壳直播源：DIYP/TVBox txt 格式（#genre# 分组 + `url,name` 行），兼容面最广。"""
+    rules = [
+        ("央视", lambda n: "CCTV" in n or "中央" in n),
+        ("卫视", lambda n: "卫视" in n),
+        ("港澳台", lambda n: any(k in n for k in ("香港", "澳门", "台湾", "HKS", "Macau"))),
+        ("体育", lambda n: "体育" in n),
+        ("电影", lambda n: "电影" in n),
+        ("少儿/动画", lambda n: any(k in n for k in ("少儿", "动画", "儿童", "卡通"))),
+        ("新闻", lambda n: "新闻" in n),
+        ("音乐", lambda n: "音乐" in n),
+        ("纪录/纪实", lambda n: any(k in n for k in ("纪录", "纪实", "探索"))),
+    ]
+    groups = defaultdict(list)
+    for st in streams:
+        name = st.get("name") or domain_key(st.get("url") or "")
+        g = "其他"
+        for label, fn in rules:
+            if fn(name):
+                g = label
+                break
+        groups[g].append((name, st.get("url") or ""))
+    lines = ["#EXTM3U"]
+    for g in ("央视", "卫视", "港澳台", "体育", "电影", "少儿/动画",
+              "新闻", "音乐", "纪录/纪实", "其他"):
+        if not groups.get(g):
+            continue
+        lines.append(f"#genre#{g}")
+        for name, url in groups[g]:
+            lines.append(f"{url},{name}")
+    return "\n".join(lines) + "\n"
+
+
 def cmd_export():
     store = load_store()
     cats = {"book": [], "subscribe": [], "tvbox": [], "iptv": [], "collect": [],
@@ -1619,6 +1704,13 @@ def cmd_export():
         m3u_lines.append(stream["url"])
     m3u_text = "\n".join(m3u_lines) + "\n"
 
+    # peekPro（羊壳）适配导出：单仓 / 多仓 / 直播 txt / 洛雪音源直链
+    peek_tvbox = cats["tvbox"]                       # 单仓，与 valid_tvbox 同构
+    peek_multi = build_peek_multi_config(tvbox_records)
+    peek_music = build_peek_music(cats["music"])
+    peek_music_urls = "\n".join(m["url"] for m in peek_music) + "\n"
+    peek_iptv_txt = build_peek_iptv_txt(cats["iptv"])
+
     archived = [r.get("source") for r in store["archived"]]
     flaky_n = sum(1 for r in store["sources"] if r.get("status") == "flaky")
     stats = {
@@ -1633,6 +1725,8 @@ def cmd_export():
         "valid_magnet": len(cats["magnet"]),
         "valid_vparse": len(cats["vparse"]),
         "valid_localpkg": len(cats["localpkg"]),
+        "peek_tvbox": len(peek_multi["storeHouse"]),
+        "peek_music": len(peek_music),
         "flaky": flaky_n,
         "archived": len(archived),
         # 历史失效条目总数（含仍在 30 天保护期内的墓碑）
@@ -1656,6 +1750,11 @@ def cmd_export():
         "valid_magnet.json": json.dumps(cats["magnet"], ensure_ascii=False, indent=1),
         "valid_vparse.json": json.dumps(cats["vparse"], ensure_ascii=False, indent=1),
         "valid_localpkg.json": json.dumps(cats["localpkg"], ensure_ascii=False, indent=1),
+        "peek_tvbox.json": json.dumps(peek_tvbox, ensure_ascii=False, indent=1),
+        "peek_tvbox_multi.json": json.dumps(peek_multi, ensure_ascii=False, indent=1),
+        "peek_music.json": json.dumps(peek_music, ensure_ascii=False, indent=1),
+        "peek_music_urls.txt": peek_music_urls,
+        "peek_iptv.txt": peek_iptv_txt,
         "archive.json": json.dumps(archived, ensure_ascii=False, indent=1),
         "stats.json": json.dumps(stats, ensure_ascii=False, indent=1),
         "upstreams.json": json.dumps(store["upstreams"], ensure_ascii=False, indent=1),

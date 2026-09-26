@@ -24,7 +24,7 @@ shuyuan-keeper/
 ├── config/sources.json          上游清单与参数
 ├── scripts/keeper.py            聚合 / 验证 / 导出
 ├── data/                        运行状态（store.json 不入库，靠 Actions cache 持久化）
-├── docs/                        站点页面 index.html（导出 json 运行时生成、不入库）
+├── docs/                        站点页面 index.html + 导出 json（运行时生成并自动提交进 git）
 ├── .github/workflows/update.yml 定时任务与 Pages 部署
 └── requirements.txt
 ```
@@ -73,7 +73,7 @@ python -m http.server 8080
 3. Settings → Actions → General → Workflow permissions 选择 `Read and write permissions`。
 4. 手动触发一次 `update-and-deploy` 工作流（默认 force=true），等待 Pages 部署完成。
 
-工作流每天 18:01（北京时间）自动运行一次，拉取上游、验证、导出，并把站点同步到 cPanel 主机与 GitHub Pages。校验状态 `data/store.json` 通过 Actions cache 在多次运行间持久化，生成文件不进入 git。
+工作流每天 18:01（北京时间）自动运行一次，拉取上游、验证、导出，并把站点同步到 cPanel 主机与 GitHub Pages。校验状态 `data/store.json` 通过 Actions cache 在多次运行间持久化；`docs/` 导出物（含 `peek_*`）每次运行后自动提交进 git，供 Pages / raw / jsDelivr 订阅使用。
 
 ## 各 App 的订阅链接
 
@@ -95,6 +95,23 @@ https://你的用户名.github.io/仓库/
 ```
 
 首页按 7 个标签页展示，每条链接支持复制、下载与二维码，书源与订阅源还带「一键导入阅读APP」按钮。
+
+### PeekPro（羊壳）订阅
+羊壳 = FM 二开的 TVBox 系壳，`export` 阶段会额外生成一套 `peek_*` 专用文件（点播 / 直播 / 音乐 / 书源），地址如下：
+
+| 模块 | 使用的链接 | 在羊壳里怎么填 |
+| --- | --- | --- |
+| 点播（单仓） | `https://你的用户名.github.io/仓库/peek_tvbox.json` | 设置 → 接口配置 → 右上角 + → 粘贴（站点全量聚合，兼容性最好） |
+| 点播（多仓） | `https://你的用户名.github.io/仓库/peek_tvbox_multi.json` | 同上；若壳支持 storeHouse 多仓，一个地址订阅全部仓库（推荐） |
+| 直播 | `https://你的用户名.github.io/仓库/peek_iptv.txt` | 接口配置第二行（直播源）填 txt 地址；VLC/Kodi 等也可用 `valid_iptv.m3u` |
+| 音乐 | `https://你的用户名.github.io/仓库/peek_music.json` | 音乐板块 → 导入脚本 → 在线链接，逐个粘贴里面的 .js 直链（洛雪格式） |
+| 音乐（纯链接清单） | `https://你的用户名.github.io/仓库/peek_music_urls.txt` | 每行一个洛雪 .js 直链，方便复制导入 |
+| 书源 | `https://你的用户名.github.io/仓库/valid.json` | 阅读模块 → 书源 → 网络导入 → 粘贴（Legado 格式） |
+
+> 说明：
+> - `peek_music.json` / `peek_music_urls.txt` 只含**洛雪系** .js 音源（羊壳音乐按洛雪格式导入）；MusicFree 插件脚本 API 与其不互通，MusicFree App 继续用 `valid_music.json`。
+> - 羊壳若提示「多仓不支持」，换用单仓 `peek_tvbox.json` 即可。
+> - 以上文件在每次工作流运行后由 `export` 重新生成，并自动提交进 git（jsDelivr 镜像同 `valid_*` 规则：`https://cdn.jsdelivr.net/gh/你的用户名/仓库@main/docs/peek_tvbox_multi.json`）。
 
 ## 国内访问加速
 

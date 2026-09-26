@@ -211,6 +211,14 @@
   .dc li{margin:4px 0}
   .dc a{color:var(--cyan);text-decoration:none}
   .dc a:hover{text-decoration:underline}
+  /* PeekPro 羊壳订阅面板 */
+  .peek-wrap{margin-top:12px}
+  .peek-wrap table{width:100%;border-collapse:collapse}
+  .peek-wrap th{width:90px;background:rgba(45,255,155,.08);color:#9fe8c8}
+  .peek-wrap td{font-size:12.5px}
+  .peek-wrap code{width:100%;box-sizing:border-box}
+  .peek-wrap .btn{white-space:nowrap}
+  .peek-note{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.7}
   /* 分类 chips + 分类徽章：双维度（类别 / 源格式）通用 */
   .dim-label{font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:4px 0 4px;user-select:none}
   .cat-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}
@@ -271,6 +279,37 @@
       <span class="hub-sub">更新于 <span id="ts">-</span> · 隔日交替复检</span>
     </div>
     <div class="tabs" id="tabs"></div>
+  </div>
+
+  <div class="hub" id="peek-hub">
+    <div class="hub-hd">
+      <span class="hub-badge">PeekPro 羊壳订阅</span>
+      <span class="hub-sub">点播 · 直播 · 音乐 · 书源，填到壳子对应位置即可</span>
+    </div>
+    <div class="peek-wrap">
+      <table>
+        <tr><th>模块</th><th>订阅地址</th><th>操作</th></tr>
+        <tr><td>点播（单仓）</td><td><code data-peek-code="peek_tvbox.json">peek_tvbox.json</code></td>
+            <td><button class="btn gray" data-peek="peek_tvbox.json">复制</button>
+                <a class="btn gray" href="peek_tvbox.json" download>下载</a></td></tr>
+        <tr><td>点播（多仓）</td><td><code data-peek-code="peek_tvbox_multi.json">peek_tvbox_multi.json</code></td>
+            <td><button class="btn gray" data-peek="peek_tvbox_multi.json">复制</button>
+                <a class="btn gray" href="peek_tvbox_multi.json" download>下载</a></td></tr>
+        <tr><td>直播（txt）</td><td><code data-peek-code="peek_iptv.txt">peek_iptv.txt</code></td>
+            <td><button class="btn gray" data-peek="peek_iptv.txt">复制</button>
+                <a class="btn gray" href="peek_iptv.txt" download>下载</a></td></tr>
+        <tr><td>音乐（洛雪）</td><td><code data-peek-code="peek_music.json">peek_music.json</code></td>
+            <td><button class="btn gray" data-peek="peek_music.json">复制</button>
+                <a class="btn gray" href="peek_music.json" download>下载</a></td></tr>
+        <tr><td>音乐（直链清单）</td><td><code data-peek-code="peek_music_urls.txt">peek_music_urls.txt</code></td>
+            <td><button class="btn gray" data-peek="peek_music_urls.txt">复制</button>
+                <a class="btn gray" href="peek_music_urls.txt" download>下载</a></td></tr>
+        <tr><td>书源（Legado）</td><td><code data-peek-code="valid.json">valid.json</code></td>
+            <td><button class="btn gray" data-peek="valid.json">复制</button>
+                <a class="btn gray" href="valid.json" download>下载</a></td></tr>
+      </table>
+      <p class="peek-note">填法：设置 → 接口配置 → 粘贴点播地址（多仓不支持就换单仓）；直播源填第二行 txt；音乐板块 → 导入脚本 → 在线链接，逐个粘贴 <b>peek_music.json</b> 里的 .js 直链（洛雪格式，MusicFree 插件不互通）；书源在阅读模块网络导入。</p>
+    </div>
   </div>
 
   <div class="panel" id="tab-book"></div>
@@ -794,6 +833,16 @@ function downloadSubmit() {
 
   bindTabs();
   switchTab("book");
+
+  // PeekPro 面板：填充绝对地址并绑定复制
+  document.querySelectorAll("[data-peek-code]").forEach(el => {
+    el.textContent = abs(el.getAttribute("data-peek-code"));
+  });
+  document.querySelectorAll("[data-peek]").forEach(el => {
+    const f = el.getAttribute("data-peek");
+    const url = abs(f);
+    el.addEventListener("click", () => copy(url, "链接已复制"));
+  });
 })();
 </script>
 </body>
