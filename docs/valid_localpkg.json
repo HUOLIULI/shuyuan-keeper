@@ -19,5 +19,26 @@
   "subcat": "cloud_search",
   "origin": "本地包·谷哥搜",
   "flags": null
+ },
+ {
+  "name": "本地包·pan8搜",
+  "url": "https://www.pan8.com/",
+  "subcat": "cloud_search",
+  "origin": "本地包·pan8搜",
+  "flags": null
+ },
+ {
+  "name": "本地包·磁力猫",
+  "url": "https://www.imym.com/",
+  "subcat": "cloud_search",
+  "origin": "本地包·磁力猫",
+  "flags": null
+ },
+ {
+  "name": "本地包·百度网盘",
+  "url": "https://pan.baidu.com/",
+  "subcat": "cloud_search",
+  "origin": "本地包·百度网盘",
+  "flags": null
  }
 ]

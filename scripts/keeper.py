@@ -72,6 +72,9 @@ UPSTREAM_FILES = {}
 YCKCEO_INDEX = []
 YCKCEO_COLLECT_INDEX = []
 YCKCEO_PROBE_LIMIT = 40
+# 可信上游：sources.json 里 upstream 带 "trusted": true 的生效，
+# 其新拉条目入库即 valid、不逐条探活（15 天有效期过后 validate 仍会重验）
+TRUSTED_ORIGINS: set = set()
 SEARCH_KEY = ""
 TIMEOUT = 10
 WORKERS = 12
@@ -95,6 +98,7 @@ def load_config():
     global CONF, UPSTREAMS, YCKCEO_INDEX, YCKCEO_COLLECT_INDEX
     global SEARCH_KEY, TIMEOUT, WORKERS
     global FAIL_LIMIT, FETCH_GAP, RECHECK_HOURS, VALIDATE_WORKERS
+    global TRUSTED_ORIGINS
     cfg = dict(DEFAULTS)
     if CONFIG.exists():
         try:
@@ -103,6 +107,7 @@ def load_config():
             print(f"[warn] 读取 {CONFIG} 失败：{exc}")
     CONF = cfg
     UPSTREAMS = cfg.get("upstreams", [])
+    TRUSTED_ORIGINS = {u.get("name") for u in UPSTREAMS if u.get("trusted")}
     UPSTREAM_FILES = {u.get("name", ""): u.get("files", []) for u in UPSTREAMS}
     YCKCEO_INDEX = cfg.get("yckceo_index", [])
     YCKCEO_COLLECT_INDEX = cfg.get("yckceo_collect_index", [])
@@ -776,13 +781,17 @@ def merge_items(store, items, stype, origin, skip_known=False):
         if not url and not name:
             continue
 
+        # 可信上游（sources.json 里 "trusted": true）：上游本身带全量活性验证能力
+        # （如 CCSH m3u 清单、IPTV-org 等），新条目入库即 valid、不逐条探活；
+        # 15 天有效期（RECHECK_HOURS）过后 validate 仍会重新校验，失效照常删除
+        trusted = origin in TRUSTED_ORIGINS
         entry = {
             "source": item.get("raw", {}),
             "domain": dom,
             "type": stype,
             "url": url,
             "name": name,
-            "status": "pending",
+            "status": "valid" if trusted else "pending",
             "fail_count": 0,
             "last_check": None,
             "origins": [origin],
@@ -1135,6 +1144,10 @@ def check_tvbox(rec):
     if not target:
         # 多仓子项、或仅有 key/ext 的结构性条目，无独立 URL 可探活
         return "valid"
+    # TVBox drpy 爬虫规则（csp_*/py_*/./ 相对路径 js）靠 spider 加载，
+    # 无独立可探 URL，按结构性条目判 valid
+    if target.startswith(("csp_", "py_", "./")):
+        return "valid"
     if not target.startswith(("http://", "https://")):
         return "dead"
     if http_get(target, timeout=TIMEOUT) is not None:
@@ -1150,25 +1163,11 @@ def check_iptv(rec):
     url = rec.get("url") or ""
     if not url.startswith(("http://", "https://")):
         return "valid" if url.startswith(("rtmp://", "rtsp://", "rtp://", "udp://")) else "dead"
-    # 先用 HEAD 快速判活；HEAD 405/403 或超时时回落 GET（部分 CDN 禁 HEAD、只放行 GET）
-    for method in ("head", "get"):
-        try:
-            resp = getattr(requests, method)(
-                url, headers={"User-Agent": UA},
-                timeout=(5, 8) if method == "head" else (5, 15),
-                allow_redirects=True, stream=(method == "get"))
-            code = resp.status_code
-            if method == "get":
-                chunk = next(resp.iter_content(1024), b"")
-                resp.close()
-                if code == 200 and len(chunk) > 0:
-                    return "valid"
-            elif code < 400:
-                return "valid"
-        except Exception:  # noqa: BLE001
-            pass
-    # 流本身取不到；若主机（域名）还在，只算规则/流失效（黄），否则站点没了（红）
-    return "flaky" if site_alive(url) else "dead"
+    # IPTV 流清单不做逐条探活（用户策略「IPTV 不用验证」）：
+    # 只做站点级（域名）可达判断——域名活着即 valid，域名没了才 dead。
+    # 单条断流不影响判定，可播性交给客户端处理；site_alive 按 origin 缓存，
+    # 同一域名上万条流只打一次网络。
+    return "valid" if site_alive(url) else "dead"
 
 
 def check_collect(rec):
@@ -1313,7 +1312,65 @@ def _dedup_by_url(targets):
     return unique, url_map
 
 
-def cmd_validate(batch=400, types=None, all_=False, flaky_only=False):
+def _flatten_buckets(buckets, batch):
+    """按类型轮转从 buckets 取 batch 条，避免小类型永远排在长尾。"""
+    targets = []
+    while len(targets) < batch and any(buckets.values()):
+        for recs in buckets.values():
+            if recs:
+                targets.append(recs.pop(0))
+            if len(targets) >= batch:
+                break
+    return targets
+
+
+def _dedup_by_url_sampled(targets, sample):
+    """URL 去重 + 上游级抽验放行。
+
+    按 (type, 首个上游名) 分桶：
+      - 桶内 >= sample 条且含 http(s) URL：随机抽 sample 条真探活，
+        桶内其余条目进入 skip_keys（不真探，直接继承采样结论）；
+      - 小桶（< sample）或无 URL 结构性条目：全部真探。
+    同一 URL 全局只探一次（url_seen）。
+    返回 (unique 真探列表, skip_keys 放行条目 id 集合)。
+    """
+    import random
+    groups = {}
+    for rec in targets:
+        key = (rec["type"], (rec.get("origins") or [""])[0])
+        groups.setdefault(key, []).append(rec)
+    unique = []
+    url_seen = set()
+    skip_keys = set()
+    for key, recs in groups.items():
+        url_recs = [r for r in recs
+                    if (r.get("url") or "").startswith(("http://", "https://"))]
+        n = len(url_recs)
+        probe_recs = []
+        if n and len(recs) >= sample:
+            probe_recs = random.sample(url_recs, min(sample, n))
+        else:
+            probe_recs = recs
+        probe_ids = {id(r) for r in probe_recs}
+        for rec in recs:
+            url = (rec.get("url") or "").strip()
+            if url and url in url_seen:
+                # 同 URL 已有人真探，直接放行继承
+                skip_keys.add(id(rec))
+                continue
+            if url:
+                url_seen.add(url)
+            if id(rec) in probe_ids or not url.startswith(("http://", "https://")):
+                # http 桶内随机抽中 / 非 http（drpy 结构条目等）→ 真探或 checker 判 valid
+                unique.append(rec)
+            else:
+                # http 大桶未抽中 → 放行，继承采样结论
+                skip_keys.add(id(rec))
+    return unique, skip_keys
+
+
+def cmd_validate(batch=400, types=None, all_=False, flaky_only=False,
+                 upstream_sample=0, pass_ratio=0.8):
     global _ALIVE_CACHE
     _ALIVE_CACHE = {}
     store = load_store()
@@ -1335,24 +1392,25 @@ def cmd_validate(batch=400, types=None, all_=False, flaky_only=False):
         elif rec.get("status") == "pending" or _age_hours(rec.get("last_check")) >= hours:
             # 正常模式：仅待验证或有效期（15 天）已到的条目
             buckets.setdefault(rec["type"], []).append(rec)
-    targets = []
-    while len(targets) < batch and any(buckets.values()):
-        for recs in buckets.values():
-            if recs:
-                targets.append(recs.pop(0))
-            if len(targets) >= batch:
-                break
+    if flaky_only:
+        fb = {t: [r for r in vs if r.get("status") == "flaky"]
+              for t, vs in buckets.items()}
+        targets = _flatten_buckets(fb, batch)
+        if not targets:
+            print("[done] 无待验证条目")
+            return
+    else:
+        targets = _flatten_buckets(buckets, batch)
     if not targets:
         print("[done] 无待验证条目")
         return
 
     print(f"[info] 本轮 {len(targets)} 条" + ("（全量）" if all_ else ""))
     started = time.time()
-    ok_n = yellow_n = dead_n = 0
-    # 同一 URL 只真打一次网络：先按 URL 去重送探活，再用线程池并发探测，
-    # 把结果回写到同 URL 的所有条目。site_alive 已按 origin 缓存，
-    # 这里是 URL 粒度去重，避免大量同域名条目重复请求。
-    unique = _dedup_by_url(targets)[0]
+    ok_n = yellow_n = dead_n = skip_n = 0
+    # 同 URL 去重 + 上游级抽验：unique 只送真实网络探测；
+    # skip_keys 里的条目（抽验放行的同上游条目）不真探，直接继承采样结论
+    unique, skip_keys = _dedup_by_url_sampled(targets, upstream_sample)
     url_verdicts = {}
 
     def _probe(rec):
@@ -1369,17 +1427,48 @@ def cmd_validate(batch=400, types=None, all_=False, flaky_only=False):
         for url, verdict in pool.map(_probe, unique):
             url_verdicts[url] = verdict
 
+    def _key_of(rec):
+        o = (rec.get("origins") or [""])[0]
+        return f"{rec['type']}|{o}"
+
+    # 上游级抽验判定：桶（type|首个上游）内随机抽 sample 条真探，
+    # 采样桶（有 http URL 的条目）valid 占比 >= pass_ratio 时，
+    # 桶内放行（skip）条目继承 valid；否则放行条目维持 pending 等下轮
+    sample_pass = {}
+    if upstream_sample:
+        groups = {}
+        for rec in targets:
+            groups.setdefault(_key_of(rec), []).append(rec)
+        for key, recs in groups.items():
+            probe_recs = [r for r in recs if id(r) not in skip_keys]
+            url_probe = [r for r in probe_recs
+                         if (r.get("url") or "").startswith(("http://", "https://"))]
+            if len(recs) >= upstream_sample and url_probe:
+                valid_n = sum(
+                    1 for r in url_probe
+                    if url_verdicts.get((r.get("url") or "").strip()) == "valid")
+                sample_pass[key] = valid_n / len(url_probe) >= pass_ratio
+
     for rec in targets:
         url = (rec.get("url") or "").strip()
-        verdict = url_verdicts.get(url)
-        if verdict is None:
-            # 无 url 条目（结构性条目）直接探
-            try:
-                verdict = CHECKERS.get(rec["type"], check_book)(rec)
-            except Exception:  # noqa: BLE001
-                verdict = "dead"
-            if verdict not in ("valid", "flaky", "dead"):
-                verdict = "valid" if verdict else "dead"
+        key = _key_of(rec)
+        if id(rec) in skip_keys:
+            # 抽验放行条目：采样达标的继承 valid，否则维持 pending 等下轮
+            if sample_pass.get(key):
+                verdict = "valid"
+                skip_n += 1
+            else:
+                continue
+        else:
+            verdict = url_verdicts.get(url)
+            if verdict is None:
+                # 无 url 条目（结构性条目）直接探
+                try:
+                    verdict = CHECKERS.get(rec["type"], check_book)(rec)
+                except Exception:  # noqa: BLE001
+                    verdict = "dead"
+                if verdict not in ("valid", "flaky", "dead"):
+                    verdict = "valid" if verdict else "dead"
         rec["last_check"] = now_iso()
         if verdict == "valid":
             rec["status"] = "valid"
@@ -1410,7 +1499,10 @@ def cmd_validate(batch=400, types=None, all_=False, flaky_only=False):
         print(f"[del] 失效自动删除 {len(dead)} 条（墓碑保护 {TOMBSTONE_DAYS} 天）")
 
     save_store(store)
-    print(f"[done] 绿 {ok_n} / 黄 {yellow_n} / 红(站点不可达) {dead_n}，耗时 {time.time() - started:.0f}s")
+    msg = f"[done] 绿 {ok_n} / 黄 {yellow_n} / 红(站点不可达) {dead_n}"
+    if skip_n:
+        msg += f" / 抽验继承 {skip_n}"
+    print(msg + f"，耗时 {time.time() - started:.0f}s")
 
 
 # --------------------------------------------------------------------------- #
@@ -1702,7 +1794,11 @@ def main():
     p_validate.add_argument("--all", dest="validate_all", action="store_true",
                             help="全量验证：无视 15 天有效期，所有条目重新探活")
     p_validate.add_argument("--flaky", dest="validate_flaky", action="store_true",
-                            help="定向修复：仅重探标黄(flaky)条目，源站复活的翻成 valid")
+                           help="定向修复：仅重探标黄(flaky)条目，源站复活的翻成 valid")
+    p_validate.add_argument("--sample", dest="validate_sample", type=int, default=8,
+                           help="上游级抽验：大桶随机抽 N 条真探，达标则桶内其余放行继承 valid（0 关闭）")
+    p_validate.add_argument("--sample-ratio", dest="validate_sample_ratio", type=float, default=0.8,
+                           help="抽验放行门槛：抽样中 valid 占比 >= 该值才放行（默认 0.8）")
     sub.add_parser("export")
     sub.add_parser("status")
     p_ingest = sub.add_parser("ingest", help="入库用户上传条目")
@@ -1714,7 +1810,9 @@ def main():
         cmd_fetch(args.force, args.skip_known)
     elif args.cmd == "validate":
         cmd_validate(args.batch, args.vtypes or None, all_=args.validate_all,
-                     flaky_only=args.validate_flaky)
+                     flaky_only=args.validate_flaky,
+                     upstream_sample=args.validate_sample,
+                     pass_ratio=args.validate_sample_ratio)
     elif args.cmd == "export":
         cmd_export()
     elif args.cmd == "status":

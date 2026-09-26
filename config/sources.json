@@ -7,15 +7,15 @@
   "recheck_hours": {
     "book": 360,
     "subscribe": 360,
-      "tvbox": 360,
-      "iptv": 360,
-      "collect": 360,
-      "videosite": 360,
-      "music": 360,
-      "magnet": 360,
-      "vparse": 360,
-      "localpkg": 360
-    },
+    "tvbox": 360,
+    "iptv": 360,
+    "collect": 360,
+    "videosite": 360,
+    "music": 360,
+    "magnet": 360,
+    "vparse": 360,
+    "localpkg": 360
+  },
   "upstreams": [
     {
       "name": "XIU2·书源",
@@ -440,13 +440,15 @@
       "name": "IPTV·CCSH全量",
       "url": "https://raw.githubusercontent.com/CCSH/IPTV/main/live.m3u",
       "type": "iptv",
-      "verify_daily": true
+      "verify_daily": true,
+      "trusted": true
     },
     {
       "name": "IPTV·CCSH精简",
       "url": "https://raw.githubusercontent.com/CCSH/IPTV/main/live_lite.m3u",
       "type": "iptv",
-      "verify_daily": false
+      "verify_daily": false,
+      "trusted": true
     },
     {
       "name": "音源·洛雪·xinghai",
