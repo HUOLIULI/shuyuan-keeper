@@ -812,6 +812,12 @@ def merge_items(store, items, stype, origin, skip_known=False):
                 # 已拉取过：只补 origins，不重合并、不覆盖、不重置校验状态
                 if origin not in rec["origins"]:
                     rec["origins"].append(origin)
+                # 可信上游：既有的 pending 条目直接翻 valid（上游带全量活性验证能力，
+                # 跳过逐条探活；15 天有效期后 validate 仍会重验）
+                if trusted and rec.get("status") == "pending":
+                    rec["status"] = "valid"
+                    rec["last_check"] = now_iso()
+                    rec["fail_count"] = 0
                 continue
             # 非 skip 模式：版本升级或条目失效时重置为待验证
             if origin not in rec["origins"]:
