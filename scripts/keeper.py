@@ -39,6 +39,21 @@ import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+# 全局共享 Session：连接池复用 TCP/TLS，批量验证提速显著
+_SESSION = None
+
+def get_session():
+    global _SESSION
+    if _SESSION is None:
+        from requests.adapters import HTTPAdapter
+        from urllib3.util.retry import Retry
+        _SESSION = requests.Session()
+        retry = Retry(total=1, backoff_factor=0.3, status_forcelist=[502, 503, 504])
+        adapter = HTTPAdapter(max_retries=retry, pool_connections=64, pool_maxsize=64)
+        _SESSION.mount("http://", adapter)
+        _SESSION.mount("https://", adapter)
+    return _SESSION
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 DOCS = ROOT / "docs"
@@ -55,7 +70,7 @@ DEFAULTS = {
     "workers": 12,
     "fail_limit": 3,
     "fetch_gap_days": 8,
-    "validate_workers": 16,
+    "validate_workers": 32,
     "recheck_hours": {
         "book": 360, "subscribe": 360, "tvbox": 360, "iptv": 360,
         "collect": 360, "videosite": 360, "music": 360,
@@ -84,10 +99,8 @@ FETCH_GAP_DAYS = 8
 # 拉取周期（秒）：默认 8 天，可由 config fetch_gap_days / fetch_gap_hours 覆盖
 FETCH_GAP = FETCH_GAP_DAYS * 86400
 # 校验并发数：URL 去重后的独立 URL 用线程池并发探活
-VALIDATE_WORKERS = 24
+VALIDATE_WORKERS = 32
 RECHECK_HOURS = DEFAULTS["recheck_hours"]
-# 校验并发数：URL 去重后的独立 URL 用线程池并发探活
-VALIDATE_WORKERS = 24
 # 失效条目标墓碑后，多少天内不再重新入库；过期后允许上游再次带回来
 TOMBSTONE_DAYS = 30
 # 已验证 valid 的源有效期（天）：期内不重复检验，到期后由下次 validate 重新探活
@@ -251,7 +264,7 @@ def site_alive(url, use_cache=True):
     for base in candidates:
         for verify in (True, False):
             try:
-                resp = requests.get(base, headers={"User-Agent": UA}, timeout=alive_to,
+                resp = get_session().get(base, headers={"User-Agent": UA}, timeout=alive_to,
                                     allow_redirects=True, stream=True, verify=verify)
                 resp.close()
                 _ALIVE_CACHE[key] = True
@@ -287,7 +300,7 @@ def http_get(url, timeout=8, headers=None, allow_redirects=True, binary=False):
     # CI（GitHub runner 海外）访问国内站慢，放宽读超时上限
     read_cap = int(os.environ.get("KEEPER_READ_TIMEOUT", 8))
     try:
-        resp = requests.get(
+        resp = get_session().get(
             url,
             headers=headers or {"User-Agent": UA},
             timeout=(5, min(timeout, read_cap)),
@@ -310,7 +323,7 @@ def fetch_json_text(url, timeout=40):
     声明的 charset 依次兜底解码，彻底避免 GBK 等非 UTF-8 上游 JSON 解析失败。
     """
     try:
-        resp = requests.get(url, headers={"User-Agent": UA},
+        resp = get_session().get(url, headers={"User-Agent": UA},
                             timeout=(5, min(timeout, 30)), allow_redirects=True)
         if resp.status_code != 200:
             return None

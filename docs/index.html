@@ -214,8 +214,9 @@
   /* PeekPro 羊壳订阅面板 */
   .peek-wrap{margin-top:12px}
   .peek-stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-  .peek-stat{flex:1;min-width:90px;background:rgba(8,10,24,.6);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-align:center}
-  .peek-stat b{display:block;font-size:20px;line-height:1.2}
+  .peek-stat{flex:1;min-width:90px;background:linear-gradient(135deg,rgba(8,10,24,.8),rgba(15,20,45,.6));border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;transition:transform .2s,border-color .2s}
+  .peek-stat:hover{transform:translateY(-2px);border-color:var(--line2)}
+  .peek-stat b{display:block;font-size:22px;line-height:1.2;font-weight:800}
   .peek-stat span{font-size:11px;color:var(--muted)}
   .peek-stat.vod b{color:var(--cyan)}
   .peek-stat.live b{color:var(--green)}
@@ -269,7 +270,7 @@
   <div class="hero">
     <div class="badge"><span class="pulse"></span> SHUYUAN · LIVING RESOURCE HUB</div>
     <h1>资源聚合仓库</h1>
-    <p class="sub">      书源 · 订阅源 · TVBox · IPTV · 采集接口 · 影视直连 · 洛雪音源 · 磁力影视 · 影视解析 · 本地包<br>上游日验 + 本仓二次复核 · 失效自动删除 · 隔日交替检验</p>
+    <p class="sub">      书源 · 订阅源 · TVBox · IPTV · 采集接口 · 影视直连 · 洛雪音源 · 磁力影视 · 影视解析 · 本地包<br>上游日验 + 本仓二次复核 · 失效自动删除 · 隔日交替检验 · <span style="color:var(--cyan)">已适配 PeekPro 羊壳</span></p>
   </div>
 
   <div class="dc" id="dc" onclick="this.classList.toggle('open')">

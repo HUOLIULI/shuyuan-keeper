@@ -529,5 +529,5 @@
   ],
   "yckceo_collect_index": [],
   "fetch_gap_days": 8,
-  "validate_workers": 24
+  "validate_workers": 32
 }
