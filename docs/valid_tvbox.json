@@ -8,14 +8,19 @@
    "api": "https://cdn.jsdmirror.com/gh/ouhaibo1980/tvbox@main/py/py_douban.py",
    "searchable": 0,
    "filterable": 0,
-   "changeable": 0
+   "changeable": 0,
+   "quickSearch": 0
   },
   {
    "key": "drpy_js_豆瓣",
    "name": "🔥聚玩盒子4K",
    "type": 3,
    "api": "https://jihulab.com/yydfys/yydf/-/raw/main/yydf/lib/drpy2.min.js",
-   "ext": "https://jihulab.com/yydfys/yydf/-/raw/main/yydf/lib/douban.js"
+   "ext": "https://jihulab.com/yydfys/yydf/-/raw/main/yydf/lib/douban.js",
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
   },
   {
    "key": " 在线┃直播2",
@@ -27,7 +32,11 @@
    "style": {
     "type": "rect",
     "ratio": 1.68
-   }
+   },
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
   },
   {
    "key": "初恋资源",
@@ -35,7 +44,9 @@
    "type": 1,
    "api": "https://video.adminqt.cn/api.php/provide/vod/",
    "searchable": 1,
-   "quickSearch": 1
+   "quickSearch": 1,
+   "filterable": 0,
+   "changeable": 0
   },
   {
    "key": "ikunzy",
@@ -55,7 +66,9 @@
     "恐怖片",
     "剧情片",
     "战争片"
-   ]
+   ],
+   "quickSearch": 0,
+   "changeable": 0
   },
   {
    "key": "豪华资源",
@@ -90,7 +103,9 @@
     "日韩综艺",
     "港台综艺",
     "欧美综艺"
-   ]
+   ],
+   "filterable": 0,
+   "changeable": 0
   },
   {
    "key": "hnzy",
@@ -110,7 +125,9 @@
     "恐怖片",
     "剧情片",
     "战争片"
-   ]
+   ],
+   "quickSearch": 0,
+   "changeable": 0
   },
   {
    "key": "gszy",
@@ -130,7 +147,9 @@
     "恐怖片",
     "剧情片",
     "战争片"
-   ]
+   ],
+   "quickSearch": 0,
+   "changeable": 0
   },
   {
    "key": "lzzy",
@@ -153,7 +172,9 @@
     "恐怖片",
     "剧情片",
     "战争片"
-   ]
+   ],
+   "quickSearch": 0,
+   "changeable": 0
   },
   {
    "key": "snzy",
@@ -173,7 +194,9 @@
     "恐怖片",
     "剧情片",
     "战争片"
-   ]
+   ],
+   "quickSearch": 0,
+   "changeable": 0
   },
   {
    "key": "иҷҺзүҷзӣҙж’ӯjs",
@@ -188,7 +211,8 @@
    "playerType": "2",
    "searchable": 0,
    "quickSearch": 0,
-   "changeable": 0
+   "changeable": 0,
+   "filterable": 0
   },
   {
    "key": "py_apple",
@@ -197,7 +221,8 @@
    "api": "http://fmys.top/py/apple.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "bilibili",
@@ -206,7 +231,8 @@
    "api": "https://11405.kstore.space/xiaye/js/е“”е“©еҗҲйӣҶ.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "зҲұеҗ¬йҹід№җ",
@@ -215,7 +241,8 @@
    "api": "https://pizazz.us.ci/other/py/зҲұеҗ¬йҹід№җ.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "зҪ‘з»ңзӣҙж’ӯ",
@@ -224,7 +251,8 @@
    "api": "https://ygbh.site/max/py/зҪ‘з»ңзӣҙж’ӯ.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "еұұжҘӮеҪұи§Ҷ",
@@ -233,7 +261,8 @@
    "api": "https://chigua.eu.org/py/еұұжҘӮеҪұи§Ҷ.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "YK",
@@ -242,7 +271,8 @@
    "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/дјҳй…·и§Ҷйў‘.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "DSYS",
@@ -251,7 +281,8 @@
    "api": "https://raw.githubusercontent.com/yuanwangokk-1/TV-BOX/main/зәҜзҰҸеҲ©/plugin/adult/DSYS.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "py_douban",
@@ -269,7 +300,8 @@
    "api": "https://7337.kstore.vip/xw/py/jieyingshi.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "еұұжңЁ",
@@ -278,7 +310,8 @@
    "api": "https://fastlink.cokey.xyz/f/p6rZcj/%E5%B1%B1%E6%9C%89%E6%9C%A8%E5%85%AE.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "й«ҳжё…зӮ№ж’ӯ",
@@ -287,7 +320,8 @@
    "api": "https://pan.29o.cn/down.php/323eba3848f29250c407a014113c784a.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "е’•еҷң",
@@ -296,7 +330,8 @@
    "api": "https://mpimg.cn/down.php/2542f809bfd6602273ad747965ce77f9.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "4k-av",
@@ -305,7 +340,8 @@
    "api": "https://pan.szfx.top/down.php/0c67ff200a5ff8b2a2e95a14d3b80563.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "е“”е№•",
@@ -314,7 +350,8 @@
    "api": "https://meow.668yun.top/api/s/unDwdM3nZBachMqnrGmG3bQDcvsubkpb/е“”е“©еҪұи§Ҷ.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "ж–ҮжүҚеҪұи§Ҷ",
@@ -323,7 +360,8 @@
    "api": "http://47.96.82.41:5188/svip/py/ж–ҮжүҚеҪұи§Ҷ.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "зҹӯеү§пҪңиҒҡеҗҲ",
@@ -332,7 +370,8 @@
    "api": "http://nn.4688888.xyz/py/зҹӯеү§иҒҡеҗҲ.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "дәәдәәеҪұи§Ҷ",
@@ -341,7 +380,8 @@
    "api": "https://17264.kstore.space/дәәдәәеҪұи§Ҷ.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "жһ«еҸ¶еҪұйҷў.py2",
@@ -350,7 +390,8 @@
    "api": "https://raw.giteeusercontent.com/dobebly/img/raw/master/img/mc.png?sb.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "py_4KеҪұйҷў",
@@ -359,7 +400,8 @@
    "api": "https://bitbucket.org/guot55/ygbh/raw/main/pro/py/4KеҪұйҷў.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "иҒҡеҗҲ",
@@ -368,7 +410,8 @@
    "api": "https://gitee.com/hulanlu/04/raw/master/py/иҒҡеҗҲ.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "еҪұи§ҶиҒҡеҗҲдә”еҗҲдёҖV2.py",
@@ -377,7 +420,8 @@
    "api": "http://150.158.52.248/tgyg/lib/еҪұи§ҶиҒҡеҗҲдә”еҗҲдёҖV2.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "csp_HongGuo",
@@ -386,7 +430,8 @@
    "api": "https://s3plus.meituan.net/opapisdk/op_ticket_1_5673241091_1788770930556_IMPGdz5q.py",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "feifan",
@@ -395,7 +440,8 @@
    "api": "http://ffzy5.tv/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "wolong",
@@ -404,7 +450,8 @@
    "api": "https://wolongzyw.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "zuida",
@@ -413,7 +460,8 @@
    "api": "https://api.zuidapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "baiduyun",
@@ -422,7 +470,8 @@
    "api": "https://api.apibdzy.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "baofeng",
@@ -431,7 +480,8 @@
    "api": "https://bfzyapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "jisu",
@@ -440,7 +490,8 @@
    "api": "https://jszyapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "tianya",
@@ -449,7 +500,8 @@
    "api": "https://tyyszy.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "wujin",
@@ -458,7 +510,8 @@
    "api": "https://api.wujinapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "modu",
@@ -467,7 +520,8 @@
    "api": "https://www.mdzyapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "sanliuling",
@@ -476,7 +530,8 @@
    "api": "https://360zy.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "dytt",
@@ -485,7 +540,8 @@
    "api": "http://caiji.dyttzyapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "ruyi",
@@ -494,7 +550,8 @@
    "api": "https://cj.rycjapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "wangwang",
@@ -503,7 +560,8 @@
    "api": "https://wwzy.tv/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "youku",
@@ -512,7 +570,8 @@
    "api": "https://api.ukuapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "huya",
@@ -521,7 +580,8 @@
    "api": "https://www.huyaapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "xinlang",
@@ -530,7 +590,8 @@
    "api": "http://api.xinlangapi.com/xinlangapi.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "jiangyu",
@@ -539,7 +600,8 @@
    "api": "https://jyzyapi.com/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "aidan",
@@ -548,7 +610,8 @@
    "api": "https://lovedan.net/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "moduzy",
@@ -557,7 +620,8 @@
    "api": "https://www.moduzy.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "feifanapi",
@@ -566,7 +630,8 @@
    "api": "https://api.ffzyapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "feifancj",
@@ -575,7 +640,8 @@
    "api": "http://cj.ffzyapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "feifan1",
@@ -584,7 +650,8 @@
    "api": "http://ffzy1.tv/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "wolong2",
@@ -593,7 +660,8 @@
    "api": "https://collect.wolongzyw.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "baofeng2",
@@ -602,7 +670,8 @@
    "api": "https://app.bfzyapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "wujin2",
@@ -611,7 +680,8 @@
    "api": "https://api.wujinapi.me/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "tianyazy",
@@ -620,7 +690,8 @@
    "api": "https://tyyszyapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "yilingba2",
@@ -629,7 +700,8 @@
    "api": "https://api.1080zyku.com/inc/apijson.php",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "uku88",
@@ -638,7 +710,8 @@
    "api": "https://api.ukuapi88.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "wujincc",
@@ -647,7 +720,8 @@
    "api": "https://api.wujinapi.cc/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "yaya",
@@ -656,7 +730,8 @@
    "api": "https://cj.yayazy.net/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "wujinnet",
@@ -665,7 +740,8 @@
    "api": "https://api.wujinapi.net/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "wangwangapi",
@@ -674,7 +750,8 @@
    "api": "https://api.wwzy.tv/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "zuidame",
@@ -683,7 +760,8 @@
    "api": "http://zuidazy.me/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "yinghua",
@@ -692,7 +770,8 @@
    "api": "https://m3u8.apiyhzy.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "bubugao",
@@ -701,7 +780,8 @@
    "api": "https://api.yparse.com/api/json",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "niuniu",
@@ -710,7 +790,8 @@
    "api": "https://api.niuniuzy.me/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "maotai",
@@ -719,7 +800,8 @@
    "api": "https://caiji.maotaizy.cc/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "dbzy",
@@ -728,7 +810,8 @@
    "api": "https://dbzy.tv/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "subo",
@@ -737,7 +820,8 @@
    "api": "https://subocaiji.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "jinying",
@@ -746,7 +830,8 @@
    "api": "https://jinyingzy.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "shandian",
@@ -755,7 +840,8 @@
    "api": "https://sdzyapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "piaoling",
@@ -764,7 +850,8 @@
    "api": "https://p2100.net/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "modudongman",
@@ -773,7 +860,8 @@
    "api": "https://caiji.moduapi.cc/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "hongniu3",
@@ -782,7 +870,8 @@
    "api": "https://www.hongniuzy3.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "suonisd",
@@ -791,7 +880,8 @@
    "api": "https://xsd.sdzyapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "pt",
@@ -800,7 +890,8 @@
    "api": "https://xy.183933.xyz/php/pt.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "官采",
@@ -809,7 +900,8 @@
    "api": "https://cj.jusj.top/api.php/provide/vod/?ac=list",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "说明",
@@ -818,7 +910,8 @@
    "api": "https://0.12yue.de5.net/tvbox/x/lib/多地址说明.json",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "🚨快车",
@@ -827,7 +920,8 @@
    "api": "https://caiji.kczyapi.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "🚨飞速",
@@ -836,7 +930,8 @@
    "api": "https://www.feisuzyapi.com/api.php/provide/vod/?ac=list",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "🚨淘片",
@@ -845,7 +940,8 @@
    "api": "https://taopianapi.com/cjapi/mc/vod/json.html",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "🚨海外看",
@@ -854,7 +950,8 @@
    "api": "https://haiwaikan.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "slyzy",
@@ -863,7 +960,8 @@
    "api": "https://xxavs.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "nxxzy",
@@ -872,7 +970,8 @@
    "api": "https://naixxzy.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "玉兔资源",
@@ -881,7 +980,8 @@
    "api": "https://apiyutu.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "精品资源",
@@ -890,7 +990,8 @@
    "api": "https://www.jingpinx.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "夜色资源",
@@ -899,7 +1000,8 @@
    "api": "https://www.vnzyz.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "辣椒資源",
@@ -908,7 +1010,8 @@
    "api": "http://apilj.com/api.php/provide/vod/at/json/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "鯊魚資源",
@@ -917,7 +1020,8 @@
    "api": "https://shayuapi.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "155資源",
@@ -926,7 +1030,8 @@
    "api": "https://155api.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "滴滴资源",
@@ -935,7 +1040,8 @@
    "api": "https://api.ddapi.cc/api.php/provide/vod/at/json",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "蕃茄",
@@ -944,7 +1050,8 @@
    "api": "https://fqzy.me//api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "红桃🍑",
@@ -953,7 +1060,8 @@
    "api": "https://apidanaizi.com/api.php/provide/vod/?ac=list",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "jkun资源",
@@ -962,7 +1070,8 @@
    "api": "https://jkunzyapi.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "CK资源",
@@ -971,7 +1080,8 @@
    "api": "https://ckzy.me/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "🔞七天资源🌈",
@@ -980,7 +1090,8 @@
    "api": "https://8day.icu/api.php/provide/vod/at/json",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "百万",
@@ -989,7 +1100,8 @@
    "api": "https://api.bwzyz.com/api.php/provide/vod/at/json",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "*AIvin",
@@ -998,7 +1110,8 @@
    "api": "http://lbapiby.com/api.php/provide/vod/at/xml",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "大地采集",
@@ -1007,7 +1120,8 @@
    "api": "https://dadiapi.com/apple_m3u8.php",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "*番号资源",
@@ -1016,7 +1130,8 @@
    "api": "http://fhapi9.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "黄色仓库|AV",
@@ -1025,7 +1140,8 @@
    "api": "https://hsckzy.vip/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "桃花资源|AV",
@@ -1034,7 +1150,8 @@
    "api": "https://thzy1.me/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "乐播资源|AV",
@@ -1043,7 +1160,8 @@
    "api": "https://lbapi9.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "lsb资源|AV",
@@ -1052,7 +1170,8 @@
    "api": "https://apilsbzy1.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "91",
@@ -1061,7 +1180,8 @@
    "api": "https://91md.me/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "MV_vod",
@@ -1070,7 +1190,8 @@
    "api": "https://mv.wogg.link/mv/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "黑木耳",
@@ -1079,7 +1200,8 @@
    "api": "https://json02.heimuer.xyz/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "茅台",
@@ -1088,7 +1210,8 @@
    "api": "https://mtzy.me/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "柚子资源",
@@ -1097,7 +1220,8 @@
    "api": "https://api.yzzy-api.com/inc/api.php/provide/vod/at/xml",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "华为资源",
@@ -1106,7 +1230,8 @@
    "api": "https://cjhwba.com/api.php/provide/vod/?ac=list",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "忆梦影视",
@@ -1115,7 +1240,8 @@
    "api": "https://www.gnpt.net/api.php/provide/vod/?ac=list",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "暴风资源",
@@ -1124,7 +1250,8 @@
    "api": "http://by.bfzyapi.com/api.php/provide/vod/at/xml",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "IKUN资源",
@@ -1133,7 +1260,8 @@
    "api": "https://www.ikunzy.org/api.php/provide/vod/at/json",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "OK资源",
@@ -1142,7 +1270,8 @@
    "api": "https://api.okzy.org/api.php/provide/vod/from/okm3u8/at/xml",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "刺桐资源",
@@ -1151,7 +1280,8 @@
    "api": "http://pg.cttv.vip/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "优质资源",
@@ -1160,7 +1290,8 @@
    "api": "https://api.yyzy-tv.vip/inc/api_mac10_all.php",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "猫眼资源",
@@ -1169,7 +1300,8 @@
    "api": "https://api.maoyanapi.top/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "飘花影院",
@@ -1178,7 +1310,8 @@
    "api": "http://www.ahjiuman.com/api.php/provide/vod/at/json",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "天翼资源",
@@ -1187,7 +1320,8 @@
    "api": "https://www.911ysw.top/tianyi.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "爱奇艺资源",
@@ -1196,7 +1330,8 @@
    "api": "https://iqiyizyapi.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "789资源",
@@ -1205,7 +1340,8 @@
    "api": "http://www.caiji.cyou/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "建安资源",
@@ -1214,7 +1350,8 @@
    "api": "http://154.219.117.232:9981/jacloudapi.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "wsycj",
@@ -1223,7 +1360,8 @@
    "api": "https://api.wsyzy.net/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "旺旺短剧",
@@ -1232,7 +1370,8 @@
    "api": "https://zhangqun1818.serv00.net/ww.php",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "ds05",
@@ -1241,7 +1380,8 @@
    "api": "http://y.ds05.cn/zyapi.php",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "php_索尼资源",
@@ -1250,7 +1390,8 @@
    "api": "https://suonizy.com/api.php/provide/vod/from/snm3u8/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "php_最大资源",
@@ -1259,7 +1400,8 @@
    "api": "https://www.zuidazy.co/api.php/provide/vod/from/zuidam3u8/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "php_如意资源",
@@ -1268,7 +1410,8 @@
    "api": "https://ryzy.tv/api.php/provide/vod/from/rym3u8/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "php_豪华资源",
@@ -1277,7 +1420,8 @@
    "api": "https://huohuzy.com/api.php/provide/vod/from/hhm3u8/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "php_虎牙资源",
@@ -1286,7 +1430,8 @@
    "api": "https://huyazy.net/api.php/provide/vod/from/hym3u8/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "php_影剧资源",
@@ -1295,7 +1440,8 @@
    "api": "https://yjzy.me/api.php/provide/vod/from/mtm3u8/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "php_猫眼资源",
@@ -1304,7 +1450,8 @@
    "api": "https://www.maoyanzy.com/api.php/provide/vod/from/mym3u8/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "php_OK资源",
@@ -1313,7 +1460,8 @@
    "api": "https://okzyw.cc/api.php/provide/vod/from/okm3u8/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "php_鸭鸭资源",
@@ -1322,7 +1470,8 @@
    "api": "https://yayazy2.com/api.php/provide/vod/from/yym3u8/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "php_爱奇艺资源",
@@ -1331,7 +1480,8 @@
    "api": "https://www.iqiyizy.com/api.php/provide/vod/from/iqym3u8/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "php_天空资源",
@@ -1340,7 +1490,8 @@
    "api": "https://api.tiankongapi.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "49zy",
@@ -1349,7 +1500,8 @@
    "api": "https://49zyw.com/api.php/provide/vod/?ac=list",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "非凡",
@@ -1358,7 +1510,8 @@
    "api": "http://ffzy.tv/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "天翼影视",
@@ -1367,7 +1520,8 @@
    "api": "http://7.qqqtv.top/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "csp_xml_天空",
@@ -1376,7 +1530,8 @@
    "api": "https://m3u8.tiankongapi.com/api.php/provide/vod/from/tkm3u8/?ac=list",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "csp_xml_鱼乐资源",
@@ -1385,7 +1540,8 @@
    "api": "https://api.yulecj.com/api.php/provide/vod/?ac=list",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "csp_xml_fox",
@@ -1394,7 +1550,8 @@
    "api": "https://api.foxzyapi.com/api.php/provide/vod/?ac=list",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "快看资源",
@@ -1403,7 +1560,8 @@
    "api": "https://kuaikan-api.com/api.php/provide/vod/?ac=list",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "t4佬",
@@ -1412,7 +1570,8 @@
    "api": "https://t4.secan.icu/vod?sites=all&ali_token=0c55c9f1c5cb4327ae2e51423276bb1e",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "每天看看",
@@ -1421,7 +1580,8 @@
    "api": "http://47.113.126.237:1234/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "考拉资源",
@@ -1430,7 +1590,8 @@
    "api": "https://ikaola.tv/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "土狗 360",
@@ -1439,7 +1600,8 @@
    "api": "http://360.tgzy.cc/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "诺讯资源",
@@ -1448,7 +1610,8 @@
    "api": "http://caiji.nxflv.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "影图影视",
@@ -1457,7 +1620,8 @@
    "api": "https://cj.vodimg.top/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "盘看影视",
@@ -1466,7 +1630,8 @@
    "api": "http://tvcaiji.pankk.cn/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "小鸟动漫",
@@ -1475,7 +1640,8 @@
    "api": "http://xydm.baicai.buzz/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "海玉影视",
@@ -1484,7 +1650,8 @@
    "api": "http://tv2.hykjtv.cn/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "MBO 影视",
@@ -1493,7 +1660,8 @@
    "api": "https://www.mbomovie.com/api.php/provide/vod/at/xml/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "快龙资源",
@@ -1502,7 +1670,8 @@
    "api": "https://lz.118318.xyz/api.php/provide/vod/at/xml",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "红牛资源",
@@ -1511,7 +1680,8 @@
    "api": "https://www.hongniuzy4.com/api.php/provide/vod/at/xml",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "三八资源",
@@ -1520,7 +1690,8 @@
    "api": "https://vod38.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "新黑木耳",
@@ -1529,7 +1700,8 @@
    "api": "https://json.heimuer.xyz/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "无忧资源",
@@ -1538,7 +1710,8 @@
    "api": "https://www.wyvod.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "秒播资源",
@@ -1547,7 +1720,8 @@
    "api": "https://api.zeqaht.com/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "糖豆广场舞",
@@ -1556,7 +1730,8 @@
    "api": "https://kk.666888.club/vod/cibn_api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "豆瓣影视",
@@ -1565,7 +1740,8 @@
    "api": "https://caiji.dbzy5.com/api.php/provide/vod/from/dbm3u8/at/json/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "如意影视",
@@ -1574,7 +1750,8 @@
    "api": "https://cj.rytvapi.com/api.php/provide/vod/from/rym3u8/at/json/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "西瓜影视",
@@ -1583,7 +1760,8 @@
    "api": "https://caiji.xgzyapi.com/api.php/provide/vod/from/xiguam3u8/at/json/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "快车影视",
@@ -1592,7 +1770,8 @@
    "api": "https://caiji.kuaichezy.org/api.php/provide/vod/from/kcm3u8/at/json/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "OK影视",
@@ -1601,7 +1780,8 @@
    "api": "https://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/json/",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "松视开通1",
@@ -1610,7 +1790,8 @@
    "api": "https://www.xrbsp.com/api/xml.php",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "松视开通2",
@@ -1619,7 +1800,8 @@
    "api": "https://www.gdlsp.com/api/xml.php",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "key": "hav6.beauty",
@@ -1628,7 +1810,8 @@
    "api": "https://www.pgxdy.com/api/xml.php",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 1
+   "filterable": 1,
+   "changeable": 0
   },
   {
    "api": "https://newtv.ggff.net/douban?token=P69Phb_y",
@@ -1636,19 +1819,30 @@
    "key": "豆瓣首页",
    "name": "豆瓣首页",
    "searchable": 0,
-   "type": 4
+   "type": 4,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
   },
   {
    "key": "py_官方采集789",
    "name": "官方采集M",
    "type": 4,
-   "api": "https://py.doube.eu.org/v2/spider?site=006849a2c19a6be413be5017be468c63"
+   "api": "https://py.doube.eu.org/v2/spider?site=006849a2c19a6be413be5017be468c63",
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
   },
   {
    "key": "php_官方资源",
    "name": "🍎 官方资源(PHP)",
    "type": 4,
-   "api": "https://php.doube.eu.org/spider/php/官方资源.php"
+   "api": "https://php.doube.eu.org/spider/php/官方资源.php",
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
   },
   {
    "key": "T4",
@@ -1657,7 +1851,8 @@
    "api": "https://service-59u7dsoa-1308372858.gz.apigw.tencentcs.com/release/vod?ali_token=https://ju990c.i996.me/TS1/token.json&timeout=10",
    "searchable": 1,
    "quickSearch": 1,
-   "filterable": 0
+   "filterable": 0,
+   "changeable": 0
   }
  ],
  "lives": [],

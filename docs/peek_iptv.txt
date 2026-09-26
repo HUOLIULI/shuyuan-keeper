@@ -1312,6 +1312,7 @@ TVBS新闻台,http://31.43.191.125:8080/restream/restream/34818
 中天新闻台,http://222.128.55.152:9080/live/fc.m3u8
 中天新闻台,http://iactive-clink.com:8081/live/111ztxw.m3u8
 中天新闻台,http://flv3948069e.live.126.net/live/dabadqdszbtest78612.flv
+中天新闻台,rtmp://home.aceimage.cn/live/xiangjiaoge-ztxw#http://rihou.cc:555/tv/中天新闻
 中视新闻,https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV09.m3u8
 民视新闻台,https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV17.m3u8
 民视新闻台,http://38.64.72.148/hls/modn/list/4012/playlist.m3u8
