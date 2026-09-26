@@ -428,6 +428,32 @@
       "type": "localpkg",
       "kind": "site_alive",
       "verify_daily": false
+    },
+    {
+      "name": "音源·MusicFree·maotoumao",
+      "url": "https://raw.githubusercontent.com/maotoumao/MusicFreePlugins/master/plugins.json",
+      "type": "music",
+      "kind": "musicfree",
+      "verify_daily": false
+    },
+    {
+      "name": "IPTV·CCSH全量",
+      "url": "https://raw.githubusercontent.com/CCSH/IPTV/main/live.m3u",
+      "type": "iptv",
+      "verify_daily": true
+    },
+    {
+      "name": "IPTV·CCSH精简",
+      "url": "https://raw.githubusercontent.com/CCSH/IPTV/main/live_lite.m3u",
+      "type": "iptv",
+      "verify_daily": false
+    },
+    {
+      "name": "音源·洛雪·xinghai",
+      "url": "https://raw.githubusercontent.com/cdyUuu/lx-music-xinghai-source/main/xinghai-music-source.js",
+      "type": "music",
+      "kind": "single",
+      "verify_daily": false
     }
   ],
   "yckceo_index": [

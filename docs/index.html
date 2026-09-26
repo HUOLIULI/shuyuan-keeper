@@ -70,42 +70,50 @@
     text-shadow:0 0 40px rgba(51,224,255,.25);
   }
   .sub{color:var(--muted);font-size:13.5px;margin:0 0 4px;line-height:1.7}
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:12px;margin:24px 0 8px}
-  .stat{
-    position:relative;background:var(--card);backdrop-filter:blur(10px);
-    border:1px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center;
-    overflow:hidden;transition:transform .25s ease,border-color .25s ease;
-  }
-  .stat:hover{transform:translateY(-3px);border-color:var(--line2)}
-  .stat::before{content:"";position:absolute;inset:0;
-    background:radial-gradient(120px 60px at 50% 0%,rgba(91,140,255,.22),transparent 70%);
-    opacity:0;transition:opacity .3s}
-  .stat:hover::before{opacity:1}
-  .stat b{display:block;font-size:24px;line-height:1.25;font-weight:800;
-    background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .stat span{font-size:12px;color:var(--muted);letter-spacing:.05em}
-  .tabs{display:flex;gap:8px;margin:22px 0 4px;flex-wrap:wrap}
+  /* 资源目录：统计 + 标签页合并成一张紧凑卡片 */
+  .hub{background:var(--card);backdrop-filter:blur(14px);border:1px solid var(--line);
+    border-radius:18px;padding:16px 18px;margin:22px 0 6px;
+    box-shadow:0 12px 40px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.02);animation:fadein .4s ease}
+  .hub-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .hub-badge{font-size:11px;letter-spacing:.14em;color:var(--cyan);text-transform:uppercase;
+    border:1px solid var(--line2);padding:3px 10px;border-radius:999px;background:rgba(51,224,255,.08)}
+  .hub-sub{font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+  .hub-sub span{color:var(--cyan)}
+  /* 标签页：可横滑的 chips，每个标签自带有效数；全局统计(标黄/已删/上游)作为尾部信息格并入同一行 */
+  .tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0;scrollbar-width:thin;align-items:stretch}
+  .tabs::-webkit-scrollbar{height:6px}
+  .tabs::-webkit-scrollbar-thumb{background:var(--line2);border-radius:6px}
   .tab{
-    position:relative;
-    padding:9px 16px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(8px);
-    border-radius:10px;cursor:pointer;font-size:14px;user-select:none;color:var(--text);
-    transition:all .22s ease;letter-spacing:.02em;overflow:hidden;
+    position:relative;flex:none;
+    display:inline-flex;flex-direction:column;justify-content:center;gap:2px;
+    padding:9px 15px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(8px);
+    border-radius:11px;cursor:pointer;font-size:13px;user-select:none;color:var(--text);
+    transition:all .22s ease;letter-spacing:.02em;overflow:hidden;min-width:62px;
   }
   .tab::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
     background:var(--grad);opacity:0;transition:opacity .22s ease}
   .tab:hover{border-color:var(--line2);transform:translateY(-2px)}
+  .tab b{font-size:16px;line-height:1;font-weight:800;color:var(--text)}
+  .tab.active b{color:#fff}
+  .tab em{font-style:normal;font-size:10px;color:var(--muted);letter-spacing:.03em}
+  .tab.active em{color:var(--cyan)}
   .tab.active{
     background:linear-gradient(135deg,rgba(51,224,255,.22),rgba(168,120,255,.22));
-    border-color:var(--cyan);color:#fff;
+    border-color:var(--cyan);
     box-shadow:0 0 0 1px rgba(51,224,255,.4),0 6px 24px rgba(51,224,255,.25),inset 0 0 18px rgba(51,224,255,.12);
     text-shadow:0 0 10px rgba(51,224,255,.6);
   }
   .tab.active::before{opacity:1}
-  .tab[data-tab=upload].active{
+  /* 尾部全局统计：不可点击的信息格，与标签页同一行排布 */
+  .tab.meta{cursor:default}
+  .tab.meta:hover{transform:none;border-color:var(--line)}
+  .tab.meta b{background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tab.up{border-color:var(--green);color:var(--green)}
+  .tab.up.active{
     background:linear-gradient(135deg,rgba(45,255,155,.20),rgba(51,224,255,.20));
     border-color:var(--green);box-shadow:0 6px 24px rgba(45,255,155,.25);text-shadow:0 0 10px rgba(45,255,155,.6);
   }
-  .tab[data-tab=upload].active::before{background:var(--grad2);opacity:1}
+  .tab.up.active::before{background:var(--grad2);opacity:1}
   .panel{
     position:relative;background:var(--card);backdrop-filter:blur(14px);
     border:1px solid var(--line);border-radius:18px;padding:22px 24px;margin:18px 0;
@@ -203,8 +211,6 @@
   .dc li{margin:4px 0}
   .dc a{color:var(--cyan);text-decoration:none}
   .dc a:hover{text-decoration:underline}
-  .tsline{color:var(--muted);font-size:12px;margin-top:14px;line-height:1.7}
-  .tsline span{color:var(--cyan)}
   /* 分类 chips + 分类徽章：双维度（类别 / 源格式）通用 */
   .dim-label{font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:4px 0 4px;user-select:none}
   .cat-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}
@@ -259,20 +265,12 @@
     </div>
   </div>
 
-  <div class="stats" id="stats"></div>
-
-  <div class="tabs">
-    <div class="tab active" data-tab="book">书源</div>
-    <div class="tab" data-tab="subscribe">订阅源</div>
-    <div class="tab" data-tab="tvbox">TVBox</div>
-    <div class="tab" data-tab="iptv">IPTV</div>
-    <div class="tab" data-tab="collect">采集</div>
-    <div class="tab" data-tab="videosite">影视直连</div>
-    <div class="tab" data-tab="music">音源</div>
-    <div class="tab" data-tab="magnet">磁力</div>
-    <div class="tab" data-tab="vparse">影视解析</div>
-    <div class="tab" data-tab="localpkg">本地包</div>
-    <div class="tab" data-tab="upload" style="border-color:var(--green);color:var(--green)">+ 用户上传</div>
+  <div class="hub">
+    <div class="hub-hd">
+      <span class="hub-badge">资源目录</span>
+      <span class="hub-sub">更新于 <span id="ts">-</span> · 隔日交替复检</span>
+    </div>
+    <div class="tabs" id="tabs"></div>
   </div>
 
   <div class="panel" id="tab-book"></div>
@@ -323,7 +321,6 @@
     <h2>上游仓库监控</h2>
     <div class="ups" id="ups"></div>
   </div>
-  <p class="tsline">数据更新于 <span id="ts">-</span> · 站点已失效的条目自动删除（已删 <span id="dead-n">0</span> 条）；仅规则失效但站点仍在的标黄保留 · 有效源 15 天不重复检验，隔日交替复检</p>
 </div>
 <div id="toast"></div>
 
@@ -610,8 +607,14 @@ function showQR(url, title) {
   }
 }
 
-document.querySelectorAll(".tab").forEach(el =>
-  el.addEventListener("click", () => switchTab(el.dataset.tab)));
+function bindTabs() {
+  document.querySelectorAll(".tab[data-tab]").forEach(el => {
+    if (el._bound) return;
+    el._bound = true;
+    el.addEventListener("click", () => switchTab(el.dataset.tab));
+  });
+}
+bindTabs();
 
 // ---------------- 用户上传：本地校验（红黄绿）+ 反馈草案 ----------------
 const TYPE_LABEL = {collect:"采集接口", videosite:"影视直连站", book:"书源", subscribe:"订阅源", tvbox:"TVBox", iptv:"IPTV",
@@ -751,20 +754,10 @@ function downloadSubmit() {
 }
 
 (async () => {
+  let s = null;
   try {
-    const s = await (await fetch("stats.json")).json();
+    s = await (await fetch("stats.json")).json();
     document.getElementById("ts").textContent = s.updated_at || "-";
-    const dn = document.getElementById("dead-n");
-    if (dn) dn.textContent = s.dead_removed == null ? "0" : s.dead_removed;
-    const items = [
-      ["书源", s.valid_book], ["订阅", s.valid_subscribe], ["TVBox", s.valid_tvbox],
-      ["IPTV", s.valid_iptv], ["采集", s.valid_collect], ["影视直连", s.valid_videosite],
-      ["音源", s.valid_music], ["磁力", s.valid_magnet], ["解析", s.valid_vparse], ["本地包", s.valid_localpkg],
-      ["标黄", s.flaky], ["已删除", s.dead_removed],
-      ["上游", `${s.upstreams_alive}/${s.upstreams_total}`]
-    ];
-    document.getElementById("stats").innerHTML =
-      items.map(([k, v]) => `<div class="stat"><b>${v == null ? "-" : v}</b><span>${k}</span></div>`).join("");
   } catch (e) { /* 首次运行前无数据 */ }
 
   try {
@@ -780,6 +773,26 @@ function downloadSubmit() {
   }
 
   TABS.forEach(t => { if (t !== "upload") buildPanel(t); });
+
+  // 标签页 + 全局统计合并成一行：每个资源 tab 显示自己有效数，尾部并入「标黄/已删/上游」全局格
+  const COUNT = {
+    book: s?.valid_book, subscribe: s?.valid_subscribe, tvbox: s?.valid_tvbox,
+    iptv: s?.valid_iptv, collect: s?.valid_collect, videosite: s?.valid_videosite,
+    music: s?.valid_music, magnet: s?.valid_magnet, vparse: s?.valid_vparse,
+    localpkg: s?.valid_localpkg
+  };
+  const resTabs = TABS.filter(t => t !== "upload").map(t => {
+    const n = COUNT[t];
+    return `<div class="tab" data-tab="${t}"><b>${n == null ? "–" : n}</b><em>${LABEL[t]}</em></div>`;
+  }).join("");
+  const metaTabs = `
+    <div class="tab meta"><b>${s?.flaky ?? "–"}</b><em>标黄</em></div>
+    <div class="tab meta"><b>${s?.dead_removed ?? "–"}</b><em>已删除</em></div>
+    <div class="tab meta"><b>${s ? s.upstreams_alive + "/" + s.upstreams_total : "–"}</b><em>上游</em></div>`;
+  document.getElementById("tabs").innerHTML =
+    resTabs + `<div class="tab up" data-tab="upload"><b>＋</b><em>上传</em></div>` + metaTabs;
+
+  bindTabs();
   switchTab("book");
 })();
 </script>

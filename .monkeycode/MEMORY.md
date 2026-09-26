@@ -24,6 +24,14 @@
 - 影视在线源 = 现有 `videosite` 批量（liu673cn/box 的 hccx 规则目录）
 - `loads_lenient` 能解析带 // 注释的 TVBox 配置；`dedup_key` 对 music 按全 URL 去重（同 CDN 多插件）
 
+### flaky(标黄)定向修复
+- flaky=站点还在但规则/流/接口探活失败，会永久标黄保留、不自动删除；只有 dead 累计 fail_limit 才删
+- 修复入口：`python3 -m scripts.keeper validate --flaky --batch 400 --type <book|tvbox|music|iptv|...>`，仅重探 status==flaky 条目，源站复活的翻回 valid，真失效维持/转 dead
+- 修复 skill 在 /root/.codingmatrix/project-tpl/.ai-ready/skills/flaky-repair/SKILL.md（只针对 Legado book / TVBox tvbox / 音源 music 三类）
+- check_iptv 已做 HEAD→GET 双探 + Icy-MetaData，避免 HEAD 405/超时把可播流误判 flaky
+- 本地 fetch 无 GITHUB_TOKEN 时 lxtree/musicflat 音源 [warn] 跳过、数字偏小，Actions 注入 token 会补齐
+- 新上游：CCSH/IPTV（live.m3u/live_lite.m3u，iptv 全量 2347）、maotoumao/MusicFreePlugins（master/plugins.json，musicfree）、cdyUuu 星海（.js single）
+
 ### 已知坑：agent 注入的 credential helper 500
 - 环境用 GIT_CONFIG_KEY_0 强制注入 /app/agent/bin/agent git-credential-helper，git push 时它返回 500 并覆盖 store helper，导致无法推送
 - 绕过方案：git remote set-url origin "https://x-access-token:<有效PAT>@github.com/..." 用 URL 内嵌 token，推后还原干净 URL

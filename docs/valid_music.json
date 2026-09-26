@@ -1098,5 +1098,19 @@
   "version": "0.0.1",
   "subcat": "music_parse",
   "origin": "音乐解析·Huibq·MusicFree"
+ },
+ {
+  "name": "suno",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/suno/index.js",
+  "version": "0.0.0",
+  "subcat": "music_parse",
+  "origin": "音源·MusicFree·maotoumao"
+ },
+ {
+  "name": "udio",
+  "url": "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/udio/index.js",
+  "version": "0.0.0",
+  "subcat": "music_parse",
+  "origin": "音源·MusicFree·maotoumao"
  }
 ]

@@ -830,6 +830,15 @@
    "filterable": 1
   },
   {
+   "key": "精品资源",
+   "name": "🦋 精品資源｜🔞",
+   "type": 1,
+   "api": "https://www.jingpinx.com/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1
+  },
+  {
    "key": "夜色资源",
    "name": "🦋 越南資源｜🔞",
    "type": 1,
@@ -866,6 +875,15 @@
    "filterable": 1
   },
   {
+   "key": "蕃茄",
+   "name": "🦋 18+蕃茄｜🔞",
+   "type": 1,
+   "api": "https://fqzy.me//api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1
+  },
+  {
    "key": "红桃🍑",
    "name": "🦋 红桃视频🍑｜🔞",
    "type": 1,
@@ -879,6 +897,15 @@
    "name": "🦋 jkun资源｜🔞",
    "type": 1,
    "api": "https://jkunzyapi.com/api.php/provide/vod",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1
+  },
+  {
+   "key": "CK资源",
+   "name": "🦋 CK资源｜🔞",
+   "type": 1,
+   "api": "https://ckzy.me/api.php/provide/vod",
    "searchable": 1,
    "quickSearch": 1,
    "filterable": 1
@@ -924,6 +951,15 @@
    "name": "🦋 黄色仓库(旧)｜🔞",
    "type": 1,
    "api": "https://hsckzy.vip/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1
+  },
+  {
+   "key": "桃花资源|AV",
+   "name": "🦋 桃花资源｜🔞",
+   "type": 1,
+   "api": "https://thzy1.me/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
    "filterable": 1
@@ -1203,6 +1239,15 @@
    "name": "爱奇艺资源(CMS)",
    "type": 1,
    "api": "https://www.iqiyizy.com/api.php/provide/vod/from/iqym3u8/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1
+  },
+  {
+   "key": "php_天空资源",
+   "name": "天空资源(CMS)",
+   "type": 1,
+   "api": "https://api.tiankongapi.com/api.php/provide/vod/",
    "searchable": 1,
    "quickSearch": 1,
    "filterable": 1

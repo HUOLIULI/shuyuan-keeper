@@ -1150,22 +1150,23 @@ def check_iptv(rec):
     url = rec.get("url") or ""
     if not url.startswith(("http://", "https://")):
         return "valid" if url.startswith(("rtmp://", "rtsp://", "rtp://", "udp://")) else "dead"
-    try:
-        resp = requests.head(url, headers={"User-Agent": UA}, timeout=(4, 4),
-                             allow_redirects=True)
-        if resp.status_code < 400:
-            return "valid"
-    except Exception:  # noqa: BLE001
-        pass
-    try:
-        resp = requests.get(url, headers={"User-Agent": UA}, timeout=(4, 4), stream=True)
-        chunk = next(resp.iter_content(1024), b"")
-        code = resp.status_code
-        resp.close()
-        if code == 200 and len(chunk) > 0:
-            return "valid"
-    except Exception:  # noqa: BLE001
-        pass
+    # 先用 HEAD 快速判活；HEAD 405/403 或超时时回落 GET（部分 CDN 禁 HEAD、只放行 GET）
+    for method in ("head", "get"):
+        try:
+            resp = getattr(requests, method)(
+                url, headers={"User-Agent": UA},
+                timeout=(5, 8) if method == "head" else (5, 15),
+                allow_redirects=True, stream=(method == "get"))
+            code = resp.status_code
+            if method == "get":
+                chunk = next(resp.iter_content(1024), b"")
+                resp.close()
+                if code == 200 and len(chunk) > 0:
+                    return "valid"
+            elif code < 400:
+                return "valid"
+        except Exception:  # noqa: BLE001
+            pass
     # 流本身取不到；若主机（域名）还在，只算规则/流失效（黄），否则站点没了（红）
     return "flaky" if site_alive(url) else "dead"
 
@@ -1312,7 +1313,7 @@ def _dedup_by_url(targets):
     return unique, url_map
 
 
-def cmd_validate(batch=400, types=None, all_=False):
+def cmd_validate(batch=400, types=None, all_=False, flaky_only=False):
     global _ALIVE_CACHE
     _ALIVE_CACHE = {}
     store = load_store()
@@ -1322,9 +1323,14 @@ def cmd_validate(batch=400, types=None, all_=False):
     for rec in store["sources"]:
         if types and rec["type"] not in types:
             continue
+        if flaky_only and rec.get("status") != "flaky":
+            continue
         hours = RECHECK_HOURS.get(rec["type"], 360)
         if all_:
             # 全量模式：无视 15 天有效期，所有条目都重新探活
+            buckets.setdefault(rec["type"], []).append(rec)
+        elif flaky_only:
+            # flaky 定向修复：标黄条目重新探源站，复活的翻 valid，真失效维持/转 dead
             buckets.setdefault(rec["type"], []).append(rec)
         elif rec.get("status") == "pending" or _age_hours(rec.get("last_check")) >= hours:
             # 正常模式：仅待验证或有效期（15 天）已到的条目
@@ -1695,6 +1701,8 @@ def main():
                             help="只验证指定类型，可多次传参（book/subscribe/tvbox/iptv/collect）")
     p_validate.add_argument("--all", dest="validate_all", action="store_true",
                             help="全量验证：无视 15 天有效期，所有条目重新探活")
+    p_validate.add_argument("--flaky", dest="validate_flaky", action="store_true",
+                            help="定向修复：仅重探标黄(flaky)条目，源站复活的翻成 valid")
     sub.add_parser("export")
     sub.add_parser("status")
     p_ingest = sub.add_parser("ingest", help="入库用户上传条目")
@@ -1705,7 +1713,8 @@ def main():
     if args.cmd == "fetch":
         cmd_fetch(args.force, args.skip_known)
     elif args.cmd == "validate":
-        cmd_validate(args.batch, args.vtypes or None, all_=args.validate_all)
+        cmd_validate(args.batch, args.vtypes or None, all_=args.validate_all,
+                     flaky_only=args.validate_flaky)
     elif args.cmd == "export":
         cmd_export()
     elif args.cmd == "status":
