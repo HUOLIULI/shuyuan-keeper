@@ -454,6 +454,69 @@
       "type": "music",
       "kind": "single",
       "verify_daily": false
+    },
+    {
+      "name": "tvbox·cluntop·box",
+      "url": "https://raw.githubusercontent.com/cluntop/tvbox/main/box.json",
+      "type": "tvbox",
+      "verify_daily": true
+    },
+    {
+      "name": "tvbox·cluntop·fun",
+      "url": "https://raw.githubusercontent.com/cluntop/tvbox/main/fun.json",
+      "type": "tvbox",
+      "verify_daily": false
+    },
+    {
+      "name": "tvbox·cluntop·aa",
+      "url": "https://raw.githubusercontent.com/cluntop/tvbox/main/aa.json",
+      "type": "tvbox",
+      "verify_daily": false
+    },
+    {
+      "name": "影视解析·cluntop",
+      "url": "https://raw.githubusercontent.com/cluntop/tvbox/main/box.json",
+      "type": "vparse",
+      "verify_daily": false
+    },
+    {
+      "name": "tvbox·hebijunge·全量",
+      "url": "https://raw.githubusercontent.com/hebijunge/tvbox-config/master/exports/all.json",
+      "type": "tvbox",
+      "verify_daily": true
+    },
+    {
+      "name": "影视解析·hebijunge",
+      "url": "https://raw.githubusercontent.com/hebijunge/tvbox-config/master/exports/live.json",
+      "type": "vparse",
+      "verify_daily": false
+    },
+    {
+      "name": "tvbox·hebijunge·pan",
+      "url": "https://raw.githubusercontent.com/hebijunge/tvbox-config/master/exports/pan.json",
+      "type": "tvbox",
+      "verify_daily": false
+    },
+    {
+      "name": "本地包·磁力猫",
+      "url": "https://www.imym.com/",
+      "type": "localpkg",
+      "kind": "site_alive",
+      "verify_daily": false
+    },
+    {
+      "name": "本地包·百度网盘",
+      "url": "https://pan.baidu.com/",
+      "type": "localpkg",
+      "kind": "site_alive",
+      "verify_daily": false
+    },
+    {
+      "name": "本地包·pan8搜",
+      "url": "https://www.pan8.com/",
+      "type": "localpkg",
+      "kind": "site_alive",
+      "verify_daily": false
     }
   ],
   "yckceo_index": [
