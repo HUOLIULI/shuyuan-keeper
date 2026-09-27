@@ -12,6 +12,36 @@
    "changeable": 0
   },
   {
+   "key": "еұұжңЁ",
+   "name": "еұұжңЁ",
+   "type": 3,
+   "api": "https://fastlink.cokey.xyz/f/p6rZcj/%E5%B1%B1%E6%9C%89%E6%9C%A8%E5%85%AE.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "е’•еҷң",
+   "name": "е’•еҷң",
+   "type": 3,
+   "api": "https://mpimg.cn/down.php/2542f809bfd6602273ad747965ce77f9.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "иҒҡеҗҲ",
+   "name": "иҒҡеҗҲ",
+   "type": 3,
+   "api": "https://gitee.com/hulanlu/04/raw/master/py/иҒҡеҗҲ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
    "key": "novel_fqapi.komr.cn",
    "name": "📖番茄小说2  [书]",
    "api": "https://fqapi.komr.cn",
