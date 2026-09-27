@@ -358,6 +358,9 @@
       <span class="board-badge green">板块1 · Legado 阅读源</span>
       <span class="board-ts">更新于 <span id="ts">-</span></span>
     </div>
+    <div style="margin-bottom:14px">
+      <input type="text" id="search-input" placeholder="🔍 搜索源名称..." style="width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:rgba(8,10,24,.6);color:var(--text);font-size:13px;outline:none" oninput="filterSources()">
+    </div>
     <div class="card-grid">
       <div class="card" data-copy="valid.json">
         <div class="card-icon" style="background:rgba(45,255,155,.12)">📚</div>
@@ -534,6 +537,15 @@
 <div id="toast"></div>
 
 <script>
+function filterSources() {
+  const q = document.getElementById("search-input").value.toLowerCase();
+  document.querySelectorAll(".card").forEach(card => {
+    const title = card.querySelector(".card-title")?.textContent.toLowerCase() || "";
+    const desc = card.querySelector(".card-desc")?.textContent.toLowerCase() || "";
+    card.style.display = (title.includes(q) || desc.includes(q)) ? "" : "none";
+  });
+}
+
 function switchTab(el, id) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('on'));
