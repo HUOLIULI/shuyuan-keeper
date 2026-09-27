@@ -3,7 +3,7 @@
   "valid_book": 1166,
   "valid_subscribe": 30,
   "valid_tvbox": 148,
-  "valid_iptv": 3432,
+  "valid_iptv": 1062,
   "valid_collect": 63,
   "valid_videosite": 7,
   "valid_music": 34,
@@ -11,5 +11,5 @@
   "peek_music": 34,
   "peek_pack": 111,
   "upstreams_total": 80,
-  "updated_at": "2026-09-28 00:19"
+  "updated_at": "2026-09-28 00:22"
 }
