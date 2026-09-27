@@ -479,7 +479,7 @@ document.querySelectorAll(".card").forEach(card => {
 });
 
 // AI 助手
-const DFT = { base: "https://apihub.agnes-ai.com/v1", key: "sk-dcCJ3jSxC2CA2wltoH3ILeRkvI47fsMEO0H20ub08WmZhRWK", model: "agnes-3.0-flash" };
+const DFT = { base: "https://apihub.agnes-ai.com/v1", key: "", model: "agnes-3.0-flash" };
 const cfg = JSON.parse(localStorage.getItem("ai_cfg") || "{}");
 document.getElementById("ai-base").value = cfg.base || DFT.base;
 document.getElementById("ai-key").value = cfg.key || DFT.key;

@@ -417,6 +417,10 @@ DISCOVER_QUERIES = [
     "书源 legado",
     "drpy source",
     "影视采集 苹果cms",
+    "短剧 tvbox",
+    "漫画 动漫 tvbox",
+    "音乐音源 musicfree",
+    "tvbox 影视站",
 ]
 
 
@@ -1914,7 +1918,7 @@ def convert_book_to_novel_sites(book_records):
     return sites
 
 
-def ai_classify_sites(sites, max_batch=20):
+def ai_classify_sites(sites, max_batch=50):
     """AI 辅助站点分类：对关键词未命中的站点，批量调 AI 判断类别。
 
     返回 {key: category} 映射，category ∈ manga/novel/drama/vod。
@@ -2000,9 +2004,9 @@ def convert_collect_to_tvbox_sites(collect_records):
 
 # 专区关键词：按站源名称归类（羊壳内 TAB 自动分类的补充，方便单类源订阅）
 PEEK_CATEGORY_RULES = {
-    "manga": ["漫画", "动漫", "comic", "manga", "banana", "漫", "番", "动画", "次元", "绅士", "bh3", "哔哩", "b站"],
-    "novel": ["小说", "阅读", "书源", "book", "novel", "笔趣", "听书", "有声", "追书", "读书", "文字"],
-    "drama": ["短剧", "drama", "short", "微短剧", "爽文", "爽剧", "短剧", "小剧场", "反转"],
+    "manga": ["漫画", "动漫", "comic", "manga", "banana", "漫", "番", "动画", "次元", "绅士", "bh3", "哔哩", "b站", "漫画", "动漫", "漫画站", "动漫站", "番剧", "二次元", "壁纸", "本子", "里番", "纯爱", "恋爱", "韩漫", "日漫", "国漫"],
+    "novel": ["小说", "阅读", "书源", "book", "novel", "笔趣", "听书", "有声", "追书", "读书", "文字", "小说站", "阅读站", "书库", "书城", "网文", "轻小说", "耽美", "言情", "玄幻", "修真", "仙侠", "武侠", "都市", "穿越"],
+    "drama": ["短剧", "drama", "short", "微短剧", "爽文", "爽剧", "小剧场", "反转", "短剧站", "短剧库", "微剧", "短剧大全", "短剧在线", "短剧免费"],
 }
 
 
