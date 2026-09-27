@@ -2626,38 +2626,146 @@ def tag_peek_sites(peek_tvbox):
     return peek_tvbox
 
 
+def _ai_repair_script(book_source, old_script, error_msg, max_retry=2):
+    """AI修复：把错误信息和旧脚本反馈给AI，让它修。"""
+    if not AI_KEY:
+        return None
+    name = book_source.get("bookSourceName", "未知")
+    url = book_source.get("bookSourceUrl", "")
+    prompt = (
+        f"你是 drpyS 修复专家。之前生成的脚本在T4测试中失败了。\n\n"
+        f"【错误信息】\n{error_msg}\n\n"
+        f"【之前的脚本】\n{old_script[:2000]}\n\n"
+        f"【站点】{name} {url}\n\n"
+        f"请修复这个脚本，确保：\n"
+        f"1. 搜索函数用 this.KEY 拼URL，返回非空列表\n"
+        f"2. 选择器匹配真实HTML结构\n"
+        f"3. 用 await request(url) 拿HTML字符串\n"
+        f"4. 用 pdfa/pdfh/pd 解析\n"
+        f"只输出修复后的 var rule = {{...}}; 代码。"
+    )
+    try:
+        resp = get_session().post(
+            AI_BASE.rstrip("/") + "/chat/completions",
+            headers={"Content-Type": "application/json", "Authorization": "Bearer " + AI_KEY},
+            json={"model": AI_MODEL, "messages": [{"role": "user", "content": prompt}], "temperature": 0.1},
+            timeout=60
+        )
+        if resp.status_code == 200:
+            text = resp.json().get("choices", [{}])[0].get("message", {}).get("content", "")
+            m = re.search(r'```(?:javascript|js)?\s*(.*?)```', text, re.S)
+            if m:
+                return m.group(1).strip()
+            if "var rule" in text:
+                return text.strip()
+    except Exception:
+        pass
+    return None
+
+
 def cmd_convert_books_to_drpy(limit=50):
-    """批量把 Legado 书源转换成 drpy 脚本。"""
+    """全自动化流水线：收集→HTML分析→AI生成→T4测试→AI修复→入库。"""
     books = json.loads((DOCS / "valid.json").read_text(encoding="utf-8"))
-    spider_dir = DOCS / "spider" / "js"
-    spider_dir.mkdir(parents=True, exist_ok=True)
-    
-    success = fail = 0
+    pack_js_dir = DOCS / "peek_pack" / "spider" / "js"
+    pack_js_dir.mkdir(parents=True, exist_ok=True)
+
+    success = fail = skipped = 0
     for i, b in enumerate(books[:limit]):
         name = b.get("bookSourceName", f"unknown_{i}")
         url = b.get("bookSourceUrl", "")
         if not url.startswith("http"):
             continue
-        from urllib.parse import urlparse
-        domain = urlparse(url).netloc.replace("www.", "")
         safe_name = name.replace("/", "_").replace(" ", "_")[:20]
         filename = f"{safe_name}[书].js"
-        if (spider_dir / filename).exists():
+        target = pack_js_dir / filename
+        if target.exists():
+            skipped += 1
             continue
+
+        print(f"  [{i+1}/{limit}] {name[:30]}...", end=" ", flush=True)
         try:
+            # 1. 生成
             script = convert_legado_to_drpy(b)
-            if script and validate_drpy_script(script):
-                (spider_dir / filename).write_text(script, encoding="utf-8")
-                print(f"  ✅ [{i+1}] {name[:25]} → {filename}")
-                success += 1
-            else:
-                print(f"  ❌ [{i+1}] {name[:25]} 验证失败")
+            if not script:
+                print("❌ 生成失败")
                 fail += 1
+                continue
+            if not validate_drpy_script(script):
+                print("❌ 静态验证失败")
+                fail += 1
+                continue
+
+            # 2. T4真实测试（最多重试2次）
+            mod = safe_name + "[书]"
+            for attempt in range(3):
+                ok, err, cnt = t4_real_test(script, mod, "斗破")
+                if ok:
+                    target.write_text(script, encoding="utf-8")
+                    print(f"✅ T4={cnt}条 (第{attempt+1}次)")
+                    success += 1
+                    break
+                if attempt < 2:
+                    # AI修复
+                    fixed = _ai_repair_script(b, script, err)
+                    if fixed and validate_drpy_script(fixed):
+                        script = fixed
+                    time.sleep(0.5)
+            else:
+                print(f"❌ {err[:50]}")
+                fail += 1
+
         except Exception as e:
-            print(f"  ❌ [{i+1}] {name[:25]} 错误: {e}")
+            print(f"❌ 错误: {str(e)[:50]}")
             fail += 1
         time.sleep(0.3)
-    print(f"\n转换完成: 成功 {success}, 失败 {fail}")
+
+    print(f"\n流水线完成: ✅{success} ❌{fail} ⏭️{skipped}")
+    # 重新生成index.json
+    _rebuild_peek_index()
+
+
+def _rebuild_peek_index():
+    """根据 peek_pack/spider/js/ 下的JS文件重建 index.json。"""
+    pack_dir = DOCS / "peek_pack"
+    js_dir = pack_dir / "spider" / "js"
+    js_files = sorted(js_dir.glob("*.js"))
+    print(f"  重建index.json: {len(js_files)}个源")
+
+    sites = []
+    for f in js_files:
+        mod = f.stem  # 不含.js
+        # 从脚本头部提取title/类型
+        content = f.read_text(encoding="utf-8")
+        title_match = re.search(r"title:'([^']+)'", content)
+        type_match = re.search(r"类型:'([^']+)'", content)
+        host_match = re.search(r"host:'([^']+)'", content)
+        searchable = 2 if "[书]" in mod or "[听]" in mod else (1 if "[短]" in mod else 0)
+        sites.append({
+            "key": f"drpyS_{mod}",
+            "name": title_match.group(1) if title_match else mod,
+            "type": 4,
+            "api": f"http://127.0.0.1:5757/api/{mod}",
+            "searchable": searchable,
+            "filterable": 1,
+            "quickSearch": 0,
+            "title": mod,
+            "类型": type_match.group(1) if type_match else "影视",
+            "lang": "ds",
+            "ext": ""
+        })
+
+    # 读取模板保留全局配置
+    template = {}
+    idx = pack_dir / "index.json"
+    if idx.exists():
+        try:
+            template = json.loads(idx.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    template["sites"] = sites
+    template["sites_count"] = len(sites)
+    idx.write_text(json.dumps(template, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"  index.json 已更新: {len(sites)}站")
 
 
 def cmd_export():
