@@ -176,6 +176,8 @@ jobs:
           fi
 
       - name: Export artifacts
+        env:
+          KEEPER_AI_CLASSIFY: "1"
         run: python scripts/keeper.py export
 
       - name: Commit generated docs (valid/peek exports)

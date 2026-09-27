@@ -1855,6 +1855,90 @@ def convert_book_to_novel_sites(book_records):
     return sites
 
 
+def ai_classify_sites(sites, max_batch=20):
+    """AI 辅助站点分类：对关键词未命中的站点，批量调 AI 判断类别。
+
+    返回 {key: category} 映射，category ∈ manga/novel/drama/vod。
+    """
+    if not AI_KEY:
+        return {}
+    unclassified = []
+    for s in sites:
+        name = (s.get("name") or "").lower()
+        matched = any(any(kw.lower() in name for kw in kws) for kws in PEEK_CATEGORY_RULES.values())
+        if not matched:
+            unclassified.append(s)
+    if not unclassified:
+        return {}
+    batch = unclassified[:max_batch]
+    names = [s.get("name", s.get("key", "?")) for s in batch]
+    prompt = (
+        "以下是影视站源名称，请判断每个最适合哪个分类。"
+        "可选分类：manga(漫画/动漫), novel(小说/阅读), drama(短剧/微短剧), vod(普通影视)。"
+        "只输出 JSON 格式 {\"站名\": \"分类\"}，不要解释。\n\n站名：\n" + "\n".join(names)
+    )
+    try:
+        resp = get_session().post(
+            AI_BASE.rstrip("/") + "/chat/completions",
+            headers={"Content-Type": "application/json", "Authorization": "Bearer " + AI_KEY},
+            json={"model": AI_MODEL, "messages": [{"role": "user", "content": prompt}], "temperature": 0.1},
+            timeout=30
+        )
+        if resp.status_code == 200:
+            text = resp.json().get("choices", [{}])[0].get("message", {}).get("content", "")
+            import re
+            m = re.search(r'\{[^}]+\}', text)
+            if m:
+                result = json.loads(m.group())
+                out = {}
+                for s in batch:
+                    name = s.get("name", "")
+                    cat = result.get(name, "")
+                    if cat in ("manga", "novel", "drama", "vod"):
+                        out[s["key"]] = cat
+                return out
+    except Exception:
+        pass
+    return {}
+
+
+def convert_collect_to_tvbox_sites(collect_records):
+    """苹果CMS采集接口 → TVBox 站点自动包装。
+
+    采集接口（/api.php/provide/vod/）本身就是 TVBox 兼容 API，
+    直接包装成 site 即可被 PeekPro 点播使用。
+    """
+    sites = []
+    seen_keys = set()
+    for c in collect_records:
+        if not isinstance(c, dict):
+            continue
+        url = (c.get("url") or c.get("api") or "").strip().rstrip("/")
+        name = c.get("name") or c.get("title") or ""
+        if not url or not url.startswith(("http://", "https://")):
+            continue
+        # 确保 URL 是 provide/vod 接口
+        if "/api.php" not in url and "/provide" not in url:
+            url = url.rstrip("/") + "/api.php/provide/vod/"
+        from urllib.parse import urlparse
+        domain = urlparse(url).netloc.replace("www.", "")
+        key = f"collect_{domain}"
+        if key in seen_keys:
+            continue
+        seen_keys.add(key)
+        sites.append({
+            "key": key,
+            "name": f"🎬{name}" if not name.startswith(("🎬", "🎯", "🔥")) else name,
+            "api": url,
+            "type": 1,  # 苹果CMS JSON API
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 1,
+            "changeable": 0,
+        })
+    return sites
+
+
 # 专区关键词：按站源名称归类（羊壳内 TAB 自动分类的补充，方便单类源订阅）
 PEEK_CATEGORY_RULES = {
     "manga": ["漫画", "动漫", "comic", "manga", "banana", "漫", "番", "动画", "次元", "绅士", "bh3", "哔哩", "b站"],
@@ -1939,12 +2023,23 @@ def cmd_export():
     peek_music = build_peek_music(cats["music"])
     peek_music_urls = "\n".join(m["url"] for m in peek_music) + "\n"
     peek_iptv_txt = build_peek_iptv_txt(cats["iptv"])
-    # 专区分类：从单仓按名称关键词筛出漫画/小说/短剧子配置
+    # 专区分类：从单仓按名称关键词 + AI 辅助筛出漫画/小说/短剧子配置
     peek_manga = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["manga"])
     peek_novel = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["novel"])
     peek_drama = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["drama"])
+    # AI 辅助分类：对关键词未命中的站点，调 AI 判断类别
+    if os.environ.get("KEEPER_AI_CLASSIFY") == "1":
+        ai_cats = ai_classify_sites(peek_tvbox.get("sites", []))
+        for key, cat in ai_cats.items():
+            site = next((s for s in peek_tvbox.get("sites", []) if s["key"] == key), None)
+            if site:
+                target = {"manga": peek_manga, "novel": peek_novel, "drama": peek_drama}.get(cat)
+                if target is not None and key not in {s["key"] for s in target.get("sites", [])}:
+                    target.setdefault("sites", []).append(site)
     # Legado 书源 → PeekPro 小说站自动转换（API 型书源包装成 TVBox site）
     novel_from_legado = convert_book_to_novel_sites(cats["book"])
+    # 采集接口 → TVBox 点播站自动包装
+    collect_sites = convert_collect_to_tvbox_sites(cats["collect"])
     # 合并：TVBox 中已有的小说站 + Legado 转换的小说站
     existing_novel_keys = {s["key"] for s in peek_novel.get("sites", [])}
     for s in novel_from_legado:
@@ -1952,7 +2047,7 @@ def cmd_export():
             peek_novel.setdefault("sites", []).append(s)
     # 合并到主点播配置（让 PeekPro 能搜到小说内容）
     existing_main_keys = {s["key"] for s in peek_tvbox.get("sites", [])}
-    for s in novel_from_legado:
+    for s in novel_from_legado + collect_sites:
         if s["key"] not in existing_main_keys:
             peek_tvbox.setdefault("sites", []).append(s)
 
