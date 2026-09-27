@@ -28,6 +28,22 @@
    "changeable": 0
   },
   {
+   "key": "иҷҺзүҷзӣҙж’ӯjs",
+   "name": "иҷҺзүҷзӣҙж’ӯ",
+   "type": 3,
+   "api": "https://gh-proxy.com/https://raw.githubusercontent.com/xiaolong69/tv/main/spider/19/js/drpy2.min.js",
+   "ext": "https://gh-proxy.com/https://raw.githubusercontent.com/xiaolong69/tv/main/spider/19/js/huya2.js",
+   "style": {
+    "type": "rect",
+    "ratio": 1.755
+   },
+   "playerType": "2",
+   "searchable": 0,
+   "quickSearch": 0,
+   "changeable": 0,
+   "filterable": 0
+  },
+  {
    "key": "зҪ‘з»ңзӣҙж’ӯ",
    "name": "зҪ‘з»ңв”ғзӣҙж’ӯ",
    "type": 3,
@@ -52,26 +68,6 @@
    "name": "иҒҡеҗҲеү§вһӢ",
    "type": 3,
    "api": "http://nn.4688888.xyz/py/зҹӯеү§иҒҡеҗҲ.py",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "changeable": 0
-  },
-  {
-   "key": "иҒҡеҗҲ",
-   "name": "иҒҡеҗҲ",
-   "type": 3,
-   "api": "https://gitee.com/hulanlu/04/raw/master/py/иҒҡеҗҲ.py",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "changeable": 0
-  },
-  {
-   "key": "еҪұи§ҶиҒҡеҗҲдә”еҗҲдёҖV2.py",
-   "name": "еҪұи§ҶиҒҡеҗҲдә”еҗҲдёҖ",
-   "type": 3,
-   "api": "http://150.158.52.248/tgyg/lib/еҪұи§ҶиҒҡеҗҲдә”еҗҲдёҖV2.py",
    "searchable": 1,
    "quickSearch": 1,
    "filterable": 1,
