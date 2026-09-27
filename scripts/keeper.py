@@ -66,37 +66,66 @@ AI_MODEL = os.environ.get("KEEPER_AI_MODEL", "agnes-3.0-flash")
 # ============================================================
 SKILL_LIBRARY = {
     "novel_template": """
-=== drpyS 小说源标准模板 ===
+=== drpyS 小说源标准模板（必须严格遵守）===
 /*
 @header({ searchable:2, filterable:1, title:'站点名[书]', '类型':'小说', lang:'ds' })
 */
 var rule = {
   类型:'小说', title:'站点名[书]', host:'https://example.com', searchable:2,
   searchUrl:'https://example.com/search?q=**',
-  推荐: async function(){ return setResult([]) },
+  推荐: async function(){
+    let {input} = this;
+    let html = (await req(input || rule.host)).content;
+    let d = [];
+    // 用 cheerio 解析: let $ = cheerio.load(html);
+    // $('选择器').each(function(){ d.push({title:$(this).text().trim(), url:urljoin(rule.host,$(this).find('a').attr('href')), desc:'', pic_url:''}); });
+    return setResult(d);
+  },
   一级: async function(tid,pg,f,e){
-    let d=[], html=(await req(input)).content;
-    // 解析列表，push {title,url,desc,pic_url}
+    let {input} = this;  // 必须解构 this.input！不能直接用 input
+    let html = (await req(input)).content;
+    let d = [];
+    let $ = cheerio.load(html);
+    $('选择器').each(function(){
+      d.push({title:$(this).text().trim(), url:urljoin(rule.host,$(this).find('a').attr('href')), desc:'', pic_url:''});
+    });
     return setResult(d);
   },
   二级: async function(ids){
-    let html=(await req(ids)).content;
+    let {input} = this;
+    let html = (await req(ids)).content;
     return {
-      vod_id:ids, vod_name:'书名', vod_pic:'封面URL', vod_content:'简介',
-      vod_remarks:'最新章节', vod_play_from:'正文',
-      vod_play_url:'第1章$章节URL#第2章$章节URL2'
+      vod_id:ids, vod_name:'书名', vod_pic:'', vod_content:'', vod_remarks:'',
+      vod_play_from:'正文', vod_play_url:'章节1$url#章节2$url2'
     };
   },
   搜索: async function(wd,quick,pg){
-    let d=[], html=(await req(input)).content;
-    // 解析搜索结果，push {title,url,desc,pic_url}
+    let {input} = this;  // 必须解构 this.input！
+    let html = (await req(input)).content;
+    let d = [];
+    let $ = cheerio.load(html);
+    $('选择器').each(function(){
+      d.push({title:$(this).text().trim(), url:urljoin(rule.host,$(this).find('a').attr('href')), desc:'', pic_url:''});
+    });
     return setResult(d);
   },
   lazy: async function(flag,id,flags){
-    let html=(await req(id)).content;
+    let html = (await req(id)).content;
     return {parse:0, url:'novel://'+JSON.stringify({title:'章节名',content:html})};
   }
 };
+
+=== 绝对禁止 ===
+- 禁止直接用 input，必须写 let {input} = this;
+- 禁止用 DOMParser（浏览器API，drpy沙箱没有）
+- 禁止用 html.matchAll().match() 链式调用
+- 禁止用 document/window/navigator
+- 禁止 require/import/fs/process
+=== 必须使用 ===
+- 解析HTML用: let $ = cheerio.load(html);
+- 请求用: (await req(url)).content
+- 列表返回: return setResult(d);
+- 相对URL: urljoin(rule.host, relativePath)
 === 模板结束 ===
 """,
 
@@ -328,14 +357,26 @@ def convert_legado_to_drpy(book_source):
 
 
 def validate_drpy_script(script):
-    """真正验证 drpy 脚本：结构+语法+运行时加载测试。"""
+    """真正验证 drpy 脚本：结构+语法+运行时加载+常见错误检查。"""
     if not script or len(script) < 200:
         return False
     # 1. 结构检查
     required = ["推荐", "一级", "二级", "搜索", "lazy"]
     if not all(f in script for f in required):
         return False
-    # 2. 语法检查
+    # 2. 常见错误检查（会导致运行时崩溃）
+    forbidden_patterns = [
+        ("DOMParser", "使用了DOMParser，drpy沙箱没有"),
+        ("document.", "使用了document，drpy沙箱没有"),
+        ("window.", "使用了window，drpy沙箱没有"),
+        ("navigator.", "使用了navigator，drpy沙箱没有"),
+        ("require(", "使用了require，drpy禁止"),
+    ]
+    for pattern, reason in forbidden_patterns:
+        if pattern in script:
+            print(f"  [validate] 拒绝: {reason}")
+            return False
+    # 3. 语法检查
     import subprocess, tempfile, os
     with tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False, encoding='utf-8') as f:
         f.write(script)
@@ -343,12 +384,13 @@ def validate_drpy_script(script):
     try:
         r = subprocess.run(['node', '-c', tmp], capture_output=True, timeout=5)
         if r.returncode != 0:
+            print(f"  [validate] 语法错误: {r.stderr.decode()[:100]}")
             return False
     except Exception:
         return False
     finally:
         os.unlink(tmp)
-    # 3. 运行时验证：模拟 drpy 环境加载
+    # 4. 运行时验证：模拟 drpy 环境加载
     test_file = tmp + '_test.js'
     with open(test_file, 'w', encoding='utf-8') as f:
         f.write(script + '\nmodule.exports = rule;')
@@ -358,15 +400,22 @@ def validate_drpy_script(script):
 const rule = require(process.argv[1]);
 if (!rule.host) throw new Error('no host');
 if (typeof rule['搜索'] !== 'function') throw new Error('no 搜索');
+if (typeof rule['一级'] !== 'function') throw new Error('no 一级');
+if (typeof rule['二级'] !== 'function') throw new Error('no 二级');
+if (typeof rule['lazy'] !== 'function') throw new Error('no lazy');
 console.log('OK');
 ''', test_file],
             capture_output=True, timeout=10, text=True
         )
-        return 'OK' in r.stdout
-    except Exception:
+        if 'OK' not in r.stdout:
+            print(f"  [validate] 加载失败: {r.stderr[:100]}")
+            return False
+    except Exception as e:
+        print(f"  [validate] 异常: {e}")
         return False
     finally:
         os.unlink(test_file)
+    return True
 
 
 ROOT = Path(__file__).resolve().parent.parent
