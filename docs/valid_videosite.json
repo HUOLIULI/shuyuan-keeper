@@ -1,1 +1,44 @@
-[]
+[
+ {
+  "name": "4K影视",
+  "url": "https://www.4kvm.tv",
+  "subcat": "online",
+  "source": "curated"
+ },
+ {
+  "name": "腾讯视频",
+  "url": "https://v.qq.com",
+  "subcat": "online",
+  "source": "curated"
+ },
+ {
+  "name": "爱奇艺",
+  "url": "https://www.iqiyi.com",
+  "subcat": "online",
+  "source": "curated"
+ },
+ {
+  "name": "优酷",
+  "url": "https://www.youku.com",
+  "subcat": "online",
+  "source": "curated"
+ },
+ {
+  "name": "芒果TV",
+  "url": "https://www.mgtv.com",
+  "subcat": "online",
+  "source": "curated"
+ },
+ {
+  "name": "哔哩哔哩",
+  "url": "https://www.bilibili.com",
+  "subcat": "online",
+  "source": "curated"
+ },
+ {
+  "name": "低端影视",
+  "url": "https://www.ddys.tv",
+  "subcat": "online",
+  "source": "curated"
+ }
+]
