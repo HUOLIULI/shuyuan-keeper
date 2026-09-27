@@ -235,10 +235,9 @@ def convert_legado_to_drpy(book_source):
 def validate_drpy_script(script):
     """验证 drpy 脚本是否可用。
 
-    1. 语法检查：能被 node 解析
-    2. 结构检查：包含所有必要函数
-    3. 运行检查：模拟调用搜索函数
-    返回 True/False
+    1. 结构检查：包含所有必要函数
+    2. 语法检查：node -c 解析
+    3. 加载检查：模拟 drpy 环境加载
     """
     if not script or len(script) < 200:
         return False
@@ -246,7 +245,7 @@ def validate_drpy_script(script):
     required = ["推荐", "一级", "二级", "搜索", "lazy"]
     if not all(f in script for f in required):
         return False
-    # 语法检查：用 node 解析
+    # 语法检查
     import subprocess, tempfile, os
     with tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False, encoding='utf-8') as f:
         f.write(script)
