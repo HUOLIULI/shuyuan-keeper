@@ -408,6 +408,15 @@
         </div>
         <button class="card-btn">复制地址</button>
       </div>
+      <div class="card" data-copy="valid_videosite.json">
+        <div class="card-icon" style="background:rgba(255,122,184,.12)">🎬</div>
+        <div class="card-body">
+          <div class="card-title">影视网站</div>
+          <div class="card-count" id="c-vsite">—</div>
+          <div class="card-desc">在线影视站直链<br><span style="color:var(--muted);font-size:11px">已验活</span></div>
+        </div>
+        <button class="card-btn">复制地址</button>
+      </div>
     </div>
   </div>
 
@@ -643,6 +652,7 @@ async function aiMake(mode) {
     set("c-vod", s.peek_tvbox);
     set("c-live", s.valid_iptv);
     set("c-music", s.peek_music);
+    set("c-vsite", s.valid_videosite || 0);
   } catch(e) {}
   try {
     const ups = await (await fetch("upstreams.json")).json();
