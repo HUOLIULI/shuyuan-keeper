@@ -278,6 +278,12 @@
   .cat-badge.orange{background:rgba(255,138,77,.15);color:#ff8a4d;border:1px solid rgba(255,138,77,.4)}
   .cat-badge.pink{background:rgba(255,122,184,.15);color:#ff7ab8;border:1px solid rgba(255,122,184,.4)}
   @media (max-width:560px){
+    .card-grid{grid-template-columns:1fr !important}
+    .tabs{flex-wrap:wrap}
+    .tab{flex:1 1 40%}
+    .hero{padding:30px 15px 15px}
+    .board{padding:14px}
+
     h1{font-size:26px}
     .stat b{font-size:20px}
     .panel{padding:16px}
@@ -478,6 +484,7 @@
       <textarea class="ai-output" id="ai-output" placeholder="结果显示在这里..."></textarea>
       <div class="ai-actions">
         <button class="btn gray" onclick="copy(document.getElementById('ai-output').value,'已复制')">复制结果</button>
+        <button class="btn cyan" onclick="testSource()">🧪 测试源</button>
         <button class="btn green" onclick="submitToRepo()">📤 提交到仓库</button>
         <button class="btn gray" onclick="document.getElementById('ai-output').value=''">清空</button>
       </div>
@@ -597,6 +604,37 @@ function testSource() {
   } else {
     status.innerHTML = '<b style="color:#ff6b9d">⚠️ 问题:</b> ' + issues.join(" | ");
   }
+}
+
+function testSource() {
+  const out = document.getElementById("ai-output").value.trim();
+  if (!out) { alert("请先生成结果"); return; }
+  const status = document.getElementById("ai-status");
+  status.textContent = "🧪 正在测试源语法...";
+  status.style.color = "var(--cyan)";
+  
+  // 基本语法检查
+  const errors = [];
+  if (out.includes("require(")) errors.push("❌ 包含require() - drpyS沙箱禁止");
+  if (out.includes("import ")) errors.push("❌ 包含import - drpyS沙箱禁止");
+  if (out.includes("DOMParser")) errors.push("❌ 包含DOMParser - drpyS沙箱禁止");
+  if (out.includes("document.")) errors.push("❌ 包含document - drpyS沙箱禁止");
+  if (out.includes("window.")) errors.push("❌ 包含window - drpyS沙箱禁止");
+  if (!out.includes("jar") && !out.includes("homeVod") && !out.includes("category")) {
+    errors.push("⚠️ 缺少标准函数(jar/homeVod/category)");
+  }
+  if (!out.includes("search")) errors.push("⚠️ 缺少search函数");
+  if (!out.includes("lazy")) errors.push("⚠️ 缺少lazy函数");
+  
+  setTimeout(() => {
+    if (errors.length === 0) {
+      status.innerHTML = "✅ 语法检查通过，可安全使用";
+      status.style.color = "var(--green)";
+    } else {
+      status.innerHTML = "⚠️ 发现问题:\n" + errors.join("\n");
+      status.style.color = "var(--yellow)";
+    }
+  }, 500);
 }
 
 function submitToRepo() {
