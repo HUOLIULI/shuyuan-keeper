@@ -350,15 +350,24 @@
   <div class="board">
     <div class="board-hd">
       <span class="board-badge purple">板块2 · PeekPro 羊壳</span>
-      <span class="board-ts">点播 · 直播 · 音乐 · 漫画 · 小说 · 短剧</span>
+      <span class="board-ts">点播 · 直播 · 音乐 · 漫画 · 小说 · 短剧（一个接口全搞定）</span>
     </div>
     <div class="card-grid">
-      <div class="card" data-copy="peek_tvbox.json">
+      <div class="card" data-copy="peek_tvbox.json" style="grid-column:1/-1;border:1px solid rgba(51,224,255,.4)">
         <div class="card-icon" style="background:rgba(51,224,255,.12)">🎬</div>
         <div class="card-body">
-          <div class="card-title">点播</div>
+          <div class="card-title">点播接口（全内容）</div>
           <div class="card-count" id="c-vod">—</div>
-          <div class="card-desc">设置→接口配置→+粘贴地址</div>
+          <div class="card-desc">
+            设置→接口配置→+粘贴地址<br>
+            <span style="color:var(--muted);font-size:12px">
+              含点播/漫画/小说/短剧，名称后缀自动分类：<br>
+              <span style="color:#4ecdc4">[书]</span>=小说 ·
+              <span style="color:#ff6b9d">[画]</span>=漫画 ·
+              <span style="color:#ff4d6d">[密]</span>=成人 ·
+              无标签=影视
+            </span>
+          </div>
         </div>
         <button class="card-btn">复制地址</button>
       </div>
@@ -371,41 +380,14 @@
         </div>
         <button class="card-btn">复制地址</button>
       </div>
-      <div class="card" data-copy="peek_music.json">
+      <div class="card" data-copy="music_loader/batch_loader.js">
         <div class="card-icon" style="background:rgba(168,120,255,.12)">🎵</div>
         <div class="card-body">
           <div class="card-title">音乐</div>
           <div class="card-count" id="c-music">—</div>
-          <div class="card-desc">音乐→设置→导入脚本</div>
+          <div class="card-desc">音乐→设置→导入脚本→在线链接</div>
         </div>
-        <button class="card-btn">复制清单</button>
-      </div>
-      <div class="card" data-copy="peek_manga.json">
-        <div class="card-icon" style="background:rgba(255,122,184,.12)">📖</div>
-        <div class="card-body">
-          <div class="card-title">漫画</div>
-          <div class="card-count" id="c-manga">—</div>
-          <div class="card-desc">专区源（可单独订阅）</div>
-        </div>
-        <button class="card-btn">复制地址</button>
-      </div>
-      <div class="card" data-copy="peek_novel.json">
-        <div class="card-icon" style="background:rgba(255,210,63,.12)">📝</div>
-        <div class="card-body">
-          <div class="card-title">小说</div>
-          <div class="card-count" id="c-novel">—</div>
-          <div class="card-desc">Legado 书源自动转换</div>
-        </div>
-        <button class="card-btn">复制地址</button>
-      </div>
-      <div class="card" data-copy="peek_drama.json">
-        <div class="card-icon" style="background:rgba(255,138,77,.12)">🎭</div>
-        <div class="card-body">
-          <div class="card-title">短剧</div>
-          <div class="card-count" id="c-drama">—</div>
-          <div class="card-desc">专区源（可单独订阅）</div>
-        </div>
-        <button class="card-btn">复制地址</button>
+        <button class="card-btn">复制脚本</button>
       </div>
     </div>
   </div>
@@ -526,9 +508,6 @@ async function aiMake(mode) {
     set("c-vod", s.peek_tvbox);
     set("c-live", s.valid_iptv);
     set("c-music", s.peek_music);
-    set("c-manga", s.peek_manga);
-    set("c-novel", s.peek_novel);
-    set("c-drama", s.peek_drama);
   } catch(e) {}
   try {
     const ups = await (await fetch("upstreams.json")).json();
