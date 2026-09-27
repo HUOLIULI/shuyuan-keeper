@@ -1,6 +1,337 @@
 {
  "spider": "https://img2.gelonghui.com/library/46da6-aa33493f-1c1d-4f35-9990-0be4bdbf0c64.png;md5;46da6b6a6a111d7924717db2ae790de3",
- "sites": [],
+ "sites": [
+  {
+   "key": "py_apple",
+   "name": "рҹҚҺв”ғиӢ№жһңв”ғеҪұи§Ҷ",
+   "type": 3,
+   "api": "http://fmys.top/py/apple.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "зҲұеҗ¬йҹід№җ",
+   "name": "зҲұеҗ¬ вҖў йҹід№җ",
+   "type": 3,
+   "api": "https://pizazz.us.ci/other/py/зҲұеҗ¬йҹід№җ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "еұұжҘӮеҪұи§Ҷ",
+   "name": "рҹ’ҘпҪңеұұжҘӮ | еҪұи§Ҷ",
+   "type": 3,
+   "api": "https://chigua.eu.org/py/еұұжҘӮеҪұи§Ҷ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "novel_fqapi.komr.cn",
+   "name": "📖番茄小说2",
+   "api": "https://fqapi.komr.cn",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.leeyegy.com",
+   "name": "📖📚 猴子阅读",
+   "api": "https://api.leeyegy.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.jmlldsc.com",
+   "name": "📖猫眼看书",
+   "api": "http://api.jmlldsc.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.wan123x.com",
+   "name": "📖🎉 花生小说",
+   "api": "https://api.wan123x.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_apitt.kanshushenapp.com",
+   "name": "📖🌐 看书神网",
+   "api": "http://apitt.kanshushenapp.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.97yd.com",
+   "name": "📖📚 必看阅读",
+   "api": "https://api.97yd.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.ieasou.com",
+   "name": "📖宜搜小说💰",
+   "api": "http://api.ieasou.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.lestory.cn",
+   "name": "📖🔰悸花乐读",
+   "api": "http://api.lestory.cn",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_webapi.gongzicp.com",
+   "name": "📖🔰长佩文学",
+   "api": "https://webapi.gongzicp.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api-bc.wtzw.com",
+   "name": "📖📚 梧桐中文",
+   "api": "https://api-bc.wtzw.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api5-normal-lf.fqnovel.com",
+   "name": "📖🌸番茄小说",
+   "api": "https://api5-normal-lf.fqnovel.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.coolapk.com",
+   "name": "📖酷安应用评论",
+   "api": "https://api.coolapk.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.yousuu.com",
+   "name": "📖优书网",
+   "api": "https://api.yousuu.com/#1",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.cdyt.com",
+   "name": "📖🎉 阅听小说",
+   "api": "http://api.cdyt.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.ylibrary.org",
+   "name": "📖library",
+   "api": "https://api.ylibrary.org",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_pre-api.tuishujun.com",
+   "name": "📖推书君api ",
+   "api": "https://pre-api.tuishujun.com#md冷魅",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_minipapi.sfacg.com",
+   "name": "📖📜 SF轻小说",
+   "api": "https://minipapi.sfacg.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.sfacg.com",
+   "name": "📖🎻SF轻小说",
+   "api": "https://api.sfacg.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_jyapi.jyacg.com",
+   "name": "📖鲸云轻小说",
+   "api": "https://jyapi.jyacg.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.midukanshu.com",
+   "name": "📖🎉 米读看书",
+   "api": "http://api.midukanshu.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.uaa.com",
+   "name": "📖📓UAA·小说",
+   "api": "https://api.uaa.com##旅途",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.jiaston.com",
+   "name": "📖⭐快读小说",
+   "api": "https://api.jiaston.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.17k.com",
+   "name": "📖17k小说",
+   "api": "http://api.17k.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_apiwz.midukanshu.com",
+   "name": "📖米读看书[apiwz]",
+   "api": "https://apiwz.midukanshu.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api5-normal-sinfonlineb.fqnovel.com",
+   "name": "📖✨ 番茄小说",
+   "api": "https://api5-normal-sinfonlineb.fqnovel.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_xapi.xinmanhua.net",
+   "name": "📖🎨新漫画",
+   "api": "https://xapi.xinmanhua.net",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.wanshu.com",
+   "name": "📖💰 绾书文学",
+   "api": "https://api.wanshu.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.foreader.com.cn",
+   "name": "📖💰 速更中文",
+   "api": "https://api.foreader.com.cn",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_nnv3api.dmzj1.com",
+   "name": "📖动漫之家",
+   "api": "https://nnv3api.dmzj1.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "novel_api.doufuyuedu.com",
+   "name": "📖豆腐阅读",
+   "api": "http://api.doufuyuedu.com",
+   "type": 3,
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  }
+ ],
  "lives": [],
  "parses": []
 }

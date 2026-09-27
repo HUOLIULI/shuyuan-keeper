@@ -54,6 +54,50 @@ def get_session():
         _SESSION.mount("https://", adapter)
     return _SESSION
 
+
+# AI 自动修复配置（内置默认，可用环境变量覆盖）
+AI_BASE = os.environ.get("KEEPER_AI_BASE", "https://apihub.agnes-ai.com/v1")
+AI_KEY = os.environ.get("KEEPER_AI_KEY", "sk-dcCJ3jSxC2CA2wltoH3ILeRkvI47fsMEO0H20ub08WmZhRWK")
+AI_MODEL = os.environ.get("KEEPER_AI_MODEL", "agnes-3.0-flash")
+
+
+def ai_repair_source(source_type, source_url, error_hint=""):
+    """后端 AI 自动修复：给失效源 URL，让 AI 生成修复建议。
+
+    返回修复后的 URL 或 None。失败不抛异常。
+    """
+    if not AI_KEY or not source_url.startswith(("http://", "https://")):
+        return None
+    prompts = {
+        "tvbox": f"这个 TVBox 站点接口返回失败：{source_url}。常见修复：1) 去掉尾部路径试根域名 2) 加 index.php 3) 换 /provide/vod。只输出修复后的完整 URL，不要解释。",
+        "collect": f"这个苹果CMS采集接口返回失败：{source_url}。常见修复：1) 加 /index.php 2) 加 /api.php 3) 去掉路径。只输出修复后的完整 URL，不要解释。",
+        "book": f"这个小说书源 URL 失效：{source_url}。常见修复：1) http→https 2) 去掉尾部斜杠 3) 换 www 前缀。只输出修复后的完整 URL，不要解释。",
+    }
+    prompt = prompts.get(source_type, prompts["tvbox"])
+    if error_hint:
+        prompt += f" 错误提示：{error_hint}"
+    try:
+        resp = get_session().post(
+            AI_BASE.rstrip("/") + "/chat/completions",
+            headers={"Content-Type": "application/json", "Authorization": "Bearer " + AI_KEY},
+            json={
+                "model": AI_MODEL,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.1
+            },
+            timeout=20
+        )
+        if resp.status_code == 200:
+            text = resp.json().get("choices", [{}])[0].get("message", {}).get("content", "").strip()
+            # 提取 URL
+            for line in text.split("\n"):
+                line = line.strip().strip("`")
+                if line.startswith(("http://", "https://")):
+                    return line
+    except Exception:
+        pass
+    return None
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 DOCS = ROOT / "docs"
@@ -1209,11 +1253,19 @@ def check_book(rec):
     if template and "{{key}}" in template:
         probe = template.replace("{{key}}", requests.utils.quote(SEARCH_KEY))
         try:
-            resp = requests.get(probe, headers={"User-Agent": UA}, timeout=TIMEOUT,
+            resp = get_session().get(probe, headers={"User-Agent": UA}, timeout=TIMEOUT,
                                 verify=False)
             rule_ok = resp.status_code < 400
         except Exception:  # noqa: BLE001
             rule_ok = False
+        # 自动修复：搜索规则失效但站点活着 → 尝试 bookSourceUrl 直接探活
+        if not rule_ok and site_ok:
+            try:
+                resp2 = get_session().get(base, headers={"User-Agent": UA}, timeout=TIMEOUT,
+                                    verify=False)
+                rule_ok = resp2.status_code < 400
+            except Exception:  # noqa: BLE001
+                pass
         return _rule_status(site_ok, rule_ok)
     return "valid" if site_ok else "dead"
 
@@ -1280,22 +1332,44 @@ def check_collect(rec):
     url = (rec.get("url") or "").rstrip("/")
     if not url.startswith(("http://", "https://")):
         return "dead"
+    site_ok = site_alive(url)
+    # 主探活路径
     probe = url + "/?ac=list"
     is_xml = "/at/xml/" in probe or probe.endswith(".xml")
-    rule_ok = False
+    rule_ok = _probe_collect(probe, is_xml)
+    # 自动修复：主路径失败但站点在 → 尝试常见路径变体
+    if not rule_ok and site_ok:
+        for variant in _collect_path_variants(url):
+            if _probe_collect(variant, ".xml" in variant):
+                rule_ok = True
+                break
+    return _rule_status(site_ok, rule_ok)
+
+
+def _probe_collect(probe, is_xml=False):
+    """探测苹果CMS采集接口是否返回有效数据。"""
     try:
-        resp = requests.get(probe, headers={"User-Agent": UA}, timeout=15)
+        resp = get_session().get(probe, headers={"User-Agent": UA}, timeout=15)
         if resp.status_code == 200:
             text = resp.text.lstrip()
             if is_xml:
-                rule_ok = text.startswith("<?xml") and ("<video" in text or "<list" in text)
-            else:
-                data = json.loads(text)
-                rule_ok = isinstance(data, dict) and ("class" in data or "list" in data)
+                return text.startswith("<?xml") and ("<video" in text or "<list" in text)
+            data = json.loads(text)
+            return isinstance(data, dict) and ("class" in data or "list" in data)
     except Exception:  # noqa: BLE001
-        rule_ok = False
-    # 接口规则失效但站点还能打开 → 黄；站点也没了 → 红
-    return _rule_status(site_alive(url), rule_ok)
+        pass
+    return False
+
+
+def _collect_path_variants(url):
+    """苹果CMS采集接口常见路径变体。"""
+    from urllib.parse import urlparse, urlunparse
+    parsed = urlparse(url)
+    variants = []
+    base_path = parsed.path.rstrip("/")
+    for suffix in ["", "/index.php", "/api.php", "/provide/vod", "/v1/api.php"]:
+        variants.append(urlunparse(parsed._replace(path=base_path + suffix, query="ac=list")))
+    return variants[1:]
 
 
 def check_videosite(rec):
@@ -1304,14 +1378,14 @@ def check_videosite(rec):
     if not url.startswith(("http://", "https://")):
         return "dead"
     try:
-        resp = requests.head(url, headers={"User-Agent": UA}, timeout=8,
+        resp = get_session().head(url, headers={"User-Agent": UA}, timeout=8,
                              allow_redirects=True, verify=False)
         if resp.status_code < 400:
             return "valid"
     except Exception:  # noqa: BLE001
         pass
     try:
-        resp = requests.get(url, headers={"User-Agent": UA}, timeout=8, stream=True,
+        resp = get_session().get(url, headers={"User-Agent": UA}, timeout=8, stream=True,
                             verify=False)
         chunk = next(resp.iter_content(512), b"")
         resp.close()
@@ -1328,7 +1402,7 @@ def check_music(rec):
     if not url.startswith(("http://", "https://")):
         return "dead"
     try:
-        resp = requests.get(url, headers={"User-Agent": UA}, timeout=(5, 8), stream=True,
+        resp = get_session().get(url, headers={"User-Agent": UA}, timeout=(5, 8), stream=True,
                             verify=False)
         chunk = next(resp.iter_content(512), b"")
         code = resp.status_code
@@ -1584,6 +1658,20 @@ def cmd_validate(batch=400, types=None, all_=False, flaky_only=False,
             # 站点还活着，只是规则/接口失效：标黄，不计死亡次数
             rec["status"] = "flaky"
             yellow_n += 1
+            # AI 自动修复：对 flaky 源尝试调用 AI 找修复后 URL
+            if os.environ.get("KEEPER_AI_REPAIR") == "1" and rec["type"] in ("tvbox", "collect", "book"):
+                fixed = ai_repair_source(rec["type"], url)
+                if fixed and fixed != url:
+                    # 验证修复后的 URL 是否可用
+                    if http_get(fixed, timeout=TIMEOUT) is not None:
+                        rec["url"] = fixed
+                        if isinstance(rec.get("source"), dict):
+                            rec["source"]["api"] = fixed
+                        rec["status"] = "valid"
+                        rec["fail_count"] = 0
+                        ok_n += 1
+                        yellow_n -= 1
+                        print(f"  [AI修复] {rec.get('name','?')[:20]}: {url[:40]} → {fixed[:40]}")
         else:  # dead：站点整个没了
             rec["fail_count"] = rec.get("fail_count", 0) + 1
             dead_n += 1
@@ -1785,11 +1873,136 @@ def sanitize_peek_tvbox(config):
     return out
 
 
+def convert_book_to_novel_sites(book_records):
+    """Legado 书源 → PeekPro 小说站自动转换。
+
+    筛选 API 型书源（URL 含 api/ 或 .json），包装成 TVBox site 格式。
+    HTML 抓取型书源不转换（协议不同，TVBox 无法解析）。
+    """
+    sites = []
+    seen_keys = set()
+    for b in book_records:
+        if not isinstance(b, dict):
+            continue
+        url = (b.get("bookSourceUrl") or "").strip()
+        name = b.get("bookSourceName") or b.get("name") or ""
+        if not url or not url.startswith(("http://", "https://")):
+            continue
+        # 只转换 API 型：URL 含 api 或以 .json 结尾
+        url_lower = url.lower()
+        if "api" not in url_lower and not url_lower.endswith(".json"):
+            continue
+        # 生成 key（用域名去重）
+        from urllib.parse import urlparse
+        domain = urlparse(url).netloc.replace("www.", "")
+        key = f"novel_{domain}"
+        if key in seen_keys:
+            continue
+        seen_keys.add(key)
+        # 包装成 TVBox site 格式
+        site = {
+            "key": key,
+            "name": f"📖{name}" if not name.startswith(("📖", "🎯", "🔥")) else name,
+            "api": url.rstrip("/"),
+            "type": 3,
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 0,
+            "changeable": 0,
+        }
+        sites.append(site)
+    return sites
+
+
+def ai_classify_sites(sites, max_batch=20):
+    """AI 辅助站点分类：对关键词未命中的站点，批量调 AI 判断类别。
+
+    返回 {key: category} 映射，category ∈ manga/novel/drama/vod。
+    """
+    if not AI_KEY:
+        return {}
+    unclassified = []
+    for s in sites:
+        name = (s.get("name") or "").lower()
+        matched = any(any(kw.lower() in name for kw in kws) for kws in PEEK_CATEGORY_RULES.values())
+        if not matched:
+            unclassified.append(s)
+    if not unclassified:
+        return {}
+    batch = unclassified[:max_batch]
+    names = [s.get("name", s.get("key", "?")) for s in batch]
+    prompt = (
+        "以下是影视站源名称，请判断每个最适合哪个分类。"
+        "可选分类：manga(漫画/动漫), novel(小说/阅读), drama(短剧/微短剧), vod(普通影视)。"
+        "只输出 JSON 格式 {\"站名\": \"分类\"}，不要解释。\n\n站名：\n" + "\n".join(names)
+    )
+    try:
+        resp = get_session().post(
+            AI_BASE.rstrip("/") + "/chat/completions",
+            headers={"Content-Type": "application/json", "Authorization": "Bearer " + AI_KEY},
+            json={"model": AI_MODEL, "messages": [{"role": "user", "content": prompt}], "temperature": 0.1},
+            timeout=30
+        )
+        if resp.status_code == 200:
+            text = resp.json().get("choices", [{}])[0].get("message", {}).get("content", "")
+            import re
+            m = re.search(r'\{[^}]+\}', text)
+            if m:
+                result = json.loads(m.group())
+                out = {}
+                for s in batch:
+                    name = s.get("name", "")
+                    cat = result.get(name, "")
+                    if cat in ("manga", "novel", "drama", "vod"):
+                        out[s["key"]] = cat
+                return out
+    except Exception:
+        pass
+    return {}
+
+
+def convert_collect_to_tvbox_sites(collect_records):
+    """苹果CMS采集接口 → TVBox 站点自动包装。
+
+    采集接口（/api.php/provide/vod/）本身就是 TVBox 兼容 API，
+    直接包装成 site 即可被 PeekPro 点播使用。
+    """
+    sites = []
+    seen_keys = set()
+    for c in collect_records:
+        if not isinstance(c, dict):
+            continue
+        url = (c.get("url") or c.get("api") or "").strip().rstrip("/")
+        name = c.get("name") or c.get("title") or ""
+        if not url or not url.startswith(("http://", "https://")):
+            continue
+        # 确保 URL 是 provide/vod 接口
+        if "/api.php" not in url and "/provide" not in url:
+            url = url.rstrip("/") + "/api.php/provide/vod/"
+        from urllib.parse import urlparse
+        domain = urlparse(url).netloc.replace("www.", "")
+        key = f"collect_{domain}"
+        if key in seen_keys:
+            continue
+        seen_keys.add(key)
+        sites.append({
+            "key": key,
+            "name": f"🎬{name}" if not name.startswith(("🎬", "🎯", "🔥")) else name,
+            "api": url,
+            "type": 1,  # 苹果CMS JSON API
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 1,
+            "changeable": 0,
+        })
+    return sites
+
+
 # 专区关键词：按站源名称归类（羊壳内 TAB 自动分类的补充，方便单类源订阅）
 PEEK_CATEGORY_RULES = {
-    "manga": ["漫画", "动漫", "comic", "manga", "banana", "漫", "番"],
-    "novel": ["小说", "阅读", "书源", "book", "novel", "阅读", "笔趣", "小说"],
-    "drama": ["短剧", "drama", "short", "短剧", "微短剧", "爽文"],
+    "manga": ["漫画", "动漫", "comic", "manga", "banana", "漫", "番", "动画", "次元", "绅士", "bh3", "哔哩", "b站"],
+    "novel": ["小说", "阅读", "书源", "book", "novel", "笔趣", "听书", "有声", "追书", "读书", "文字"],
+    "drama": ["短剧", "drama", "short", "微短剧", "爽文", "爽剧", "短剧", "小剧场", "反转"],
 }
 
 
@@ -1869,10 +2082,33 @@ def cmd_export():
     peek_music = build_peek_music(cats["music"])
     peek_music_urls = "\n".join(m["url"] for m in peek_music) + "\n"
     peek_iptv_txt = build_peek_iptv_txt(cats["iptv"])
-    # 专区分类：从单仓按名称关键词筛出漫画/小说/短剧子配置
+    # 专区分类：从单仓按名称关键词 + AI 辅助筛出漫画/小说/短剧子配置
     peek_manga = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["manga"])
     peek_novel = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["novel"])
     peek_drama = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["drama"])
+    # AI 辅助分类：对关键词未命中的站点，调 AI 判断类别
+    if os.environ.get("KEEPER_AI_CLASSIFY") == "1":
+        ai_cats = ai_classify_sites(peek_tvbox.get("sites", []))
+        for key, cat in ai_cats.items():
+            site = next((s for s in peek_tvbox.get("sites", []) if s["key"] == key), None)
+            if site:
+                target = {"manga": peek_manga, "novel": peek_novel, "drama": peek_drama}.get(cat)
+                if target is not None and key not in {s["key"] for s in target.get("sites", [])}:
+                    target.setdefault("sites", []).append(site)
+    # Legado 书源 → PeekPro 小说站自动转换（API 型书源包装成 TVBox site）
+    novel_from_legado = convert_book_to_novel_sites(cats["book"])
+    # 采集接口 → TVBox 点播站自动包装
+    collect_sites = convert_collect_to_tvbox_sites(cats["collect"])
+    # 合并：TVBox 中已有的小说站 + Legado 转换的小说站
+    existing_novel_keys = {s["key"] for s in peek_novel.get("sites", [])}
+    for s in novel_from_legado:
+        if s["key"] not in existing_novel_keys:
+            peek_novel.setdefault("sites", []).append(s)
+    # 合并到主点播配置（让 PeekPro 能搜到小说内容）
+    existing_main_keys = {s["key"] for s in peek_tvbox.get("sites", [])}
+    for s in novel_from_legado + collect_sites:
+        if s["key"] not in existing_main_keys:
+            peek_tvbox.setdefault("sites", []).append(s)
 
     archived = [r.get("source") for r in store["archived"]]
     flaky_n = sum(1 for r in store["sources"] if r.get("status") == "flaky")
@@ -1933,7 +2169,42 @@ def cmd_export():
         base.mkdir(parents=True, exist_ok=True)
         for filename, content in payloads.items():
             (base / filename).write_text(content, encoding="utf-8")
+    # 导出后格式校验：确保 PeekPro 能正常解析
+    _validate_peek_outputs(payloads)
     print(f"[done] {stats}")
+
+
+def _validate_peek_outputs(payloads):
+    """导出后自动校验 PeekPro 兼容格式，打印警告。"""
+    warnings = []
+    # TVBox 单仓：必须有 sites 数组
+    tv = json.loads(payloads["peek_tvbox.json"])
+    if not isinstance(tv.get("sites"), list):
+        warnings.append("peek_tvbox.json: sites 不是数组")
+    elif len(tv["sites"]) == 0:
+        warnings.append("peek_tvbox.json: sites 为空")
+    # 检查每个 site 都有 key 和 api
+    for i, s in enumerate(tv.get("sites", [])):
+        if not s.get("key"):
+            warnings.append(f"peek_tvbox.json: site[{i}] 缺 key")
+        if not s.get("api") and not s.get("searchUrl"):
+            warnings.append(f"peek_tvbox.json: site[{i}] ({s.get('key','?')}) 缺 api")
+    # IPTV txt：必须是 name,url 格式（不是 url,name）
+    iptv_lines = payloads["peek_iptv.txt"].strip().split("\n")
+    name_url_count = sum(1 for l in iptv_lines if l and not l.startswith("#") and "," in l and not l.split(",")[0].startswith("http"))
+    if name_url_count == 0:
+        warnings.append("peek_iptv.txt: 未检测到 name,url 格式行")
+    # 音乐清单：每项必须有 url
+    music = json.loads(payloads["peek_music.json"])
+    for i, m in enumerate(music):
+        if not m.get("url"):
+            warnings.append(f"peek_music.json: item[{i}] 缺 url")
+    if warnings:
+        print(f"[warn] 格式校验 {len(warnings)} 条:")
+        for w in warnings[:10]:
+            print(f"  - {w}")
+    else:
+        print("[check] PeekPro 格式校验通过")
 
 
 def cmd_ingest(submit_dir=None, types=None):

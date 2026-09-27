@@ -10,6 +10,32 @@
    "quickSearch": 1,
    "filterable": 1,
    "changeable": 0
+  },
+  {
+   "key": " 在线┃直播2",
+   "name": "📺┃网红┃直播",
+   "type": 3,
+   "api": "http://alist.xn--z7x900a.live/ddrpy2.m.js",
+   "ext": "http://alist.xn--z7x900a.live/JustLive.js",
+   "gridview": "0-0-H",
+   "style": {
+    "type": "rect",
+    "ratio": 1.68
+   },
+   "searchable": 1,
+   "quickSearch": 0,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "зҪ‘з»ңзӣҙж’ӯ",
+   "name": "зҪ‘з»ңв”ғзӣҙж’ӯ",
+   "type": 3,
+   "api": "https://ygbh.site/max/py/зҪ‘з»ңзӣҙж’ӯ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
   }
  ],
  "lives": [],

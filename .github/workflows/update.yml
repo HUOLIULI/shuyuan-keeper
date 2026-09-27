@@ -146,6 +146,7 @@ jobs:
         env:
           KEEPER_READ_TIMEOUT: "15"
           KEEPER_ALIVE_TIMEOUT: "12"
+          KEEPER_AI_REPAIR: "1"
         run: |
           python - <<'PY'
           import json, subprocess
@@ -178,6 +179,8 @@ jobs:
           fi
 
       - name: Export artifacts
+        env:
+          KEEPER_AI_CLASSIFY: "1"
         run: python scripts/keeper.py export
 
       - name: Commit generated docs (valid/peek exports)
