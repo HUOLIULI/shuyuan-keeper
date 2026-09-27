@@ -318,15 +318,75 @@ def ai_make_drpy_script(site_url, site_name=""):
     return None
 
 
-def convert_legado_to_drpy(book_source):
-    """Legado 书源 → drpy JS 脚本自动转换。
+def _fetch_site_html(url, timeout=8):
+    """拉取站点HTML，返回 (html, error)。"""
+    try:
+        r = get_session().get(url, headers={"User-Agent": UA}, timeout=timeout)
+        if r.status_code == 200:
+            return r.text, None
+        return None, f"HTTP {r.status_code}"
+    except Exception as e:
+        return None, str(e)
 
-    读取 Legado 书源 JSON，用 AI 把规则翻译成 drpy 脚本。
-    返回 JS 脚本内容或 None。
+
+def _find_search_form(html, base_url):
+    """从HTML中提取搜索表单信息。"""
+    import re
+    info = {"action": "", "method": "get", "input_name": "q", "found": False}
+    # 找 form
+    m = re.search(r'<form[^>]*action="([^"]*)"[^>]*method="([^"]*)"[^>]*>(.*?)</form>', html, re.S | re.I)
+    if not m:
+        m = re.search(r'<form[^>]*method="([^"]*)"[^>]*action="([^"]*)"[^>]*>(.*?)</form>', html, re.S | re.I)
+        if m:
+            info["method"] = m.group(1).lower()
+            info["action"] = m.group(2)
+            form_body = m.group(3)
+        else:
+            return info
+    else:
+        info["action"] = m.group(1)
+        info["method"] = m.group(2).lower()
+        form_body = m.group(3)
+    # 找搜索输入框
+    im = re.search(r'<input[^>]*name="([^"]*)"[^>]*>', form_body, re.I)
+    if im:
+        info["input_name"] = im.group(1)
+    info["found"] = True
+    return info
+
+
+def _extract_html_structure(html, max_len=3000):
+    """提取HTML中有用的结构信息（去掉script/style，保留标签和class）。"""
+    import re
+    # 去掉 script/style
+    html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.S|re.I)
+    html = re.sub(r'<style[^>]*>.*?</style>', '', html, flags=re.S|re.I)
+    # 提取所有标签和class/id，形成结构骨架
+    tags = re.findall(r'<(\w+)[^>]*(?:class="([^"]*)"|id="([^"]*)")?[^>]*>', html)
+    structure = []
+    for tag, cls, eid in tags[:100]:
+        if tag in ('html','head','meta','link','body'):
+            continue
+        line = f"<{tag}"
+        if cls: line += f' class="{cls}"'
+        if eid: line += f' id="{eid}"'
+        line += ">"
+        structure.append(line)
+    result = "\n".join(structure[:60])
+    if len(result) > max_len:
+        result = result[:max_len] + "\n...(截断)"
+    return result
+
+
+def convert_legado_to_drpy(book_source):
+    """Legado 书源 → drpyS 脚本自动转换（HTML感知版）。
+
+    1. 先拉取站点真实HTML
+    2. 提取搜索表单信息和HTML结构
+    3. 把真实结构给AI，让它基于真实DOM写选择器
     """
     if not AI_KEY:
         return None
-    # 提取书源关键信息
     name = book_source.get("bookSourceName", "未知")
     url = book_source.get("bookSourceUrl", "")
     explore = book_source.get("exploreUrl", "")[:500]
@@ -334,21 +394,74 @@ def convert_legado_to_drpy(book_source):
     book_info = book_source.get("ruleBookInfo", {})
     content = book_source.get("ruleContent", {})
 
-    # 智能检测需要哪些 skill 片段
+    # === 关键改进：先拉真实HTML ===
+    search_form_info = ""
+    html_structure = ""
+    search_url_template = ""
+
+    # 1. 拉首页HTML找搜索表单
+    home_html, err = _fetch_site_html(url)
+    if home_html:
+        form = _find_search_form(home_html, url)
+        if form["found"]:
+            # 构建搜索URL模板
+            action = form["action"]
+            if action.startswith("/"):
+                from urllib.parse import urlparse
+                parsed = urlparse(url)
+                action = f"{parsed.scheme}://{parsed.netloc}{action}"
+            elif not action.startswith("http"):
+                action = url.rstrip("/") + "/" + action
+            search_url_template = f"{action}?{form['input_name']}=**"
+            search_form_info = (
+                f"【真实搜索表单】\n"
+                f"  方法: {form['method'].upper()}\n"
+                f"  搜索URL模板: {search_url_template}\n"
+                f"  搜索参数名: {form['input_name']}\n"
+            )
+        # 提取HTML结构
+        html_structure = _extract_html_structure(home_html)
+    else:
+        search_form_info = f"【注意】首页拉取失败: {err}"
+
+    # 2. 如果有Legado提供的搜索URL，优先用
+    legado_search_url = search.get("url", "")
+    if legado_search_url:
+        if not legado_search_url.startswith("http"):
+            legado_search_url = url.rstrip("/") + "/" + legado_search_url.lstrip("/")
+        search_url_template = legado_search_url.replace("{{key}}", "**").replace("{{searchKey}}", "**")
+
+    # 2.5 关键：实际跑一次搜索，把结果HTML给AI看
+    search_result_html = ""
+    if search_url_template:
+        test_url = search_url_template.replace("**", "斗破")
+        result_html, serr = _fetch_site_html(test_url, timeout=10)
+        if result_html:
+            search_result_html = _extract_html_structure(result_html, max_len=2500)
+        else:
+            search_result_html = f"（搜索页面拉取失败: {serr}）"
+
     skill_snippets = _detect_legado_skills(book_source)
     skills_text = "\n".join(skill_snippets)
 
     prompt = (
-        f"你是 drpyS 脚本开发者。把 Legado 书源翻译成 drpyS JS 脚本。\n\n"
-        f"【绝对禁止】输出 Legado 格式（searchRule/bookList/ruleSearch等）。\n"
-        f"【必须输出】纯JS代码，var rule = {{...}};\n\n"
-        f"{skills_text}\n"
-        f"【Legado书源】\n"
+        f"你是 drpyS 脚本开发者。基于真实站点结构生成 drpyS JS 脚本。\n\n"
+        f"{skills_text}\n\n"
+        f"{search_form_info}\n\n"
+        f"【搜索结果页HTML结构骨架】（这是搜索'斗破'后的真实结果页面）\n{search_result_html}\n\n"
+        f"【Legado书源参考】\n"
         f"名称:{name}\nURL:{url}\n"
-        f"搜索规则:{json.dumps(search, ensure_ascii=False)[:400]}\n"
-        f"详情规则:{json.dumps(book_info, ensure_ascii=False)[:400]}\n"
-        f"内容规则:{json.dumps(content, ensure_ascii=False)[:400]}\n\n"
-        f"把Legado规则翻译成上面的drpyS格式。只输出JS代码，不要解释。"
+        f"搜索规则:{json.dumps(search, ensure_ascii=False)[:300]}\n"
+        f"详情规则:{json.dumps(book_info, ensure_ascii=False)[:300]}\n\n"
+        f"要求：\n"
+        f"1. searchUrl 用上面URL模板（**会被替换成搜索词）\n"
+        f"2. 选择器必须基于上面【搜索结果页HTML结构骨架】里的真实class/id\n"
+        f"3. 用 pdfa/pdfh/pd 解析，&&是子选择器分隔符\n"
+        f"4. 搜索函数用 this.KEY 拼URL，一级用 this.input\n"
+        f"5. 列表项 push {{title,url,desc,pic_url}}\n"
+        f"6. 二级返回vod对象，章节用#分隔\n"
+        f"7. lazy返回 novel://JSON\n\n"
+        f"只输出 var rule = {{...}}; 代码，不要解释。"
     )
     try:
         resp = get_session().post(
@@ -357,7 +470,7 @@ def convert_legado_to_drpy(book_source):
             json={
                 "model": AI_MODEL,
                 "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0.3
+                "temperature": 0.2
             },
             timeout=60
         )
@@ -371,7 +484,6 @@ def convert_legado_to_drpy(book_source):
                 script = text.strip()
             else:
                 return None
-            # 验证：必须包含所有必要函数
             required = ["推荐", "一级", "二级", "搜索", "lazy"]
             if all(f in script for f in required):
                 return script
@@ -442,6 +554,44 @@ console.log('OK');
     finally:
         os.unlink(test_file)
     return True
+
+
+# === 真实T4测试：复制脚本到本地drpy-node，实际跑搜索 ===
+DRPY_NODE_DIR = os.environ.get("DRPY_NODE_DIR",
+    "/home/user/Doubao/chats/2992679393100546/peekpro_analysis/fix_deps/drpy-node2.0.4-merged-final")
+DRPY_NODE_JS = os.path.join(DRPY_NODE_DIR, "spider", "js")
+DRPY_NODE_API = "http://127.0.0.1:5757"
+
+
+def t4_real_test(script, module_name, keyword="斗破"):
+    """把脚本复制到drpy-node并实际跑T4搜索，返回 (ok, error_msg, result_count)。"""
+    import shutil, urllib.parse, glob
+    try:
+        os.makedirs(DRPY_NODE_JS, exist_ok=True)
+        for old in glob.glob(os.path.join(DRPY_NODE_JS, module_name + "*.js")):
+            os.unlink(old)
+        target = os.path.join(DRPY_NODE_JS, module_name + ".js")
+        with open(target, "w", encoding="utf-8") as f:
+            f.write(script)
+        time.sleep(0.5)
+        enc_name = urllib.parse.quote(module_name)
+        enc_kw = urllib.parse.quote(keyword)
+        url = f"{DRPY_NODE_API}/api/{enc_name}?wd={enc_kw}&refresh=1"
+        r = get_session().get(url, timeout=15)
+        ct = r.headers.get("content-type","")
+        if not ct.startswith("application/json"):
+            return False, f"非JSON响应: {r.text[:100]}", 0
+        data = r.json()
+        if "error" in data:
+            return False, f"运行错误: {str(data['error'])[:150]}", 0
+        lst = data.get("list") or []
+        if isinstance(lst, list) and len(lst) > 0:
+            return True, "", len(lst)
+        if data.get("list") == []:
+            return False, "搜索返回空列表（选择器不对）", 0
+        return False, f"返回异常: {str(data)[:150]}", 0
+    except Exception as e:
+        return False, f"测试异常: {e}", 0
 
 
 ROOT = Path(__file__).resolve().parent.parent
