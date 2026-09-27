@@ -2,10 +2,10 @@ name: update-and-deploy
 
 on:
   schedule:
-    # 每天北京时间 18:00 跑一次（GitHub cron 按 UTC，18:00 CST = 10:00 UTC）。
-    # 校验窗口为 18:00 至次日 05:50；隔一天不校验（由 store.last_validate_day 判断）。
-    # 上游拉取在 8 天窗口内才执行（由 last_fetch 判断），且只收新增（--skip-known）。
-    - cron: "0 10 * * *"
+    # 每2天跑一次（UTC 10:00 = 北京18:00）
+    # 效率最优：源站变化不快，2天足够新鲜度
+    # 每月约15次 × 8分钟 ≈ 120分钟，远低于免费额度
+    - cron: "0 10 */2 * *"
   workflow_dispatch:
     inputs:
       force_fetch:
@@ -81,30 +81,17 @@ jobs:
           now_dt = datetime.now(timezone.utc)
           now_ts = now_dt.timestamp()
 
-          fetch_gap_days = 8
+          fetch_gap_days = 6
 
           force_fetch = str(os.environ.get("INPUT_FORCE_FETCH", "")).lower() == "true"
           skip_known = str(os.environ.get("INPUT_SKIP_KNOWN", "")).lower() == "true"
           validate_all = str(os.environ.get("INPUT_VALIDATE_ALL", "")).lower() == "true"
           batch = os.environ.get("INPUT_BATCH", "800")
 
-          # 隔一天不校验：用 last_validate_day 记录上次校验的 UTC 日期，
-          # 与今天相隔 >= 2 天才再次校验
+          # 每次跑都验证（cron已经是2天一次了，不需要再隔一天）
           last_val_day = store.get("last_validate_day", "")
-          if not validate_all and last_val_day:
-              try:
-                  gap_days = (now_dt - datetime.fromisoformat(last_val_day + "T00:00:00+00:00")).days
-                  if gap_days < 2:
-                      store["should_validate"] = False
-                      print(f"[schedule] 上次校验 {last_val_day}，距今 {gap_days} 天，未到隔日，跳过校验")
-                  else:
-                      store["should_validate"] = True
-                      print(f"[schedule] 距上次校验 {gap_days} 天，进入校验")
-              except ValueError:
-                  store["should_validate"] = True
-          else:
-              store["should_validate"] = True
-              print(f"[schedule] 无记录或全量验证，进入校验")
+          store["should_validate"] = True
+          print(f"[schedule] 每次运行都验证")
 
           last_fetch = store.get("last_fetch", 0)
           fetch_age_days = (now_ts - last_fetch) / 86400 if last_fetch else 10**9
