@@ -335,7 +335,7 @@
   },
   {
    "key": "4k-av",
-   "name": "4k-av",
+   "name": "4k-av  [密]",
    "type": 3,
    "api": "https://pan.szfx.top/down.php/0c67ff200a5ff8b2a2e95a14d3b80563.py",
    "searchable": 1,
@@ -855,7 +855,7 @@
   },
   {
    "key": "modudongman",
-   "name": "🍀魔都动漫",
+   "name": "🍀魔都动漫  [画]",
    "type": 1,
    "api": "https://caiji.moduapi.cc/api.php/provide/vod",
    "searchable": 1,
@@ -1115,7 +1115,7 @@
   },
   {
    "key": "大地采集",
-   "name": "🦋 大地av｜🔞",
+   "name": "🦋 大地av｜🔞  [密]",
    "type": 0,
    "api": "https://dadiapi.com/apple_m3u8.php",
    "searchable": 1,
@@ -1125,7 +1125,7 @@
   },
   {
    "key": "*番号资源",
-   "name": "🦋 番号资源｜🔞",
+   "name": "🦋 番号资源｜🔞  [密]",
    "type": 1,
    "api": "http://fhapi9.com/api.php/provide/vod/",
    "searchable": 1,
@@ -1635,7 +1635,7 @@
   },
   {
    "key": "小鸟动漫",
-   "name": "🍚小鸟动漫(聚)",
+   "name": "🍚小鸟动漫(聚)  [画]",
    "type": 1,
    "api": "http://xydm.baicai.buzz/api.php/provide/vod/",
    "searchable": 1,
@@ -1805,7 +1805,7 @@
   },
   {
    "key": "hav6.beauty",
-   "name": "🔞黄AV",
+   "name": "🔞黄AV  [密]",
    "type": 0,
    "api": "https://www.pgxdy.com/api/xml.php",
    "searchable": 1,

@@ -3,7 +3,7 @@
  "sites": [
   {
    "key": "modudongman",
-   "name": "🍀魔都动漫",
+   "name": "🍀魔都动漫  [画]",
    "type": 1,
    "api": "https://caiji.moduapi.cc/api.php/provide/vod",
    "searchable": 1,
@@ -13,7 +13,7 @@
   },
   {
    "key": "*番号资源",
-   "name": "🦋 番号资源｜🔞",
+   "name": "🦋 番号资源｜🔞  [密]",
    "type": 1,
    "api": "http://fhapi9.com/api.php/provide/vod/",
    "searchable": 1,
@@ -23,7 +23,7 @@
   },
   {
    "key": "小鸟动漫",
-   "name": "🍚小鸟动漫(聚)",
+   "name": "🍚小鸟动漫(聚)  [画]",
    "type": 1,
    "api": "http://xydm.baicai.buzz/api.php/provide/vod/",
    "searchable": 1,
