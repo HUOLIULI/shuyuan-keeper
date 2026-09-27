@@ -535,6 +535,29 @@
   <!-- 上游状态 -->
   <div class="board">
     <div class="board-hd">
+      <span class="board-badge">版本信息</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;font-size:13px">
+      <div style="padding:10px;background:rgba(51,224,255,.05);border-radius:10px">
+        <div style="color:var(--muted);font-size:11px">版本</div>
+        <div style="color:var(--cyan);font-weight:700">v1.0.0</div>
+      </div>
+      <div style="padding:10px;background:rgba(45,255,155,.05);border-radius:10px">
+        <div style="color:var(--muted);font-size:11px">更新频率</div>
+        <div style="color:var(--green);font-weight:700">每2天</div>
+      </div>
+      <div style="padding:10px;background:rgba(168,120,255,.05);border-radius:10px">
+        <div style="color:var(--muted);font-size:11px">上游源</div>
+        <div style="color:var(--purple);font-weight:700">80+</div>
+      </div>
+      <div style="padding:10px;background:rgba(255,210,63,.05);border-radius:10px">
+        <div style="color:var(--muted);font-size:11px">最后更新</div>
+        <div style="color:var(--yellow);font-weight:700" id="ts2">-</div>
+      </div>
+    </div>
+  </div>
+  <div class="board">
+    <div class="board-hd">
       <span class="board-badge">上游监控</span>
     </div>
     <div class="ups" id="ups"></div>
