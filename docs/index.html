@@ -235,14 +235,24 @@
   /* AI 助手面板 */
   .ai-box{display:flex;flex-direction:column;gap:12px}
   .ai-cfg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .ai-cfg input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:13px;background:rgba(8,10,24,.6);color:var(--text);outline:none}
-  .ai-cfg input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(168,120,255,.15)}
+  .ai-cfg input,#ai-model,#ai-input-url{padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:13px;background:rgba(8,10,24,.6);color:var(--text);outline:none}
+  .ai-cfg input:focus,#ai-model:focus,#ai-input-url:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(168,120,255,.15)}
+  .ai-cfg input::placeholder,#ai-model::placeholder,#ai-input-url::placeholder,.ai-input::placeholder{color:var(--muted)}
   .ai-input{width:100%;min-height:80px;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:13px;background:rgba(8,10,24,.6);color:var(--text);outline:none;font-family:inherit;resize:vertical}
   .ai-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(168,120,255,.15)}
   .ai-output{width:100%;min-height:200px;padding:12px;border:1px solid var(--purple);border-radius:10px;font-size:12px;background:rgba(20,10,40,.4);color:var(--green);outline:none;font-family:ui-monospace,Menlo,monospace;resize:vertical;white-space:pre-wrap;word-break:break-all}
   .ai-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   .ai-status{font-size:12px;color:var(--muted)}
   .ai-status b{color:var(--green)}
+  /* AI按钮配色 */
+  .btn.purple{background:rgba(168,120,255,.2);border-color:var(--purple);color:#e0c8ff}
+  .btn.purple:hover{background:rgba(168,120,255,.35);box-shadow:0 0 12px rgba(168,120,255,.3)}
+  .btn.blue{background:rgba(51,140,255,.2);border-color:var(--cyan);color:#b8e8ff}
+  .btn.blue:hover{background:rgba(51,140,255,.35);box-shadow:0 0 12px rgba(51,140,255,.3)}
+  .btn.green{background:rgba(45,255,155,.15);border-color:var(--green);color:#b8ffd8}
+  .btn.green:hover{background:rgba(45,255,155,.3);box-shadow:0 0 12px rgba(45,255,155,.3)}
+  .btn.orange{background:rgba(255,138,77,.15);border-color:#ff8a4d;color:#ffd4b8}
+  .btn.orange:hover{background:rgba(255,138,77,.3);box-shadow:0 0 12px rgba(255,138,77,.3)}
   /* 分类 chips + 分类徽章：双维度（类别 / 源格式）通用 */
   .dim-label{font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:4px 0 4px;user-select:none}
   .cat-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}
