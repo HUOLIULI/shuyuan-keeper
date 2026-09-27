@@ -1756,6 +1756,47 @@ def sanitize_peek_tvbox(config):
     return out
 
 
+def convert_book_to_novel_sites(book_records):
+    """Legado 书源 → PeekPro 小说站自动转换。
+
+    筛选 API 型书源（URL 含 api/ 或 .json），包装成 TVBox site 格式。
+    HTML 抓取型书源不转换（协议不同，TVBox 无法解析）。
+    """
+    sites = []
+    seen_keys = set()
+    for b in book_records:
+        if not isinstance(b, dict):
+            continue
+        url = (b.get("bookSourceUrl") or "").strip()
+        name = b.get("bookSourceName") or b.get("name") or ""
+        if not url or not url.startswith(("http://", "https://")):
+            continue
+        # 只转换 API 型：URL 含 api 或以 .json 结尾
+        url_lower = url.lower()
+        if "api" not in url_lower and not url_lower.endswith(".json"):
+            continue
+        # 生成 key（用域名去重）
+        from urllib.parse import urlparse
+        domain = urlparse(url).netloc.replace("www.", "")
+        key = f"novel_{domain}"
+        if key in seen_keys:
+            continue
+        seen_keys.add(key)
+        # 包装成 TVBox site 格式
+        site = {
+            "key": key,
+            "name": f"📖{name}" if not name.startswith(("📖", "🎯", "🔥")) else name,
+            "api": url.rstrip("/"),
+            "type": 3,
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 0,
+            "changeable": 0,
+        }
+        sites.append(site)
+    return sites
+
+
 # 专区关键词：按站源名称归类（羊壳内 TAB 自动分类的补充，方便单类源订阅）
 PEEK_CATEGORY_RULES = {
     "manga": ["漫画", "动漫", "comic", "manga", "banana", "漫", "番", "动画", "次元", "绅士", "bh3", "哔哩", "b站"],
@@ -1844,6 +1885,18 @@ def cmd_export():
     peek_manga = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["manga"])
     peek_novel = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["novel"])
     peek_drama = filter_tvbox_by_category(peek_tvbox, PEEK_CATEGORY_RULES["drama"])
+    # Legado 书源 → PeekPro 小说站自动转换（API 型书源包装成 TVBox site）
+    novel_from_legado = convert_book_to_novel_sites(cats["book"])
+    # 合并：TVBox 中已有的小说站 + Legado 转换的小说站
+    existing_novel_keys = {s["key"] for s in peek_novel.get("sites", [])}
+    for s in novel_from_legado:
+        if s["key"] not in existing_novel_keys:
+            peek_novel.setdefault("sites", []).append(s)
+    # 合并到主点播配置（让 PeekPro 能搜到小说内容）
+    existing_main_keys = {s["key"] for s in peek_tvbox.get("sites", [])}
+    for s in novel_from_legado:
+        if s["key"] not in existing_main_keys:
+            peek_tvbox.setdefault("sites", []).append(s)
 
     archived = [r.get("source") for r in store["archived"]]
     flaky_n = sum(1 for r in store["sources"] if r.get("status") == "flaky")
