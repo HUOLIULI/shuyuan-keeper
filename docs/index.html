@@ -319,6 +319,9 @@
   .tab-pane{display:none}
   .tab-pane.on{display:block;animation:fadeIn .3s ease}
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--line);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:6px}
+  .loading{color:var(--cyan)!important}
 </style>
 </head>
 <body>
@@ -534,6 +537,9 @@
   </div>
   </div><!-- /tab-about -->
 </div>
+<footer style="text-align:center;padding:20px;color:var(--muted);font-size:11px">
+  资源聚合仓库 · 自动收集·自动验活·自动转换 · 仅供学习研究
+</footer>
 <div id="toast"></div>
 
 <script>
