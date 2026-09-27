@@ -2271,42 +2271,13 @@ def sanitize_peek_tvbox(config):
 
 
 def convert_book_to_novel_sites(book_records):
-    """Legado 书源 → PeekPro 小说站自动转换。
-
-    只有 API 型书源（URL 本身就是 drpy 兼容的 API）才能直接用。
-    HTML 抓取型书源需要生成 drpy 脚本，这里不做。
+    """Legado 书源 → PeekPro 小说站。
+    
+    已废弃：之前直接把 API URL 塞成 type=3 站，PeekPro/drpyS 不认。
+    现在统一走 convert_legado_to_drpy() 生成 drpyS 脚本（type=4, lang=ds）。
+    此函数返回空列表，避免再生成假站。
     """
-    sites = []
-    seen_keys = set()
-    for b in book_records:
-        if not isinstance(b, dict):
-            continue
-        url = (b.get("bookSourceUrl") or "").strip()
-        name = b.get("bookSourceName") or b.get("name") or ""
-        if not url or not url.startswith(("http://", "https://")):
-            continue
-        # 只转换 API 型：URL 含 api/ 或以 .json 结尾
-        url_lower = url.lower()
-        if "api" not in url_lower and not url_lower.endswith(".json"):
-            continue
-        from urllib.parse import urlparse
-        domain = urlparse(url).netloc.replace("www.", "")
-        key = f"novel_{domain}"
-        if key in seen_keys:
-            continue
-        seen_keys.add(key)
-        site = {
-            "key": key,
-            "name": f"📖{name}" if not name.startswith(("📖", "🎯", "🔥")) else name,
-            "api": url.rstrip("/"),
-            "type": 3,
-            "searchable": 1,
-            "quickSearch": 0,
-            "filterable": 0,
-            "changeable": 0,
-        }
-        sites.append(site)
-    return sites
+    return []
 
 
 def ai_classify_sites(sites, max_batch=50):
