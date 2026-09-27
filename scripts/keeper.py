@@ -165,16 +165,28 @@ def convert_legado_to_drpy(book_source):
 
     prompt = (
         f"你是 drpy 小说源开发者。把以下 Legado 书源转换成 drpy JS 脚本。\n\n"
-        f"书源名称: {name}\n"
-        f"书源URL: {url}\n"
-        f"探索列表: {explore}\n"
+        f"【drpy 脚本格式要求】\n"
+        f"var rule = {{\n"
+        f"    title: '站点名',\n"
+        f"    host: 'https://xxx.com',\n"
+        f"    推荐: async () => {{ /* 首页推荐列表 */ }},\n"
+        f"    一级: async () => {{ /* 分类列表 */ }},\n"
+        f"    二级: async () => {{ /* 书籍详情 */ }},\n"
+        f"    搜索: async () => {{ /* 搜索 */ }},\n"
+        f"    lazy: async () => {{ /* 章节内容 */ }},\n"
+        f"}};\n\n"
+        f"【书源信息】\n"
+        f"名称: {name}\n"
+        f"URL: {url}\n"
+        f"探索: {explore}\n"
         f"搜索规则: {json.dumps(search, ensure_ascii=False)[:300]}\n"
-        f"书籍信息规则: {json.dumps(book_info, ensure_ascii=False)[:300]}\n"
+        f"详情规则: {json.dumps(book_info, ensure_ascii=False)[:300]}\n"
         f"内容规则: {json.dumps(content, ensure_ascii=False)[:300]}\n\n"
-        f"生成一个完整的 drpy JS 脚本，格式：var rule={{...}}\n"
-        f"必须包含：homeContent, categoryContent, detailContent, searchContent, lazy\n"
-        f"host 设为 {url}\n"
-        f"只输出代码，不要解释。"
+        f"要求：\n"
+        f"1. 必须用中文函数名：推荐/一级/二级/搜索/lazy\n"
+        f"2. host 设为 {url}\n"
+        f"3. 只输出 var rule = {{...}}; 格式的代码\n"
+        f"4. 不要解释，直接输出代码"
     )
     try:
         resp = get_session().post(
@@ -192,9 +204,16 @@ def convert_legado_to_drpy(book_source):
             import re
             m = re.search(r'```(?:javascript|js)?\s*(.*?)```', text, re.S)
             if m:
-                return m.group(1).strip()
-            if "var rule" in text:
-                return text.strip()
+                script = m.group(1).strip()
+            elif "var rule" in text:
+                script = text.strip()
+            else:
+                return None
+            # 验证：必须包含所有必要函数
+            required = ["推荐", "一级", "二级", "搜索", "lazy"]
+            if all(f in script for f in required):
+                return script
+            return None
     except Exception:
         pass
     return None
