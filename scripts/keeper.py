@@ -62,7 +62,7 @@ AI_MODEL = os.environ.get("KEEPER_AI_MODEL", "agnes-3.0-flash")
 
 
 def ai_repair_source(source_type, source_url, error_hint=""):
-    """后端 AI 自动修复：给失效源 URL，让 AI 生成修复建议。
+    """后端 AI 自动修复：分析站点内容，生成修复后的 URL 或新脚本。
 
     返回修复后的 URL 或 None。失败不抛异常。
     """
@@ -94,6 +94,54 @@ def ai_repair_source(source_type, source_url, error_hint=""):
                 line = line.strip().strip("`")
                 if line.startswith(("http://", "https://")):
                     return line
+    except Exception:
+        pass
+    return None
+
+
+def ai_make_drpy_script(site_url, site_name=""):
+    """AI 自动制作 drpy 脚本：分析存活站点 → 生成完整 drpy JS 脚本。
+
+    用于 flaky 但站点活着的源，AI 分析站点结构后生成可用脚本。
+    返回 JS 脚本内容或 None。
+    """
+    if not AI_KEY or not site_url.startswith(("http://", "https://")):
+        return None
+    # 先拉取站点内容做分析
+    try:
+        resp = get_session().get(site_url, headers={"User-Agent": UA}, timeout=10)
+        if resp.status_code != 200:
+            return None
+        html = resp.text[:2000]  # 只取前2KB做分析
+    except Exception:
+        return None
+    prompt = (
+        f"你是 drpy 源开发者。站点 {site_name} ({site_url}) 接口失效但站点活着。"
+        f"分析以下站点 HTML 片段，生成一个完整的 drpy JS 脚本，"
+        f"包含 homeContent、categoryContent、detailContent、searchContent、playerContent。"
+        f"脚本格式：var rule={{...}}。只输出代码，不要解释。\n\n"
+        f"站点 HTML 片段：\n{html}"
+    )
+    try:
+        resp = get_session().post(
+            AI_BASE.rstrip("/") + "/chat/completions",
+            headers={"Content-Type": "application/json", "Authorization": "Bearer " + AI_KEY},
+            json={
+                "model": AI_MODEL,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.3
+            },
+            timeout=45
+        )
+        if resp.status_code == 200:
+            text = resp.json().get("choices", [{}])[0].get("message", {}).get("content", "")
+            # 提取 JS 代码
+            import re
+            m = re.search(r'```(?:javascript|js)?\s*(.*?)```', text, re.S)
+            if m:
+                return m.group(1).strip()
+            if "var rule" in text:
+                return text.strip()
     except Exception:
         pass
     return None
@@ -1676,6 +1724,24 @@ def cmd_validate(batch=400, types=None, all_=False, flaky_only=False,
                         ok_n += 1
                         yellow_n -= 1
                         print(f"  [AI修复] {rec.get('name','?')[:20]}: {url[:40]} → {fixed[:40]}")
+                # AI 制源：路径修复失败 → 分析站点生成 drpy 脚本
+                elif os.environ.get("KEEPER_AI_MAKE") == "1" and rec["type"] == "tvbox" and site_alive(url):
+                    script = ai_make_drpy_script(url, rec.get("name", ""))
+                    if script and len(script) > 100:
+                        # 保存脚本到 data/drpy/
+                        drpy_dir = DATA / "drpy"
+                        drpy_dir.mkdir(exist_ok=True)
+                        from urllib.parse import urlparse
+                        domain = urlparse(url).netloc.replace("www.", "")
+                        script_path = drpy_dir / f"{domain}.js"
+                        script_path.write_text(script, encoding="utf-8")
+                        print(f"  [AI制源] {rec.get('name','?')[:20]}: 生成 drpy 脚本 {script_path.name}")
+                        # 标记为已制源，导出时会包含
+                        rec["drpy_script"] = str(script_path)
+                        rec["status"] = "valid"
+                        rec["fail_count"] = 0
+                        ok_n += 1
+                        yellow_n -= 1
         else:  # dead：站点整个没了
             rec["fail_count"] = rec.get("fail_count", 0) + 1
             dead_n += 1

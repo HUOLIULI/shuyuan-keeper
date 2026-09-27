@@ -147,6 +147,7 @@ jobs:
           KEEPER_READ_TIMEOUT: "15"
           KEEPER_ALIVE_TIMEOUT: "12"
           KEEPER_AI_REPAIR: "1"
+          KEEPER_AI_MAKE: "1"
         run: |
           python - <<'PY'
           import json, subprocess
