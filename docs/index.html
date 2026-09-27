@@ -274,215 +274,180 @@
     .cat-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px}
     .chip{flex:none}
   }
+  /* 双板块卡片布局 */
+  .board{background:var(--card);backdrop-filter:blur(14px);border:1px solid var(--line);
+    border-radius:18px;padding:20px 22px;margin:18px 0;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+  .board-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .board-badge{font-size:11px;letter-spacing:.12em;padding:4px 12px;border-radius:999px;border:1px solid var(--line2);
+    color:var(--cyan);text-transform:uppercase}
+  .board-badge.green{color:var(--green);border-color:var(--green)}
+  .board-badge.purple{color:var(--purple);border-color:var(--purple)}
+  .board-ts{font-size:11px;color:var(--muted)}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+  .card{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--line);border-radius:14px;
+    background:rgba(8,10,24,.5);cursor:pointer;transition:all .2s ease}
+  .card:hover{border-color:var(--line2);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+  .card-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+  .card-body{flex:1;min-width:0}
+  .card-title{font-size:14px;font-weight:700;color:var(--text)}
+  .card-count{font-size:22px;font-weight:800;color:var(--cyan);line-height:1.2}
+  .card-desc{font-size:11px;color:var(--muted);margin-top:2px}
+  .card-btn{flex:none;padding:8px 14px;border:none;border-radius:8px;background:linear-gradient(135deg,rgba(120,160,255,.22),rgba(120,160,255,.10));
+    color:var(--text);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line2);transition:all .2s}
+  .card-btn:hover{background:rgba(51,224,255,.2);border-color:var(--cyan)}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="hero">
-    <div class="badge"><span class="pulse"></span> SHUYUAN · LIVING RESOURCE HUB</div>
+    <div class="badge"><span class="pulse"></span> SHUYUAN · AUTO RESOURCE HUB</div>
     <h1>资源聚合仓库</h1>
-    <p class="sub">      书源 · 订阅源 · TVBox · IPTV · 采集接口 · 影视直连 · 洛雪音源 · 磁力影视 · 影视解析 · 本地包<br>上游日验 + 本仓二次复核 · 失效自动删除 · 隔日交替检验 · <span style="color:var(--cyan)">已适配 PeekPro 羊壳</span></p>
+    <p class="sub">全自动收集 → 去重 → 核验修复 → 转换 → 导出 · 每日自动更新</p>
   </div>
 
+  <!-- 免责声明 -->
   <div class="dc" id="dc" onclick="this.classList.toggle('open')">
-    <div class="t"><b>免责声明</b><span>本仓库仅供个人学习、研究、备份。全部资源版权归原权利人所有，禁止商用、二次分发或搬运。点击展开完整条款。</span></div>
+    <div class="t"><b>免责声明</b><span>仅供个人学习研究，禁止商用/分发，随时删库。点击展开。</span></div>
     <div class="body">
       <ul>
-        <li>本仓库为非营利性个人仓库，与原始内容权利人无关联、无合作、无授权关系。</li>
-        <li>未经权利人许可，禁止：Fork / 克隆 / 镜像 / 搬运本仓库至其他平台；售卖、付费传播、引流变现等任何商业用途；二次分发、打包转载。</li>
-        <li>本仓库随时可能无通知删除、清空或停止维护，不保证内容完整性、准确性与永久可用性。</li>
-        <li>访问、下载或使用本仓库任何内容产生的风险与后果，由使用者自行承担；如相关内容在您所在地区不合法，请立即停止使用。</li>
-        <li>侵权反馈：通过 <a href="mailto:shuyuan-keeper@example.com" target="_blank">邮件</a> 提交（权利证明 + 侵权位置 + 有效联系方式），核实后删除。</li>
+        <li>本仓库为非营利性个人仓库，与原始内容权利人无关联。</li>
+        <li>未经许可禁止 Fork/克隆/镜像/搬运；禁止售卖、付费传播等商业用途。</li>
+        <li>随时可能无通知删除，不保证内容完整性与永久可用性。</li>
+        <li>使用风险自担；如不合法请立即停止。侵权请邮件反馈。</li>
       </ul>
     </div>
   </div>
 
-  <div class="hub">
-    <div class="hub-hd">
-      <span class="hub-badge" style="color:var(--green);border-color:var(--green)">板块1 · Legado 阅读源</span>
-      <span class="hub-sub">更新于 <span id="ts">-</span> · 隔日交替复检</span>
+  <!-- 板块1：Legado -->
+  <div class="board">
+    <div class="board-hd">
+      <span class="board-badge green">板块1 · Legado 阅读源</span>
+      <span class="board-ts">更新于 <span id="ts">-</span></span>
     </div>
-    <div class="tabs" id="tabs"></div>
-  </div>
-
-  <div class="hub" id="peek-hub">
-    <div class="hub-hd">
-      <span class="hub-badge" style="color:var(--purple);border-color:var(--purple)">板块2 · PeekPro 羊壳</span>
-      <span class="hub-sub">点播 · 直播 · 音乐 · 漫画 · 小说 · 短剧</span>
-    </div>
-    <div class="peek-wrap">
-      <div class="peek-stats" id="peek-stats">
-        <div class="peek-stat vod"><b id="ps-vod">—</b><span>点播站点</span></div>
-        <div class="peek-stat live"><b id="ps-live">—</b><span>直播频道</span></div>
-        <div class="peek-stat music"><b id="ps-music">—</b><span>音乐音源</span></div>
-        <div class="peek-stat manga"><b id="ps-manga">—</b><span>漫画站</span></div>
-        <div class="peek-stat novel"><b id="ps-novel">—</b><span>小说站</span></div>
-        <div class="peek-stat drama"><b id="ps-drama">—</b><span>短剧站</span></div>
+    <div class="card-grid">
+      <div class="card" data-copy="valid.json">
+        <div class="card-icon" style="background:rgba(45,255,155,.12)">📚</div>
+        <div class="card-body">
+          <div class="card-title">书源</div>
+          <div class="card-count" id="c-book">—</div>
+          <div class="card-desc">Legado 书源管理 → 网络导入</div>
+        </div>
+        <button class="card-btn">复制地址</button>
       </div>
-      <table>
-        <tr><th>模块</th><th>订阅地址</th><th>操作</th></tr>
-        <tr><td><span class="cat-badge cyan">点播</span></td>
-            <td><code data-peek-code="peek_tvbox.json">peek_tvbox.json</code></td>
-            <td><button class="btn gray" data-peek="peek_tvbox.json">复制</button>
-                <a class="btn gray" href="peek_tvbox.json" download>下载</a></td></tr>
-        <tr><td><span class="cat-badge green">直播</span></td>
-            <td><code data-peek-code="peek_iptv.txt">peek_iptv.txt</code></td>
-            <td><button class="btn gray" data-peek="peek_iptv.txt">复制</button>
-                <a class="btn gray" href="peek_iptv.txt" download>下载</a></td></tr>
-        <tr><td><span class="cat-badge purple">音乐</span></td>
-            <td><code data-peek-code="peek_music.json">peek_music.json</code></td>
-            <td><button class="btn gray" data-peek="peek_music.json">复制</button>
-                <a class="btn gray" href="peek_music.json" download>下载</a></td></tr>
-        <tr><td><span class="cat-badge pink">漫画</span></td>
-            <td><code data-peek-code="peek_manga.json">peek_manga.json</code></td>
-            <td><button class="btn gray" data-peek="peek_manga.json">复制</button>
-                <a class="btn gray" href="peek_manga.json" download>下载</a></td></tr>
-        <tr><td><span class="cat-badge yellow">小说</span></td>
-            <td><code data-peek-code="peek_novel.json">peek_novel.json</code></td>
-            <td><button class="btn gray" data-peek="peek_novel.json">复制</button>
-                <a class="btn gray" href="peek_novel.json" download>下载</a></td></tr>
-        <tr><td><span class="cat-badge orange">短剧</span></td>
-            <td><code data-peek-code="peek_drama.json">peek_drama.json</code></td>
-            <td><button class="btn gray" data-peek="peek_drama.json">复制</button>
-                <a class="btn gray" href="peek_drama.json" download>下载</a></td></tr>
-      </table>
-      <p class="peek-note">
-        <span class="peek-step">1</span><b>点播</b>：设置 → 接口配置 → 右上角 + → 名称随意 → 粘贴 <b>peek_tvbox.json</b> 地址（漫画/小说/短剧在壳内自动分 Tab，也可单独订阅专区文件）。<br>
-        <span class="peek-step">2</span><b>直播</b>：直播 → 直播源 → 添加 → 粘贴 <b>peek_iptv.txt</b> 地址（FM 格式，已按央视/卫视/体育分组）。<br>
-        <span class="peek-step">3</span><b>音乐</b>：音乐板块 → 设置 → 导入脚本 → 在线链接；先打开 <b>peek_music.json</b>，复制其中一条 <b>.js</b> 地址粘贴（一次一个音源，洛雪格式）。<br>
-        <span style="opacity:.65">注：peek_tvbox_multi.json 为影视仓/宝盒多仓格式，羊壳不支持 storeHouse，勿填。</span>
-      </p>
+      <div class="card" data-copy="valid_subscribe.json">
+        <div class="card-icon" style="background:rgba(51,224,255,.12)">📰</div>
+        <div class="card-body">
+          <div class="card-title">订阅源</div>
+          <div class="card-count" id="c-sub">—</div>
+          <div class="card-desc">Legado 我的 → 订阅 → 网络导入</div>
+        </div>
+        <button class="card-btn">复制地址</button>
+      </div>
     </div>
   </div>
 
-  <div class="panel" id="tab-book"></div>
-  <div class="panel hidden" id="tab-subscribe"></div>
-  <div class="panel hidden" id="tab-tvbox"></div>
-  <div class="panel hidden" id="tab-iptv"></div>
-  <div class="panel hidden" id="tab-collect"></div>
-  <div class="panel hidden" id="tab-videosite"></div>
-  <div class="panel hidden" id="tab-music"></div>
-  <div class="panel hidden" id="tab-magnet"></div>
-  <div class="panel hidden" id="tab-vparse"></div>
-  <div class="panel hidden" id="tab-localpkg"></div>
-  <div class="panel hidden" id="tab-upload"></div>
-  <div class="panel hidden" id="tab-ai"></div>
-
-  <div class="panel" id="up-panel" style="display:none">
-    <h2>上传资源（本地校验 + 生成反馈草案）</h2>
-    <p class="hint">选择分类 → 粘贴内容（一行一个 URL，或合法 JSON 数组/对象）→ 本地校验看红黄绿 → 复制反馈草案发送给站长邮箱即可。</p>
-    <div class="upselect">
-      <select id="up-type">
-        <option value="collect">采集接口（苹果CMS）</option>
-        <option value="videosite">影视直连站</option>
-        <option value="magnet">磁力/BT 聚合站</option>
-        <option value="vparse">影视解析接口</option>
-        <option value="localpkg">影视本地包入口</option>
-        <option value="music">音源（洛雪/MusicFree）</option>
-        <option value="book">书源（Legado）</option>
-        <option value="subscribe">订阅源</option>
-        <option value="tvbox">TVBox 配置</option>
-        <option value="iptv">IPTV 直播源</option>
-      </select>
-      <input type="text" id="up-name" placeholder="来源名称（可选，如 某某采集）" style="flex:1;min-width:200px">
+  <!-- 板块2：PeekPro -->
+  <div class="board">
+    <div class="board-hd">
+      <span class="board-badge purple">板块2 · PeekPro 羊壳</span>
+      <span class="board-ts">点播 · 直播 · 音乐 · 漫画 · 小说 · 短剧</span>
     </div>
-    <textarea id="up-content" placeholder="粘贴 URL（一行一个）或 JSON 数组 [{\"url\":\"...\",\"name\":\"...\"}]"></textarea>
-    <div class="upbtns">
-      <button class="btn" onclick="runLocalCheck()">本地校验（红/黄/绿）</button>
-      <button class="btn blue" onclick="makeIssueDraft()">生成反馈草案</button>
-      <button class="btn gray" onclick="downloadSubmit()">导出 JSON</button>
+    <div class="card-grid">
+      <div class="card" data-copy="peek_tvbox.json">
+        <div class="card-icon" style="background:rgba(51,224,255,.12)">🎬</div>
+        <div class="card-body">
+          <div class="card-title">点播</div>
+          <div class="card-count" id="c-vod">—</div>
+          <div class="card-desc">设置→接口配置→+粘贴地址</div>
+        </div>
+        <button class="card-btn">复制地址</button>
+      </div>
+      <div class="card" data-copy="peek_iptv.txt">
+        <div class="card-icon" style="background:rgba(45,255,155,.12)">📺</div>
+        <div class="card-body">
+          <div class="card-title">直播</div>
+          <div class="card-count" id="c-live">—</div>
+          <div class="card-desc">直播→直播源→添加地址</div>
+        </div>
+        <button class="card-btn">复制地址</button>
+      </div>
+      <div class="card" data-copy="peek_music.json">
+        <div class="card-icon" style="background:rgba(168,120,255,.12)">🎵</div>
+        <div class="card-body">
+          <div class="card-title">音乐</div>
+          <div class="card-count" id="c-music">—</div>
+          <div class="card-desc">音乐→设置→导入脚本</div>
+        </div>
+        <button class="card-btn">复制清单</button>
+      </div>
+      <div class="card" data-copy="peek_manga.json">
+        <div class="card-icon" style="background:rgba(255,122,184,.12)">📖</div>
+        <div class="card-body">
+          <div class="card-title">漫画</div>
+          <div class="card-count" id="c-manga">—</div>
+          <div class="card-desc">专区源（可单独订阅）</div>
+        </div>
+        <button class="card-btn">复制地址</button>
+      </div>
+      <div class="card" data-copy="peek_novel.json">
+        <div class="card-icon" style="background:rgba(255,210,63,.12)">📝</div>
+        <div class="card-body">
+          <div class="card-title">小说</div>
+          <div class="card-count" id="c-novel">—</div>
+          <div class="card-desc">Legado 书源自动转换</div>
+        </div>
+        <button class="card-btn">复制地址</button>
+      </div>
+      <div class="card" data-copy="peek_drama.json">
+        <div class="card-icon" style="background:rgba(255,138,77,.12)">🎭</div>
+        <div class="card-body">
+          <div class="card-title">短剧</div>
+          <div class="card-count" id="c-drama">—</div>
+          <div class="card-desc">专区源（可单独订阅）</div>
+        </div>
+        <button class="card-btn">复制地址</button>
+      </div>
     </div>
-    <div id="up-legend" style="margin:8px 0;display:none">
-      <span class="badge green" id="lg-green"></span>
-      <span class="badge yellow" id="lg-yellow"></span>
-      <span class="badge red" id="lg-red"></span>
-    </div>
-    <div class="vlist" id="up-vlist"></div>
   </div>
 
-  <div class="panel">
-    <h2>上游仓库监控</h2>
+  <!-- AI 助手 -->
+  <div class="board">
+    <div class="board-hd">
+      <span class="board-badge" style="color:var(--purple);border-color:var(--purple)">AI 制源助手</span>
+      <span class="board-ts">粘贴 URL → 自动生成脚本/配置</span>
+    </div>
+    <div class="ai-box">
+      <div class="ai-cfg">
+        <input id="ai-base" placeholder="API Base">
+        <input id="ai-key" type="password" placeholder="API Key">
+      </div>
+      <input id="ai-model" placeholder="模型名">
+      <textarea class="ai-input" id="ai-input" placeholder="粘贴站点 URL 或失效源 JSON..."></textarea>
+      <div class="ai-actions">
+        <button class="btn" onclick="aiMake('drpy')">生成 drpy</button>
+        <button class="btn blue" onclick="aiMake('tvbox')">生成 TVBox</button>
+        <button class="btn gray" onclick="aiMake('fix')">修复源</button>
+        <span class="ai-status" id="ai-status"></span>
+      </div>
+      <textarea class="ai-output" id="ai-output" placeholder="结果显示在这里..."></textarea>
+      <div class="ai-actions">
+        <button class="btn gray" onclick="copy(document.getElementById('ai-output').value,'已复制')">复制结果</button>
+        <button class="btn gray" onclick="document.getElementById('ai-output').value=''">清空</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 上游状态 -->
+  <div class="board">
+    <div class="board-hd">
+      <span class="board-badge">上游监控</span>
+    </div>
     <div class="ups" id="ups"></div>
   </div>
 </div>
 <div id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
-const TABS = ["book", "subscribe", "tvbox", "iptv", "collect", "videosite", "music",
-             "magnet", "vparse", "localpkg", "upload", "ai"];
-const FILE = {book: "valid.json", subscribe: "valid_subscribe.json", tvbox: "valid_tvbox.json",
-              iptv: "valid_iptv.m3u", collect: "valid_collect.json", videosite: "valid_videosite.json",
-              music: "valid_music.json", magnet: "valid_magnet.json",
-              vparse: "valid_vparse.json", localpkg: "valid_localpkg.json"};
-const LABEL = {book: "书源", subscribe: "订阅源", tvbox: "站点", iptv: "频道", collect: "采集接口",
-               videosite: "影视站", music: "音源", magnet: "磁力站", vparse: "解析接口", localpkg: "本地包", ai: "AI 助手"};
-const META = {
-   book:      {title: "有效书源", desc: "阅读 Legado：书源管理 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "bookSource", extraBtn: ""},
-   subscribe: {title: "有效订阅源", desc: "阅读 Legado：我的 → 订阅 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "rssSource", extraBtn: ""},
-   tvbox:     {title: "TVBox 配置", desc: "TVBox / 影视仓：设置 → 配置地址 → 粘贴下面地址，每次启动自动刷新。", extraBtn: "copyAll"},
-   iptv:      {title: "IPTV 直播源（M3U）", desc: "VLC / Kodi / DIYP / TVBox：播放列表或直播源设置里填下面 M3U 地址。", extraBtn: "copyAll"},
-   collect:   {title: "采集接口（苹果CMS）", desc: "苹果CMS / 空壳影视：采集接口配置里填下面 JSON 地址。", extraBtn: ""},
-   videosite: {title: "影视直连站", desc: "HCCX 规则映射出的可直连影视站 + 在线观影站（zhuiju），浏览器可直接打开。", extraBtn: ""},
-   music:     {title: "有效音源", desc: "洛雪 LX / MusicFree 音源（.js）：复制下面地址作为插件订阅源导入。", extraBtn: "copyAll"},
-   magnet:    {title: "磁力/BT 聚合站", desc: "磁力、BT、网盘搜索聚合入口（zhuiju 追剧指南），浏览器直接打开搜资源。", extraBtn: "copyAll"},
-   vparse:    {title: "影视解析接口", desc: "TVBox parses 解析接口（爱腾芒/优酷等 flag 聚合），TVBox 设置 → 解析接口里填。", extraBtn: "copyAll"},
-   localpkg:  {title: "影视本地包入口", desc: "网盘搜索 / 离线包仓库（夸克搜、追剧吧、谷哥搜等），浏览器直接打开。", extraBtn: ""}
-};
-const data = {book: [], subscribe: [], tvbox: [], iptv: [], collect: [], videosite: [],
-              music: [], magnet: [], vparse: [], localpkg: []};
-const loaded = {};
-
-/* ---- 双维度分类（类别 subcat × 源格式 fmt）---- */
-const CATMAP = {
-  // 类别
-  tvbox_py:      {label: "py 爬虫",    color: "green"},
-  tvbox_site:    {label: "常规站点",    color: "cyan"},
-  tvbox_t4:      {label: "T4 接口",     color: "purple"},
-  tvbox_default: {label: "默认源",      color: "yellow"},
-  online_video:  {label: "在线观看",    color: "cyan"},
-  hccx_rule:     {label: "直连规则",    color: "green"},
-  magnet_search: {label: "磁力/BT",     color: "orange"},
-  cloud_search:  {label: "网盘搜索",    color: "purple"},
-  parse_iface:   {label: "解析接口",    color: "pink"},
-  music_source:  {label: "常规音源",    color: "green"},
-  music_parse:   {label: "音乐解析",    color: "purple"},
-  // 源格式
-  js_plugin:     {label: ".js 插件",    color: "green"},
-  m3u_live:      {label: "M3U 直播",    color: "cyan"},
-  url_list:      {label: "URL 列表",    color: "yellow"}
-};
-const FILTERS = {}; // FILTERS[tab] = {subcat:"", fmt:""}
-
-function subcatOf(tab, r) {
-  if (tab === "tvbox") {
-    const t = String(r.type || "0");
-    if (t === "3") return "tvbox_py";
-    if (t === "4") return "tvbox_t4";
-    if (t === "1") return "tvbox_site";
-    return "tvbox_default";
-  }
-  if (r.subcat) return r.subcat;
-  // 按标签页兜底：videosite 全为 HCCX 直连规则（在线观影站后续接入才分 online_video）
-  if (tab === "videosite") return "hccx_rule";
-  if (tab === "magnet") return "magnet_search";
-  if (tab === "vparse") return "parse_iface";
-  if (tab === "localpkg") return "cloud_search";
-  return "cloud_search";
-}
-function fmtOf(r) {
-  const u = (r.url || "");
-  if (r._type === "iptv" || u.includes("m3u")) return "m3u_live";
-  if (u.includes(".js")) return "js_plugin";
-  return "url_list";
-}
-// 每个标签页维度：tvbox/vod/magnet 为「类别+源格式」双维，其余单「类别」维
-const DIMS = {
-  tvbox: ["subcat", "fmt"], videosite: ["subcat", "fmt"], music: ["subcat", "fmt"],
-    magnet: ["subcat"], vparse: ["subcat"], localpkg: ["subcat"],
-  book: [], subscribe: [], iptv: ["fmt"], collect: []
-};
-
 const abs = (file) => new URL(file, location.href).href;
 
 function toast(msg) {
@@ -494,491 +459,86 @@ function toast(msg) {
 }
 
 async function copy(text, msg) {
-  try {
-    await navigator.clipboard.writeText(text);
-  } catch (e) {
-    const ta = document.createElement("textarea");
-    ta.value = text; document.body.appendChild(ta); ta.select();
-    document.execCommand("copy"); ta.remove();
-  }
+  try { await navigator.clipboard.writeText(text); }
+  catch(e) { const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); }
   toast(msg || "已复制");
 }
 
-function buildPanel(tab) {
-  if (tab === "ai") { buildAIPanel(); return; }
-  const meta = META[tab];
-  const url = abs(FILE[tab]);
-  const importBtn = meta.importKind
-    ? `<button class="btn" onclick="doImport('${meta.importKind}')">一键导入阅读APP</button>` : "";
-  const extraBtn = meta.extraBtn === "copyAll"
-    ? `<button class="btn gray" onclick="copyAllContent('${tab}')">复制全部内容</button>` : "";
-  const dims = DIMS[tab];
-  const dimsHtml = dims && dims.length
-    ? dims.map((dim, i) =>
-        `<div class="dim-label">${i === 0 ? "类别" : "源格式"}</div>` +
-        `<div id="${tab}-dim${i}" class="cat-chips"></div>`
-      ).join("")
-    : "";
-  document.getElementById(`tab-${tab}`).innerHTML = `
-    <h2>${meta.title}</h2>
-    <p class="hint">${meta.desc}</p>
-    ${dimsHtml}
-    <p><code id="url-${tab}">${url}</code></p>
-    ${importBtn}
-    <button class="btn gray" onclick="copy('${url}','链接已复制')">复制链接</button>
-    ${extraBtn}
-    <button class="btn gray" onclick="showQR('${url}','${meta.title}')">二维码</button>
-    <a class="btn gray" href="${FILE[tab]}" download>下载</a>
-    <input type="search" id="q-${tab}" placeholder="搜索名称 / 地址 / 类别…" oninput="renderTable('${tab}')">
-    <div class="tblwrap"><table id="tbl-${tab}"></table></div>
-    <div class="tbl-foot"><span id="cnt-${tab}" class="tbl-count"></span></div>`;
-}
-
-// ---- 双维度分类渲染（类别 × 源格式）----
-
-function renderChips(tab, dimIdx, keyFn, allLabel) {
-  const el = document.getElementById(`${tab}-dim${dimIdx}`);
-  if (!el) return;
-  FILTERS[tab] = FILTERS[tab] || {subcat:"", fmt:""};
-  const cur = dimIdx === 0 ? FILTERS[tab].subcat : FILTERS[tab].fmt;
-  const counts = {};
-  data[tab].forEach(r => { const k = keyFn(r); counts[k] = (counts[k]||0)+1; });
-  const present = Object.keys(CATMAP).filter(k => counts[k]);
-  const total = data[tab].length;
-  el.innerHTML =
-    `<div class="chip ${cur===""?"on":""}" data-c="" onclick="setDim('${tab}',${dimIdx},'')">${allLabel} ${total}</div>` +
-    present.map(k => {
-      const c = CATMAP[k].color || "cyan";
-      return `<div class="chip ${c} ${cur===k?"on":""}" data-c="${k}" onclick="setDim('${tab}',${dimIdx},'${k}')">${CATMAP[k].label} ${counts[k]}</div>`;
-    }).join("");
-}
-
-function setDim(tab, dimIdx, key) {
-  FILTERS[tab] = FILTERS[tab] || {subcat:"", fmt:""};
-  if (dimIdx === 0) FILTERS[tab].subcat = key; else FILTERS[tab].fmt = key;
-  const dims = DIMS[tab] || [];
-  if (dims.includes("subcat")) renderChips(tab, 0, subcatOf, "全部类别");
-  if (dims.includes("fmt")) renderChips(tab, 1, fmtOf, "全部格式");
-  renderTable(tab);
-}
-
-async function load(tab) {
-  if (loaded[tab]) return;
-  loaded[tab] = true;
-  if (tab === "ai") { buildAIPanel(); return; }
-  try {
-    if (tab === "tvbox") {
-      const cfg = await (await fetch(FILE.tvbox)).json();
-      // 保留 type（分类）：3=py爬虫源 1=常规 0=默认 4=T4接口
-      data.tvbox = (cfg.sites || []).map(s => ({
-        name: s.name || s.key || "",
-        url: s.api || s.searchUrl || "",
-        type: s.type != null ? String(s.type) : ""
-      }));
-    } else if (tab === "iptv") {
-      const text = await (await fetch(FILE.iptv)).text();
-      let name = "";
-      data.iptv = [];
-      text.split("\n").forEach(line => {
-        line = line.trim();
-        if (line.startsWith("#EXTINF")) name = (line.split(",").pop() || "").trim();
-        else if (line.startsWith("http")) data.iptv.push({name, url: line, _type: "iptv"});
-      });
-    } else if (tab === "collect") {
-      const arr = await (await fetch(FILE.collect)).json();
-      data.collect = (arr || []).map(x => ({name: x.name || x.title || "", url: x.url || x.api || ""}));
-    } else {
-      const arr = await (await fetch(FILE[tab])).json();
-      data[tab] = (arr || []).map(x => ({
-        name: x.bookSourceName || x.sourceName || x.name || "",
-        url: x.bookSourceUrl || x.sourceUrl || x.url || "",
-        subcat: x.subcat || "",
-        _type: tab
-      }));
-    }
-  } catch (e) {
-    data[tab] = [];
-  }
-  renderTable(tab);
-}
-
-function esc(s) {
-  return String(s == null ? "" : s)
-    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-}
-
-function renderTable(tab) {
-  const q = (document.getElementById(`q-${tab}`)?.value || "").trim().toLowerCase();
-  FILTERS[tab] = FILTERS[tab] || {subcat:"", fmt:""};
-  let rows = data[tab].filter(r =>
-    !q || (r.name || "").toLowerCase().includes(q) || (r.url || "").toLowerCase().includes(q)
-      || subcatOf(tab, r).toLowerCase().includes(q)
-  );
-  const f = FILTERS[tab];
-  if (f.subcat) rows = rows.filter(r => subcatOf(tab, r) === f.subcat);
-  if (f.fmt) rows = rows.filter(r => fmtOf(r) === f.fmt);
-  rows = rows.slice(0, 800);
-  const dims = DIMS[tab] || [];
-  const headSubcat = dims.includes("subcat") ? `<th style="width:100px">类别</th>` : "";
-  const headFmt = dims.includes("fmt") ? `<th style="width:100px">格式</th>` : "";
-  const bodySubcat = dims.includes("subcat")
-    ? (r => { const k = subcatOf(tab, r); const c = CATMAP[k] || {label: k, color: "cyan"};
-        return `<td><span class="cat-badge ${c.color}">${c.label}</span></td>`; })
-    : null;
-  const bodyFmt = dims.includes("fmt")
-    ? (r => { const k = fmtOf(r); const c = CATMAP[k] || {label: k, color: "yellow"};
-        return `<td><span class="cat-badge ${c.color}">${c.label}</span></td>`; })
-    : null;
-  document.getElementById(`tbl-${tab}`).innerHTML =
-    `<tr><th style="width:48px">#</th><th style="width:200px">${LABEL[tab]}</th>${headSubcat}${headFmt}<th>地址</th></tr>` +
-    (rows.map((r, i) =>
-      `<tr><td class="tag">${i + 1}</td><td>${esc(r.name)}</td>${bodySubcat?bodySubcat(r):""}${bodyFmt?bodyFmt(r):""}` +
-      `<td><span class="tag">${esc(r.url)}</span>` +
-      `<button class="btn gray" style="padding:2px 8px;font-size:11px;margin-left:6px" ` +
-      `onclick="copy('${esc(r.url).replace(/'/g, "\\'")}','地址已复制')">复制</button></td></tr>`
-    ).join("") || `<tr><td colspan="${dims.length+3}" class="tag">（暂无有效数据，先运行一次工作流）</td></tr>`);
-  // 右下角「共 N 条」计数
-  const total = data[tab].length;
-  let cnt = `<span class="tbl-count">共 ${total} 条</span>`;
-  if (total !== rows.length) cnt += `（当前筛选 ${rows.length}）`;
-  const countEl = document.getElementById(`cnt-${tab}`);
-  if (countEl) countEl.innerHTML = cnt;
-  const dims2 = DIMS[tab] || [];
-  if (dims2.includes("subcat")) renderChips(tab, 0, subcatOf, "全部类别");
-  if (dims2.includes("fmt")) renderChips(tab, 1, fmtOf, "全部格式");
-}
-
-function switchTab(tab) {
-  const isUpload = tab === "upload";
-  document.querySelectorAll(".tab").forEach(el =>
-    el.classList.toggle("active", el.dataset.tab === (isUpload ? "upload" : tab)));
-  document.querySelectorAll(".panel").forEach(el => {
-    const id = el.id;
-    const name = id.replace("tab-", "");
-    const hide = isUpload ? name !== "upload" : name !== tab;
-    el.classList.toggle("hidden", hide);
+// 卡片复制
+document.querySelectorAll(".card").forEach(card => {
+  card.addEventListener("click", (e) => {
+    if (e.target.tagName === "BUTTON") return;
+    const file = card.dataset.copy;
+    copy(abs(file), "地址已复制");
   });
-  document.getElementById("up-panel").style.display = isUpload ? "" : "none";
-  if (isUpload) return;
-  load(tab);
-}
-
-function doImport(kind) {
-  const file = kind === "bookSource" ? "valid.json" : "valid_subscribe.json";
-  location.href = "legado://import/" + kind + "?src=" + encodeURIComponent(abs(file));
-}
-
-function copyAllContent(tab) {
-  fetch(FILE[tab]).then(r => r.text()).then(t => copy(t, "全部内容已复制")).catch(() => toast("加载失败"));
-}
-
-function showQR(url, title) {
-  const mask = document.createElement("div");
-  mask.className = "modal";
-  mask.onclick = (e) => { if (e.target === mask) mask.remove(); };
-  const box = document.createElement("div");
-  box.className = "box";
-  box.innerHTML = `<h3 style="margin:0 0 12px">${esc(title)}</h3><div id="qrbox"></div><p class="tag" style="margin-top:10px">${esc(url)}</p>`;
-  mask.appendChild(box);
-  document.body.appendChild(mask);
-  const qrbox = box.querySelector("#qrbox");
-  if (window.QRCode) {
-    new QRCode(qrbox, {text: url, width: 240, height: 240, correctLevel: QRCode.CorrectLevel.M});
-  } else {
-    const img = document.createElement("img");
-    img.src = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=" + encodeURIComponent(url);
-    img.alt = "QR";
-    qrbox.appendChild(img);
-  }
-}
-
-function bindTabs() {
-  document.querySelectorAll(".tab[data-tab]").forEach(el => {
-    if (el._bound) return;
-    el._bound = true;
-    el.addEventListener("click", () => switchTab(el.dataset.tab));
+  const btn = card.querySelector(".card-btn");
+  if (btn) btn.addEventListener("click", () => {
+    const file = card.dataset.copy;
+    copy(abs(file), "地址已复制");
   });
-}
-bindTabs();
+});
 
-// ---------------- 用户上传：本地校验（红黄绿）+ 反馈草案 ----------------
-const TYPE_LABEL = {collect:"采集接口", videosite:"影视直连站", book:"书源", subscribe:"订阅源", tvbox:"TVBox", iptv:"IPTV",
-                    magnet:"磁力/BT", vparse:"影视解析", localpkg:"本地包", music:"音源"};
-
-function parseUpload() {
-  const type = document.getElementById("up-type").value;
-  const rawName = document.getElementById("up-name").value.trim();
-  const text = document.getElementById("up-content").value.trim();
-  const items = [];
-  if (type === "iptv" && (text.startsWith("#EXTM3U") || text.includes("#EXTINF"))) {
-    let name = "";
-    text.split("\n").forEach(line => {
-      line = line.trim();
-      if (line.startsWith("#EXTINF")) name = (line.split(",").pop() || "").trim();
-      else if (line.startsWith("http") || line.startsWith("rtmp") || line.startsWith("rtsp"))
-        items.push({url: line, name: name || line});
-    });
-  } else if (text.startsWith("[") || text.startsWith("{")) {
-    let obj;
-    try { obj = JSON.parse(text); } catch (e) { obj = null; }
-    if (Array.isArray(obj)) obj.forEach(x => items.push({url: x.url || x.api || x.bookSourceUrl || "", name: x.name || x.title || x.bookSourceName || ""}));
-    else if (obj) {
-      const list = obj.list || obj.data || obj.sites || obj;
-      if (Array.isArray(list)) list.forEach(x => items.push({url: x.url || x.api || x.bookSourceUrl || "", name: x.name || x.title || x.bookSourceName || ""}));
-      else if (list && (list.url || list.api)) items.push({url: list.url || list.api, name: list.name || list.title || ""});
-    }
-  } else {
-    text.split("\n").forEach(line => {
-      line = line.trim();
-      if (line.startsWith("http")) items.push({url: line, name: line});
-    });
-  }
-  return {type, rawName, items};
-}
-
-async function probeOne(item, type) {
-  const url = (item.url || "").trim();
-  if (!url) return {color: "red", status: "invalid", msg: "空 URL"};
-  const headOk = /^(https?:)?\/\//.test(url);
-  if (!headOk) return {color: "red", status: "invalid", msg: "非 http(s) URL"};
-  try {
-    const r = await fetch(url, {method: "HEAD", redirect: "follow", mode: "no-cors"}).catch(() => null);
-    let ok = true;
-    if (type === "collect") {
-      const g = await fetch(url.replace(/\/+$/, "/") + "/?ac=list", {mode: "cors"}).catch(() => null);
-      if (!g || g.status >= 400) return {color: "yellow", status: "flaky", msg: "采集接口连通性待确认"};
-      try {
-        const j = await g.json();
-        ok = j && (j.class || j.list);
-      } catch (e) { ok = false; }
-    } else if (type === "videosite" || type === "iptv") {
-      const g2 = await fetch(url, {method: "GET", redirect: "follow", mode: "cors"}).catch(() => null);
-      if (!g2 || g2.status >= 400) ok = false;
-      else {
-        const t = await g2.text().catch(() => "");
-        if (type === "videosite" && t.length < 200) ok = false;
-      }
-    } else if (type === "music") {
-      const g4 = await fetch(url, {method: "GET", redirect: "follow", mode: "cors"}).catch(() => null);
-      if (!g4 || g4.status >= 400) ok = false;
-      else {
-        const t = (await g4.text().catch(() => "")).ltrim().toLowerCase();
-        if (t.startsWith("<!doctype") || t.includes("<html")) ok = false;
-      }
-    } else if (type === "book" || type === "subscribe" || type === "tvbox") {
-      const g3 = await fetch(url, {method: "GET", redirect: "follow", mode: "cors"}).catch(() => null);
-      ok = g3 && g3.status < 400;
-    }
-    if (ok) return {color: "green", status: "valid", msg: "有效"};
-    return {color: "yellow", status: "flaky", msg: "连通但格式待复核"};
-  } catch (e) {
-    return {color: "red", status: "invalid", msg: "无法访问"};
-  }
-}
-
-async function runLocalCheck() {
-  const {type, rawName, items} = parseUpload();
-  if (!items.length) { toast("请先粘贴内容"); return; }
-  document.getElementById("up-vlist").innerHTML =
-    `<div class="vrow"><span class="tag">校验中 ${items.length} 条…</span></div>`;
-  document.getElementById("up-legend").style.display = "none";
-  const results = [];
-  for (const it of items.slice(0, 200)) {
-    const res = await probeOne(it, type);
-    res.name = it.name || ""; res.url = it.url || "";
-    results.push(res);
-  }
-  const cnt = {green: 0, yellow: 0, red: 0};
-  results.forEach(r => cnt[r.color]++);
-  document.getElementById("lg-green").textContent = `绿 ${cnt.green} 有效`;
-  document.getElementById("lg-yellow").textContent = `黄 ${cnt.yellow} 存疑`;
-  document.getElementById("lg-red").textContent = `红 ${cnt.red} 失效`;
-  document.getElementById("up-legend").style.display = "flex";
-  document.getElementById("up-vlist").innerHTML = results.map(r =>
-    `<div class="vrow"><span class="dot ${r.color}"></span><span class="nm" title="${esc(r.name)}">${esc(r.name) || "-"}</span>` +
-    `<span class="ul">${esc(r.url)}</span><span class="st badge ${r.color}">${r.status}</span></div>`).join("");
-  window._lastResults = results; window._lastType = type; window._lastName = rawName;
-  toast(`校验完成：绿 ${cnt.green} / 黄 ${cnt.yellow} / 红 ${cnt.red}`);
-}
-
-// ---------------- AI 制源助手 ----------------
-function buildAIPanel() {
-  const panel = document.getElementById("tab-ai");
-  if (!panel || panel.dataset.built) return;
-  panel.dataset.built = "1";
-  const cfg = JSON.parse(localStorage.getItem("ai_cfg") || "{}");
-  const DFT = {
-    base: "https://apihub.agnes-ai.com/v1",
-    key: "sk-dcCJ3jSxC2CA2wltoH3ILeRkvI47fsMEO0H20ub08WmZhRWK",
-    model: "agnes-3.0-flash"
-  };
-  panel.innerHTML = `
-    <h2 style="color:var(--purple)">AI 制源助手</h2>
-    <p class="hint">粘贴站点 URL 或失效源 JSON，AI 自动生成 drpy 脚本 / TVBox 配置 / 修复建议。已内置默认 API，开箱即用。</p>
-    <div class="ai-box">
-      <div class="ai-cfg">
-        <input id="ai-base" placeholder="API Base URL" value="${esc(cfg.base || DFT.base)}">
-        <input id="ai-key" type="password" placeholder="API Key" value="${esc(cfg.key || DFT.key)}">
-      </div>
-      <div style="display:flex;gap:10px;align-items:center">
-        <label style="font-size:12px;color:var(--muted);flex:none">模型</label>
-        <input id="ai-model" placeholder="模型名" value="${esc(cfg.model || DFT.model)}" style="flex:1;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:13px;background:rgba(8,10,24,.6);color:var(--text);outline:none">
-      </div>
-      <input class="ai-input" id="ai-input" placeholder="粘贴站点 URL（如 https://example.com/api.php/provide/vod）或失效的 TVBox 源 JSON...">
-      <div class="ai-actions">
-        <button class="btn" onclick="aiMake('drpy')">生成 drpy 脚本</button>
-        <button class="btn blue" onclick="aiMake('tvbox')">生成 TVBox 配置</button>
-        <button class="btn gray" onclick="aiMake('fix')">修复失效源</button>
-        <span class="ai-status" id="ai-status"></span>
-      </div>
-      <textarea class="ai-output" id="ai-output" placeholder="AI 生成的结果会显示在这里，可直接复制到 PeekPro..."></textarea>
-      <div class="ai-actions">
-        <button class="btn gray" onclick="copy(document.getElementById('ai-output').value,'结果已复制')">复制结果</button>
-        <button class="btn gray" onclick="document.getElementById('ai-output').value=''">清空</button>
-      </div>
-    </div>`;
-}
+// AI 助手
+const DFT = { base: "https://apihub.agnes-ai.com/v1", key: "sk-dcCJ3jSxC2CA2wltoH3ILeRkvI47fsMEO0H20ub08WmZhRWK", model: "agnes-3.0-flash" };
+const cfg = JSON.parse(localStorage.getItem("ai_cfg") || "{}");
+document.getElementById("ai-base").value = cfg.base || DFT.base;
+document.getElementById("ai-key").value = cfg.key || DFT.key;
+document.getElementById("ai-model").value = cfg.model || DFT.model;
 
 async function aiMake(mode) {
   const base = document.getElementById("ai-base").value.trim();
   const key = document.getElementById("ai-key").value.trim();
-  const model = document.getElementById("ai-model").value.trim() || "agnes-3.0-flash";
+  const model = document.getElementById("ai-model").value.trim() || DFT.model;
   const input = document.getElementById("ai-input").value.trim();
   const out = document.getElementById("ai-output");
   const st = document.getElementById("ai-status");
-  if (!key) { st.innerHTML = '<b style="color:var(--red)">请先填 API Key</b>'; return; }
-  if (!input) { st.innerHTML = '<b style="color:var(--red)">请先粘贴站点 URL 或源内容</b>'; return; }
+  if (!key) { st.innerHTML = '<b style="color:var(--red)">请填 API Key</b>'; return; }
+  if (!input) { st.innerHTML = '<b style="color:var(--red)">请粘贴 URL</b>'; return; }
   localStorage.setItem("ai_cfg", JSON.stringify({base, key, model}));
   const prompts = {
-    drpy: "你是一个 drpy 源开发者。根据以下站点 URL，生成一个完整的 drpy JS 脚本（.js），包含 homeContent、categoryContent、detailContent、searchContent、playerContent。脚本格式为：var rule={...}。只输出代码，不要解释。",
-    tvbox: "你是一个 TVBox 配置开发者。根据以下站点 URL，生成一个标准 TVBox 单仓 JSON 配置（含 spider、sites、lives、parses），sites 至少包含该站。只输出 JSON，不要解释。",
-    fix: "你是一个影视源修复专家。分析以下失效的源 JSON，找出问题并给出修复后的完整 JSON。常见问题：缺 key/api、格式错误、字段缺失。只输出修复后的 JSON，不要解释。"
+    drpy: "你是 drpy 源开发者。根据站点 URL 生成完整 drpy JS 脚本。只输出代码。",
+    tvbox: "你是 TVBox 配置开发者。根据站点 URL 生成标准 TVBox JSON 配置。只输出 JSON。",
+    fix: "你是影视源修复专家。分析失效源 JSON，输出修复后的完整 JSON。只输出 JSON。"
   };
   out.value = "";
-  st.innerHTML = '<b style="color:var(--cyan)">AI 生成中...</b>';
+  st.innerHTML = '<b style="color:var(--cyan)">生成中...</b>';
   try {
-    const resp = await fetch(base.replace(/\/$/, "") + "/chat/completions", {
+    const resp = await fetch(base.replace(/\/$/,"") + "/chat/completions", {
       method: "POST",
       headers: {"Content-Type": "application/json", "Authorization": "Bearer " + key},
-      body: JSON.stringify({
-        model: model,
-        messages: [{role: "user", content: prompts[mode] + "\n\n站点/源：\n" + input}],
-        temperature: 0.3
-      })
+      body: JSON.stringify({ model, messages: [{role:"user", content: prompts[mode] + "\n\n" + input}], temperature: 0.3 })
     });
-    if (!resp.ok) {
-      const err = await resp.text();
-      st.innerHTML = '<b style="color:var(--red)">错误: ' + resp.status + " " + err.slice(0, 100) + '</b>';
-      return;
-    }
+    if (!resp.ok) { st.innerHTML = '<b style="color:var(--red)">错误 ' + resp.status + '</b>'; return; }
     const data = await resp.json();
     out.value = data.choices?.[0]?.message?.content || "(无返回)";
-    st.innerHTML = '<b style="color:var(--green)">生成完成</b>';
-  } catch (e) {
-    st.innerHTML = '<b style="color:var(--red)">请求失败: ' + e.message + '</b>';
-  }
+    st.innerHTML = '<b style="color:var(--green)">完成</b>';
+  } catch(e) { st.innerHTML = '<b style="color:var(--red)">失败: ' + e.message + '</b>'; }
 }
 
-function makeIssueDraft() {
-  const results = window._lastResults || [];
-  const type = window._lastType || document.getElementById("up-type").value;
-  const rawName = window._lastName || document.getElementById("up-name").value.trim();
-  if (!results.length) { toast("请先执行本地校验"); return; }
-  const lines = [];
-  lines.push(`# [用户上传] ${TYPE_LABEL[type]} ${results.length} 条`);
-  lines.push("");
-  lines.push(`- 分类：\`${type}\``);
-  lines.push(`- 来源名：${rawName || "（未填）"}`);
-  const cnt = {green: 0, yellow: 0, red: 0};
-  results.forEach(r => cnt[r.color]++);
-  lines.push(`- 校验：绿 ${cnt.green} / 黄 ${cnt.yellow} / 红 ${cnt.red}`);
-  lines.push("");
-  lines.push("| 状态 | 名称 | URL |");
-  lines.push("| --- | --- | --- |");
-  results.forEach(r => {
-    const ico = r.color === "green" ? "🟢" : r.color === "yellow" ? "🟡" : "🔴";
-    lines.push(`| ${ico} ${r.status} | ${r.name || "-"} | ${r.url} |`);
-  });
-  lines.push("");
-  lines.push("<!-- 提示：可将下方 JSON 导出交给站长，由站长脚本统一入库 -->");
-  copy(lines.join("\n"), "反馈草案已复制，发送给站长邮箱即可");
-}
-
-function downloadSubmit() {
-  const results = (window._lastResults || []).filter(r => r.color !== "red");
-  const type = window._lastType || document.getElementById("up-type").value;
-  const payload = (window._lastType ? results : parseUpload().items).map(r => ({url: r.url, name: r.name || ""}));
-  const blob = new Blob([JSON.stringify(payload, null, 2)], {type: "application/json"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = `user_submit_${type}.json`;
-  a.click();
-  toast(`已导出 ${payload.length} 条（绿+黄），保存到 data/user_submit/ 后 ingest`);
-}
-
+// 加载统计
 (async () => {
-  let s = null;
   try {
-    s = await (await fetch("stats.json")).json();
+    const s = await (await fetch("stats.json")).json();
     document.getElementById("ts").textContent = s.updated_at || "-";
-  } catch (e) { /* 首次运行前无数据 */ }
-
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v ?? "—"; };
+    set("c-book", s.valid_book);
+    set("c-sub", s.valid_subscribe);
+    set("c-vod", s.peek_tvbox);
+    set("c-live", s.valid_iptv);
+    set("c-music", s.peek_music);
+    set("c-manga", s.peek_manga);
+    set("c-novel", s.peek_novel);
+    set("c-drama", s.peek_drama);
+  } catch(e) {}
   try {
     const ups = await (await fetch("upstreams.json")).json();
-    const entries = Object.entries(ups);
-    document.getElementById("ups").innerHTML = entries.map(([name, st]) => {
-      const daily = st.daily ? " ·日验" : "";
-      const cnt = st.ok ? `${st.count}条${daily}` : (st.msg || "失败");
-      return `<div class="up"><span class="dot ${st.ok ? "" : "dead"}"></span>${esc(name)}<small>${esc(cnt)}</small></div>`;
-    }).join("") || "<div class='up'>暂无数据</div>";
-  } catch (e) {
-    document.getElementById("ups").innerHTML = "<div class='up'>先运行一次工作流</div>";
-  }
-
-  TABS.forEach(t => { if (t !== "upload") buildPanel(t); });
-
-  // 标签页 + 全局统计合并成一行：每个资源 tab 显示自己有效数，尾部并入「标黄/已删/上游」全局格
-  const COUNT = {
-    book: s?.valid_book, subscribe: s?.valid_subscribe, tvbox: s?.valid_tvbox,
-    iptv: s?.valid_iptv, collect: s?.valid_collect, videosite: s?.valid_videosite,
-    music: s?.valid_music, magnet: s?.valid_magnet, vparse: s?.valid_vparse,
-    localpkg: s?.valid_localpkg
-  };
-  const resTabs = TABS.filter(t => t !== "upload").map(t => {
-    const n = COUNT[t];
-    const display = t === "ai" ? "AI" : (n == null ? "–" : n);
-    return `<div class="tab" data-tab="${t}"><b>${display}</b><em>${LABEL[t]}</em></div>`;
-  }).join("");
-  const metaTabs = `
-    <div class="tab meta"><b>${s?.flaky ?? "–"}</b><em>标黄</em></div>
-    <div class="tab meta"><b>${s?.dead_removed ?? "–"}</b><em>已删除</em></div>
-    <div class="tab meta"><b>${s ? s.upstreams_alive + "/" + s.upstreams_total : "–"}</b><em>上游</em></div>`;
-  document.getElementById("tabs").innerHTML =
-    resTabs + `<div class="tab up" data-tab="upload"><b>＋</b><em>上传</em></div>` + metaTabs;
-
-  bindTabs();
-  switchTab("book");
-
-  // PeekPro 面板：填充绝对地址并绑定复制
-  document.querySelectorAll("[data-peek-code]").forEach(el => {
-    el.textContent = abs(el.getAttribute("data-peek-code"));
-  });
-  document.querySelectorAll("[data-peek]").forEach(el => {
-    const f = el.getAttribute("data-peek");
-    const url = abs(f);
-    el.addEventListener("click", () => copy(url, "链接已复制"));
-  });
-  // 实时统计：从 stats.json 读取
-  fetch(abs("stats.json")).then(r => r.json()).then(s => {
-    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v ?? "—"; };
-    set("ps-vod", s.peek_tvbox);
-    set("ps-live", s.valid_iptv);
-    set("ps-music", s.peek_music);
-    set("ps-manga", s.peek_manga);
-    set("ps-novel", s.peek_novel);
-    set("ps-drama", s.peek_drama);
-  }).catch(() => {});
+    document.getElementById("ups").innerHTML = Object.entries(ups).map(([name, st]) =>
+      `<div class="up"><span class="dot ${st.ok?"":"dead"}"></span>${esc(name)}<small>${st.ok?st.count+"条":(st.msg||"失败")}</small></div>`
+    ).join("") || "<div class='up'>暂无数据</div>";
+  } catch(e) {}
 })();
+
+function esc(s) { return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 </script>
 </body>
 </html>

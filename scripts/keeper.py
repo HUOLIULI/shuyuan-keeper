@@ -54,6 +54,50 @@ def get_session():
         _SESSION.mount("https://", adapter)
     return _SESSION
 
+
+# AI 自动修复配置（内置默认，可用环境变量覆盖）
+AI_BASE = os.environ.get("KEEPER_AI_BASE", "https://apihub.agnes-ai.com/v1")
+AI_KEY = os.environ.get("KEEPER_AI_KEY", "sk-dcCJ3jSxC2CA2wltoH3ILeRkvI47fsMEO0H20ub08WmZhRWK")
+AI_MODEL = os.environ.get("KEEPER_AI_MODEL", "agnes-3.0-flash")
+
+
+def ai_repair_source(source_type, source_url, error_hint=""):
+    """后端 AI 自动修复：给失效源 URL，让 AI 生成修复建议。
+
+    返回修复后的 URL 或 None。失败不抛异常。
+    """
+    if not AI_KEY or not source_url.startswith(("http://", "https://")):
+        return None
+    prompts = {
+        "tvbox": f"这个 TVBox 站点接口返回失败：{source_url}。常见修复：1) 去掉尾部路径试根域名 2) 加 index.php 3) 换 /provide/vod。只输出修复后的完整 URL，不要解释。",
+        "collect": f"这个苹果CMS采集接口返回失败：{source_url}。常见修复：1) 加 /index.php 2) 加 /api.php 3) 去掉路径。只输出修复后的完整 URL，不要解释。",
+        "book": f"这个小说书源 URL 失效：{source_url}。常见修复：1) http→https 2) 去掉尾部斜杠 3) 换 www 前缀。只输出修复后的完整 URL，不要解释。",
+    }
+    prompt = prompts.get(source_type, prompts["tvbox"])
+    if error_hint:
+        prompt += f" 错误提示：{error_hint}"
+    try:
+        resp = get_session().post(
+            AI_BASE.rstrip("/") + "/chat/completions",
+            headers={"Content-Type": "application/json", "Authorization": "Bearer " + AI_KEY},
+            json={
+                "model": AI_MODEL,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.1
+            },
+            timeout=20
+        )
+        if resp.status_code == 200:
+            text = resp.json().get("choices", [{}])[0].get("message", {}).get("content", "").strip()
+            # 提取 URL
+            for line in text.split("\n"):
+                line = line.strip().strip("`")
+                if line.startswith(("http://", "https://")):
+                    return line
+    except Exception:
+        pass
+    return None
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 DOCS = ROOT / "docs"
@@ -1555,6 +1599,20 @@ def cmd_validate(batch=400, types=None, all_=False, flaky_only=False,
             # 站点还活着，只是规则/接口失效：标黄，不计死亡次数
             rec["status"] = "flaky"
             yellow_n += 1
+            # AI 自动修复：对 flaky 源尝试调用 AI 找修复后 URL
+            if os.environ.get("KEEPER_AI_REPAIR") == "1" and rec["type"] in ("tvbox", "collect", "book"):
+                fixed = ai_repair_source(rec["type"], url)
+                if fixed and fixed != url:
+                    # 验证修复后的 URL 是否可用
+                    if http_get(fixed, timeout=TIMEOUT) is not None:
+                        rec["url"] = fixed
+                        if isinstance(rec.get("source"), dict):
+                            rec["source"]["api"] = fixed
+                        rec["status"] = "valid"
+                        rec["fail_count"] = 0
+                        ok_n += 1
+                        yellow_n -= 1
+                        print(f"  [AI修复] {rec.get('name','?')[:20]}: {url[:40]} → {fixed[:40]}")
         else:  # dead：站点整个没了
             rec["fail_count"] = rec.get("fail_count", 0) + 1
             dead_n += 1
