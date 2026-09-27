@@ -164,42 +164,49 @@ def convert_legado_to_drpy(book_source):
     content = book_source.get("ruleContent", {})
 
     prompt = (
-        f"你是 drpy 小说源开发者。把以下 Legado 书源转换成 drpy JS 脚本。\n\n"
-        f"【drpy 脚本正确格式】\n"
+        f"你是 drpyS 脚本开发者。把 Legado 书源翻译成 drpyS JS 脚本。\n\n"
+        f"【绝对禁止】输出 Legado 格式（searchRule/bookList/ruleSearch等）。\n"
+        f"【必须输出】以下格式的纯JS代码。\n\n"
+        f"=== 标准模板（必须照此格式）===\n"
+        f"/*\n"
+        f"@header({{ searchable:2, filterable:1, title:'{name}[书]', '类型':'小说', lang:'ds' }})\n"
+        f"*/\n"
         f"var rule = {{\n"
-        f"    title: '站点名',\n"
-        f"    host: 'https://xxx.com',\n"
-        f"    推荐: async function() {{ /* 首页推荐 */ }},\n"
-        f"    一级: async function(tid, pg) {{ /* 分类列表 */ }},\n"
-        f"    二级: async function(ids) {{ /* 书籍详情 */ }},\n"
-        f"    搜索: async function(wd, quick, pg) {{ /* 搜索 */ }},\n"
-        f"    lazy: async function(flag, id, flags) {{ /* 章节内容 */ }},\n"
-        f"}};\n\n"
-        f"【返回字段格式】\n"
-        f"推荐/一级/搜索 返回数组，每项字段：\n"
-        f"  vod_id: 书籍ID\n"
-        f"  vod_name: 书名\n"
-        f"  vod_pic: 封面URL\n"
-        f"  vod_remarks: 描述/作者\n\n"
-        f"二级 返回对象：\n"
-        f"  vod_id, vod_name, vod_pic, vod_remarks, vod_play_url, vod_play_flag\n\n"
-        f"【API 用法】\n"
-        f"  let resp = await request(url);  // 返回 {{content: html, status: 200}}\n"
-        f"  let $ = cheerio.load(resp.content);  // 用cheerio解析HTML\n"
-        f"  let items = $('.book-list .item').toArray();  // 遍历选择器\n\n"
-        f"【书源信息】\n"
-        f"名称: {name}\n"
-        f"URL: {url}\n"
-        f"探索: {explore}\n"
-        f"搜索规则: {json.dumps(search, ensure_ascii=False)[:300]}\n"
-        f"详情规则: {json.dumps(book_info, ensure_ascii=False)[:300]}\n"
-        f"内容规则: {json.dumps(content, ensure_ascii=False)[:300]}\n\n"
-        f"要求：\n"
-        f"1. 用 function() 而不是 () => {{\n"
-        f"2. 用 vod_name/vod_id/vod_pic/vod_remarks 字段\n"
-        f"3. 用 request() 和 cheerio 解析\n"
-        f"4. host 设为 {url}\n"
-        f"5. 只输出 var rule = {{...}}; 代码，不要解释"
+        f"  类型:'小说', title:'{name}[书]', host:'{url}', searchable:2,\n"
+        f"  searchUrl:'{url}/search?q=**',\n"
+        f"  推荐: async function(){{ return [] }},\n"
+        f"  一级: async function(tid,pg,f,e){{\n"
+        f"    let d=[], html=(await req(input)).content;\n"
+        f"    // 解析列表，push {{title,url,desc,pic_url}}\n"
+        f"    return setResult(d);\n"
+        f"  }},\n"
+        f"  二级: async function(ids){{\n"
+        f"    let html=(await req(ids)).content;\n"
+        f"    return {{ vod_id:ids, vod_name:'书名', vod_pic:'', vod_content:'', vod_remarks:'', vod_play_from:'正文', vod_play_url:'章节1$url#章节2$url2' }};\n"
+        f"  }},\n"
+        f"  搜索: async function(wd,quick,pg){{\n"
+        f"    let d=[], html=(await req(input)).content;\n"
+        f"    // 解析搜索结果，push {{title,url,desc,pic_url}}\n"
+        f"    return setResult(d);\n"
+        f"  }},\n"
+        f"  lazy: async function(flag,id,flags){{\n"
+        f"    let html=(await req(id)).content;\n"
+        f"    return {{parse:0, url:'novel://'+JSON.stringify({{title:'章节',content:html}})}};\n"
+        f"  }}\n"
+        f"}};\n"
+        f"=== 模板结束 ===\n\n"
+        f"【可用API】\n"
+        f"- req(url) 或 request(url): HTTP请求，.content是HTML文本\n"
+        f"- setResult(arr): 包装列表返回\n"
+        f"- cut(html, start, end): 提取中间文本\n"
+        f"- this.input: 当前请求URL\n"
+        f"- 列表项字段: title, url, desc, pic_url\n\n"
+        f"【Legado书源】\n"
+        f"名称:{name}\nURL:{url}\n"
+        f"搜索规则:{json.dumps(search, ensure_ascii=False)[:400]}\n"
+        f"详情规则:{json.dumps(book_info, ensure_ascii=False)[:400]}\n"
+        f"内容规则:{json.dumps(content, ensure_ascii=False)[:400]}\n\n"
+        f"把Legado规则翻译成上面的drpyS格式。只输出JS代码，不要解释。"
     )
     try:
         resp = get_session().post(
@@ -2350,7 +2357,7 @@ def cmd_convert_books_to_drpy(limit=50):
         from urllib.parse import urlparse
         domain = urlparse(url).netloc.replace("www.", "")
         safe_name = name.replace("/", "_").replace(" ", "_")[:20]
-        filename = f"{safe_name}.js"
+        filename = f"{safe_name}[书].js"
         if (spider_dir / filename).exists():
             continue
         try:
@@ -2429,6 +2436,45 @@ def cmd_export():
     #   - peek_music.json     洛雪音源清单（浏览后复制单个 .js 导入）
     #   - peek_music_urls.txt 洛雪音源直链（每行一个 .js）
     peek_tvbox = sanitize_peek_tvbox(cats["tvbox"])
+    # 扫描 spider/js/*.js，把已验证的 drpyS 脚本加入站点
+    drpy_sites = []
+    spider_js_dir = DOCS / "spider" / "js"
+    if spider_js_dir.exists():
+        for f in sorted(spider_js_dir.glob("*.js")):
+            module_name = f.stem  # 文件名就是模块名
+            # 判断类型标签
+            site_type = "小说"
+            tag = "[书]"
+            if "[画]" in module_name:
+                site_type = "漫画"
+                tag = "[画]"
+            elif "[密]" in module_name:
+                site_type = "影视"
+                tag = "[密]"
+            elif "[短]" in module_name:
+                site_type = "短剧"
+                tag = "[短]"
+            elif "[听]" in module_name:
+                site_type = "音乐"
+                tag = "[听]"
+            drpy_sites.append({
+                "key": f"drpyS_{module_name}",
+                "name": f"{module_name}(DS)",
+                "type": 4,
+                "api": f"/api/{module_name}",
+                "searchable": 2,
+                "filterable": 1,
+                "quickSearch": 0,
+                "title": module_name,
+                "类型": site_type,
+                "lang": "ds",
+                "ext": ""
+            })
+    # 合并到 peek_tvbox
+    existing_keys = {s.get("key") for s in peek_tvbox.get("sites", [])}
+    for s in drpy_sites:
+        if s["key"] not in existing_keys:
+            peek_tvbox.setdefault("sites", []).append(s)
     peek_multi = build_peek_multi_config(tvbox_records)
     peek_music = build_peek_music(cats["music"])
     peek_music_urls = "\n".join(m["url"] for m in peek_music) + "\n"
