@@ -1322,6 +1322,50 @@ def check_book(rec):
     return "valid" if site_ok else "dead"
 
 
+def rebuild_collect_as_tvbox(rec):
+    """自动重制：苹果CMS采集接口 → TVBox type=1 站点配置。
+
+    flaky 但站点活着的采集接口，自动包装成 TVBox 单站格式。
+    """
+    url = (rec.get("url") or "").rstrip("/")
+    if not url:
+        return False
+    # 确保有标准苹果CMS路径
+    api_url = url
+    if "/index.php" not in api_url and "/api.php" not in api_url and "/provide/vod" not in api_url:
+        api_url = api_url + "/index.php"
+    # 验证新 URL 是否真的返回苹果CMS数据
+    probe = api_url + "?ac=list"
+    try:
+        resp = get_session().get(probe, headers={"User-Agent": UA}, timeout=15)
+        if resp.status_code != 200:
+            return False
+        data = json.loads(resp.text.strip())
+        if not isinstance(data, dict):
+            return False
+        cls = data.get("class", [])
+        lst = data.get("list", [])
+        if not (isinstance(cls, list) and len(cls) > 0) and not (isinstance(lst, list) and len(lst) > 0):
+            return False
+    except Exception:
+        return False
+    # 重制为 TVBox 站点
+    name = rec.get("name", "未知采集")
+    new_source = {
+        "key": "collect_" + hash(url) % 10000,
+        "name": name,
+        "type": 1,
+        "api": api_url,
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1,
+    }
+    rec["source"] = new_source
+    rec["type"] = "tvbox"
+    rec["url"] = api_url
+    return True
+
+
 def check_tvbox(rec):
     """TVBox 站点条目：探测 URL + 验证 JSON 内容有效性。"""
     src = rec.get("source") or {}
@@ -1764,11 +1808,10 @@ def cmd_validate(batch=400, types=None, all_=False, flaky_only=False,
             # 站点还活着，只是规则/接口失效：标黄，不计死亡次数
             rec["status"] = "flaky"
             yellow_n += 1
-            # AI 自动修复：对 flaky 源尝试调用 AI 找修复后 URL
+            # 自动修复链：路径变体 → AI URL修复 → 自动重制 → AI制源
             if os.environ.get("KEEPER_AI_REPAIR") == "1" and rec["type"] in ("tvbox", "collect", "book"):
                 fixed = ai_repair_source(rec["type"], url)
                 if fixed and fixed != url:
-                    # 验证修复后的 URL 是否可用
                     if http_get(fixed, timeout=TIMEOUT) is not None:
                         rec["url"] = fixed
                         if isinstance(rec.get("source"), dict):
@@ -1778,24 +1821,31 @@ def cmd_validate(batch=400, types=None, all_=False, flaky_only=False,
                         ok_n += 1
                         yellow_n -= 1
                         print(f"  [AI修复] {rec.get('name','?')[:20]}: {url[:40]} → {fixed[:40]}")
-                # AI 制源：路径修复失败 → 分析站点生成 drpy 脚本
+                # 自动重制：苹果CMS采集接口 → TVBox type=1 站点
+                elif rec["type"] == "collect" and site_alive(url):
+                    rebuilt = rebuild_collect_as_tvbox(rec)
+                    if rebuilt:
+                        rec["status"] = "valid"
+                        rec["fail_count"] = 0
+                        ok_n += 1
+                        yellow_n -= 1
+                        print(f"  [自动重制] {rec.get('name','?')[:20]}: 采集接口→TVBox站点")
+                # AI 制源：站点活着但规则完全不对 → 分析站点生成 drpy 脚本
                 elif os.environ.get("KEEPER_AI_MAKE") == "1" and rec["type"] == "tvbox" and site_alive(url):
                     script = ai_make_drpy_script(url, rec.get("name", ""))
                     if script and len(script) > 100:
-                        # 保存脚本到 data/drpy/
                         drpy_dir = DATA / "drpy"
                         drpy_dir.mkdir(exist_ok=True)
                         from urllib.parse import urlparse
                         domain = urlparse(url).netloc.replace("www.", "")
                         script_path = drpy_dir / f"{domain}.js"
                         script_path.write_text(script, encoding="utf-8")
-                        print(f"  [AI制源] {rec.get('name','?')[:20]}: 生成 drpy 脚本 {script_path.name}")
-                        # 标记为已制源，导出时会包含
                         rec["drpy_script"] = str(script_path)
                         rec["status"] = "valid"
                         rec["fail_count"] = 0
                         ok_n += 1
                         yellow_n -= 1
+                        print(f"  [AI制源] {rec.get('name','?')[:20]}: drpy脚本 {script_path.name}")
         else:  # dead：站点整个没了
             rec["fail_count"] = rec.get("fail_count", 0) + 1
             dead_n += 1
