@@ -1323,35 +1323,72 @@ def check_book(rec):
 
 
 def check_tvbox(rec):
-    """TVBox 站点条目：有可探测 URL 就探活，结构性条目（无 URL）视为有效。"""
+    """TVBox 站点条目：探测 URL + 验证 JSON 内容有效性。"""
     src = rec.get("source") or {}
     sub = rec.get("sub_config") or ""
     target = sub or (src.get("api") or src.get("searchUrl") or rec.get("url") or "").strip()
     if not target:
-        # 多仓子项、或仅有 key/ext 的结构性条目，无独立 URL 可探活
         return "valid"
-    # TVBox drpy 爬虫规则（csp_*/py_*/./ 相对路径 js）靠 spider 加载，
-    # 无独立可探 URL，按结构性条目判 valid
     if target.startswith(("csp_", "py_", "./")):
         return "valid"
     if not target.startswith(("http://", "https://")):
         return "dead"
-    if http_get(target, timeout=TIMEOUT) is not None:
-        return "valid"
-    # 自动修复：尝试常见路径变体（404 但站点在 → 可能路径变了）
-    if site_alive(target):
-        variants = _tvbox_path_variants(target)
-        for v in variants:
-            if http_get(v, timeout=TIMEOUT) is not None:
-                # 路径变体成功，更新 source.api 指向修复后的路径
-                if isinstance(rec.get("source"), dict):
-                    rec["source"]["api"] = v
+
+    # 深度验证：拉取 JSON 并检查结构
+    try:
+        resp = get_session().get(target, headers={"User-Agent": UA}, timeout=TIMEOUT)
+        if resp.status_code != 200:
+            raise Exception(f"HTTP {resp.status_code}")
+        text = resp.text.strip()
+        if not text:
+            raise Exception("empty response")
+        data = json.loads(strip_json_comments(text))
+        # TVBox 单仓格式
+        if isinstance(data, dict) and "sites" in data:
+            sites = data.get("sites", [])
+            if not isinstance(sites, list) or len(sites) == 0:
+                raise Exception("sites 为空")
+            if not any(s.get("key") and s.get("name") for s in sites):
+                raise Exception("sites 无有效条目")
+            return "valid"
+        # 苹果CMS API 格式（单站 type=1）
+        if isinstance(data, dict) and ("class" in data or "list" in data):
+            cls = data.get("class", [])
+            lst = data.get("list", [])
+            if (isinstance(cls, list) and len(cls) > 0) or (isinstance(lst, list) and len(lst) > 0):
                 return "valid"
-    # CDN/raw 静态托管（jsdelivr/raw.githubusercontent 等）上探不到 = 资源本身没了，
-    # 不是"站点还在只是接口失效"，应判死以便自动删除，避免永久标黄
-    if _host_always_alive(target):
+            raise Exception("苹果CMS 接口无分类/列表")
+        # 多仓 storeHouse 格式
+        if isinstance(data, dict) and "storeHouse" in data:
+            houses = data.get("storeHouse", [])
+            if not houses or not any(h.get("spider") or h.get("urls") for h in houses):
+                raise Exception("storeHouse 为空")
+            return "valid"
+        # 纯数组格式（直接是 sites 列表）
+        if isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
+            if any(s.get("key") or s.get("name") for s in data):
+                return "valid"
+            raise Exception("数组无有效站点")
+        raise Exception("非 TVBox 格式")
+    except Exception as e:
+        # JSON 解析失败或格式不对
+        if site_alive(target):
+            # 站点活着但格式不对 → flaky
+            # 尝试路径变体
+            variants = _tvbox_path_variants(target)
+            for v in variants:
+                try:
+                    resp2 = get_session().get(v, headers={"User-Agent": UA}, timeout=TIMEOUT)
+                    if resp2.status_code == 200:
+                        data2 = json.loads(strip_json_comments(resp2.text.strip()))
+                        if isinstance(data2, dict) and data2.get("sites"):
+                            if isinstance(rec.get("source"), dict):
+                                rec["source"]["api"] = v
+                            return "valid"
+                except Exception:
+                    continue
+            return "flaky"
         return "dead"
-    return "flaky" if site_alive(target) else "dead"
 
 
 def _tvbox_path_variants(url):
@@ -1399,7 +1436,7 @@ def check_collect(rec):
 
 
 def _probe_collect(probe, is_xml=False):
-    """探测苹果CMS采集接口是否返回有效数据。"""
+    """探测苹果CMS采集接口是否返回有效数据（有视频列表）。"""
     try:
         resp = get_session().get(probe, headers={"User-Agent": UA}, timeout=15)
         if resp.status_code == 200:
@@ -1407,7 +1444,15 @@ def _probe_collect(probe, is_xml=False):
             if is_xml:
                 return text.startswith("<?xml") and ("<video" in text or "<list" in text)
             data = json.loads(text)
-            return isinstance(data, dict) and ("class" in data or "list" in data)
+            # 必须有 class 分类 或 list 视频列表且非空
+            if isinstance(data, dict):
+                cls = data.get("class", [])
+                lst = data.get("list", [])
+                if isinstance(cls, list) and len(cls) > 0:
+                    return True
+                if isinstance(lst, list) and len(lst) > 0:
+                    return True
+            return False
     except Exception:  # noqa: BLE001
         pass
     return False
@@ -1449,20 +1494,29 @@ def check_videosite(rec):
 
 
 def check_music(rec):
-    """音源文件：直接探测 .js 可达且非 HTML 错误页。"""
+    """音源文件：探测 .js 可达 + 检查是否包含音乐源接口函数。"""
     url = rec.get("url") or ""
     if not url.startswith(("http://", "https://")):
         return "dead"
     try:
-        resp = get_session().get(url, headers={"User-Agent": UA}, timeout=(5, 8), stream=True,
-                            verify=False)
-        chunk = next(resp.iter_content(512), b"")
+        resp = get_session().get(url, headers={"User-Agent": UA}, timeout=(5, 10))
         code = resp.status_code
-        resp.close()
-        if code == 200 and len(chunk) > 0:
-            head = chunk.decode("utf-8", "ignore").lstrip().lower()
-            if not head.startswith("<!doctype") and "<html" not in head[:200]:
+        text = resp.text[:5000]  # 只取前5KB检查
+        if code == 200 and len(text) > 50:
+            head = text.lstrip().lower()
+            if head.startswith("<!doctype") or "<html" in head[:200]:
+                return "dead"
+            # 洛雪音乐源必须包含这些关键函数之一
+            has_music_api = any(kw in text for kw in [
+                "musicSearch", "getMusicUrl", "music_search",
+                "getMusicUrl", "searchMusic", "getLyric",
+                "module.exports", "export default",
+                "var music", "const music",
+            ])
+            if has_music_api:
                 return "valid"
+            # 文件存在但不含音乐接口 → flaky
+            return "flaky"
     except Exception:  # noqa: BLE001
         pass
     return "dead"
