@@ -477,24 +477,51 @@ async function aiMake(mode) {
   if (!key) { st.innerHTML = '<b style="color:var(--red)">请填 API Key</b>'; return; }
   if (!input) { st.innerHTML = '<b style="color:var(--red)">请粘贴 URL</b>'; return; }
   localStorage.setItem("ai_cfg", JSON.stringify({base, key, model}));
+
+  const drpyTemplate = `你是 drpyS 源开发者。基于以下站点信息生成完整的 var rule = {...}; 脚本。
+
+关键API（必须遵守）：
+- await request(url) 直接返回HTML字符串
+- pdfa(html,'选择器&&子选择器') 返回数组
+- pdfh(html,'选择器&&Text') 返回文本
+- pd(html,'选择器&&属性') 返回属性
+- this.KEY=搜索词, this.MY_PAGE=页码
+- 必须包含: 推荐/一级/二级/搜索/lazy 五个函数
+- 搜索函数用 this.KEY 拼URL
+- 禁止: require/DOMParser/document/window/(await req(`
+
   const prompts = {
-    drpy: "你是 drpy 源开发者。根据站点 URL 生成完整 drpy JS 脚本。只输出代码。",
-    tvbox: "你是 TVBox 配置开发者。根据站点 URL 生成标准 TVBox JSON 配置。只输出 JSON。",
-    fix: "你是影视源修复专家。分析失效源 JSON，输出修复后的完整 JSON。只输出 JSON。"
+    drpy: drpyTemplate + "\\n\\n站点信息：" + input,
+    tvbox: "你是 TVBox 配置开发者。根据站点 URL 生成标准 TVBox JSON 配置。只输出 JSON。\\n\\n站点：" + input,
+    fix: "你是影视源修复专家。分析失效源 JSON，输出修复后的完整 JSON。只输出 JSON。\\n\\n失效源：" + input
   };
   out.value = "";
-  st.innerHTML = '<b style="color:var(--cyan)">生成中...</b>';
+  st.innerHTML = '<b style="color:var(--cyan)">⏳ 生成中...</b>';
+  const t0 = Date.now();
   try {
-    const resp = await fetch(base.replace(/\/$/,"") + "/chat/completions", {
+    const url = base.replace(/\\/$/,"") + "/chat/completions";
+    console.log("[AI] 请求:", url, "model:", model);
+    const resp = await fetch(url, {
       method: "POST",
       headers: {"Content-Type": "application/json", "Authorization": "Bearer " + key},
-      body: JSON.stringify({ model, messages: [{role:"user", content: prompts[mode] + "\n\n" + input}], temperature: 0.3 })
+      body: JSON.stringify({ model, messages: [{role:"user", content: prompts[mode]}], temperature: 0.3 })
     });
-    if (!resp.ok) { st.innerHTML = '<b style="color:var(--red)">错误 ' + resp.status + '</b>'; return; }
+    const ms = ((Date.now()-t0)/1000).toFixed(1);
+    console.log("[AI] 响应:", resp.status, "耗时:", ms+"s");
+    if (!resp.ok) {
+      const errText = await resp.text();
+      console.error("[AI] 错误响应:", errText.slice(0,500));
+      st.innerHTML = '<b style="color:var(--red)">错误 ' + resp.status + ' (' + ms + 's)</b><pre style="color:var(--muted);font-size:11px;margin-top:4px;white-space:pre-wrap">' + errText.slice(0,300) + '</pre>';
+      return;
+    }
     const data = await resp.json();
     out.value = data.choices?.[0]?.message?.content || "(无返回)";
-    st.innerHTML = '<b style="color:var(--green)">完成</b>';
-  } catch(e) { st.innerHTML = '<b style="color:var(--red)">失败: ' + e.message + '</b>'; }
+    const tok = data.usage ? ` (${data.usage.total_tokens}tok, ${ms}s)` : " (" + ms + "s)";
+    st.innerHTML = '<b style="color:var(--green)">✅ 完成' + tok + '</b>';
+  } catch(e) {
+    console.error("[AI] 异常:", e);
+    st.innerHTML = '<b style="color:var(--red)">❌ 失败: ' + e.message + '</b><br><small style="color:var(--muted)">可能是CORS被拦截或网络问题</small>';
+  }
 }
 
 // 加载统计
