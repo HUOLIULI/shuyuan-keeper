@@ -2,42 +2,10 @@
  "spider": "https://img2.gelonghui.com/library/46da6-aa33493f-1c1d-4f35-9990-0be4bdbf0c64.png;md5;46da6b6a6a111d7924717db2ae790de3",
  "sites": [
   {
-   "key": "ikunzy",
-   "name": "🐓┃爱坤┃资源",
-   "type": 1,
-   "api": "https://ikunzyapi.com/api.php/provide/vod ",
-   "searchable": 1,
-   "filterable": 0,
-   "categories": [
-    "欧美剧",
-    "韩剧",
-    "日剧",
-    "动作片",
-    "喜剧片",
-    "爱情片",
-    "科幻片",
-    "恐怖片",
-    "剧情片",
-    "战争片"
-   ],
-   "quickSearch": 0,
-   "changeable": 0
-  },
-  {
    "key": "py_apple",
    "name": "рҹҚҺв”ғиӢ№жһңв”ғеҪұи§Ҷ",
    "type": 3,
    "api": "http://fmys.top/py/apple.py",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "changeable": 0
-  },
-  {
-   "key": "bilibili",
-   "name": "Bз«ҷпҪңжҳҹжәҗ",
-   "type": 3,
-   "api": "https://11405.kstore.space/xiaye/js/е“”е“©еҗҲйӣҶ.py",
    "searchable": 1,
    "quickSearch": 1,
    "filterable": 1,
@@ -58,16 +26,6 @@
    "name": "рҹ’ҘпҪңеұұжҘӮ | еҪұи§Ҷ",
    "type": 3,
    "api": "https://chigua.eu.org/py/еұұжҘӮеҪұи§Ҷ.py",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "changeable": 0
-  },
-  {
-   "key": "py_jieyingshi",
-   "name": "вҳҖдёғжҳҹрҹ”№еҪұз•Ң",
-   "type": 3,
-   "api": "https://7337.kstore.vip/xw/py/jieyingshi.py",
    "searchable": 1,
    "quickSearch": 1,
    "filterable": 1,
