@@ -124,6 +124,9 @@ jobs:
           json.dump(store, open(store_path, "w"), ensure_ascii=False, indent=2)
           PY
 
+      - name: Auto-discover upstreams
+        run: python scripts/keeper.py discover
+
       - name: Fetch upstreams (8-day window)
         run: |
           python - <<'PY'

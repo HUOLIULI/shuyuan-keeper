@@ -365,6 +365,65 @@ def gh_api(url):
     return None
 
 
+# 自动发现上游：GitHub 搜索关键词 → 验证可用 → 加入配置
+DISCOVER_QUERIES = [
+    "TVBox config subscription",
+    "tvbox 接口配置",
+    "iptv m3u live",
+    "书源 legado",
+    "drpy source",
+    "影视采集 苹果cms",
+]
+
+
+def cmd_discover():
+    """自动探寻新上游仓库，测试可用后加入 config/sources.json。"""
+    cfg = json.load(open(CONFIG, encoding="utf-8"))
+    existing = {u.get("url", "") for u in cfg.get("upstreams", [])}
+    discovered = []
+    for q in DISCOVER_QUERIES:
+        data = gh_api(f"https://api.github.com/search/repositories?q={requests.utils.quote(q)}&sort=stars&per_page=10")
+        if not data or "items" not in data:
+            continue
+        for repo in data["items"]:
+            name = repo.get("full_name", "")
+            # 找默认分支下的常见配置文件
+            branch = repo.get("default_branch", "main")
+            for path in ("index.json", "config.json", "tvbox.json", "sub.json"):
+                url = f"https://raw.githubusercontent.com/{name}/{branch}/{path}"
+                if url in existing:
+                    continue
+                # 快速验证：能拉到 JSON
+                text = fetch_json_text(url, timeout=10)
+                if not text:
+                    continue
+                try:
+                    obj = json.loads(strip_json_comments(text))
+                except Exception:
+                    continue
+                # 必须是 TVBox 或书源格式
+                if not isinstance(obj, dict) and not isinstance(obj, list):
+                    continue
+                # 判断类型
+                if isinstance(obj, dict) and ("sites" in obj or "spider" in obj):
+                    discovered.append({"name": name, "url": url, "type": "tvbox"})
+                elif isinstance(obj, list) and len(obj) > 5 and "bookSourceUrl" in obj[0]:
+                    discovered.append({"name": name, "url": url, "type": "book"})
+                else:
+                    continue
+                existing.add(url)
+                print(f"  [发现] {name}: {url[:60]}")
+    # 写入配置
+    if discovered:
+        cfg.setdefault("upstreams", [])
+        for d in discovered:
+            cfg["upstreams"].append({"url": d["url"], "name": d["name"], "type": d["type"]})
+        json.dump(cfg, open(CONFIG, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+        print(f"[发现] 新增 {len(discovered)} 个上游")
+    else:
+        print("[发现] 无新上游")
+
+
 def dedup_key(rec):
     """iptv / music / magnet / vparse / localpkg 用完整 URL 去重
     （同域名多频道、同 CDN 多插件、同站多 flag），其余用域名去重。"""
@@ -2017,6 +2076,7 @@ def main():
                            help="抽验放行门槛：抽样中 valid 占比 >= 该值才放行（默认 0.8）")
     sub.add_parser("export")
     sub.add_parser("status")
+    sub.add_parser("discover", help="自动探寻新上游仓库")
     p_ingest = sub.add_parser("ingest", help="入库用户上传条目")
     p_ingest.add_argument("--dir", default=None, help="user_submit 目录（默认 data/user_submit）")
     p_ingest.add_argument("--type", action="append", dest="itypes", help="只处理指定分类")
@@ -2033,6 +2093,8 @@ def main():
         cmd_export()
     elif args.cmd == "status":
         cmd_status()
+    elif args.cmd == "discover":
+        cmd_discover()
     elif args.cmd == "ingest":
         cmd_ingest(args.dir, args.itypes or None)
 
