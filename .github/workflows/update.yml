@@ -182,7 +182,9 @@ jobs:
       - name: Export artifacts
         env:
           KEEPER_AI_CLASSIFY: "1"
-        run: python scripts/keeper.py export
+        run: |
+          python scripts/keeper.py export
+          python scripts/keeper.py drpy-pack
 
       - name: Commit generated docs (valid/peek exports)
         run: |

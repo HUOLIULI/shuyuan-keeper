@@ -2381,6 +2381,63 @@ def cmd_ingest(submit_dir=None, types=None):
     print(json.dumps(results, ensure_ascii=False, indent=1))
 
 
+def build_drpy_config(peek_tvbox, peek_iptv_lines, peek_music):
+    """从 PeekPro 导出数据生成 drpy-node 兼容配置。
+
+    输出格式：drpy-node json/api.json 单仓 TVBox 格式
+    """
+    sites = []
+    for s in peek_tvbox.get("sites", []):
+        site = {
+            "key": s.get("key", s.get("name", "")),
+            "name": s.get("name", s.get("key", "")),
+            "type": s.get("type", 1),
+            "api": s.get("api", s.get("searchUrl", "")),
+            "searchable": s.get("searchable", 1),
+            "quickSearch": s.get("quickSearch", 1),
+            "filterable": s.get("filterable", 1),
+        }
+        if s.get("ext"):
+            site["ext"] = s["ext"]
+        if s.get("jar"):
+            site["jar"] = s["jar"]
+        if s.get("category"):
+            site["category"] = s["category"]
+        sites.append(site)
+
+    config = {
+        "spider": "./spider.jar",
+        "sites": sites,
+        "parses": [
+            {"name": "聚合", "type": 3, "url": "Web"},
+            {"name": "虾米", "type": 0, "url": "https://jx.xmflv.com/?url="},
+            {"name": "云解", "type": 0, "url": "https://yparse.ik9.cc/index.php?url="},
+        ],
+        "lives": peek_iptv_lines[:50] if peek_iptv_lines else [{}],
+    }
+    return config
+
+
+def cmd_drpy_pack():
+    """生成 drpy-node 兼容配置包，供本地部署使用。"""
+    import json
+    docs = Path("docs")
+    peek_tvbox = json.load(open(docs / "peek_tvbox.json", encoding="utf-8"))
+    peek_iptv = open(docs / "peek_iptv.txt", encoding="utf-8").readlines()
+    peek_music = json.load(open(docs / "peek_music.json", encoding="utf-8"))
+
+    config = build_drpy_config(peek_tvbox, peek_iptv, peek_music)
+
+    out = Path("docs/drpy_pack")
+    out.mkdir(exist_ok=True)
+    json.dump(config, open(out / "api.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    print(f"[drpy-pack] 生成 api.json: {len(config['sites'])} 个站点")
+
+    # 生成音乐批量加载器（已在 docs/music_loader/ 中）
+    print(f"[drpy-pack] 音乐加载器: docs/music_loader/batch_loader.js")
+    print(f"[drpy-pack] 完成")
+
+
 def cmd_status():
     store = load_store()
     from collections import Counter
@@ -2418,6 +2475,7 @@ def main():
     sub.add_parser("export")
     sub.add_parser("status")
     sub.add_parser("discover", help="自动探寻新上游仓库")
+    sub.add_parser("drpy-pack", help="生成 drpy-node 兼容配置包")
     p_ingest = sub.add_parser("ingest", help="入库用户上传条目")
     p_ingest.add_argument("--dir", default=None, help="user_submit 目录（默认 data/user_submit）")
     p_ingest.add_argument("--type", action="append", dest="itypes", help="只处理指定分类")
@@ -2436,6 +2494,8 @@ def main():
         cmd_status()
     elif args.cmd == "discover":
         cmd_discover()
+    elif args.cmd == "drpy-pack":
+        cmd_drpy_pack()
     elif args.cmd == "ingest":
         cmd_ingest(args.dir, args.itypes or None)
 
