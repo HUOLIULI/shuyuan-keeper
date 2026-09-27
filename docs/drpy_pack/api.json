@@ -1571,69 +1571,6 @@
       "filterable": 0
     },
     {
-      "key": "drpyS_69书吧.com[书]",
-      "name": "69书吧.com[书](DS)",
-      "type": 4,
-      "api": "/api/69书吧.com[书]",
-      "searchable": 2,
-      "quickSearch": 0,
-      "filterable": 1
-    },
-    {
-      "key": "drpyS_天天看[书]",
-      "name": "天天看[书](DS)",
-      "type": 4,
-      "api": "/api/天天看[书]",
-      "searchable": 2,
-      "quickSearch": 0,
-      "filterable": 1
-    },
-    {
-      "key": "drpyS_快书网[书]",
-      "name": "快书网[书](DS)",
-      "type": 4,
-      "api": "/api/快书网[书]",
-      "searchable": 2,
-      "quickSearch": 0,
-      "filterable": 1
-    },
-    {
-      "key": "drpyS_独步小说网[书]",
-      "name": "独步小说网[书](DS)",
-      "type": 4,
-      "api": "/api/独步小说网[书]",
-      "searchable": 2,
-      "quickSearch": 0,
-      "filterable": 1
-    },
-    {
-      "key": "drpyS_番茄小说2[书]",
-      "name": "番茄小说2[书](DS)",
-      "type": 4,
-      "api": "/api/番茄小说2[书]",
-      "searchable": 2,
-      "quickSearch": 0,
-      "filterable": 1
-    },
-    {
-      "key": "drpyS_起点中文[书]",
-      "name": "起点中文[书](DS)",
-      "type": 4,
-      "api": "/api/起点中文[书]",
-      "searchable": 2,
-      "quickSearch": 0,
-      "filterable": 1
-    },
-    {
-      "key": "drpyS_酷我小说[书]",
-      "name": "酷我小说[书](DS)",
-      "type": 4,
-      "api": "/api/酷我小说[书]",
-      "searchable": 2,
-      "quickSearch": 0,
-      "filterable": 1
-    },
-    {
       "key": "collect_cj.lziapi.com",
       "name": "🎬苹果CMS·lziapi采集接口",
       "type": 1,
