@@ -112,9 +112,11 @@ jobs:
           PY
 
       - name: Auto-discover upstreams
+        continue-on-error: true
         run: python scripts/keeper.py discover
 
       - name: Fetch upstreams (8-day window)
+        continue-on-error: true
         run: |
           python - <<'PY'
           import json, subprocess
@@ -130,6 +132,7 @@ jobs:
           PY
 
       - name: Validate sources
+        continue-on-error: true
         env:
           KEEPER_READ_TIMEOUT: "15"
           KEEPER_ALIVE_TIMEOUT: "12"
@@ -137,24 +140,23 @@ jobs:
           KEEPER_AI_MAKE: "1"
         run: |
           python - <<'PY'
-          import json, subprocess
+          import json, subprocess, time
           store = json.load(open("data/store.json"))
           if not store.get("should_validate"):
-              print("[validate] 隔日未到，跳过校验")
+              print("[validate] 未到时间，跳过校验")
           else:
+              # 主验证：200条，避免限流
               args = ["python", "scripts/keeper.py", "validate",
-                      "--batch", str(store.get("validate_batch", 2000))]
-              if store.get("should_validate_all"):
-                  args.append("--all")
+                      "--batch", str(store.get("validate_batch", 200))]
               print("[validate]", " ".join(args))
               subprocess.run(args, check=False)
-              # 常规校验后追加一轮 flaky 定向深修：把已复活的标黄源翻回 valid，
-              # 真失效的维持/转 dead（自动删除），让线上 store 的 flaky 持续收敛
+              # 间隔30秒再跑flaky，避免连续请求被限流
+              time.sleep(30)
+              # flaky深修：200条
               flaky_args = ["python", "scripts/keeper.py", "validate",
-                            "--flaky", "--batch", "400"]
+                            "--flaky", "--batch", "200"]
               print("[validate --flaky]", " ".join(flaky_args))
               subprocess.run(flaky_args, check=False)
-              # 记录本次校验的 UTC 日期，供下次"隔一天不校验"判断
               from datetime import datetime, timezone
               store["last_validate_day"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
               json.dump(store, open("data/store.json", "w"), ensure_ascii=False)
