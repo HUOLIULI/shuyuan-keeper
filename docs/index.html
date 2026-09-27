@@ -340,6 +340,7 @@
   <div class="tabs">
     <div class="tab on" onclick="switchTab(this,'tab-legado')">📖 Legado</div>
     <div class="tab" onclick="switchTab(this,'tab-peek')">📺 PeekPro</div>
+    <div class="tab" onclick="switchTab(this,'tab-vsites')">🎬 影视网站</div>
     <div class="tab" onclick="switchTab(this,'tab-ai')">🤖 AI制源</div>
     <div class="tab" onclick="switchTab(this,'tab-about')">ℹ️ 关于</div>
   </div>
@@ -432,6 +433,16 @@
     </div>
   </div>
   </div><!-- /tab-peek -->
+
+  <div class="tab-pane" id="tab-vsites">
+  <div class="board">
+    <div class="board-hd">
+      <span class="board-badge pink">影视网站导航</span>
+      <span class="board-ts">共 <span id="c-vsite">—</span> 个站点 · 已验活</span>
+    </div>
+    <div id="vsite-list" style="display:flex;flex-direction:column;gap:8px"></div>
+  </div>
+  </div><!-- /tab-vsites -->
 
   <div class="tab-pane" id="tab-ai">
   <!-- AI 助手 -->
@@ -696,6 +707,22 @@ async function aiMake(mode) {
       `<div class="up"><span class="dot ${st.ok?"":"dead"}"></span>${esc(name)}<small>${st.ok?st.count+"条":(st.msg||"失败")}</small></div>`
     ).join("") || "<div class='up'>暂无数据</div>";
   } catch(e) {}
+  // 加载影视网站列表
+  try {
+    const vs = await (await fetch("valid_videosite.json")).json();
+    const html = vs.map((v,i) => `
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(8,10,24,.5);border:1px solid var(--line);border-radius:12px;transition:all .2s" onmouseover="this.style.borderColor='var(--line2)'" onmouseout="this.style.borderColor='var(--line)'">
+        <span style="color:var(--muted);font-size:12px;width:30px;flex:none">${i+1}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:600;color:var(--text);font-size:13px">${esc(v.name||"未命名")}</div>
+          <div style="font-size:11px;color:var(--muted);word-break:break-all">${esc(v.url||"")}</div>
+        </div>
+        <button class="card-btn" onclick="copy('${esc(v.url||"")}','已复制')">复制</button>
+      </div>`).join("");
+    document.getElementById("vsite-list").innerHTML = html || "<div style='color:var(--muted);text-align:center;padding:20px'>暂无影视站数据</div>";
+  } catch(e) {
+    document.getElementById("vsite-list").innerHTML = "<div style='color:var(--muted);text-align:center;padding:20px'>加载失败</div>";
+  }
 })();
 
 function esc(s) { return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
