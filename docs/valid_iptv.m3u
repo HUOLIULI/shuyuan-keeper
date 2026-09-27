@@ -5,7 +5,7 @@ https://jmp2.uk/plu-62ba60f059624e000781c436.m3u8
 https://dash2.antik.sk/live/test_one_plus_one_int_tizen/playlist.m3u8
 #EXTINF:-1,1+1 Marafon (1080p)
 https://dash2.antik.sk/live/1plus1_marathon/playlist.m3u8
-#EXTINF:-1,like Gecko) Chrome/120.0.0.0 Safari/537.36" group-title="General",1+1 Ukraina (1080p)
+#EXTINF:-1,1+1 Ukraina (1080p)
 http://stream.mcquack.net/219/index.m3u8
 #EXTINF:-1,1-2-3.tv (270p)
 https://123tv-mx1.flex-cdn.net/index.m3u8
@@ -19,7 +19,7 @@ https://cdn.freevisiontv.co.za/sttv/smil:1kzn.stream.smil/playlist.m3u8
 https://tv.cdn.xsg.ge/gpb-1tv/index.m3u8
 #EXTINF:-1,1Twente TV (1080p)
 https://ms7.mx-cd.net/dtv-11/198-989148/1Twente_TV.smil/chunklist_w954512639_b4292608_slNLD.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36" group-title="General",2+2 (1080p)
+#EXTINF:-1,2+2 (1080p)
 http://stream.mcquack.net/173/index.m3u8
 #EXTINF:-1,2+2 Marathon (1080p)
 https://lowa8026-cmyk.github.io/Ukraine/Edyni_Novyny/2Plus2Marafon.m3u8
@@ -127,7 +127,7 @@ http://89.33.29.115:8080/IL_5Stars/index.m3u8
 https://617c5175c970b.streamlock.net:4444/tvcinco/live1/playlist.m3u8
 #EXTINF:-1,6PR (1080p)
 https://6prlive.akamaized.net/hls/live/2033806/6PR/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.36" group-title="General",6 sotok (1080p)
+#EXTINF:-1,6 sotok (1080p)
 http://stream.mcquack.net/405/index.m3u8
 #EXTINF:-1,6ter (1080p)
 http://145.239.5.177/314/index.m3u8
@@ -137,7 +137,7 @@ http://91.214.48.158:4022/udp/224.2.2.4:10000
 https://yuppparoriglin.akamaized.net/181224/smil:6tv.smil/playlist.m3u8?hdnts=st=1735898689~exp=1835898688~acl=*~hmac=f5fe24724fe05481e3841f9eb5ab8efdee0a3dd83645ae9dcf45703f525bab7b
 #EXTINF:-1,6 Wise Tv (720p)
 https://live.enhdtv.com:8081/8150/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Entertainment",7/8 TV
+#EXTINF:-1,7/8 TV
 http://213.91.179.28:8000/play/a0cn
 #EXTINF:-1,7 Gold (1080p)
 https://streamcdnr6-dddfac816632463dac50b21109dc1bb3.msvdn.net/live/S58803518/OOZape6Nxp4H/playlist.m3u8
@@ -311,7 +311,7 @@ https://live2.tensila.com/pearl-v-1.pearlfm/hls/live/mystream.m3u8
 https://cdn.pishow.tv/ott/live/1211/master.m3u8
 #EXTINF:-1,100% NEWS (576p)
 http://85.238.112.40:8810/hls_sec/239.33.16.32-.m3u8
-#EXTINF:-1,like Gecko) Chrome/120.0.0.0 Safari/537.36" group-title="General",101tv Antequera [Geo-blocked]
+#EXTINF:-1,101tv Antequera [Geo-blocked]
 https://liveingesta318.cdnmedia.tv/101weblive/smil:antequera.smil/playlist.m3u8
 #EXTINF:-1,101tv Cadiz (1080p)
 https://streaming101tv.es:19360/cadiz/cadiz.m3u8
@@ -383,7 +383,7 @@ https://183.bozztv.com/ssh101/ssh101/a7tvjarabacoa/playlist.m3u8
 https://a7tvlive.ro/A7TV/A7TV/playlist.m3u8
 #EXTINF:-1,A12 TV
 https://video1.getstreamhosting.com:1936/8250/8250/manifest.m3u8
-#EXTINF:-1,como Gecko) Chrome/112.0.0.0 Mobile Safari/537.36" group-title="News",A24 (720p)
+#EXTINF:-1,A24 (720p)
 https://g5.vxral-slo.transport.edge-access.net/a12/ngrp:a24-100056_all/playlist.m3u8?sense=true
 #EXTINF:-1,A Haber (1080p)
 https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/ahaber/ahaber.m3u8
@@ -1115,11 +1115,11 @@ https://live-evg8.tv360.bitel.com.pe/bitel/amazonicatvSRT/playlist.m3u8
 https://amchls.wns.live/hls/stream.m3u8
 #EXTINF:-1,AMC (United States) (720p)
 http://23.239.31.26:8989/amc/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Movies",AMC Europe Czech Republic
+#EXTINF:-1,AMC Europe Czech Republic
 http://88.212.15.19/live/test_amc_25p/playlist.m3u8
-#EXTINF:-1,like Gecko) Chrome/120.0.0.0 Safari/537.36" group-title="Movies",AMC Europe Hungary
+#EXTINF:-1,AMC Europe Hungary
 http://88.212.15.19/live/amc_hun/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36 VLC/3.0.18 LibVLC/3.0.18" group-title="Movies",AMC Europe Romania
+#EXTINF:-1,AMC Europe Romania
 https://iron1.jarvisx1.cfd/amece/usergenrx3oq1kr.m3u8
 #EXTINF:-1,AMC Latin America (1080p)
 http://15.204.246.24:8080/AMCHD/index.m3u8
@@ -1143,7 +1143,7 @@ http://45.170.130.224:8000/play/a02o/index.m3u8?hls
 http://45.171.108.253:8888/AMERICA/index.m3u8
 #EXTINF:-1,America TeVe (1080p)
 https://live.gideo.video/americateve2/master.m3u8
-#EXTINF:-1,como Gecko) Chrome/112.0.0.0 Mobile Safari/537.36" group-title="General",America TV (720p)
+#EXTINF:-1,America TV (720p)
 https://prepublish.f.qaotic.net/a07/americahls-100056/playlist_720p.m3u8
 #EXTINF:-1,America's Next Top Model
 https://jmp2.uk/plu-68757c45759366af05b3b199.m3u8
@@ -1293,7 +1293,7 @@ https://mcdn.antennaplus.gr/live/media0/Ant1/HLS/Ant1.m3u8
 http://l2.cloudskep.com/ant1cm2/abr/playlist.m3u8
 #EXTINF:-1,Antares Television
 https://5949aa132c8fb.streamlock.net:1963/iptvantares/liveantarestv/playlist.m3u8
-#EXTINF:-1,like Gecko) Chrome/124.0.0.0 Safari/537.36" group-title="General",Antena 1 (Peru) (1080p)
+#EXTINF:-1,Antena 1 (Peru) (1080p)
 http://bantel-cdn1.iptvperu.tv:1935/btnscrtn/antenauno.stream/playlist.m3u8
 #EXTINF:-1,Antena 1 (Romania)
 https://live4dai.antenaplay.ro/live2_sdi14/live2_sdi14_600k.m3u8
@@ -1329,7 +1329,7 @@ https://amg02333-pbs-amg02333c1-samsung-au-1253.playouts.now.amagi.tv/PBSD-Antiq
 https://bbc-antiquesroadshowuk-1-us.roku.wurl.tv/playlist.m3u8
 #EXTINF:-1,Antofagasta TV (1080p)
 https://unlimited6-cl.dps.live/atv/atv.smil/playlist.m3u8
-#EXTINF:-1,like Gecko) Chrome/65.0.3325.181 Safari/537.36" group-title="General",ANTV (720p)
+#EXTINF:-1,ANTV (720p)
 http://103.58.160.157:8278/720-ANTV/playlist.m3u8
 #EXTINF:-1,Anwar TV2 (720p)
 https://cloud.odysee.live/content/f92670235a1ce2bce4cf77671cc4dcc2188baa1d/master.m3u8
@@ -1391,11 +1391,11 @@ https://jmp2.uk/plu-61c0ac242bb0cf0007015f89.m3u8
 https://jmp2.uk/plu-61c091c39863900007ac9e8f.m3u8
 #EXTINF:-1,Are You The One? NO
 https://jmp2.uk/plu-61c1db8ed6d97900076ea15c.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Sports",Arena Sport 1
+#EXTINF:-1,Arena Sport 1
 http://88.212.15.19/live/test_arenasport/playlist.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Sports",Arena Sport 2
+#EXTINF:-1,Arena Sport 2
 http://88.212.15.19/live/test_arenasport_dva/playlist.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Sports",Arena Sport 5 Premium
+#EXTINF:-1,Arena Sport 5 Premium
 https://nl1.nghk.ai/SK2SRHD/index.m3u8
 #EXTINF:-1,Argentinisima Satelital (540p)
 https://stream1.sersat.com/hls/argentinisima.m3u8
@@ -1433,9 +1433,9 @@ https://amtvusdvr.tulix.tv/am4abr/index.m3u8
 https://amtv.tulixcdn.com/amtv2/am2abr/index.m3u8
 #EXTINF:-1,Armenia 2 (1080p)
 https://amtv.tulixcdn.com/amtv3/am3abr/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.36" group-title="Movies",Armenia Premium (720p)
+#EXTINF:-1,Armenia Premium (720p)
 http://stream.mcquack.net/123/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.36" group-title="General",Armenia TV Satellite (576p)
+#EXTINF:-1,Armenia TV Satellite (576p)
 http://stream.mcquack.net/175/index.m3u8
 #EXTINF:-1,Army TV (1080p)
 https://api-tv.ipnet.ua/api/v1/manifest/2118742632.m3u8
@@ -1509,7 +1509,7 @@ https://cdn.vegasplus.us/vegas/actv/playlist.m3u8
 http://103.172.187.30:12000/stream/mytv/null-11/master.m3u8
 #EXTINF:-1,Asian News (1080p)
 https://stream.ottlive.co.in/asiannews/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/144.0.0.0 Safari/537.36" group-title="Entertainment",AsianBox (1080p)
+#EXTINF:-1,AsianBox (1080p)
 https://cdn4.skygo.mn/live/disk1/AsianBOX/DASH-FTA/AsianBOX.mpd
 #EXTINF:-1,AsianCrush (1080p)
 https://linear-900.frequency.stream/dist/cineverse/900/hls/master/playlist.m3u8
@@ -1597,7 +1597,7 @@ http://stream.mcquack.net/244/index.m3u8
 https://ncdn.telewebion.ir/atrak/live/playlist.m3u8
 #EXTINF:-1,Atrina TV
 https://atrihls.wns.live/hls/stream.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.36" group-title="General",ATV (Armenia) (1080p)
+#EXTINF:-1,ATV (Armenia) (1080p)
 http://stream.mcquack.net/36/index.m3u8
 #EXTINF:-1,ATV (Belgium) (1080p)
 https://live.zendzend.com/mpegts/29375_107244/media_mpegts_0.m3u8
@@ -1715,43 +1715,43 @@ https://jmp2.uk/plu-62bc1784120ba80007935aaa.m3u8
 https://jmp2.uk/plu-61c0925c738ecd000882450a.m3u8
 #EXTINF:-1,AWTV (1080p) [Geo-blocked]
 https://awtv.nuvemplay.live/hls/stream.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Movies",AXN Adria
+#EXTINF:-1,AXN Adria
 http://5.57.74.130:8000/play/a0at/index.m3u8
 #EXTINF:-1,AXN Asia Taiwan (1080p)
 http://125.227.210.55:4050/VideoInput/play.ts
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Movies",AXN Black Czech Republic
+#EXTINF:-1,AXN Black Czech Republic
 http://88.212.15.19/live/test_black/playlist.m3u8
 #EXTINF:-1,AXN Black Poland (576p)
 http://185.227.34.179:8080/axn-black/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36 VLC/3.0.18 LibVLC/3.0.18" group-title="Movies",AXN Black Romania
+#EXTINF:-1,AXN Black Romania
 https://saruman1.tharen1.cfd/axyblack/usergenrxi6s93hs2.m3u8
-#EXTINF:-1,like Gecko) Chrome/120.0.0.0 Safari/537.36" group-title="Movies",AXN CEE
+#EXTINF:-1,AXN CEE
 http://88.212.15.19/live/axn_hun/index.m3u8
 #EXTINF:-1,AXN CEE Bulgary
 http://85.11.144.9:4222/AXN
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Movies",AXN CEE Czech Republic
+#EXTINF:-1,AXN CEE Czech Republic
 http://88.212.15.19/live/test_axn/playlist.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36 VLC/3.0.18 LibVLC/3.0.18" group-title="Movies",AXN CEE Romania
+#EXTINF:-1,AXN CEE Romania
 https://cronos.mangora1.cfd/axy/usergend3h5jkc9rnd.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36" group-title="Movies",AXN Crime
+#EXTINF:-1,AXN Crime
 http://88.212.15.19/live/viasat_film/index.m3u8
 #EXTINF:-1,AXN Latin America (1080p)
 http://138.121.15.230:9002/AXN/index.m3u8
 #EXTINF:-1,AXN Latin America South
 http://45.228.235.116:8000/play/a0iy/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Movies",AXN Movies (720p)
+#EXTINF:-1,AXN Movies (720p)
 http://50.7.120.34:8080/AXN_BLACK/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36 VLC/3.0.18 LibVLC/3.0.18" group-title="Entertainment",AXN Spin
+#EXTINF:-1,AXN Spin
 https://cronos.mangora1.cfd/spyn/usergencs85ja0j1rrnd.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36" group-title="Entertainment",AXN Spin Poland
+#EXTINF:-1,AXN Spin Poland
 https://polska.hach.workers.dev/14847.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36 VLC/3.0.18 LibVLC/3.0.18" group-title="Entertainment",AXN White
+#EXTINF:-1,AXN White
 https://onyx1.mofta1.cfd/axwhite/usergenx23rnd.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Entertainment",AXN White CzechRepublic
+#EXTINF:-1,AXN White CzechRepublic
 http://88.212.15.19/live/test_white/playlist.m3u8
 #EXTINF:-1,AXN White Poland (576p)
 http://185.227.34.179:8080/axn-white/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Entertainment",AXN White Portugal (480p)
+#EXTINF:-1,AXN White Portugal (480p)
 http://50.7.120.34:8080/AXN_WHITE/index.m3u8
 #EXTINF:-1,AXS TV (720p)
 http://23.239.31.26:8989/axstv/index.m3u8
@@ -1853,13 +1853,13 @@ https://stream.iptvservice.eu/hls/balatontv.m3u8
 https://rtmpcontrol.com:1936/balchitv/balchitv/playlist.m3u8
 #EXTINF:-1,Balikpapan TV (720p)
 http://122.248.43.242:1935/BALIKPAPANTV/_definst_/myStream/playlist.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36" group-title="Undefined",Ballcasterz
+#EXTINF:-1,Ballcasterz
 http://antik.streaming.tivio.studio/channels/yXDwkH0CbFfkhU7ZnHlT/index.m3u8
 #EXTINF:-1,Balle Balle (576p)
 https://streams.tangotv.in/BALLEBALLE/ORIGIN/index.m3u8
 #EXTINF:-1,Balle Balle HD (720p)
 https://mcncdndigital.com/balleballetv/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/149.0.0.0 Safari/537.36" group-title="Undefined",Balticum TV (576p)
+#EXTINF:-1,Balticum TV (576p)
 http://stream.mcquack.net/376/index.m3u8
 #EXTINF:-1,BAM-TV
 https://belafrikamediatv.vedge.infomaniak.com/livecast/ik:belafrikamediatv/manifest.m3u8
@@ -1935,17 +1935,17 @@ https://vs-cmaf-pushb-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_arabi
 https://amg00793-amg00793c40-rakuten-es-5444.playouts.now.amagi.tv/playlist.m3u8
 #EXTINF:-1,BBC Earth Czechia
 http://88.212.15.29/live/test_bbc_eartch_hevc/playlist.m3u8
-#EXTINF:-1,like Gecko) Chrome/120.0.0.0 Safari/537.36" group-title="Documentary",BBC Earth Hungary
+#EXTINF:-1,BBC Earth Hungary
 http://88.212.15.19/live/bbce_hun/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36 VLC/3.0.18 LibVLC/3.0.18" group-title="Documentary",BBC Earth Romania
+#EXTINF:-1,BBC Earth Romania
 https://iron1.jarvisx1.cfd/ert/usergenrx8ofzq1kr.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36" group-title="Documentary",BBC Earth Turkiye
+#EXTINF:-1,BBC Earth Turkiye
 https://nord.ayakkabiparti.lol/bbc/index.m3u8
 #EXTINF:-1,BBC Earth US (1080p)
 https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEarthA-hls/playlist.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36 VLC/3.0.18 LibVLC/3.0.18" group-title="Entertainment",BBC First Romania
+#EXTINF:-1,BBC First Romania
 https://onyx1.mofta1.cfd/bibi1/usergendxn09l2s6cek.m3u8
-#EXTINF:-1,like Gecko) Chrome/120.0.0.0 Safari/537.36" group-title="Entertainment",BBC First Turkiye
+#EXTINF:-1,BBC First Turkiye
 http://88.212.15.29/live/bbc_first/index.m3u8
 #EXTINF:-1,BBC Food (1080p)
 https://d1e9r0b71zfwk7.cloudfront.net/playlist.m3u8
@@ -2101,7 +2101,7 @@ https://live1.ovalcast.com:3916/live/bcngospeltvlive.m3u8
 https://viewmedia7219.bozztv.com/wmedia/viewmedia100/web_001/Stream/playlist.m3u8
 #EXTINF:-1,BD Television (720p)
 https://stream.oursnetworktv.com/latin/telegtmb/playlist.m3u8
-#EXTINF:-1,like Gecko) Chrome/83.0.4103.97 Safari/537.36 CrKey/1.44.191160" group-title="News",BDN (1080p)
+#EXTINF:-1,BDN (1080p)
 https://liveingesta318.cdnmedia.tv/badalonatvlive/smil:live.smil/playlist.m3u8
 #EXTINF:-1,Beach TV Florida & Alabama (720p)
 http://media4.tripsmarter.com:1935/LiveTV/DTVHD/playlist.m3u8
@@ -2135,15 +2135,15 @@ https://jmp2.uk/plu-672e16f5daad7f0008929a0d.m3u8
 https://jmp2.uk/plu-672e157d7d5da5000812872d.m3u8
 #EXTINF:-1,Becker (Sweden) NO
 https://jmp2.uk/plu-672e1634e482950008c759a5.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36" group-title="Movies",beIN Box Office 1
+#EXTINF:-1,beIN Box Office 1
 https://nord.ayakkabiparti.lol/box1/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36" group-title="Movies",beIN Box Office 2
+#EXTINF:-1,beIN Box Office 2
 https://nord.ayakkabiparti.lol/box2/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36" group-title="Movies",beIN Box Office 3
+#EXTINF:-1,beIN Box Office 3
 https://nord.ayakkabiparti.lol/box3/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36" group-title="Movies",beIN Movies Stars
+#EXTINF:-1,beIN Movies Stars
 https://nord.ayakkabiparti.lol/bsaction1/index.m3u8
-#EXTINF:-1,like Gecko) Chrome/130.0.0.0 Safari/537.36" group-title="Movies",beIN Movies Turk
+#EXTINF:-1,beIN Movies Turk
 https://nord.ayakkabiparti.lol/bsturk/index.m3u8
 #EXTINF:-1,beIN SPORTS XTRA (1080p)
 https://bein-xtra-bein.amagi.tv/playlist.m3u8
@@ -2977,7 +2977,7 @@ http://php.jdshipin.com/PLTV/iptv.php?id=gdty
 http://php.jdshipin.com/TVOD/iptv.php?id=gdty
 #EXTINF:-1,足球频道
 https://epg.pw/stream/c7df950876e6a1ceb8be74ee86f9f702cebbbae29f1d15124ef8f86fd43161cf.m3u8
-#EXTINF:-1,tvg-id="云南卫视" tvg-name="云南卫视" tvg-logo="https://gitee.com/suxuang/logo/raw/master/mylogo/云南卫视.png" group-title="卫视频道",云南卫视
+#EXTINF:-1,云南卫视
 http://nn.7x9d.cn/xzc2.php?ua=TW96aWxsYS81LjAgKFdpbmRvd3MgTlQgNi4xOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTA2LjAuMC4wIFNhZmFyaS81MzcuMzY=&hls=aHR0cDovL3d3dy5kc2suY2MvcGhwL3N4Z2QucGhwP2lkPXlud3M=
 #EXTINF:-1,延边卫视
 http://120.76.248.139/live/bfgd/4200000117.m3u8
@@ -5205,8 +5205,6 @@ http://222.128.55.152:9080/live/fc.m3u8
 http://iactive-clink.com:8081/live/111ztxw.m3u8
 #EXTINF:-1,中天新闻台
 http://flv3948069e.live.126.net/live/dabadqdszbtest78612.flv
-#EXTINF:-1,中天新闻台
-rtmp://home.aceimage.cn/live/xiangjiaoge-ztxw#http://rihou.cc:555/tv/中天新闻
 #EXTINF:-1,中视
 http://31.43.191.125:8080/restream/restream/34897
 #EXTINF:-1,中视新闻

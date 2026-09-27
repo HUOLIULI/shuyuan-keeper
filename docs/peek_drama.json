@@ -1,31 +1,11 @@
 {
- "spider": "https://img2.gelonghui.com/library/46da6-aa33493f-1c1d-4f35-9990-0be4bdbf0c64.png;md5;46da6b6a6a111d7924717db2ae790de3",
+ "spider": "",
  "sites": [
   {
    "key": "旺旺短剧",
    "name": "旺旺短剧",
    "type": 1,
    "api": "https://zhangqun1818.serv00.net/ww.php",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "changeable": 0
-  },
-  {
-   "key": "зҹӯеү§пҪңиҒҡеҗҲ",
-   "name": "иҒҡеҗҲеү§вһӢ",
-   "type": 3,
-   "api": "http://nn.4688888.xyz/py/зҹӯеү§иҒҡеҗҲ.py",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "changeable": 0
-  },
-  {
-   "key": "csp_HongGuo",
-   "name": "рҹҚҺжһңеӯҗв”ғзІҫйҖүзҹӯеү§",
-   "type": 3,
-   "api": "https://s3plus.meituan.net/opapisdk/op_ticket_1_5673241091_1788770930556_IMPGdz5q.py",
    "searchable": 1,
    "quickSearch": 1,
    "filterable": 1,

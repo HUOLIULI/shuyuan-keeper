@@ -1,66 +1,6 @@
 {
- "spider": "https://img2.gelonghui.com/library/46da6-aa33493f-1c1d-4f35-9990-0be4bdbf0c64.png;md5;46da6b6a6a111d7924717db2ae790de3",
- "sites": [
-  {
-   "key": "drpyS_独步小说网[书]",
-   "name": "独步小说网[书](DS)",
-   "type": 4,
-   "api": "/api/独步小说网[书]",
-   "searchable": 2,
-   "filterable": 1,
-   "quickSearch": 0,
-   "title": "独步小说网[书]",
-   "类型": "小说",
-   "lang": "ds",
-   "ext": ""
-  },
-  {
-   "key": "drpyS_番茄小说2[书]",
-   "name": "番茄小说2[书](DS)",
-   "type": 4,
-   "api": "/api/番茄小说2[书]",
-   "searchable": 2,
-   "filterable": 1,
-   "quickSearch": 0,
-   "title": "番茄小说2[书]",
-   "类型": "小说",
-   "lang": "ds",
-   "ext": ""
-  },
-  {
-   "key": "drpyS_酷我小说[书]",
-   "name": "酷我小说[书](DS)",
-   "type": 4,
-   "api": "/api/酷我小说[书]",
-   "searchable": 2,
-   "filterable": 1,
-   "quickSearch": 0,
-   "title": "酷我小说[书]",
-   "类型": "小说",
-   "lang": "ds",
-   "ext": ""
-  },
-  {
-   "key": "зҲұеҗ¬йҹід№җ",
-   "name": "зҲұеҗ¬ вҖў йҹід№җ",
-   "type": 3,
-   "api": "https://pizazz.us.ci/other/py/зҲұеҗ¬йҹід№җ.py",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "changeable": 0
-  },
-  {
-   "key": "е’•еҷң",
-   "name": "е’•еҷң",
-   "type": 3,
-   "api": "https://mpimg.cn/down.php/2542f809bfd6602273ad747965ce77f9.py",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "changeable": 0
-  }
- ],
+ "spider": "",
+ "sites": [],
  "lives": [],
  "parses": []
 }
