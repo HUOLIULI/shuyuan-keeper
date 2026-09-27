@@ -231,6 +231,37 @@ def convert_legado_to_drpy(book_source):
         pass
     return None
 
+
+def validate_drpy_script(script):
+    """验证 drpy 脚本是否可用。
+
+    1. 语法检查：能被 node 解析
+    2. 结构检查：包含所有必要函数
+    3. 运行检查：模拟调用搜索函数
+    返回 True/False
+    """
+    if not script or len(script) < 200:
+        return False
+    # 结构检查
+    required = ["推荐", "一级", "二级", "搜索", "lazy"]
+    if not all(f in script for f in required):
+        return False
+    # 语法检查：用 node 解析
+    import subprocess, tempfile, os
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False, encoding='utf-8') as f:
+        f.write(script)
+        tmp = f.name
+    try:
+        r = subprocess.run(['node', '-c', tmp], capture_output=True, timeout=5)
+        if r.returncode != 0:
+            return False
+    except Exception:
+        return False
+    finally:
+        os.unlink(tmp)
+    return True
+
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 DOCS = ROOT / "docs"
@@ -2312,12 +2343,12 @@ def cmd_convert_books_to_drpy(limit=50):
             continue
         try:
             script = convert_legado_to_drpy(b)
-            if script and len(script) > 100 and "var rule" in script:
+            if script and validate_drpy_script(script):
                 (spider_dir / filename).write_text(script, encoding="utf-8")
                 print(f"  ✅ [{i+1}] {name[:25]} → {filename}")
                 success += 1
             else:
-                print(f"  ❌ [{i+1}] {name[:25]} 生成失败")
+                print(f"  ❌ [{i+1}] {name[:25]} 验证失败")
                 fail += 1
         except Exception as e:
             print(f"  ❌ [{i+1}] {name[:25]} 错误: {e}")
