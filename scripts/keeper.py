@@ -66,77 +66,104 @@ AI_MODEL = os.environ.get("KEEPER_AI_MODEL", "agnes-3.0-flash")
 # ============================================================
 SKILL_LIBRARY = {
     "novel_template": """
-=== drpyS 小说源标准模板（必须严格遵守）===
+=== drpyS 小说源标准模板（必须严格遵守，基于官方七猫小说[书].js）===
 /*
 @header({ searchable:2, filterable:1, title:'站点名[书]', '类型':'小说', lang:'ds' })
 */
 var rule = {
   类型:'小说', title:'站点名[书]', host:'https://example.com', searchable:2,
-  searchUrl:'https://example.com/search?q=**',
+  searchUrl:'https://example.com/search?searchkey=**',
   推荐: async function(){
     let {input} = this;
-    let html = (await req(input || rule.host)).content;
-    let d = [];
-    // 用 cheerio 解析: let $ = cheerio.load(html);
-    // $('选择器').each(function(){ d.push({title:$(this).text().trim(), url:urljoin(rule.host,$(this).find('a').attr('href')), desc:'', pic_url:''}); });
-    return setResult(d);
+    // 推荐页：手动设置input再调一级
+    this.input = rule.host + '/rank/';
+    return await this.一级();
   },
-  一级: async function(tid,pg,f,e){
-    let {input} = this;  // 必须解构 this.input！不能直接用 input
-    let html = (await req(input)).content;
+  一级: async function(){
+    let {input, pdfa, pdfh, pd} = this;
+    let html = await request(input);  // request()直接返回HTML字符串！
     let d = [];
-    let $ = cheerio.load(html);
-    $('选择器').each(function(){
-      d.push({title:$(this).text().trim(), url:urljoin(rule.host,$(this).find('a').attr('href')), desc:'', pic_url:''});
+    // 用pdfa多元素选择，&&是子选择器
+    let data = pdfa(html, 'div.book-list&&li');
+    data.forEach((it) => {
+      d.push({
+        title: pdfh(it, '.title&&Text'),
+        pic_url: pd(it, 'img&&src'),
+        desc: pdfh(it, '.author&&Text'),
+        url: pd(it, 'a&&href'),
+        content: pdfh(it, '.desc&&Text'),
+      })
+    });
+    return setResult(d)
+  },
+  二级: async function(){
+    let {input, pdfa, pdfh, pd} = this;
+    let html = await request(input);
+    let VOD = {};
+    VOD.vod_name = pdfh(html, 'h1&&Text');
+    VOD.vod_pic = pd(html, '.cover&&img&&src');
+    VOD.vod_content = pdfh(html, '.intro&&Text');
+    VOD.vod_remarks = pdfh(html, '.update&&Text');
+    VOD.vod_play_from = '书名';
+    // 章节列表：从HTML或API获取
+    let chapters = pdfa(html, 'ul.chapters&&li');
+    let urls = chapters.map((ch) => pdfh(ch, 'a&&Text') + '$' + pd(ch, 'a&&href'));
+    VOD.vod_play_url = urls.join('#');
+    return VOD
+  },
+  搜索: async function(){
+    let {KEY, MY_PAGE} = this;  // KEY=搜索词, MY_PAGE=页码
+    let url = rule.searchUrl.replace('**', KEY);
+    if (MY_PAGE > 1) url = url.replace(/page=\\d+/, 'page=' + MY_PAGE);
+    let html = await request(url);
+    let d = [];
+    let data = pdfa(html, 'div.search-list&&li');
+    data.forEach((it) => {
+      d.push({
+        title: pdfh(it, '.title&&Text'),
+        desc: pdfh(it, '.author&&Text'),
+        img: pd(it, 'img&&src'),
+        url: pd(it, 'a&&href'),
+      });
     });
     return setResult(d);
   },
-  二级: async function(ids){
+  lazy: async function(){
     let {input} = this;
-    let html = (await req(ids)).content;
+    let html = await request(input);
     return {
-      vod_id:ids, vod_name:'书名', vod_pic:'', vod_content:'', vod_remarks:'',
-      vod_play_from:'正文', vod_play_url:'章节1$url#章节2$url2'
+      parse: 0,
+      url: 'novel://' + JSON.stringify({title:'章节名', content:html})
     };
-  },
-  搜索: async function(wd,quick,pg){
-    let {input} = this;  // 必须解构 this.input！
-    let html = (await req(input)).content;
-    let d = [];
-    let $ = cheerio.load(html);
-    $('选择器').each(function(){
-      d.push({title:$(this).text().trim(), url:urljoin(rule.host,$(this).find('a').attr('href')), desc:'', pic_url:''});
-    });
-    return setResult(d);
-  },
-  lazy: async function(flag,id,flags){
-    let html = (await req(id)).content;
-    return {parse:0, url:'novel://'+JSON.stringify({title:'章节名',content:html})};
   }
 };
 
+=== 关键API（从drpy-node源码确认）===
+- request(url, obj?) → 直接返回HTML字符串（不是{content:xxx}！）
+- pdfa(html, '选择器&&子选择器') → 返回数组（多元素）
+- pdfh(html, '选择器&&Text') → 返回字符串（单元素文本）
+- pd(html, '选择器&&属性') → 返回字符串（属性值，如href/src）
+- this.KEY = 搜索关键词（搜索时由框架注入）
+- this.MY_PAGE = 页码
+- this.input = 当前要请求的URL（一级/二级时由框架设置）
+- setResult(d) → 包装列表结果
+- urljoin(host, relativePath) → 拼接URL
+- 列表项字段: {title, url, desc, pic_url} 或 {title, url, desc, img}
 === 绝对禁止 ===
-- 禁止直接用 input，必须写 let {input} = this;
-- 禁止用 DOMParser（浏览器API，drpy沙箱没有）
-- 禁止用 html.matchAll().match() 链式调用
-- 禁止用 document/window/navigator
+- 禁止用 (await req(url)).content 这种写法！用 await request(url)
+- 禁止用 DOMParser/document/window/navigator
 - 禁止 require/import/fs/process
-=== 必须使用 ===
-- 解析HTML用: let $ = cheerio.load(html);
-- 请求用: (await req(url)).content
-- 列表返回: return setResult(d);
-- 相对URL: urljoin(rule.host, relativePath)
+- 禁止在搜索函数里用 this.input（搜索用 this.KEY 自己拼URL）
 === 模板结束 ===
 """,
 
     "urljoin_snippet": """
 【urljoin 片段】所有相对链接必须用 urljoin 转绝对路径：
   let absUrl = urljoin(host, relativePath);
-  // 例: urljoin('https://abc.com/book/1', '/chapter/2') → 'https://abc.com/chapter/2'
 """,
 
     "cryptojs_aes": """
-【CryptoJS AES 解密片段】Legado 的 java AES 加密 → drpyS 用 CryptoJS：
+【CryptoJS AES 解密片段】
   let decrypted = CryptoJS.AES.decrypt(cipherText, CryptoJS.enc.Utf8.parse(key), {
     iv: CryptoJS.enc.Utf8.parse(iv),
     mode: CryptoJS.mode.CBC,
@@ -145,23 +172,21 @@ var rule = {
 """,
 
     "cryptojs_md5": """
-【MD5 签名片段】Legado 的 java MD5 → drpyS 用 md5()：
+【MD5 签名片段】
   let sign = md5(stringToSign);
 """,
 
     "captcha_snippet": """
-【验证码片段】遇到登录/搜索验证码时调用内置 OCR：
+【验证码片段】
   let ocrResp = await request('/captcha/ocr', {method:'POST', body:JSON.stringify({type:'text', bg:imageDataUrl})});
-  let code = JSON.parse(ocrResp.content).data.code;
 """,
 
     "gbk_snippet": """
-【GBK 编码片段】GBK 编码网站用 gbkTool：
-  let html = await gbkTool.decode(req(url).content);
+【GBK 编码片段】GBK网站在rule里设 encoding:'gbk' 即可，request()自动处理
 """,
 
     "cheerio_snippet": """
-【cheerio 解析片段】用 cheerio 解析 HTML：
+【cheerio 备选解析】pdfa/pdfh/pd 是首选，复杂情况可用cheerio：
   let $ = cheerio.load(html);
   $('div.book-item').each(function(){
     d.push({
@@ -174,8 +199,8 @@ var rule = {
 """,
 
     "cut_snippet": """
-【cut 提取片段】从 HTML 中提取 JSON 或文本片段：
-  let jsonStr = cut(html, 'window.__DATA__=', '};').replace(/;$/, '');
+【cut 提取片段】从 HTML 中提取 JSON：
+  let jsonStr = cut(html, 'window.__DATA__=', '};');
   let data = JSON.parse(jsonStr);
 """,
 }
@@ -371,6 +396,7 @@ def validate_drpy_script(script):
         ("window.", "使用了window，drpy沙箱没有"),
         ("navigator.", "使用了navigator，drpy沙箱没有"),
         ("require(", "使用了require，drpy禁止"),
+        ("(await req(", "用了(await req(url)).content，应该用 await request(url)"),
     ]
     for pattern, reason in forbidden_patterns:
         if pattern in script:
