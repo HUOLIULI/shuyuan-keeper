@@ -513,5 +513,89 @@
   "影视站·导航2": {
     "type": "videosite",
     "url": "https://raw.githubusercontent.com/waifu-tw/tvbox/main/webSite.txt"
+  },
+  "书源·legado_aoaostar": {
+    "type": "book",
+    "url": "https://raw.githubusercontent.com/aoaostar/book-source/main/bookSource.json"
+  },
+  "书源·legado_XIU2": {
+    "type": "book",
+    "url": "https://raw.githubusercontent.com/XIU2/BookSource/main/BookSource.json"
+  },
+  "书源·legado_Gladtbam": {
+    "type": "book",
+    "url": "https://raw.githubusercontent.com/Gladtbam/BookSource/main/BookSource.json"
+  },
+  "书源·订阅_Gladtbam": {
+    "type": "subscribe",
+    "url": "https://raw.githubusercontent.com/Gladtbam/BookSource/main/subscribeSource.json"
+  },
+  "书源·legado_qq549412210": {
+    "type": "book",
+    "url": "https://raw.githubusercontent.com/qq549412210/BookSource/main/BookSource.json"
+  },
+  "书源·legado_qist": {
+    "type": "book",
+    "url": "https://raw.githubusercontent.com/qist/BookSource/main/BookSource.json"
+  },
+  "书源·legado_cyqcloud": {
+    "type": "book",
+    "url": "https://raw.githubusercontent.com/cyqcloud/BookSource/main/BookSource.json"
+  },
+  "tvbox·单仓_cms": {
+    "type": "tvbox",
+    "url": "https://raw.githubusercontent.com/YuanJen/tvbox/main/cms.json"
+  },
+  "tvbox·单仓_hipy": {
+    "type": "tvbox",
+    "url": "https://raw.githubusercontent.com/YuanJen/tvbox/main/hipy.json"
+  },
+  "tvbox·单仓_cat": {
+    "type": "tvbox",
+    "url": "https://raw.githubusercontent.com/YuanJen/tvbox/main/cat.json"
+  },
+  "tvbox·多仓_multi": {
+    "type": "tvbox",
+    "url": "https://raw.githubusercontent.com/YuanJen/tvbox/main/multi.json"
+  },
+  "tvbox·okcjc": {
+    "type": "tvbox",
+    "url": "https://raw.githubusercontent.com/okcjc/TVBox/main/json/tvbox.json"
+  },
+  "tvbox·baiwan": {
+    "type": "tvbox",
+    "url": "https://raw.githubusercontent.com/baiwan/TVBox/main/json/tvbox.json"
+  },
+  "音乐·lsr321": {
+    "type": "music",
+    "url": "https://raw.githubusercontent.com/lsr321/LX/main/interface.json"
+  },
+  "音乐·XXAdmin6": {
+    "type": "music",
+    "url": "https://raw.githubusercontent.com/XXAdmin6/website/main/music.json"
+  },
+  "音乐·lx-music": {
+    "type": "music",
+    "url": "https://raw.githubusercontent.com/lxmusics/lx-music-api-server/main/config.json"
+  },
+  "iptv·官方": {
+    "type": "iptv",
+    "url": "https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u"
+  },
+  "iptv·pluto": {
+    "type": "iptv",
+    "url": "https://raw.githubusercontent.com/joevess/IPTV/main/home.m3u8"
+  },
+  "iptv·Bing": {
+    "type": "iptv",
+    "url": "https://raw.githubusercontent.com/Bing/iptv/main/iptv.m3u"
+  },
+  "影视站·zyplayer": {
+    "type": "videosite",
+    "url": "https://raw.githubusercontent.com/gaotianqiu/zy-player/main/website.json"
+  },
+  "影视站·cms_list": {
+    "type": "videosite",
+    "url": "https://raw.githubusercontent.com/YuanJen/tvbox/main/cms.txt"
   }
 }
