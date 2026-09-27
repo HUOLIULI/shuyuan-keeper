@@ -449,7 +449,7 @@
   <div class="board">
     <div class="board-hd">
       <span class="board-badge" style="color:var(--purple);border-color:var(--purple)">AI 制源助手</span>
-      <span class="board-ts">输入站点URL → 自动抓取分析 → 生成对应格式源</span>
+      <span class="board-ts">①输入URL → ②抓取分析 → ③选格式生成 → ④测试 → ⑤提交仓库</span>
     </div>
     <div class="ai-box">
       <div class="ai-cfg">
@@ -486,6 +486,35 @@
   </div><!-- /tab-ai -->
 
   <div class="tab-pane" id="tab-about">
+  <!-- 流水线说明 -->
+  <div class="board">
+    <div class="board-hd">
+      <span class="board-badge">自动化流水线</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--muted)">
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(51,224,255,.05);border-radius:10px">
+        <span style="color:var(--cyan);font-weight:700">1</span>
+        <span><b style="color:var(--text)">收集上游</b> — 每2天自动拉取80+上游源</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(45,255,155,.05);border-radius:10px">
+        <span style="color:var(--green);font-weight:700">2</span>
+        <span><b style="color:var(--text)">去重+验活</b> — 自动去重，批量验证存活(200条/次)</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(168,120,255,.05);border-radius:10px">
+        <span style="color:var(--purple);font-weight:700">3</span>
+        <span><b style="color:var(--text)">AI转换+修复</b> — Legado书源→drpyS脚本，T4实测验证</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(255,210,63,.05);border-radius:10px">
+        <span style="color:var(--yellow);font-weight:700">4</span>
+        <span><b style="color:var(--text)">导出+部署</b> — 生成TVBox/IPTV/音乐配置，自动部署Pages</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(255,138,77,.05);border-radius:10px">
+        <span style="color:#ff8a4d;font-weight:700">5</span>
+        <span><b style="color:var(--text)">用户提交</b> — AI生成/上传的源，自动验证后入库</span>
+      </div>
+    </div>
+  </div>
+  
   <!-- 上游状态 -->
   <div class="board">
     <div class="board-hd">
