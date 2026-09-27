@@ -879,7 +879,7 @@ async function aiMake(mode) {
   try {
     const vs = await (await fetch("valid_videosite.json")).json();
     const html = vs.map((v,i) => `
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(8,10,24,.5);border:1px solid var(--line);border-radius:12px;transition:all .2s" onmouseover="this.style.borderColor='var(--line2)'" onmouseout="this.style.borderColor='var(--line)'">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(8,10,24,.5);border:1px solid var(--line);border-radius:12px;transition:all .2s" onmouseover="this.style.borderColor='var(--cyan)';this.style.boxShadow='0 4px 15px rgba(51,224,255,.1)'" onmouseout="this.style.borderColor='var(--line)';this.style.boxShadow='none'">
         <span style="color:var(--muted);font-size:12px;width:30px;flex:none">${i+1}</span>
         <div style="flex:1;min-width:0">
           <div style="font-weight:600;color:var(--text);font-size:13px">${esc(v.name||"未命名")}</div>
