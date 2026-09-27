@@ -12,6 +12,26 @@
    "changeable": 0
   },
   {
+   "key": "py_apple",
+   "name": "рҹҚҺв”ғиӢ№жһңв”ғеҪұи§Ҷ",
+   "type": 3,
+   "api": "http://fmys.top/py/apple.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "еұұжҘӮеҪұи§Ҷ",
+   "name": "рҹ’ҘпҪңеұұжҘӮ | еҪұи§Ҷ",
+   "type": 3,
+   "api": "https://chigua.eu.org/py/еұұжҘӮеҪұи§Ҷ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
    "key": "py_jieyingshi",
    "name": "вҳҖдёғжҳҹрҹ”№еҪұз•Ң",
    "type": 3,
@@ -22,10 +42,50 @@
    "changeable": 0
   },
   {
+   "key": "ж–ҮжүҚеҪұи§Ҷ",
+   "name": "ж–ҮжүҚпҪңеҪұи§Ҷ",
+   "type": 3,
+   "api": "http://47.96.82.41:5188/svip/py/ж–ҮжүҚеҪұи§Ҷ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
    "key": "зҹӯеү§пҪңиҒҡеҗҲ",
    "name": "иҒҡеҗҲеү§вһӢ",
    "type": 3,
    "api": "http://nn.4688888.xyz/py/зҹӯеү§иҒҡеҗҲ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "дәәдәәеҪұи§Ҷ",
+   "name": "вҷЁпёҸдәәдәәпҪңеҪұи§Ҷ",
+   "type": 3,
+   "api": "https://17264.kstore.space/дәәдәәеҪұи§Ҷ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "жһ«еҸ¶еҪұйҷў.py2",
+   "name": "жһ«еҸ¶еҪұйҷў(T3)",
+   "type": 3,
+   "api": "https://raw.giteeusercontent.com/dobebly/img/raw/master/img/mc.png?sb.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "py_4KеҪұйҷў",
+   "name": "рҹҘӯ4Kв”ғеҪұйҷў",
+   "type": 3,
+   "api": "https://bitbucket.org/guot55/ygbh/raw/main/pro/py/4KеҪұйҷў.py",
    "searchable": 1,
    "quickSearch": 1,
    "filterable": 1,
