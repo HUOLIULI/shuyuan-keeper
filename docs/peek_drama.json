@@ -12,26 +12,50 @@
    "changeable": 0
   },
   {
-   "key": " 在线┃直播2",
-   "name": "📺┃网红┃直播",
+   "key": "py_jieyingshi",
+   "name": "вҳҖдёғжҳҹрҹ”№еҪұз•Ң",
    "type": 3,
-   "api": "http://alist.xn--z7x900a.live/ddrpy2.m.js",
-   "ext": "http://alist.xn--z7x900a.live/JustLive.js",
-   "gridview": "0-0-H",
-   "style": {
-    "type": "rect",
-    "ratio": 1.68
-   },
+   "api": "https://7337.kstore.vip/xw/py/jieyingshi.py",
    "searchable": 1,
-   "quickSearch": 0,
-   "filterable": 0,
+   "quickSearch": 1,
+   "filterable": 1,
    "changeable": 0
   },
   {
-   "key": "зҪ‘з»ңзӣҙж’ӯ",
-   "name": "зҪ‘з»ңв”ғзӣҙж’ӯ",
+   "key": "зҹӯеү§пҪңиҒҡеҗҲ",
+   "name": "иҒҡеҗҲеү§вһӢ",
    "type": 3,
-   "api": "https://ygbh.site/max/py/зҪ‘з»ңзӣҙж’ӯ.py",
+   "api": "http://nn.4688888.xyz/py/зҹӯеү§иҒҡеҗҲ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "иҒҡеҗҲ",
+   "name": "иҒҡеҗҲ",
+   "type": 3,
+   "api": "https://gitee.com/hulanlu/04/raw/master/py/иҒҡеҗҲ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "еҪұи§ҶиҒҡеҗҲдә”еҗҲдёҖV2.py",
+   "name": "еҪұи§ҶиҒҡеҗҲдә”еҗҲдёҖ",
+   "type": 3,
+   "api": "http://150.158.52.248/tgyg/lib/еҪұи§ҶиҒҡеҗҲдә”еҗҲдёҖV2.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "csp_HongGuo",
+   "name": "рҹҚҺжһңеӯҗв”ғзІҫйҖүзҹӯеү§",
+   "type": 3,
+   "api": "https://s3plus.meituan.net/opapisdk/op_ticket_1_5673241091_1788770930556_IMPGdz5q.py",
    "searchable": 1,
    "quickSearch": 1,
    "filterable": 1,
