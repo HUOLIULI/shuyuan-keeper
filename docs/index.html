@@ -807,13 +807,22 @@ function buildAIPanel() {
   if (!panel || panel.dataset.built) return;
   panel.dataset.built = "1";
   const cfg = JSON.parse(localStorage.getItem("ai_cfg") || "{}");
+  const DFT = {
+    base: "https://apihub.agnes-ai.com/v1",
+    key: "sk-dcCJ3jSxC2CA2wltoH3ILeRkvI47fsMEO0H20ub08WmZhRWK",
+    model: "agnes-3.0-flash"
+  };
   panel.innerHTML = `
     <h2 style="color:var(--purple)">AI 制源助手</h2>
-    <p class="hint">粘贴站点 URL 或失效源 JSON，AI 自动生成 drpy 脚本 / TVBox 配置 / 修复建议。API Key 仅存浏览器本地，不上传服务器。</p>
+    <p class="hint">粘贴站点 URL 或失效源 JSON，AI 自动生成 drpy 脚本 / TVBox 配置 / 修复建议。已内置默认 API，开箱即用。</p>
     <div class="ai-box">
       <div class="ai-cfg">
-        <input id="ai-base" placeholder="API Base URL（默认 https://api.openai.com/v1）" value="${esc(cfg.base || "https://api.openai.com/v1")}">
-        <input id="ai-key" type="password" placeholder="API Key（sk-...）" value="${esc(cfg.key || "")}">
+        <input id="ai-base" placeholder="API Base URL" value="${esc(cfg.base || DFT.base)}">
+        <input id="ai-key" type="password" placeholder="API Key" value="${esc(cfg.key || DFT.key)}">
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <label style="font-size:12px;color:var(--muted);flex:none">模型</label>
+        <input id="ai-model" placeholder="模型名" value="${esc(cfg.model || DFT.model)}" style="flex:1;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:13px;background:rgba(8,10,24,.6);color:var(--text);outline:none">
       </div>
       <input class="ai-input" id="ai-input" placeholder="粘贴站点 URL（如 https://example.com/api.php/provide/vod）或失效的 TVBox 源 JSON...">
       <div class="ai-actions">
@@ -833,12 +842,13 @@ function buildAIPanel() {
 async function aiMake(mode) {
   const base = document.getElementById("ai-base").value.trim();
   const key = document.getElementById("ai-key").value.trim();
+  const model = document.getElementById("ai-model").value.trim() || "agnes-3.0-flash";
   const input = document.getElementById("ai-input").value.trim();
   const out = document.getElementById("ai-output");
   const st = document.getElementById("ai-status");
   if (!key) { st.innerHTML = '<b style="color:var(--red)">请先填 API Key</b>'; return; }
   if (!input) { st.innerHTML = '<b style="color:var(--red)">请先粘贴站点 URL 或源内容</b>'; return; }
-  localStorage.setItem("ai_cfg", JSON.stringify({base, key}));
+  localStorage.setItem("ai_cfg", JSON.stringify({base, key, model}));
   const prompts = {
     drpy: "你是一个 drpy 源开发者。根据以下站点 URL，生成一个完整的 drpy JS 脚本（.js），包含 homeContent、categoryContent、detailContent、searchContent、playerContent。脚本格式为：var rule={...}。只输出代码，不要解释。",
     tvbox: "你是一个 TVBox 配置开发者。根据以下站点 URL，生成一个标准 TVBox 单仓 JSON 配置（含 spider、sites、lives、parses），sites 至少包含该站。只输出 JSON，不要解释。",
@@ -851,7 +861,7 @@ async function aiMake(mode) {
       method: "POST",
       headers: {"Content-Type": "application/json", "Authorization": "Bearer " + key},
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: model,
         messages: [{role: "user", content: prompts[mode] + "\n\n站点/源：\n" + input}],
         temperature: 0.3
       })
