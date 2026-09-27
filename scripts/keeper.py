@@ -1175,11 +1175,35 @@ def check_tvbox(rec):
         return "dead"
     if http_get(target, timeout=TIMEOUT) is not None:
         return "valid"
+    # 自动修复：尝试常见路径变体（404 但站点在 → 可能路径变了）
+    if site_alive(target):
+        variants = _tvbox_path_variants(target)
+        for v in variants:
+            if http_get(v, timeout=TIMEOUT) is not None:
+                # 路径变体成功，更新 source.api 指向修复后的路径
+                if isinstance(rec.get("source"), dict):
+                    rec["source"]["api"] = v
+                return "valid"
     # CDN/raw 静态托管（jsdelivr/raw.githubusercontent 等）上探不到 = 资源本身没了，
     # 不是"站点还在只是接口失效"，应判死以便自动删除，避免永久标黄
     if _host_always_alive(target):
         return "dead"
     return "flaky" if site_alive(target) else "dead"
+
+
+def _tvbox_path_variants(url):
+    """TVBox API 常见路径变体：404 时尝试自动修复。"""
+    from urllib.parse import urlparse, urlunparse
+    parsed = urlparse(url)
+    variants = []
+    # 去掉路径尾部，试 /index.php /api.php /provide/vod
+    if parsed.path and parsed.path not in ("/", ""):
+        base_path = parsed.path.rsplit("/", 1)[0] or "/"
+    else:
+        base_path = "/"
+    for suffix in ["index.php", "api.php", "provide/vod", "provide/api.php"]:
+        variants.append(urlunparse(parsed._replace(path=base_path.rstrip("/") + "/" + suffix, query="")))
+    return variants[:4]
 
 
 def check_iptv(rec):

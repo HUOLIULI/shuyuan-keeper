@@ -232,6 +232,17 @@
   .peek-note{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.8}
   .peek-note b{color:var(--text)}
   .peek-step{display:inline-block;background:rgba(51,224,255,.12);color:var(--cyan);border-radius:6px;padding:1px 7px;font-size:11px;font-weight:700;margin-right:4px}
+  /* AI 助手面板 */
+  .ai-box{display:flex;flex-direction:column;gap:12px}
+  .ai-cfg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .ai-cfg input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:13px;background:rgba(8,10,24,.6);color:var(--text);outline:none}
+  .ai-cfg input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(168,120,255,.15)}
+  .ai-input{width:100%;min-height:80px;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:13px;background:rgba(8,10,24,.6);color:var(--text);outline:none;font-family:inherit;resize:vertical}
+  .ai-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(168,120,255,.15)}
+  .ai-output{width:100%;min-height:200px;padding:12px;border:1px solid var(--purple);border-radius:10px;font-size:12px;background:rgba(20,10,40,.4);color:var(--green);outline:none;font-family:ui-monospace,Menlo,monospace;resize:vertical;white-space:pre-wrap;word-break:break-all}
+  .ai-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .ai-status{font-size:12px;color:var(--muted)}
+  .ai-status b{color:var(--green)}
   /* 分类 chips + 分类徽章：双维度（类别 / 源格式）通用 */
   .dim-label{font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:4px 0 4px;user-select:none}
   .cat-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}
@@ -355,6 +366,7 @@
   <div class="panel hidden" id="tab-vparse"></div>
   <div class="panel hidden" id="tab-localpkg"></div>
   <div class="panel hidden" id="tab-upload"></div>
+  <div class="panel hidden" id="tab-ai"></div>
 
   <div class="panel" id="up-panel" style="display:none">
     <h2>上传资源（本地校验 + 生成反馈草案）</h2>
@@ -398,13 +410,13 @@
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
 const TABS = ["book", "subscribe", "tvbox", "iptv", "collect", "videosite", "music",
-             "magnet", "vparse", "localpkg", "upload"];
+             "magnet", "vparse", "localpkg", "upload", "ai"];
 const FILE = {book: "valid.json", subscribe: "valid_subscribe.json", tvbox: "valid_tvbox.json",
               iptv: "valid_iptv.m3u", collect: "valid_collect.json", videosite: "valid_videosite.json",
               music: "valid_music.json", magnet: "valid_magnet.json",
               vparse: "valid_vparse.json", localpkg: "valid_localpkg.json"};
 const LABEL = {book: "书源", subscribe: "订阅源", tvbox: "站点", iptv: "频道", collect: "采集接口",
-               videosite: "影视站", music: "音源", magnet: "磁力站", vparse: "解析接口", localpkg: "本地包"};
+               videosite: "影视站", music: "音源", magnet: "磁力站", vparse: "解析接口", localpkg: "本地包", ai: "AI 助手"};
 const META = {
    book:      {title: "有效书源", desc: "阅读 Legado：书源管理 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "bookSource", extraBtn: ""},
    subscribe: {title: "有效订阅源", desc: "阅读 Legado：我的 → 订阅 → 右上角 → 网络导入 → 粘贴下面地址。", importKind: "rssSource", extraBtn: ""},
@@ -493,6 +505,7 @@ async function copy(text, msg) {
 }
 
 function buildPanel(tab) {
+  if (tab === "ai") { buildAIPanel(); return; }
   const meta = META[tab];
   const url = abs(FILE[tab]);
   const importBtn = meta.importKind
@@ -552,6 +565,7 @@ function setDim(tab, dimIdx, key) {
 async function load(tab) {
   if (loaded[tab]) return;
   loaded[tab] = true;
+  if (tab === "ai") { buildAIPanel(); return; }
   try {
     if (tab === "tvbox") {
       const cfg = await (await fetch(FILE.tvbox)).json();
@@ -787,6 +801,74 @@ async function runLocalCheck() {
   toast(`校验完成：绿 ${cnt.green} / 黄 ${cnt.yellow} / 红 ${cnt.red}`);
 }
 
+// ---------------- AI 制源助手 ----------------
+function buildAIPanel() {
+  const panel = document.getElementById("tab-ai");
+  if (!panel || panel.dataset.built) return;
+  panel.dataset.built = "1";
+  const cfg = JSON.parse(localStorage.getItem("ai_cfg") || "{}");
+  panel.innerHTML = `
+    <h2 style="color:var(--purple)">AI 制源助手</h2>
+    <p class="hint">粘贴站点 URL 或失效源 JSON，AI 自动生成 drpy 脚本 / TVBox 配置 / 修复建议。API Key 仅存浏览器本地，不上传服务器。</p>
+    <div class="ai-box">
+      <div class="ai-cfg">
+        <input id="ai-base" placeholder="API Base URL（默认 https://api.openai.com/v1）" value="${esc(cfg.base || "https://api.openai.com/v1")}">
+        <input id="ai-key" type="password" placeholder="API Key（sk-...）" value="${esc(cfg.key || "")}">
+      </div>
+      <input class="ai-input" id="ai-input" placeholder="粘贴站点 URL（如 https://example.com/api.php/provide/vod）或失效的 TVBox 源 JSON...">
+      <div class="ai-actions">
+        <button class="btn" onclick="aiMake('drpy')">生成 drpy 脚本</button>
+        <button class="btn blue" onclick="aiMake('tvbox')">生成 TVBox 配置</button>
+        <button class="btn gray" onclick="aiMake('fix')">修复失效源</button>
+        <span class="ai-status" id="ai-status"></span>
+      </div>
+      <textarea class="ai-output" id="ai-output" placeholder="AI 生成的结果会显示在这里，可直接复制到 PeekPro..."></textarea>
+      <div class="ai-actions">
+        <button class="btn gray" onclick="copy(document.getElementById('ai-output').value,'结果已复制')">复制结果</button>
+        <button class="btn gray" onclick="document.getElementById('ai-output').value=''">清空</button>
+      </div>
+    </div>`;
+}
+
+async function aiMake(mode) {
+  const base = document.getElementById("ai-base").value.trim();
+  const key = document.getElementById("ai-key").value.trim();
+  const input = document.getElementById("ai-input").value.trim();
+  const out = document.getElementById("ai-output");
+  const st = document.getElementById("ai-status");
+  if (!key) { st.innerHTML = '<b style="color:var(--red)">请先填 API Key</b>'; return; }
+  if (!input) { st.innerHTML = '<b style="color:var(--red)">请先粘贴站点 URL 或源内容</b>'; return; }
+  localStorage.setItem("ai_cfg", JSON.stringify({base, key}));
+  const prompts = {
+    drpy: "你是一个 drpy 源开发者。根据以下站点 URL，生成一个完整的 drpy JS 脚本（.js），包含 homeContent、categoryContent、detailContent、searchContent、playerContent。脚本格式为：var rule={...}。只输出代码，不要解释。",
+    tvbox: "你是一个 TVBox 配置开发者。根据以下站点 URL，生成一个标准 TVBox 单仓 JSON 配置（含 spider、sites、lives、parses），sites 至少包含该站。只输出 JSON，不要解释。",
+    fix: "你是一个影视源修复专家。分析以下失效的源 JSON，找出问题并给出修复后的完整 JSON。常见问题：缺 key/api、格式错误、字段缺失。只输出修复后的 JSON，不要解释。"
+  };
+  out.value = "";
+  st.innerHTML = '<b style="color:var(--cyan)">AI 生成中...</b>';
+  try {
+    const resp = await fetch(base.replace(/\/$/, "") + "/chat/completions", {
+      method: "POST",
+      headers: {"Content-Type": "application/json", "Authorization": "Bearer " + key},
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [{role: "user", content: prompts[mode] + "\n\n站点/源：\n" + input}],
+        temperature: 0.3
+      })
+    });
+    if (!resp.ok) {
+      const err = await resp.text();
+      st.innerHTML = '<b style="color:var(--red)">错误: ' + resp.status + " " + err.slice(0, 100) + '</b>';
+      return;
+    }
+    const data = await resp.json();
+    out.value = data.choices?.[0]?.message?.content || "(无返回)";
+    st.innerHTML = '<b style="color:var(--green)">生成完成</b>';
+  } catch (e) {
+    st.innerHTML = '<b style="color:var(--red)">请求失败: ' + e.message + '</b>';
+  }
+}
+
 function makeIssueDraft() {
   const results = window._lastResults || [];
   const type = window._lastType || document.getElementById("up-type").value;
@@ -854,7 +936,8 @@ function downloadSubmit() {
   };
   const resTabs = TABS.filter(t => t !== "upload").map(t => {
     const n = COUNT[t];
-    return `<div class="tab" data-tab="${t}"><b>${n == null ? "–" : n}</b><em>${LABEL[t]}</em></div>`;
+    const display = t === "ai" ? "AI" : (n == null ? "–" : n);
+    return `<div class="tab" data-tab="${t}"><b>${display}</b><em>${LABEL[t]}</em></div>`;
   }).join("");
   const metaTabs = `
     <div class="tab meta"><b>${s?.flaky ?? "–"}</b><em>标黄</em></div>
