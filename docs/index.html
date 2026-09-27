@@ -552,7 +552,7 @@
       </div>
       <div style="padding:10px;background:rgba(255,210,63,.05);border-radius:10px">
         <div style="color:var(--muted);font-size:11px">最后更新</div>
-        <div style="color:var(--yellow);font-weight:700" id="ts2">-</div>
+        <div style="color:var(--yellow);font-weight:700" id="ts2">加载中...</div>
       </div>
     </div>
   </div>
@@ -861,6 +861,8 @@ async function aiMake(mode) {
     set("c-live", s.valid_iptv);
     set("c-music", s.peek_music);
     set("c-vsite", s.valid_videosite || 0);
+    const ts2 = document.getElementById("ts2");
+    if (ts2) ts2.textContent = s.updated_at || "-";
   } catch(e) {}
   try {
     const ups = await (await fetch("upstreams.json")).json();
