@@ -2192,6 +2192,23 @@ def filter_tvbox_by_category(config, keywords):
     return out
 
 
+def tag_peek_sites(peek_tvbox):
+    """给 PeekPro 站点名称加分类后缀标签：[书]=小说 [画]=漫画 [密]=成人"""
+    for s in peek_tvbox.get("sites", []):
+        n = s.get("name", "")
+        # 已有标签就不重复加
+        if "[书]" in n or "[画]" in n or "[密]" in n:
+            continue
+        # 判断分类
+        if any(k in n for k in ["小说", "阅读", "书源", "笔趣", "听书", "读书", "书城", "网文", "番茄", "猴子", "花生", "宜搜", "必看", "SF轻小说", "鲸云", "豆腐", "快读", "17k", "UAA"]):
+            s["name"] = n + "  [书]"
+        elif any(k in n for k in ["漫画", "动漫", "comic", "manga", "番剧", "小鸟动漫", "魔都动漫", "新漫画", "动漫之家"]):
+            s["name"] = n + "  [画]"
+        elif any(k in n for k in ["番号", "成人", "磁力", "av", "AV", "福利"]):
+            s["name"] = n + "  [密]"
+    return peek_tvbox
+
+
 def cmd_export():
     store = load_store()
     cats = {"book": [], "subscribe": [], "tvbox": [], "iptv": [], "collect": [],
@@ -2283,6 +2300,8 @@ def cmd_export():
     for s in novel_from_legado + collect_sites:
         if s["key"] not in existing_main_keys:
             peek_tvbox.setdefault("sites", []).append(s)
+    # 给所有站点加 PeekPro 分类后缀标签
+    tag_peek_sites(peek_tvbox)
 
     archived = [r.get("source") for r in store["archived"]]
     flaky_n = sum(1 for r in store["sources"] if r.get("status") == "flaky")
