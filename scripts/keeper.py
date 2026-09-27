@@ -2050,10 +2050,8 @@ def sanitize_peek_tvbox(config):
 def convert_book_to_novel_sites(book_records):
     """Legado 书源 → PeekPro 小说站自动转换。
 
-    策略：
-    1. API 型（URL 含 api/ 或 .json）→ type=3 直接包装
-    2. HTML 抓取型 → 提取 bookSourceUrl 作为 drpy 站源
-    3. 去重：同域名只保留一个
+    只有 API 型书源（URL 本身就是 drpy 兼容的 API）才能直接用。
+    HTML 抓取型书源需要生成 drpy 脚本，这里不做。
     """
     sites = []
     seen_keys = set()
@@ -2064,22 +2062,21 @@ def convert_book_to_novel_sites(book_records):
         name = b.get("bookSourceName") or b.get("name") or ""
         if not url or not url.startswith(("http://", "https://")):
             continue
-        # 生成 key（用域名去重）
+        # 只转换 API 型：URL 含 api/ 或以 .json 结尾
+        url_lower = url.lower()
+        if "api" not in url_lower and not url_lower.endswith(".json"):
+            continue
         from urllib.parse import urlparse
         domain = urlparse(url).netloc.replace("www.", "")
         key = f"novel_{domain}"
         if key in seen_keys:
             continue
         seen_keys.add(key)
-        # 判断类型
-        url_lower = url.lower()
-        is_api = "api" in url_lower or url_lower.endswith(".json")
-        # 包装成 TVBox site 格式
         site = {
             "key": key,
             "name": f"📖{name}" if not name.startswith(("📖", "🎯", "🔥")) else name,
             "api": url.rstrip("/"),
-            "type": 3 if is_api else 1,  # API型用type=3，HTML型用type=1
+            "type": 3,
             "searchable": 1,
             "quickSearch": 0,
             "filterable": 0,
