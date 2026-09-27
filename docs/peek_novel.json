@@ -2,8 +2,78 @@
  "spider": "https://img2.gelonghui.com/library/46da6-aa33493f-1c1d-4f35-9990-0be4bdbf0c64.png;md5;46da6b6a6a111d7924717db2ae790de3",
  "sites": [
   {
+   "key": "初恋资源",
+   "name": "🧡┃初恋┃官源",
+   "type": 1,
+   "api": "https://video.adminqt.cn/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 0,
+   "changeable": 0
+  },
+  {
+   "key": "зҲұеҗ¬йҹід№җ",
+   "name": "зҲұеҗ¬ вҖў йҹід№җ",
+   "type": 3,
+   "api": "https://pizazz.us.ci/other/py/зҲұеҗ¬йҹід№җ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "еұұжңЁ",
+   "name": "еұұжңЁ",
+   "type": 3,
+   "api": "https://fastlink.cokey.xyz/f/p6rZcj/%E5%B1%B1%E6%9C%89%E6%9C%A8%E5%85%AE.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "е’•еҷң",
+   "name": "е’•еҷң",
+   "type": 3,
+   "api": "https://mpimg.cn/down.php/2542f809bfd6602273ad747965ce77f9.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "дәәдәәеҪұи§Ҷ",
+   "name": "вҷЁпёҸдәәдәәпҪңеҪұи§Ҷ",
+   "type": 3,
+   "api": "https://17264.kstore.space/дәәдәәеҪұи§Ҷ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "иҒҡеҗҲ",
+   "name": "иҒҡеҗҲ",
+   "type": 3,
+   "api": "https://gitee.com/hulanlu/04/raw/master/py/иҒҡеҗҲ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "еҪұи§ҶиҒҡеҗҲдә”еҗҲдёҖV2.py",
+   "name": "еҪұи§ҶиҒҡеҗҲдә”еҗҲдёҖ",
+   "type": 3,
+   "api": "http://150.158.52.248/tgyg/lib/еҪұи§ҶиҒҡеҗҲдә”еҗҲдёҖV2.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
    "key": "novel_fqapi.komr.cn",
-   "name": "📖番茄小说2",
+   "name": "📖番茄小说2  [书]",
    "api": "https://fqapi.komr.cn",
    "type": 3,
    "searchable": 1,
@@ -13,7 +83,7 @@
   },
   {
    "key": "novel_api.leeyegy.com",
-   "name": "📖📚 猴子阅读",
+   "name": "📖📚 猴子阅读  [书]",
    "api": "https://api.leeyegy.com",
    "type": 3,
    "searchable": 1,
@@ -33,7 +103,7 @@
   },
   {
    "key": "novel_api.wan123x.com",
-   "name": "📖🎉 花生小说",
+   "name": "📖🎉 花生小说  [书]",
    "api": "https://api.wan123x.com",
    "type": 3,
    "searchable": 1,
@@ -53,7 +123,7 @@
   },
   {
    "key": "novel_api.97yd.com",
-   "name": "📖📚 必看阅读",
+   "name": "📖📚 必看阅读  [书]",
    "api": "https://api.97yd.com",
    "type": 3,
    "searchable": 1,
@@ -63,7 +133,7 @@
   },
   {
    "key": "novel_api.ieasou.com",
-   "name": "📖宜搜小说💰",
+   "name": "📖宜搜小说💰  [书]",
    "api": "http://api.ieasou.com",
    "type": 3,
    "searchable": 1,
@@ -103,7 +173,7 @@
   },
   {
    "key": "novel_api5-normal-lf.fqnovel.com",
-   "name": "📖🌸番茄小说",
+   "name": "📖🌸番茄小说  [书]",
    "api": "https://api5-normal-lf.fqnovel.com",
    "type": 3,
    "searchable": 1,
@@ -133,7 +203,7 @@
   },
   {
    "key": "novel_api.cdyt.com",
-   "name": "📖🎉 阅听小说",
+   "name": "📖🎉 阅听小说  [书]",
    "api": "http://api.cdyt.com",
    "type": 3,
    "searchable": 1,
@@ -163,7 +233,7 @@
   },
   {
    "key": "novel_minipapi.sfacg.com",
-   "name": "📖📜 SF轻小说",
+   "name": "📖📜 SF轻小说  [书]",
    "api": "https://minipapi.sfacg.com",
    "type": 3,
    "searchable": 1,
@@ -173,7 +243,7 @@
   },
   {
    "key": "novel_api.sfacg.com",
-   "name": "📖🎻SF轻小说",
+   "name": "📖🎻SF轻小说  [书]",
    "api": "https://api.sfacg.com",
    "type": 3,
    "searchable": 1,
@@ -183,7 +253,7 @@
   },
   {
    "key": "novel_jyapi.jyacg.com",
-   "name": "📖鲸云轻小说",
+   "name": "📖鲸云轻小说  [书]",
    "api": "https://jyapi.jyacg.com",
    "type": 3,
    "searchable": 1,
@@ -203,7 +273,7 @@
   },
   {
    "key": "novel_api.uaa.com",
-   "name": "📖📓UAA·小说",
+   "name": "📖📓UAA·小说  [书]",
    "api": "https://api.uaa.com##旅途",
    "type": 3,
    "searchable": 1,
@@ -213,7 +283,7 @@
   },
   {
    "key": "novel_api.jiaston.com",
-   "name": "📖⭐快读小说",
+   "name": "📖⭐快读小说  [书]",
    "api": "https://api.jiaston.com",
    "type": 3,
    "searchable": 1,
@@ -223,7 +293,7 @@
   },
   {
    "key": "novel_api.17k.com",
-   "name": "📖17k小说",
+   "name": "📖17k小说  [书]",
    "api": "http://api.17k.com",
    "type": 3,
    "searchable": 1,
@@ -243,7 +313,7 @@
   },
   {
    "key": "novel_api5-normal-sinfonlineb.fqnovel.com",
-   "name": "📖✨ 番茄小说",
+   "name": "📖✨ 番茄小说  [书]",
    "api": "https://api5-normal-sinfonlineb.fqnovel.com",
    "type": 3,
    "searchable": 1,
@@ -253,7 +323,7 @@
   },
   {
    "key": "novel_xapi.xinmanhua.net",
-   "name": "📖🎨新漫画",
+   "name": "📖🎨新漫画  [画]",
    "api": "https://xapi.xinmanhua.net",
    "type": 3,
    "searchable": 1,
@@ -283,7 +353,7 @@
   },
   {
    "key": "novel_nnv3api.dmzj1.com",
-   "name": "📖动漫之家",
+   "name": "📖动漫之家  [画]",
    "api": "https://nnv3api.dmzj1.com",
    "type": 3,
    "searchable": 1,
@@ -293,7 +363,7 @@
   },
   {
    "key": "novel_api.doufuyuedu.com",
-   "name": "📖豆腐阅读",
+   "name": "📖豆腐阅读  [书]",
    "api": "http://api.doufuyuedu.com",
    "type": 3,
    "searchable": 1,

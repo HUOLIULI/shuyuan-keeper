@@ -10,6 +10,26 @@
    "quickSearch": 1,
    "filterable": 1,
    "changeable": 0
+  },
+  {
+   "key": "зҹӯеү§пҪңиҒҡеҗҲ",
+   "name": "иҒҡеҗҲеү§вһӢ",
+   "type": 3,
+   "api": "http://nn.4688888.xyz/py/зҹӯеү§иҒҡеҗҲ.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
+  },
+  {
+   "key": "csp_HongGuo",
+   "name": "рҹҚҺжһңеӯҗв”ғзІҫйҖүзҹӯеү§",
+   "type": 3,
+   "api": "https://s3plus.meituan.net/opapisdk/op_ticket_1_5673241091_1788770930556_IMPGdz5q.py",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "changeable": 0
   }
  ],
  "lives": [],

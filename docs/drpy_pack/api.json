@@ -204,7 +204,7 @@
     },
     {
       "key": "4k-av",
-      "name": "4k-av",
+      "name": "4k-av  [密]",
       "type": 3,
       "api": "https://pan.szfx.top/down.php/0c67ff200a5ff8b2a2e95a14d3b80563.py",
       "searchable": 1,
@@ -672,7 +672,7 @@
     },
     {
       "key": "modudongman",
-      "name": "🍀魔都动漫",
+      "name": "🍀魔都动漫  [画]",
       "type": 1,
       "api": "https://caiji.moduapi.cc/api.php/provide/vod",
       "searchable": 1,
@@ -906,7 +906,7 @@
     },
     {
       "key": "大地采集",
-      "name": "🦋 大地av｜🔞",
+      "name": "🦋 大地av｜🔞  [密]",
       "type": 0,
       "api": "https://dadiapi.com/apple_m3u8.php",
       "searchable": 1,
@@ -915,7 +915,7 @@
     },
     {
       "key": "*番号资源",
-      "name": "🦋 番号资源｜🔞",
+      "name": "🦋 番号资源｜🔞  [密]",
       "type": 1,
       "api": "http://fhapi9.com/api.php/provide/vod/",
       "searchable": 1,
@@ -1374,7 +1374,7 @@
     },
     {
       "key": "小鸟动漫",
-      "name": "🍚小鸟动漫(聚)",
+      "name": "🍚小鸟动漫(聚)  [画]",
       "type": 1,
       "api": "http://xydm.baicai.buzz/api.php/provide/vod/",
       "searchable": 1,
@@ -1527,7 +1527,7 @@
     },
     {
       "key": "hav6.beauty",
-      "name": "🔞黄AV",
+      "name": "🔞黄AV  [密]",
       "type": 0,
       "api": "https://www.pgxdy.com/api/xml.php",
       "searchable": 1,
@@ -1572,7 +1572,7 @@
     },
     {
       "key": "novel_fqapi.komr.cn",
-      "name": "📖番茄小说2",
+      "name": "📖番茄小说2  [书]",
       "type": 3,
       "api": "https://fqapi.komr.cn",
       "searchable": 1,
@@ -1581,7 +1581,7 @@
     },
     {
       "key": "novel_api.leeyegy.com",
-      "name": "📖📚 猴子阅读",
+      "name": "📖📚 猴子阅读  [书]",
       "type": 3,
       "api": "https://api.leeyegy.com",
       "searchable": 1,
@@ -1599,7 +1599,7 @@
     },
     {
       "key": "novel_api.wan123x.com",
-      "name": "📖🎉 花生小说",
+      "name": "📖🎉 花生小说  [书]",
       "type": 3,
       "api": "https://api.wan123x.com",
       "searchable": 1,
@@ -1617,7 +1617,7 @@
     },
     {
       "key": "novel_api.97yd.com",
-      "name": "📖📚 必看阅读",
+      "name": "📖📚 必看阅读  [书]",
       "type": 3,
       "api": "https://api.97yd.com",
       "searchable": 1,
@@ -1626,7 +1626,7 @@
     },
     {
       "key": "novel_api.ieasou.com",
-      "name": "📖宜搜小说💰",
+      "name": "📖宜搜小说💰  [书]",
       "type": 3,
       "api": "http://api.ieasou.com",
       "searchable": 1,
@@ -1662,7 +1662,7 @@
     },
     {
       "key": "novel_api5-normal-lf.fqnovel.com",
-      "name": "📖🌸番茄小说",
+      "name": "📖🌸番茄小说  [书]",
       "type": 3,
       "api": "https://api5-normal-lf.fqnovel.com",
       "searchable": 1,
@@ -1689,7 +1689,7 @@
     },
     {
       "key": "novel_api.cdyt.com",
-      "name": "📖🎉 阅听小说",
+      "name": "📖🎉 阅听小说  [书]",
       "type": 3,
       "api": "http://api.cdyt.com",
       "searchable": 1,
@@ -1716,7 +1716,7 @@
     },
     {
       "key": "novel_minipapi.sfacg.com",
-      "name": "📖📜 SF轻小说",
+      "name": "📖📜 SF轻小说  [书]",
       "type": 3,
       "api": "https://minipapi.sfacg.com",
       "searchable": 1,
@@ -1725,7 +1725,7 @@
     },
     {
       "key": "novel_api.sfacg.com",
-      "name": "📖🎻SF轻小说",
+      "name": "📖🎻SF轻小说  [书]",
       "type": 3,
       "api": "https://api.sfacg.com",
       "searchable": 1,
@@ -1734,7 +1734,7 @@
     },
     {
       "key": "novel_jyapi.jyacg.com",
-      "name": "📖鲸云轻小说",
+      "name": "📖鲸云轻小说  [书]",
       "type": 3,
       "api": "https://jyapi.jyacg.com",
       "searchable": 1,
@@ -1752,7 +1752,7 @@
     },
     {
       "key": "novel_api.uaa.com",
-      "name": "📖📓UAA·小说",
+      "name": "📖📓UAA·小说  [书]",
       "type": 3,
       "api": "https://api.uaa.com##旅途",
       "searchable": 1,
@@ -1761,7 +1761,7 @@
     },
     {
       "key": "novel_api.jiaston.com",
-      "name": "📖⭐快读小说",
+      "name": "📖⭐快读小说  [书]",
       "type": 3,
       "api": "https://api.jiaston.com",
       "searchable": 1,
@@ -1770,7 +1770,7 @@
     },
     {
       "key": "novel_api.17k.com",
-      "name": "📖17k小说",
+      "name": "📖17k小说  [书]",
       "type": 3,
       "api": "http://api.17k.com",
       "searchable": 1,
@@ -1788,7 +1788,7 @@
     },
     {
       "key": "novel_api5-normal-sinfonlineb.fqnovel.com",
-      "name": "📖✨ 番茄小说",
+      "name": "📖✨ 番茄小说  [书]",
       "type": 3,
       "api": "https://api5-normal-sinfonlineb.fqnovel.com",
       "searchable": 1,
@@ -1797,7 +1797,7 @@
     },
     {
       "key": "novel_xapi.xinmanhua.net",
-      "name": "📖🎨新漫画",
+      "name": "📖🎨新漫画  [画]",
       "type": 3,
       "api": "https://xapi.xinmanhua.net",
       "searchable": 1,
@@ -1824,7 +1824,7 @@
     },
     {
       "key": "novel_nnv3api.dmzj1.com",
-      "name": "📖动漫之家",
+      "name": "📖动漫之家  [画]",
       "type": 3,
       "api": "https://nnv3api.dmzj1.com",
       "searchable": 1,
@@ -1833,7 +1833,7 @@
     },
     {
       "key": "novel_api.doufuyuedu.com",
-      "name": "📖豆腐阅读",
+      "name": "📖豆腐阅读  [书]",
       "type": 3,
       "api": "http://api.doufuyuedu.com",
       "searchable": 1,
@@ -2292,7 +2292,7 @@
     },
     {
       "key": "collect_fhapi9.com",
-      "name": "🎬番号资源站",
+      "name": "🎬番号资源站  [密]",
       "type": 1,
       "api": "http://fhapi9.com/api.php/provide/vod",
       "searchable": 1,
@@ -2328,7 +2328,7 @@
     },
     {
       "key": "collect_fqzy.me",
-      "name": "🎬番茄资源站",
+      "name": "🎬番茄资源站  [书]",
       "type": 1,
       "api": "https://fqzy.me/api.php/provide/vod",
       "searchable": 1,
@@ -2346,7 +2346,7 @@
     },
     {
       "key": "collect_api.souavzyw.net",
-      "name": "🎬搜av资源站",
+      "name": "🎬搜av资源站  [密]",
       "type": 1,
       "api": "https://api.souavzyw.net/api.php/provide/vod",
       "searchable": 1,
@@ -2382,7 +2382,7 @@
     },
     {
       "key": "collect_pgxdy.com",
-      "name": "🎬黄av资源站",
+      "name": "🎬黄av资源站  [密]",
       "type": 1,
       "api": "https://www.pgxdy.com/api/json.php/api.php/provide/vod/",
       "searchable": 1,
