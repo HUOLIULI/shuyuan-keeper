@@ -186,6 +186,7 @@ jobs:
             echo "no docs changes"
           else
             git commit -m "chore(docs): refresh valid/peek exports"
+            git pull --rebase origin main
             git push
           fi
 
