@@ -209,7 +209,7 @@ jobs:
             git push
           fi
 
-      - name: Sync site to cPanel host (FTP)
+      - name: Sync site to cPanel host (FTPS)
         env:
           FTP_HOST: ${{ secrets.CPANEL_FTP_HOST }}
           FTP_USER: ${{ secrets.CPANEL_FTP_USER }}
@@ -221,23 +221,28 @@ jobs:
             exit 0
           fi
           python - <<'PY'
-          import ftplib, os
-          ftp=ftplib.FTP()
-          ftp.connect(os.environ["FTP_HOST"],21,timeout=60)
-          ftp.login(os.environ["FTP_USER"],os.environ["FTP_PASS"])
-          base=os.environ.get("FTP_DIR","htdocs")
+          import ftplib, os, ssl
+          # FTPS (TLS) — InfinityFree Pure-FTPd 要求加密
+          ftp = ftplib.FTP_TLS(context=ssl._create_unverified_context())
+          ftp.connect(os.environ["FTP_HOST"], 21, timeout=60)
+          ftp.login(os.environ["FTP_USER"], os.environ["FTP_PASS"])
+          ftp.prot_p()  # 加密数据连接
+          base = os.environ.get("FTP_DIR", "htdocs")
+          uploaded = 0
           for f in sorted(os.listdir("docs")):
+              fp = os.path.join("docs", f)
+              if not os.path.isfile(fp):
+                  continue
+              if f.endswith((".jpg", ".png", ".gif", ".zip")):
+                  continue
               try:
-                  with open(os.path.join("docs",f),"rb") as fh:
-                      ftp.storbinary(f"STOR {base}/{f}",fh,blocksize=32768)
-                  print("  up:",f)
+                  with open(fp, "rb") as fh:
+                      ftp.storbinary(f"STOR {base}/{f}", fh, blocksize=32768)
+                  uploaded += 1
+                  print(f"  ✓ {f}")
               except Exception as e:
-                  print(f"  WARN: upload {f} failed: {e}")
-          try:
-              ftp.cwd(base)
-              print("remote now:",sorted(ftp.nlst())[:50])
-          except Exception as e:
-              print("verify warn:",e)
+                  print(f"  ✗ {f}: {e}")
+          print(f"\n已上传 {uploaded} 个文件到 {base}/")
           ftp.quit()
           PY
 
