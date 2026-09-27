@@ -2,16 +2,6 @@
   "spider": "https://img2.gelonghui.com/library/46da6-aa33493f-1c1d-4f35-9990-0be4bdbf0c64.png;md5;46da6b6a6a111d7924717db2ae790de3",
   "sites": [
     {
-      "key": "初恋资源",
-      "name": "🧡┃初恋┃官源",
-      "type": 1,
-      "api": "https://video.adminqt.cn/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0,
-      "changeable": 0
-    },
-    {
       "key": "豪华资源",
       "name": "🎥┃豪华┃资源",
       "type": 1,
@@ -140,114 +130,10 @@
       "changeable": 0
     },
     {
-      "key": "иҷҺзүҷзӣҙж’ӯjs",
-      "name": "иҷҺзүҷзӣҙж’ӯ",
-      "type": 3,
-      "api": "https://gh-proxy.com/https://raw.githubusercontent.com/xiaolong69/tv/main/spider/19/js/drpy2.min.js",
-      "ext": "https://gh-proxy.com/https://raw.githubusercontent.com/xiaolong69/tv/main/spider/19/js/huya2.js",
-      "style": {
-        "type": "rect",
-        "ratio": 1.755
-      },
-      "playerType": "2",
-      "searchable": 0,
-      "quickSearch": 0,
-      "changeable": 0,
-      "filterable": 0,
-      "lang": "cat"
-    },
-    {
-      "key": "py_apple",
-      "name": "рҹҚҺв”ғиӢ№жһңв”ғеҪұи§Ҷ",
-      "type": 3,
-      "api": "http://fmys.top/py/apple.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0,
-      "lang": "hipy"
-    },
-    {
-      "key": "еұұжңЁ",
-      "name": "еұұжңЁ",
-      "type": 3,
-      "api": "https://fastlink.cokey.xyz/f/p6rZcj/%E5%B1%B1%E6%9C%89%E6%9C%A8%E5%85%AE.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0,
-      "lang": "hipy"
-    },
-    {
-      "key": "й«ҳжё…зӮ№ж’ӯ",
-      "name": "й«ҳжё…зӮ№ж’ӯ",
-      "type": 3,
-      "api": "https://pan.29o.cn/down.php/323eba3848f29250c407a014113c784a.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0,
-      "lang": "hipy"
-    },
-    {
-      "key": "е’•еҷң",
-      "name": "е’•еҷң",
-      "type": 3,
-      "api": "https://mpimg.cn/down.php/2542f809bfd6602273ad747965ce77f9.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0,
-      "lang": "hipy"
-    },
-    {
-      "key": "4k-av",
-      "name": "4k-av  [福]",
-      "type": 3,
-      "api": "https://pan.szfx.top/down.php/0c67ff200a5ff8b2a2e95a14d3b80563.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0,
-      "lang": "hipy"
-    },
-    {
-      "key": "е“”е№•",
-      "name": "е“”е“©4K",
-      "type": 3,
-      "api": "https://meow.668yun.top/api/s/unDwdM3nZBachMqnrGmG3bQDcvsubkpb/е“”е“©еҪұи§Ҷ.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0,
-      "lang": "hipy"
-    },
-    {
-      "key": "csp_HongGuo",
-      "name": "рҹҚҺжһңеӯҗв”ғзІҫйҖүзҹӯеү§",
-      "type": 3,
-      "api": "https://s3plus.meituan.net/opapisdk/op_ticket_1_5673241091_1788770930556_IMPGdz5q.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0,
-      "lang": "hipy"
-    },
-    {
       "key": "feifan",
       "name": "🍀非凡资源",
       "type": 1,
       "api": "http://ffzy5.tv/api.php/provide/vod",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "wolong",
-      "name": "卧龙资源",
-      "type": 1,
-      "api": "https://wolongzyw.com/api.php/provide/vod",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
@@ -388,16 +274,6 @@
       "name": "🍀非凡采集",
       "type": 1,
       "api": "http://cj.ffzyapi.com/api.php/provide/vod",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "wolong2",
-      "name": "🍀卧龙采集",
-      "type": 1,
-      "api": "https://collect.wolongzyw.com/api.php/provide/vod",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
@@ -584,16 +460,6 @@
       "changeable": 0
     },
     {
-      "key": "🚨飞速",
-      "name": "飞速资源🔥无界",
-      "type": 1,
-      "api": "https://www.feisuzyapi.com/api.php/provide/vod/?ac=list",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
       "key": "slyzy",
       "name": "🦋 湿乐园｜🔞",
       "type": 1,
@@ -608,16 +474,6 @@
       "name": "🦋 玉兔資源｜🔞",
       "type": 1,
       "api": "https://apiyutu.com/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "夜色资源",
-      "name": "🦋 越南資源｜🔞",
-      "type": 1,
-      "api": "https://www.vnzyz.com/api.php/provide/vod/",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
@@ -684,16 +540,6 @@
       "changeable": 0
     },
     {
-      "key": "大地采集",
-      "name": "🦋 大地av｜🔞  [福]",
-      "type": 0,
-      "api": "https://dadiapi.com/apple_m3u8.php",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
       "key": "黄色仓库|AV",
       "name": "🦋 黄色仓库(旧)｜🔞",
       "type": 1,
@@ -734,40 +580,10 @@
       "changeable": 0
     },
     {
-      "key": "黑木耳",
-      "name": "黑木耳 | 采集",
-      "type": 1,
-      "api": "https://json02.heimuer.xyz/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
       "key": "茅台",
       "name": "茅台 | 采集",
       "type": 1,
       "api": "https://mtzy.me/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "忆梦影视",
-      "name": "忆梦影视",
-      "type": 1,
-      "api": "https://www.gnpt.net/api.php/provide/vod/?ac=list",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "暴风资源",
-      "name": "暴风资源",
-      "type": 0,
-      "api": "http://by.bfzyapi.com/api.php/provide/vod/at/xml",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
@@ -804,40 +620,10 @@
       "changeable": 0
     },
     {
-      "key": "天翼资源",
-      "name": "天翼资源┃刺桐",
-      "type": 1,
-      "api": "https://www.911ysw.top/tianyi.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "789资源",
-      "name": "789资源┃刺桐",
-      "type": 1,
-      "api": "http://www.caiji.cyou/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
       "key": "wsycj",
       "name": "采集",
       "type": 1,
       "api": "https://api.wsyzy.net/api.php/provide/vod",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "ds05",
-      "name": "🍀都司资源",
-      "type": 0,
-      "api": "http://y.ds05.cn/zyapi.php",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
@@ -944,90 +730,10 @@
       "changeable": 0
     },
     {
-      "key": "csp_xml_天空",
-      "name": "❤天空资源",
-      "type": 1,
-      "api": "https://m3u8.tiankongapi.com/api.php/provide/vod/from/tkm3u8/?ac=list",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "csp_xml_fox",
-      "name": "❤fox",
-      "type": 1,
-      "api": "https://api.foxzyapi.com/api.php/provide/vod/?ac=list",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "土狗 360",
-      "name": "🥒土狗 360(官)",
-      "type": 1,
-      "api": "http://360.tgzy.cc/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "诺讯资源",
-      "name": "🍑诺讯资源(官)",
-      "type": 1,
-      "api": "http://caiji.nxflv.com/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "盘看影视",
-      "name": "🥑盘看影视(聚)",
-      "type": 1,
-      "api": "http://tvcaiji.pankk.cn/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "MBO 影视",
-      "name": "🍹MBO 影视(聚)",
-      "type": 0,
-      "api": "https://www.mbomovie.com/api.php/provide/vod/at/xml/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "红牛资源",
-      "name": "红牛资源(🔥)",
-      "type": 0,
-      "api": "https://www.hongniuzy4.com/api.php/provide/vod/at/xml",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
       "key": "三八资源",
       "name": "三八资源(🔥)",
       "type": 1,
       "api": "https://vod38.com/api.php/provide/vod",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "新黑木耳",
-      "name": "新黑木耳(🔥)",
-      "type": 1,
-      "api": "https://json.heimuer.xyz/api.php/provide/vod",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
@@ -1091,47 +797,6 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "松视开通1",
-      "name": "松视1",
-      "type": 0,
-      "api": "https://www.xrbsp.com/api/xml.php",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "松视开通2",
-      "name": "松视2",
-      "type": 0,
-      "api": "https://www.gdlsp.com/api/xml.php",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "hav6.beauty",
-      "name": "🔞黄AV  [福]",
-      "type": 0,
-      "api": "https://www.pgxdy.com/api/xml.php",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "api": "https://newtv.ggff.net/douban?token=P69Phb_y",
-      "indexs": 0,
-      "key": "豆瓣首页",
-      "name": "豆瓣首页",
-      "searchable": 0,
-      "type": 4,
-      "quickSearch": 0,
-      "filterable": 0,
       "changeable": 0
     },
     {
@@ -1485,29 +1150,9 @@
       "changeable": 0
     },
     {
-      "key": "collect_caiji.semaozy.net",
-      "name": "🎬色猫资源站",
-      "api": "https://caiji.semaozy.net/inc/api.php",
-      "type": 1,
-      "searchable": 1,
-      "quickSearch": 0,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
       "key": "collect_lovedan.net",
       "name": "🎬艾旦资源站",
       "api": "https://lovedan.net/api.php/provide/vod",
-      "type": 1,
-      "searchable": 1,
-      "quickSearch": 0,
-      "filterable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "collect_dadiapi.com",
-      "name": "🎬大地资源站",
-      "api": "https://dadiapi.com/api.php",
       "type": 1,
       "searchable": 1,
       "quickSearch": 0,
