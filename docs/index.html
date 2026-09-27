@@ -303,7 +303,7 @@
   .card{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--line);border-radius:14px;
     background:rgba(8,10,24,.5);cursor:pointer;transition:all .2s ease}
   .card:hover{border-color:rgba(51,224,255,.4);transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,.4),0 0 15px rgba(51,224,255,.1)}
-  .card-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+  .card-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;transition:transform .2s}
   .card-body{flex:1;min-width:0}
   .card-title{font-size:14px;font-weight:700;color:var(--text)}
   .card-count{font-size:22px;font-weight:800;color:var(--cyan);line-height:1.2}
@@ -590,6 +590,22 @@ function loadLocalFile(input) {
   reader.readAsText(f);
 }
 
+function recommendSites() {
+  const sites = [
+    "https://www.4kvm.tv",
+    "https://www.ddys.tv",
+    "https://v.qq.com",
+    "https://www.iqiyi.com",
+    "https://www.youku.com",
+    "https://www.mgtv.com",
+    "https://www.bilibili.com",
+  ];
+  const html = "💡 推荐站点:\n" + sites.map(s => "  " + s).join("\n") + "\n\n点击复制后粘贴到上方输入框";
+  document.getElementById("ai-output").value = html;
+  document.getElementById("ai-status").textContent = "💡 已列出推荐站点";
+  document.getElementById("ai-status").style.color = "var(--cyan)";
+}
+
 function testSource() {
   const out = document.getElementById("ai-output").value.trim();
   if (!out) { alert("请先生成或加载源"); return; }
@@ -604,6 +620,22 @@ function testSource() {
   } else {
     status.innerHTML = '<b style="color:#ff6b9d">⚠️ 问题:</b> ' + issues.join(" | ");
   }
+}
+
+function recommendSites() {
+  const sites = [
+    "https://www.4kvm.tv",
+    "https://www.ddys.tv",
+    "https://v.qq.com",
+    "https://www.iqiyi.com",
+    "https://www.youku.com",
+    "https://www.mgtv.com",
+    "https://www.bilibili.com",
+  ];
+  const html = "💡 推荐站点:\n" + sites.map(s => "  " + s).join("\n") + "\n\n点击复制后粘贴到上方输入框";
+  document.getElementById("ai-output").value = html;
+  document.getElementById("ai-status").textContent = "💡 已列出推荐站点";
+  document.getElementById("ai-status").style.color = "var(--cyan)";
 }
 
 function testSource() {
