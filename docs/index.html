@@ -396,7 +396,7 @@
   <div class="board">
     <div class="board-hd">
       <span class="board-badge" style="color:var(--purple);border-color:var(--purple)">AI 制源助手</span>
-      <span class="board-ts">粘贴 URL → 自动生成脚本/配置</span>
+      <span class="board-ts">输入站点URL → 自动抓取分析 → 生成对应格式源</span>
     </div>
     <div class="ai-box">
       <div class="ai-cfg">
@@ -404,13 +404,21 @@
         <input id="ai-key" type="password" placeholder="API Key">
       </div>
       <input id="ai-model" placeholder="模型名">
-      <textarea class="ai-input" id="ai-input" placeholder="粘贴站点 URL 或失效源 JSON..."></textarea>
-      <div class="ai-actions">
-        <button class="btn" onclick="aiMake('drpy')">生成 drpy</button>
-        <button class="btn blue" onclick="aiMake('tvbox')">生成 TVBox</button>
+      <input id="ai-input-url" placeholder="输入站点 URL (如 https://example.com)">
+      <div class="ai-actions" style="flex-wrap:wrap;gap:6px">
+        <span style="color:var(--muted);font-size:12px">目标格式:</span>
+        <button class="btn purple" onclick="aiMake('legado')">Legado书源</button>
+        <button class="btn blue" onclick="aiMake('drpy_novel')">PeekPro书源</button>
+        <button class="btn green" onclick="aiMake('drpy_vod')">PeekPro点播</button>
+        <button class="btn orange" onclick="aiMake('drpy_music')">PeekPro音乐</button>
         <button class="btn gray" onclick="aiMake('fix')">修复源</button>
         <span class="ai-status" id="ai-status"></span>
       </div>
+      <div class="ai-actions" style="gap:6px">
+        <button class="btn gray" onclick="aiFetchHTML()">🔍 先抓取分析站点</button>
+        <span style="color:var(--muted);font-size:11px">自动拉取首页HTML提取结构</span>
+      </div>
+      <textarea class="ai-input" id="ai-input" placeholder="粘贴站点 URL 或失效源 JSON（修复模式）..."></textarea>
       <textarea class="ai-output" id="ai-output" placeholder="结果显示在这里..."></textarea>
       <div class="ai-actions">
         <button class="btn gray" onclick="copy(document.getElementById('ai-output').value,'已复制')">复制结果</button>
@@ -467,40 +475,105 @@ document.getElementById("ai-base").value = cfg.base || DFT.base;
 document.getElementById("ai-key").value = cfg.key || DFT.key;
 document.getElementById("ai-model").value = cfg.model || DFT.model;
 
+let cachedHTML = ""; // 缓存抓取的HTML
+
+async function aiFetchHTML() {
+  const url = document.getElementById("ai-input-url").value.trim();
+  const st = document.getElementById("ai-status");
+  if (!url) { st.innerHTML = '<b style="color:var(--red)">请输入URL</b>'; return; }
+  st.innerHTML = '<b style="color:var(--cyan)">🔍 抓取中...</b>';
+  try {
+    // 用CORS代理抓取
+    const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
+    const resp = await fetch(proxyUrl);
+    const html = await resp.text();
+    // 提取结构骨架
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    const skeleton = [];
+    tmp.querySelectorAll("*").forEach(el => {
+      if (el.tagName === "SCRIPT" || el.tagName === "STYLE") return;
+      const cls = el.className ? `.${String(el.className).split(" ").join(".")}` : "";
+      const id = el.id ? "#" + el.id : "";
+      if (cls || id) skeleton.push(`<${el.tagName.toLowerCase()}${id}${cls}>`);
+    });
+    cachedHTML = skeleton.slice(0, 80).join("\n");
+    document.getElementById("ai-input").value = url + "\n\n--- 站点结构分析 ---\n" + cachedHTML;
+    st.innerHTML = '<b style="color:var(--green)">✅ 已抓取分析 (' + html.length + ' bytes)</b>';
+  } catch(e) {
+    st.innerHTML = '<b style="color:var(--red)">❌ 抓取失败: ' + e.message + '</b>';
+  }
+}
+
+const DRPY_NOVEL_TPL = `你是 drpyS 小说源开发者。生成完整 var rule = {...}; 脚本。
+
+【必须遵守】
+- await request(url) 直接返回HTML字符串
+- pdfa/pdfh/pd 原生选择器（&&分隔父子）
+- this.KEY=搜索词, this.MY_PAGE=页码
+- 必须有: 推荐/一级/二级/搜索/lazy 五函数
+- lazy返回 {parse:0,url:'novel://'+JSON.stringify({title,content})}
+- 文件名必须带[书]标签
+- 禁止: require/DOMParser/document/window/(await req(`;
+
+const DRPY_VOD_TPL = `你是 drpyS 影视源开发者。生成完整 var rule = {...}; 脚本。
+
+【必须遵守】
+- await request(url) 直接返回HTML字符串
+- pdfa/pdfh/pd 原生选择器
+- this.KEY=搜索词, this.MY_PAGE=页码
+- 必须有: 推荐/一级/二级/搜索/lazy 五函数
+- 二级返回 vod_play_from/vod_play_url（$分隔章节，#分隔线路）
+- lazy返回 {parse:0,url:m3u8直链}
+- 禁止: require/DOMParser/document/window`;
+
+const DRPY_MUSIC_TPL = `你是 drpyS 音乐源开发者。生成完整 var rule = {...}; 脚本。
+
+【必须遵守】
+- await request(url) 直接返回HTML字符串
+- pdfa/pdfh/pd 原生选择器
+- this.KEY=搜索词
+- 必须有: 推荐/一级/二级/搜索/lazy 五函数
+- 二级返回音乐列表（title/url/pic）
+- lazy返回 {parse:0,url:mp3直链}
+- 文件名必须带[听]标签
+- 禁止: require/DOMParser/document/window`;
+
+const LEGADO_TPL = `你是 Legado 书源开发者。生成标准 Legado JSON 书源。
+
+【必须包含字段】
+- bookSourceName, bookSourceUrl, bookSourceComment
+- ruleSearch: {bookList, name, url, author, kind, desc, cover, wordCount}
+- ruleBookInfo: {init, name, cover, intro, bookUrl, tocUrl, durChapterUrl}
+- ruleContent: {nextContent, content, title}
+- 只输出纯JSON，不要解释`;
+
 async function aiMake(mode) {
   const base = document.getElementById("ai-base").value.trim();
   const key = document.getElementById("ai-key").value.trim();
   const model = document.getElementById("ai-model").value.trim() || DFT.model;
-  const input = document.getElementById("ai-input").value.trim();
+  const urlInput = document.getElementById("ai-input-url").value.trim();
+  const extraInput = document.getElementById("ai-input").value.trim();
   const out = document.getElementById("ai-output");
   const st = document.getElementById("ai-status");
   if (!key) { st.innerHTML = '<b style="color:var(--red)">请填 API Key</b>'; return; }
-  if (!input) { st.innerHTML = '<b style="color:var(--red)">请粘贴 URL</b>'; return; }
+  if (!urlInput && !extraInput) { st.innerHTML = '<b style="color:var(--red)">请输入URL或粘贴内容</b>'; return; }
   localStorage.setItem("ai_cfg", JSON.stringify({base, key, model}));
 
-  const drpyTemplate = `你是 drpyS 源开发者。基于以下站点信息生成完整的 var rule = {...}; 脚本。
-
-关键API（必须遵守）：
-- await request(url) 直接返回HTML字符串
-- pdfa(html,'选择器&&子选择器') 返回数组
-- pdfh(html,'选择器&&Text') 返回文本
-- pd(html,'选择器&&属性') 返回属性
-- this.KEY=搜索词, this.MY_PAGE=页码
-- 必须包含: 推荐/一级/二级/搜索/lazy 五个函数
-- 搜索函数用 this.KEY 拼URL
-- 禁止: require/DOMParser/document/window/(await req(`
-
+  const userContent = (urlInput ? "站点: " + urlInput + "\n" : "") + (extraInput ? extraInput : "");
   const prompts = {
-    drpy: drpyTemplate + "\\n\\n站点信息：" + input,
-    tvbox: "你是 TVBox 配置开发者。根据站点 URL 生成标准 TVBox JSON 配置。只输出 JSON。\\n\\n站点：" + input,
-    fix: "你是影视源修复专家。分析失效源 JSON，输出修复后的完整 JSON。只输出 JSON。\\n\\n失效源：" + input
+    legado: LEGADO_TPL + "\n\n" + userContent,
+    drpy_novel: DRPY_NOVEL_TPL + "\n\n" + userContent,
+    drpy_vod: DRPY_VOD_TPL + "\n\n" + userContent,
+    drpy_music: DRPY_MUSIC_TPL + "\n\n" + userContent,
+    fix: "你是源修复专家。分析失效源，输出修复后的完整结果。只输出代码/JSON。\n\n" + userContent
   };
   out.value = "";
   st.innerHTML = '<b style="color:var(--cyan)">⏳ 生成中...</b>';
   const t0 = Date.now();
   try {
-    const url = base.replace(/\\/$/,"") + "/chat/completions";
-    console.log("[AI] 请求:", url, "model:", model);
+    const url = base.replace(/\/$/,"") + "/chat/completions";
+    console.log("[AI] mode:", mode, "model:", model);
     const resp = await fetch(url, {
       method: "POST",
       headers: {"Content-Type": "application/json", "Authorization": "Bearer " + key},
@@ -510,7 +583,7 @@ async function aiMake(mode) {
     console.log("[AI] 响应:", resp.status, "耗时:", ms+"s");
     if (!resp.ok) {
       const errText = await resp.text();
-      console.error("[AI] 错误响应:", errText.slice(0,500));
+      console.error("[AI] 错误:", errText.slice(0,500));
       st.innerHTML = '<b style="color:var(--red)">错误 ' + resp.status + ' (' + ms + 's)</b><pre style="color:var(--muted);font-size:11px;margin-top:4px;white-space:pre-wrap">' + errText.slice(0,300) + '</pre>';
       return;
     }
@@ -520,7 +593,7 @@ async function aiMake(mode) {
     st.innerHTML = '<b style="color:var(--green)">✅ 完成' + tok + '</b>';
   } catch(e) {
     console.error("[AI] 异常:", e);
-    st.innerHTML = '<b style="color:var(--red)">❌ 失败: ' + e.message + '</b><br><small style="color:var(--muted)">可能是CORS被拦截或网络问题</small>';
+    st.innerHTML = '<b style="color:var(--red)">❌ 失败: ' + e.message + '</b>';
   }
 }
 
