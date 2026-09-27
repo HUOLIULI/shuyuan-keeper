@@ -163,8 +163,37 @@ jobs:
           PY
 
       - name: Ingest user submissions
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -d data/user_submit ] && [ -n "$(ls -A data/user_submit/*.json 2>/dev/null)" ]; then
+          # 从GitHub Issues拉取用户提交的源
+          mkdir -p data/user_submit
+          python - <<'PY'
+          import os, json, re, urllib.request
+          token = os.environ.get("GH_TOKEN","")
+          req = urllib.request.Request(
+            "https://api.github.com/repos/${{ github.repository }}/issues?state=open&labels=user-submit&per_page=10",
+            headers={"Authorization": f"token {token}", "Accept": "application/vnd.github+json"}
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=15) as r:
+                  issues = json.loads(r.read())
+              for issue in issues:
+                  body = issue.get("body","")
+                  # 提取代码块
+                  m = re.search(r"```\n(.*?)```", body, re.DOTALL)
+                  if m:
+                      content = m.group(1).strip()
+                      fn = f"data/user_submit/issue_{issue['number']}.json"
+                      with open(fn, "w") as f:
+                          f.write(content)
+                      print(f"  📥 Issue#{issue['number']}: 已保存")
+          except Exception as e:
+              print(f"拉取Issues失败: {e}")
+          PY
+          # 处理提交的源
+          if [ -n "$(ls data/user_submit/*.json 2>/dev/null)" ]; then
             python scripts/keeper.py ingest
           fi
 
