@@ -602,6 +602,7 @@ function copyAllPeek() {
 }
 
 function switchTab(el, id) {
+  window.scrollTo({top: 0, behavior: 'smooth'});
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('on'));
   el.classList.add('on');
