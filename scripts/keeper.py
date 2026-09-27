@@ -1150,11 +1150,19 @@ def check_book(rec):
     if template and "{{key}}" in template:
         probe = template.replace("{{key}}", requests.utils.quote(SEARCH_KEY))
         try:
-            resp = requests.get(probe, headers={"User-Agent": UA}, timeout=TIMEOUT,
+            resp = get_session().get(probe, headers={"User-Agent": UA}, timeout=TIMEOUT,
                                 verify=False)
             rule_ok = resp.status_code < 400
         except Exception:  # noqa: BLE001
             rule_ok = False
+        # 自动修复：搜索规则失效但站点活着 → 尝试 bookSourceUrl 直接探活
+        if not rule_ok and site_ok:
+            try:
+                resp2 = get_session().get(base, headers={"User-Agent": UA}, timeout=TIMEOUT,
+                                    verify=False)
+                rule_ok = resp2.status_code < 400
+            except Exception:  # noqa: BLE001
+                pass
         return _rule_status(site_ok, rule_ok)
     return "valid" if site_ok else "dead"
 
@@ -1221,22 +1229,44 @@ def check_collect(rec):
     url = (rec.get("url") or "").rstrip("/")
     if not url.startswith(("http://", "https://")):
         return "dead"
+    site_ok = site_alive(url)
+    # 主探活路径
     probe = url + "/?ac=list"
     is_xml = "/at/xml/" in probe or probe.endswith(".xml")
-    rule_ok = False
+    rule_ok = _probe_collect(probe, is_xml)
+    # 自动修复：主路径失败但站点在 → 尝试常见路径变体
+    if not rule_ok and site_ok:
+        for variant in _collect_path_variants(url):
+            if _probe_collect(variant, ".xml" in variant):
+                rule_ok = True
+                break
+    return _rule_status(site_ok, rule_ok)
+
+
+def _probe_collect(probe, is_xml=False):
+    """探测苹果CMS采集接口是否返回有效数据。"""
     try:
-        resp = requests.get(probe, headers={"User-Agent": UA}, timeout=15)
+        resp = get_session().get(probe, headers={"User-Agent": UA}, timeout=15)
         if resp.status_code == 200:
             text = resp.text.lstrip()
             if is_xml:
-                rule_ok = text.startswith("<?xml") and ("<video" in text or "<list" in text)
-            else:
-                data = json.loads(text)
-                rule_ok = isinstance(data, dict) and ("class" in data or "list" in data)
+                return text.startswith("<?xml") and ("<video" in text or "<list" in text)
+            data = json.loads(text)
+            return isinstance(data, dict) and ("class" in data or "list" in data)
     except Exception:  # noqa: BLE001
-        rule_ok = False
-    # 接口规则失效但站点还能打开 → 黄；站点也没了 → 红
-    return _rule_status(site_alive(url), rule_ok)
+        pass
+    return False
+
+
+def _collect_path_variants(url):
+    """苹果CMS采集接口常见路径变体。"""
+    from urllib.parse import urlparse, urlunparse
+    parsed = urlparse(url)
+    variants = []
+    base_path = parsed.path.rstrip("/")
+    for suffix in ["", "/index.php", "/api.php", "/provide/vod", "/v1/api.php"]:
+        variants.append(urlunparse(parsed._replace(path=base_path + suffix, query="ac=list")))
+    return variants[1:]
 
 
 def check_videosite(rec):
@@ -1245,14 +1275,14 @@ def check_videosite(rec):
     if not url.startswith(("http://", "https://")):
         return "dead"
     try:
-        resp = requests.head(url, headers={"User-Agent": UA}, timeout=8,
+        resp = get_session().head(url, headers={"User-Agent": UA}, timeout=8,
                              allow_redirects=True, verify=False)
         if resp.status_code < 400:
             return "valid"
     except Exception:  # noqa: BLE001
         pass
     try:
-        resp = requests.get(url, headers={"User-Agent": UA}, timeout=8, stream=True,
+        resp = get_session().get(url, headers={"User-Agent": UA}, timeout=8, stream=True,
                             verify=False)
         chunk = next(resp.iter_content(512), b"")
         resp.close()
@@ -1269,7 +1299,7 @@ def check_music(rec):
     if not url.startswith(("http://", "https://")):
         return "dead"
     try:
-        resp = requests.get(url, headers={"User-Agent": UA}, timeout=(5, 8), stream=True,
+        resp = get_session().get(url, headers={"User-Agent": UA}, timeout=(5, 8), stream=True,
                             verify=False)
         chunk = next(resp.iter_content(512), b"")
         code = resp.status_code
@@ -1728,9 +1758,9 @@ def sanitize_peek_tvbox(config):
 
 # 专区关键词：按站源名称归类（羊壳内 TAB 自动分类的补充，方便单类源订阅）
 PEEK_CATEGORY_RULES = {
-    "manga": ["漫画", "动漫", "comic", "manga", "banana", "漫", "番"],
-    "novel": ["小说", "阅读", "书源", "book", "novel", "阅读", "笔趣", "小说"],
-    "drama": ["短剧", "drama", "short", "短剧", "微短剧", "爽文"],
+    "manga": ["漫画", "动漫", "comic", "manga", "banana", "漫", "番", "动画", "次元", "绅士", "bh3", "哔哩", "b站"],
+    "novel": ["小说", "阅读", "书源", "book", "novel", "笔趣", "听书", "有声", "追书", "读书", "文字"],
+    "drama": ["短剧", "drama", "short", "微短剧", "爽文", "爽剧", "短剧", "小剧场", "反转"],
 }
 
 
@@ -1874,7 +1904,42 @@ def cmd_export():
         base.mkdir(parents=True, exist_ok=True)
         for filename, content in payloads.items():
             (base / filename).write_text(content, encoding="utf-8")
+    # 导出后格式校验：确保 PeekPro 能正常解析
+    _validate_peek_outputs(payloads)
     print(f"[done] {stats}")
+
+
+def _validate_peek_outputs(payloads):
+    """导出后自动校验 PeekPro 兼容格式，打印警告。"""
+    warnings = []
+    # TVBox 单仓：必须有 sites 数组
+    tv = json.loads(payloads["peek_tvbox.json"])
+    if not isinstance(tv.get("sites"), list):
+        warnings.append("peek_tvbox.json: sites 不是数组")
+    elif len(tv["sites"]) == 0:
+        warnings.append("peek_tvbox.json: sites 为空")
+    # 检查每个 site 都有 key 和 api
+    for i, s in enumerate(tv.get("sites", [])):
+        if not s.get("key"):
+            warnings.append(f"peek_tvbox.json: site[{i}] 缺 key")
+        if not s.get("api") and not s.get("searchUrl"):
+            warnings.append(f"peek_tvbox.json: site[{i}] ({s.get('key','?')}) 缺 api")
+    # IPTV txt：必须是 name,url 格式（不是 url,name）
+    iptv_lines = payloads["peek_iptv.txt"].strip().split("\n")
+    name_url_count = sum(1 for l in iptv_lines if l and not l.startswith("#") and "," in l and not l.split(",")[0].startswith("http"))
+    if name_url_count == 0:
+        warnings.append("peek_iptv.txt: 未检测到 name,url 格式行")
+    # 音乐清单：每项必须有 url
+    music = json.loads(payloads["peek_music.json"])
+    for i, m in enumerate(music):
+        if not m.get("url"):
+            warnings.append(f"peek_music.json: item[{i}] 缺 url")
+    if warnings:
+        print(f"[warn] 格式校验 {len(warnings)} 条:")
+        for w in warnings[:10]:
+            print(f"  - {w}")
+    else:
+        print("[check] PeekPro 格式校验通过")
 
 
 def cmd_ingest(submit_dir=None, types=None):
