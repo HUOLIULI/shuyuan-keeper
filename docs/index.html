@@ -403,6 +403,10 @@
       <span class="board-badge purple">板块2 · PeekPro 羊壳</span>
       <span class="board-ts">点播 · 直播 · 音乐 · 漫画 · 小说 · 短剧（一个接口全搞定）</span>
     </div>
+    <div style="margin-bottom:14px;display:flex;gap:8px">
+      <button class="btn" onclick="copyAllPeek()">📋 一键复制所有订阅</button>
+      <span style="color:var(--muted);font-size:11px;line-height:30px">复制全部配置到剪贴板</span>
+    </div>
     <div class="card-grid">
       <div class="card" data-copy="peek_tvbox.json" style="grid-column:1/-1;border:1px solid rgba(51,224,255,.4)">
         <div class="card-icon" style="background:rgba(51,224,255,.12)">🎬</div>
@@ -581,6 +585,19 @@ function filterSources() {
     const title = card.querySelector(".card-title")?.textContent.toLowerCase() || "";
     const desc = card.querySelector(".card-desc")?.textContent.toLowerCase() || "";
     card.style.display = (title.includes(q) || desc.includes(q)) ? "" : "none";
+  });
+}
+
+function copyAllPeek() {
+  const base = location.origin + location.pathname;
+  const urls = [
+    "点播接口: " + base + "peek_tvbox.json",
+    "直播源: " + base + "peek_iptv.txt",
+    "音乐脚本: " + base + "music_loader/batch_loader.js",
+    "本地包: " + base + "peek_pack/index.json",
+  ].join("\n");
+  navigator.clipboard.writeText(urls).then(() => {
+    toast("✅ 已复制所有订阅地址");
   });
 }
 
