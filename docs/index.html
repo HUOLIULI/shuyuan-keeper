@@ -305,6 +305,14 @@
   .card-btn{flex:none;padding:8px 14px;border:none;border-radius:8px;background:linear-gradient(135deg,rgba(120,160,255,.22),rgba(120,160,255,.10));
     color:var(--text);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line2);transition:all .2s}
   .card-btn:hover{background:rgba(51,224,255,.2);border-color:var(--cyan)}
+  /* 标签页 */
+  .tabs{display:flex;gap:4px;margin:16px 0 20px;border-bottom:1px solid var(--line)}
+  .tab{flex:1;padding:12px 8px;text-align:center;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;user-select:none}
+  .tab:hover{color:var(--text)}
+  .tab.on{color:var(--cyan);border-bottom-color:var(--cyan);text-shadow:0 0 10px rgba(51,224,255,.4)}
+  .tab-pane{display:none}
+  .tab-pane.on{display:block;animation:fadeIn .3s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -328,6 +336,15 @@
     </div>
   </div>
 
+  <!-- 标签导航 -->
+  <div class="tabs">
+    <div class="tab on" onclick="switchTab(this,'tab-legado')">📖 Legado</div>
+    <div class="tab" onclick="switchTab(this,'tab-peek')">📺 PeekPro</div>
+    <div class="tab" onclick="switchTab(this,'tab-ai')">🤖 AI制源</div>
+    <div class="tab" onclick="switchTab(this,'tab-about')">ℹ️ 关于</div>
+  </div>
+
+  <div class="tab-pane on" id="tab-legado">
   <!-- 板块1：Legado -->
   <div class="board">
     <div class="board-hd">
@@ -355,7 +372,9 @@
       </div>
     </div>
   </div>
+  </div><!-- /tab-legado -->
 
+  <div class="tab-pane" id="tab-peek">
   <!-- 板块2：PeekPro -->
   <div class="board">
     <div class="board-hd">
@@ -419,7 +438,9 @@
       </div>
     </div>
   </div>
+  </div><!-- /tab-peek -->
 
+  <div class="tab-pane" id="tab-ai">
   <!-- AI 助手 -->
   <div class="board">
     <div class="board-hd">
@@ -455,7 +476,9 @@
       </div>
     </div>
   </div>
+  </div><!-- /tab-ai -->
 
+  <div class="tab-pane" id="tab-about">
   <!-- 上游状态 -->
   <div class="board">
     <div class="board-hd">
@@ -463,10 +486,17 @@
     </div>
     <div class="ups" id="ups"></div>
   </div>
+  </div><!-- /tab-about -->
 </div>
 <div id="toast"></div>
 
 <script>
+function switchTab(el, id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById(id).classList.add('on');
+}
 const abs = (file) => new URL(file, location.href).href;
 
 function toast(msg) {
