@@ -465,7 +465,9 @@
       </div>
       <div class="ai-actions" style="gap:6px">
         <button class="btn gray" onclick="aiFetchHTML()">🔍 先抓取分析站点</button>
-        <span style="color:var(--muted);font-size:11px">自动拉取首页HTML提取结构</span>
+        <button class="btn gray" onclick="document.getElementById('file-upload').click()">📂 上传本地源文件</button>
+        <input type="file" id="file-upload" accept=".json,.txt,.js,.py" style="display:none" onchange="loadLocalFile(this)">
+        <span style="color:var(--muted);font-size:11px">支持.json/.txt/.js/.py</span>
       </div>
       <textarea class="ai-input" id="ai-input" placeholder="粘贴站点 URL 或失效源 JSON（修复模式）..."></textarea>
       <textarea class="ai-output" id="ai-output" placeholder="结果显示在这里..."></textarea>
@@ -535,6 +537,17 @@ document.getElementById("ai-key").value = cfg.key || DFT.key;
 document.getElementById("ai-model").value = cfg.model || DFT.model;
 
 let cachedHTML = ""; // 缓存抓取的HTML
+
+function loadLocalFile(input) {
+  const f = input.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.getElementById("ai-output").value = `文件名: ${f.name}\n大小: ${(f.size/1024).toFixed(1)}KB\n\n${e.target.result.slice(0,8000)}`;
+    document.getElementById("ai-status").textContent = `✅ 已加载: ${f.name}`;
+  };
+  reader.readAsText(f);
+}
 
 function submitToRepo() {
   const out = document.getElementById("ai-output").value.trim();
