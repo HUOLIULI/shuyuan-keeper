@@ -146,6 +146,59 @@ def ai_make_drpy_script(site_url, site_name=""):
         pass
     return None
 
+
+def convert_legado_to_drpy(book_source):
+    """Legado 书源 → drpy JS 脚本自动转换。
+
+    读取 Legado 书源 JSON，用 AI 把规则翻译成 drpy 脚本。
+    返回 JS 脚本内容或 None。
+    """
+    if not AI_KEY:
+        return None
+    # 提取书源关键信息
+    name = book_source.get("bookSourceName", "未知")
+    url = book_source.get("bookSourceUrl", "")
+    explore = book_source.get("exploreUrl", "")[:500]
+    search = book_source.get("ruleSearch", {})
+    book_info = book_source.get("ruleBookInfo", {})
+    content = book_source.get("ruleContent", {})
+
+    prompt = (
+        f"你是 drpy 小说源开发者。把以下 Legado 书源转换成 drpy JS 脚本。\n\n"
+        f"书源名称: {name}\n"
+        f"书源URL: {url}\n"
+        f"探索列表: {explore}\n"
+        f"搜索规则: {json.dumps(search, ensure_ascii=False)[:300]}\n"
+        f"书籍信息规则: {json.dumps(book_info, ensure_ascii=False)[:300]}\n"
+        f"内容规则: {json.dumps(content, ensure_ascii=False)[:300]}\n\n"
+        f"生成一个完整的 drpy JS 脚本，格式：var rule={{...}}\n"
+        f"必须包含：homeContent, categoryContent, detailContent, searchContent, lazy\n"
+        f"host 设为 {url}\n"
+        f"只输出代码，不要解释。"
+    )
+    try:
+        resp = get_session().post(
+            AI_BASE.rstrip("/") + "/chat/completions",
+            headers={"Content-Type": "application/json", "Authorization": "Bearer " + AI_KEY},
+            json={
+                "model": AI_MODEL,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.3
+            },
+            timeout=60
+        )
+        if resp.status_code == 200:
+            text = resp.json().get("choices", [{}])[0].get("message", {}).get("content", "")
+            import re
+            m = re.search(r'```(?:javascript|js)?\s*(.*?)```', text, re.S)
+            if m:
+                return m.group(1).strip()
+            if "var rule" in text:
+                return text.strip()
+    except Exception:
+        pass
+    return None
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 DOCS = ROOT / "docs"
@@ -2207,6 +2260,40 @@ def tag_peek_sites(peek_tvbox):
     return peek_tvbox
 
 
+def cmd_convert_books_to_drpy(limit=50):
+    """批量把 Legado 书源转换成 drpy 脚本。"""
+    books = json.loads((DOCS / "valid.json").read_text(encoding="utf-8"))
+    spider_dir = DOCS / "spider" / "js"
+    spider_dir.mkdir(parents=True, exist_ok=True)
+    
+    success = fail = 0
+    for i, b in enumerate(books[:limit]):
+        name = b.get("bookSourceName", f"unknown_{i}")
+        url = b.get("bookSourceUrl", "")
+        if not url.startswith("http"):
+            continue
+        from urllib.parse import urlparse
+        domain = urlparse(url).netloc.replace("www.", "")
+        safe_name = name.replace("/", "_").replace(" ", "_")[:20]
+        filename = f"{safe_name}.js"
+        if (spider_dir / filename).exists():
+            continue
+        try:
+            script = convert_legado_to_drpy(b)
+            if script and len(script) > 100 and "var rule" in script:
+                (spider_dir / filename).write_text(script, encoding="utf-8")
+                print(f"  ✅ [{i+1}] {name[:25]} → {filename}")
+                success += 1
+            else:
+                print(f"  ❌ [{i+1}] {name[:25]} 生成失败")
+                fail += 1
+        except Exception as e:
+            print(f"  ❌ [{i+1}] {name[:25]} 错误: {e}")
+            fail += 1
+        time.sleep(0.3)
+    print(f"\n转换完成: 成功 {success}, 失败 {fail}")
+
+
 def cmd_export():
     store = load_store()
     cats = {"book": [], "subscribe": [], "tvbox": [], "iptv": [], "collect": [],
@@ -2597,6 +2684,7 @@ def main():
     sub.add_parser("status")
     sub.add_parser("discover", help="自动探寻新上游仓库")
     sub.add_parser("drpy-pack", help="生成 drpy-node 兼容配置包")
+    sub.add_parser("convert-books", help="AI批量把Legado书源转换成drpy脚本")
     p_ingest = sub.add_parser("ingest", help="入库用户上传条目")
     p_ingest.add_argument("--dir", default=None, help="user_submit 目录（默认 data/user_submit）")
     p_ingest.add_argument("--type", action="append", dest="itypes", help="只处理指定分类")
@@ -2617,6 +2705,8 @@ def main():
         cmd_discover()
     elif args.cmd == "drpy-pack":
         cmd_drpy_pack()
+    elif args.cmd == "convert-books":
+        cmd_convert_books_to_drpy(limit=int(os.environ.get("CONVERT_BOOKS_LIMIT", "50")))
     elif args.cmd == "ingest":
         cmd_ingest(args.dir, args.itypes or None)
 
