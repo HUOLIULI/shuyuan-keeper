@@ -61,6 +61,118 @@ AI_KEY = os.environ.get("KEEPER_AI_KEY", "sk-dcCJ3jSxC2CA2wltoH3ILeRkvI47fsMEO0H
 AI_MODEL = os.environ.get("KEEPER_AI_MODEL", "agnes-3.0-flash")
 
 
+# ============================================================
+# 内置 drpy-node-skill 片段库
+# ============================================================
+SKILL_LIBRARY = {
+    "novel_template": """
+=== drpyS 小说源标准模板 ===
+/*
+@header({ searchable:2, filterable:1, title:'站点名[书]', '类型':'小说', lang:'ds' })
+*/
+var rule = {
+  类型:'小说', title:'站点名[书]', host:'https://example.com', searchable:2,
+  searchUrl:'https://example.com/search?q=**',
+  推荐: async function(){ return setResult([]) },
+  一级: async function(tid,pg,f,e){
+    let d=[], html=(await req(input)).content;
+    // 解析列表，push {title,url,desc,pic_url}
+    return setResult(d);
+  },
+  二级: async function(ids){
+    let html=(await req(ids)).content;
+    return {
+      vod_id:ids, vod_name:'书名', vod_pic:'封面URL', vod_content:'简介',
+      vod_remarks:'最新章节', vod_play_from:'正文',
+      vod_play_url:'第1章$章节URL#第2章$章节URL2'
+    };
+  },
+  搜索: async function(wd,quick,pg){
+    let d=[], html=(await req(input)).content;
+    // 解析搜索结果，push {title,url,desc,pic_url}
+    return setResult(d);
+  },
+  lazy: async function(flag,id,flags){
+    let html=(await req(id)).content;
+    return {parse:0, url:'novel://'+JSON.stringify({title:'章节名',content:html})};
+  }
+};
+=== 模板结束 ===
+""",
+
+    "urljoin_snippet": """
+【urljoin 片段】所有相对链接必须用 urljoin 转绝对路径：
+  let absUrl = urljoin(host, relativePath);
+  // 例: urljoin('https://abc.com/book/1', '/chapter/2') → 'https://abc.com/chapter/2'
+""",
+
+    "cryptojs_aes": """
+【CryptoJS AES 解密片段】Legado 的 java AES 加密 → drpyS 用 CryptoJS：
+  let decrypted = CryptoJS.AES.decrypt(cipherText, CryptoJS.enc.Utf8.parse(key), {
+    iv: CryptoJS.enc.Utf8.parse(iv),
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  }).toString(CryptoJS.enc.Utf8);
+""",
+
+    "cryptojs_md5": """
+【MD5 签名片段】Legado 的 java MD5 → drpyS 用 md5()：
+  let sign = md5(stringToSign);
+""",
+
+    "captcha_snippet": """
+【验证码片段】遇到登录/搜索验证码时调用内置 OCR：
+  let ocrResp = await request('/captcha/ocr', {method:'POST', body:JSON.stringify({type:'text', bg:imageDataUrl})});
+  let code = JSON.parse(ocrResp.content).data.code;
+""",
+
+    "gbk_snippet": """
+【GBK 编码片段】GBK 编码网站用 gbkTool：
+  let html = await gbkTool.decode(req(url).content);
+""",
+
+    "cheerio_snippet": """
+【cheerio 解析片段】用 cheerio 解析 HTML：
+  let $ = cheerio.load(html);
+  $('div.book-item').each(function(){
+    d.push({
+      title: $(this).find('h3').text().trim(),
+      url: urljoin(host, $(this).find('a').attr('href')),
+      desc: $(this).find('.author').text().trim(),
+      pic_url: urljoin(host, $(this).find('img').attr('src'))
+    });
+  });
+""",
+
+    "cut_snippet": """
+【cut 提取片段】从 HTML 中提取 JSON 或文本片段：
+  let jsonStr = cut(html, 'window.__DATA__=', '};').replace(/;$/, '');
+  let data = JSON.parse(jsonStr);
+""",
+}
+
+
+def _detect_legado_skills(book_source):
+    """检测 Legado 书源需要哪些 skill 片段。"""
+    needed = ["novel_template"]
+    raw = json.dumps(book_source, ensure_ascii=False)
+    # 检测加密
+    if "java." in raw or "AES" in raw or "encrypt" in raw or "decrypt" in raw:
+        needed.append("cryptojs_aes")
+    if "md5" in raw.lower() or "MD5" in raw:
+        needed.append("cryptojs_md5")
+    # 检测相对URL风险
+    if "ruleSearch" in raw and "bookList" in raw:
+        needed.append("urljoin_snippet")
+    # 检测GBK
+    if "gbk" in raw.lower() or "GBK" in raw or "charset" in raw:
+        needed.append("gbk_snippet")
+    # 默认加 cheerio 和 cut
+    needed.append("cheerio_snippet")
+    needed.append("cut_snippet")
+    return [SKILL_LIBRARY[k] for k in needed if k in SKILL_LIBRARY]
+
+
 def ai_repair_source(source_type, source_url, error_hint=""):
     """后端 AI 自动修复：分析站点内容，生成修复后的 URL 或新脚本。
 
@@ -116,10 +228,15 @@ def ai_make_drpy_script(site_url, site_name=""):
     except Exception:
         return None
     prompt = (
-        f"你是 drpy 源开发者。站点 {site_name} ({site_url}) 接口失效但站点活着。"
-        f"分析以下站点 HTML 片段，生成一个完整的 drpy JS 脚本，"
-        f"包含 homeContent、categoryContent、detailContent、searchContent、playerContent。"
-        f"脚本格式：var rule={{...}}。只输出代码，不要解释。\n\n"
+        f"你是 drpyS 源开发者。站点 {site_name} ({site_url}) 接口失效但站点活着。\n"
+        f"分析以下站点 HTML 片段，生成一个完整的 drpyS JS 脚本。\n"
+        f"{SKILL_LIBRARY['novel_template']}\n"
+        f"{SKILL_LIBRARY['cheerio_snippet']}\n"
+        f"{SKILL_LIBRARY['urljoin_snippet']}\n"
+        f"脚本必须包含：推荐、一级、二级、搜索、lazy 五个函数。\n"
+        f"用 req() 请求，setResult() 包装列表，列表项用 title/url/desc/pic_url。\n"
+        f"二级返回 vod 对象，lazy 返回 novel:// 格式。\n"
+        f"只输出 var rule 代码，不要解释。\n\n"
         f"站点 HTML 片段：\n{html}"
     )
     try:
@@ -163,44 +280,15 @@ def convert_legado_to_drpy(book_source):
     book_info = book_source.get("ruleBookInfo", {})
     content = book_source.get("ruleContent", {})
 
+    # 智能检测需要哪些 skill 片段
+    skill_snippets = _detect_legado_skills(book_source)
+    skills_text = "\n".join(skill_snippets)
+
     prompt = (
         f"你是 drpyS 脚本开发者。把 Legado 书源翻译成 drpyS JS 脚本。\n\n"
         f"【绝对禁止】输出 Legado 格式（searchRule/bookList/ruleSearch等）。\n"
-        f"【必须输出】以下格式的纯JS代码。\n\n"
-        f"=== 标准模板（必须照此格式）===\n"
-        f"/*\n"
-        f"@header({{ searchable:2, filterable:1, title:'{name}[书]', '类型':'小说', lang:'ds' }})\n"
-        f"*/\n"
-        f"var rule = {{\n"
-        f"  类型:'小说', title:'{name}[书]', host:'{url}', searchable:2,\n"
-        f"  searchUrl:'{url}/search?q=**',\n"
-        f"  推荐: async function(){{ return [] }},\n"
-        f"  一级: async function(tid,pg,f,e){{\n"
-        f"    let d=[], html=(await req(input)).content;\n"
-        f"    // 解析列表，push {{title,url,desc,pic_url}}\n"
-        f"    return setResult(d);\n"
-        f"  }},\n"
-        f"  二级: async function(ids){{\n"
-        f"    let html=(await req(ids)).content;\n"
-        f"    return {{ vod_id:ids, vod_name:'书名', vod_pic:'', vod_content:'', vod_remarks:'', vod_play_from:'正文', vod_play_url:'章节1$url#章节2$url2' }};\n"
-        f"  }},\n"
-        f"  搜索: async function(wd,quick,pg){{\n"
-        f"    let d=[], html=(await req(input)).content;\n"
-        f"    // 解析搜索结果，push {{title,url,desc,pic_url}}\n"
-        f"    return setResult(d);\n"
-        f"  }},\n"
-        f"  lazy: async function(flag,id,flags){{\n"
-        f"    let html=(await req(id)).content;\n"
-        f"    return {{parse:0, url:'novel://'+JSON.stringify({{title:'章节',content:html}})}};\n"
-        f"  }}\n"
-        f"}};\n"
-        f"=== 模板结束 ===\n\n"
-        f"【可用API】\n"
-        f"- req(url) 或 request(url): HTTP请求，.content是HTML文本\n"
-        f"- setResult(arr): 包装列表返回\n"
-        f"- cut(html, start, end): 提取中间文本\n"
-        f"- this.input: 当前请求URL\n"
-        f"- 列表项字段: title, url, desc, pic_url\n\n"
+        f"【必须输出】纯JS代码，var rule = {{...}};\n\n"
+        f"{skills_text}\n"
         f"【Legado书源】\n"
         f"名称:{name}\nURL:{url}\n"
         f"搜索规则:{json.dumps(search, ensure_ascii=False)[:400]}\n"
