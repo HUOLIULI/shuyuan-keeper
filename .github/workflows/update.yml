@@ -179,6 +179,14 @@ jobs:
             python scripts/keeper.py ingest
           fi
 
+      - name: Convert Legado books to drpy scripts
+        env:
+          KEEPER_AI_BASE: ${{ secrets.KEEPER_AI_BASE }}
+          KEEPER_AI_KEY: ${{ secrets.KEEPER_AI_KEY }}
+          KEEPER_AI_MODEL: ${{ secrets.KEEPER_AI_MODEL }}
+          CONVERT_BOOKS_LIMIT: "50"
+        run: python scripts/keeper.py convert-books
+
       - name: Export artifacts
         env:
           KEEPER_AI_CLASSIFY: "1"
