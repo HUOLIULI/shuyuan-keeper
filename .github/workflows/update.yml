@@ -179,12 +179,28 @@ jobs:
             python scripts/keeper.py ingest
           fi
 
-      - name: Convert Legado books to drpy scripts
+      - name: Setup Node.js (for drpy-node T4 test)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup drpy-node for T4 testing
+        run: |
+          echo "Setting up drpy-node..."
+          git clone --depth 1 https://github.com/hjdhnx/drpy-node /tmp/drpy-node 2>/dev/null || echo "drpy-node clone failed, T4 test will be skipped"
+          cd /tmp/drpy-node && npm install --production 2>&1 | tail -3 || echo "npm install failed"
+          # Start drpy-node in background
+          nohup node index.js > /tmp/drpy.log 2>&1 &
+          sleep 5
+          curl -s -m 5 http://127.0.0.1:5757/ && echo " drpy-node OK" || echo " drpy-node not ready, T4 skipped"
+
+      - name: Convert Legado books to drpy scripts (with T4)
         env:
           KEEPER_AI_BASE: ${{ secrets.KEEPER_AI_BASE }}
           KEEPER_AI_KEY: ${{ secrets.KEEPER_AI_KEY }}
           KEEPER_AI_MODEL: ${{ secrets.KEEPER_AI_MODEL }}
-          CONVERT_BOOKS_LIMIT: "50"
+          CONVERT_BOOKS_LIMIT: "20"
+          DRPY_NODE_DIR: /tmp/drpy-node
         run: python scripts/keeper.py convert-books
 
       - name: Export artifacts
