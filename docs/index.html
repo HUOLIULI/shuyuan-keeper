@@ -328,6 +328,8 @@
 ::-webkit-scrollbar-thumb{background:var(--line2);border-radius:4px}
 ::-webkit-scrollbar-thumb:hover{background:var(--cyan)}
 </style>
+<script src="lib/cheerio.min.js"></script>
+<script src="lib/html_parser_lite.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -1442,6 +1444,204 @@ async function autoGen() {
 })();
 
 function esc(s) { return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+// ============================================================
+// Legado 书源在线测试功能
+// ============================================================
+
+// Legado规则解析器
+class LegadoParser {
+  constructor(html, baseUrl) {
+    this.$ = cheerio.load(html);
+    this.baseUrl = baseUrl;
+  }
+  
+  // 解析Legado规则
+  parse(ruleStr, parent) {
+    if (!ruleStr) return '';
+    
+    // 处理JS规则
+    if (ruleStr.startsWith('<js>') || ruleStr.startsWith('@js:')) {
+      return this.parseJsRule(ruleStr);
+    }
+    
+    // 处理正则规则
+    if (ruleStr.startsWith('regex:')) {
+      return this.parseRegex(ruleStr);
+    }
+    
+    // 处理普通选择器规则
+    return this.parseSelector(ruleStr, parent);
+  }
+  
+  // 解析选择器规则
+  parseSelector(ruleStr, parent) {
+    const parts = ruleStr.split('&&');
+    let current = parent ? this.$(parent) : this.$('body');
+    
+    for (let i = 0; i < parts.length - 1; i++) {
+      const sel = parts[i].trim();
+      if (!sel || sel === 'body') continue;
+      
+      // 处理排除语法 p--a
+      let excludeTag = null;
+      if (sel.includes('--')) {
+        const se = sel.split('--');
+        sel = se[0];
+        excludeTag = se[1];
+      }
+      
+      // 处理位置选择器 .0 .-1
+      let index = null;
+      const idxMatch = sel.match(/\.(-?\d+)$/);
+      if (idxMatch) {
+        index = parseInt(idxMatch[1]);
+        sel = sel.slice(0, idxMatch.index);
+      }
+      
+      try {
+        current = current.find(sel);
+        if (index !== null) {
+          current = current.eq(index);
+        }
+      } catch(e) {
+        console.log('Selector error:', sel, e);
+      }
+    }
+    
+    // 最后一部分是取值
+    const lastPart = parts[parts.length - 1].trim();
+    if (lastPart === 'Text' || lastPart === 'text') {
+      return current.text().trim();
+    } else if (lastPart === 'Html' || lastPart === 'html') {
+      return current.html();
+    } else if (lastPart.startsWith('@')) {
+      // @href, @src 等
+      const attr = lastPart.slice(1);
+      let val = current.attr(attr) || '';
+      // 补全相对路径
+      if (val && !val.startsWith('http') && !val.startsWith('//')) {
+        val = this.baseUrl.replace(/\/$/, '') + '/' + val.replace(/^\//, '');
+      }
+      return val;
+    } else {
+      // 默认取文本
+      return current.text().trim();
+    }
+  }
+  
+  // 解析JS规则（简化版）
+  parseJsRule(ruleStr) {
+    // 简化处理，只提取字符串
+    return '';
+  }
+  
+  // 解析正则规则
+  parseRegex(ruleStr) {
+    return '';
+  }
+  
+  // 获取所有匹配元素
+  findAll(ruleStr) {
+    const parts = ruleStr.split('&&');
+    let current = this.$('body');
+    
+    for (let i = 0; i < parts.length; i++) {
+      const sel = parts[i].trim();
+      if (!sel || sel === 'body') continue;
+      
+      // 处理位置选择器
+      let index = null;
+      const idxMatch = sel.match(/\.(-?\d+)$/);
+      if (idxMatch) {
+        index = parseInt(idxMatch[1]);
+        sel = sel.slice(0, idxMatch.index);
+      }
+      
+      try {
+        if (index !== null) {
+          current = current.find(sel).eq(index);
+        } else {
+          current = current.find(sel);
+        }
+      } catch(e) {}
+    }
+    
+    return current.toArray();
+  }
+}
+
+// 测试Legado书源
+async function testLegadoSource() {
+  const code = document.getElementById('ai-output').value.trim();
+  const st = document.getElementById('ai-status');
+  
+  if (!code) {
+    st.innerHTML = '<b style="color:var(--red)">❌ 请先粘贴Legado书源JSON</b>';
+    return;
+  }
+  
+  st.innerHTML = '<b style="color:var(--cyan)">🧪 开始测试Legado书源...</b>';
+  
+  try {
+    // 1. 解析书源JSON
+    let source;
+    try {
+      source = JSON.parse(code);
+    } catch(e) {
+      st.innerHTML = '<b style="color:var(--red)">❌ JSON解析失败: ' + e.message + '</b>';
+      return;
+    }
+    
+    st.innerHTML += '<br>✅ [1/4] JSON解析成功: ' + (source.bookSourceName || '未知');
+    
+    // 2. 检查必需字段
+    const requiredFields = ['bookSourceName', 'bookSourceUrl', 'searchUrl', 'ruleSearch', 'ruleToc', 'ruleContent'];
+    const missing = requiredFields.filter(f => !source[f]);
+    if (missing.length > 0) {
+      st.innerHTML += '<br>⚠️ 缺少字段: ' + missing.join(', ');
+    } else {
+      st.innerHTML += '<br>✅ [2/4] 必需字段齐全';
+    }
+    
+    // 3. 测试搜索功能
+    st.innerHTML += '<br>🔍 [3/4] 测试搜索功能...';
+    await new Promise(r => setTimeout(r, 200));
+    
+    try {
+      const searchUrl = source.searchUrl.replace('{{key}}', '斗罗大陆').replace('{{page}}', '0');
+      const baseUrl = source.bookSourceUrl;
+      
+      const resp = await fetch(searchUrl, { 
+        headers: { 'User-Agent': 'Mozilla/5.0' },
+        signal: AbortSignal.timeout(10000)
+      });
+      const html = await resp.text();
+      
+      const parser = new LegadoParser(html, baseUrl);
+      const ruleSearch = typeof source.ruleSearch === 'string' 
+        ? JSON.parse(source.ruleSearch) 
+        : source.ruleSearch;
+      
+      if (ruleSearch && ruleSearch.bookList) {
+        const books = parser.findAll(ruleSearch.bookList);
+        st.innerHTML += '<br>✅ 搜索成功，找到 ' + books.length + ' 本书';
+        
+        if (books.length > 0) {
+          st.innerHTML += '<br>   第一本: ' + parser.parse(ruleSearch.name, books[0]);
+        }
+      } else {
+        st.innerHTML += '<br>⚠️ 搜索规则格式不对';
+      }
+    } catch(e) {
+      st.innerHTML += '<br>⚠️ 搜索测试失败: ' + e.message;
+    }
+    
+    // 4. 完成
+    st.innerHTML += '<br><b style="color:var(--green)">🎉 测试完成！</b>';
+    
+  } catch(e) {
+    st.innerHTML += '<br><b style="color:var(--red)">❌ 测试失败: ' + e.message + '</b>';
+  }
+}
 </script>
-</body>
-</html>
