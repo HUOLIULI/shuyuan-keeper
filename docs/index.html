@@ -1245,6 +1245,95 @@ const DRPY_NOVEL_TPL = `你是 羊壳接口小说源开发者。生成完整 var
 // ============================================================
 
 // ============================================================
+// 网页源制作方法（去广告+保留主体）
+// ============================================================
+//
+// 【网页源是什么】
+// 把站点包装成一个完整HTML页面，去广告，只保留主体内容
+// 在peekPro的webview里运行
+//
+// 【制作步骤】
+// 1. 分析站点API（或抓取HTML）
+// 2. 写HTML页面，包含:
+//    - 搜索栏
+//    - 分类标签
+//    - 视频网格
+//    - 详情弹窗
+//    - 播放调用
+// 3. 去广告:
+//    - CSS: .ad, .advertisement { display: none !important; }
+//    - JS: 定时删除广告节点
+// 4. 桥接App: window.fongmiBridge / window.fm
+//
+// 【桥接API】
+// - fm.player.play(url): 播放视频
+// - fm.search(): 打开搜索
+// - fm.vodInline: 内联播放
+// - fm.req/res: 网络请求
+//
+// 【网页源模板】
+// <!DOCTYPE html>
+// <html>
+// <head>
+//   <meta charset="UTF-8">
+//   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//   <title>站点名称</title>
+//   <style>
+//     /* 去广告 */
+//     .ad, .advertisement, .banner { display: none !important; }
+//     /* 主体样式 */
+//     body { margin: 0; padding: 10px; background: #222; color: #fff; }
+//     .search-bar { display: flex; gap: 8px; margin-bottom: 10px; }
+//     .tabs { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 10px; }
+//     .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+//     .card { border-radius: 10px; overflow: hidden; background: #333; }
+//     .card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+//     .card .name { padding: 8px; font-size: 13px; }
+//   </style>
+// </head>
+// <body>
+//   <div class="search-bar">
+//     <input type="text" id="kw" placeholder="搜索...">
+//     <button onclick="doSearch()">搜索</button>
+//   </div>
+//   <div class="tabs" id="tabs"></div>
+//   <div class="grid" id="grid"></div>
+//   <script>
+//     const HOST = 'https://站点域名';
+//     // 加载首页
+//     async function loadHome() {
+//       const resp = await fetch(HOST + '/api/home');
+//       const data = await resp.json();
+//       renderGrid(data.list);
+//     }
+//     // 搜索
+//     async function doSearch() {
+//       const kw = document.getElementById('kw').value;
+//       const resp = await fetch(HOST + '/api/search?q=' + kw);
+//       const data = await resp.json();
+//       renderGrid(data.list);
+//     }
+//     // 渲染
+//     function renderGrid(list) {
+//       document.getElementById('grid').innerHTML = list.map(item => 
+//         `<div class="card" onclick="play('${item.url}')">
+//           <img src="${item.pic}">
+//           <div class="name">${item.name}</div>
+//         </div>`
+//       ).join('');
+//     }
+//     // 播放
+//     function play(url) {
+//       if (window.fm) fm.player.play(url);
+//     }
+//     loadHome();
+//   </script>
+// </body>
+// </html>
+//
+// ============================================================
+
+// ============================================================
 // PeekPro 1.5.8 各板块解析模块规范（从源码逆向得出）
 // ============================================================
 //
