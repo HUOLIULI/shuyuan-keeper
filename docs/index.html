@@ -1202,7 +1202,49 @@ const LEGADO_TPL = `你是 Legado 阅读 app 书源开发者。生成标准 Lega
 - 编码不是utf8时加 |char=gbk
 - searchUrl中searchPage从0开始用searchPage-1
 - ruleContent: {nextContent, content, title}
-- 只输出纯JSON，不要解释`;
+- 只输出纯JSON，不要解释
+
+【实战字段清单（从真实书源总结）】
+必备字段:
+- bookSourceName: 书源名称
+- bookSourceUrl: 网站URL
+- bookSourceType: 0(文本)
+- bookSourceGroup: 分组
+- enabled: true
+- enabledExplore: true
+- header: {'User-Agent': 'Mozilla/5.0 ...'}
+- searchUrl: 搜索URL
+- ruleSearch: 搜索规则
+- ruleBookInfo: 详情规则
+- ruleToc: 目录规则
+- ruleContent: 正文规则
+
+【选择器实战技巧】
+1. Jsoup: class.类名@tag.标签名.位置@属性
+   例: class.book-list@tag.li.0@text
+2. XPath: //div[@class='book-list']/a
+3. 正则: regex(正则表达式)
+4. JS规则: <js>...</js> 或 @js:
+5. 多规则: 用 | 分隔，取第一个成功的
+6. 替换: #要替换的内容
+7. 位置: .0=第一个, .-1=最后一个
+
+【ruleSearch完整示例】
+{
+  "bookList": "class.res-list@tag.div",
+  "name": "class.book-name@tag.a@text",
+  "author": "class.author@text",
+  "coverUrl": "class.book-img@tag.img@src",
+  "intro": "class.intro@text",
+  "lastChapter": "class.update@text",
+  "bookUrl": "class.book-name@tag.a@href"
+}
+
+【常见坑】
+- 相对路径需要补全域名
+- 动态加载内容用JS规则抓取
+- 反爬需要加header和cookie
+- 分页用 {{page}} 占位符`;
 
 async function aiMake(mode) {
   const base = document.getElementById("ai-base").value.trim();
