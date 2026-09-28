@@ -6,13 +6,13 @@
 <title>资源聚合仓库 · 书源 / TVBox / IPTV / 磁力 / 解析 / 音源</title>
 <style>
   :root{
-    --bg:#05060f;
+    --bg:#03050e;
     --bg2:#0a0d1f;
-    --panel:rgba(255,255,255,.045);
+    --panel:rgba(255,255,255,.05);
     --panel-solid:#0d1128;
-    --card:rgba(17,20,40,.6);
-    --line:rgba(120,160,255,.16);
-    --line2:rgba(120,160,255,.30);
+    --card:rgba(17,20,40,.7);
+    --line:rgba(120,160,255,.18);
+    --line2:rgba(120,160,255,.35);
     --text:#e9ecff;
     --muted:#8b93b8;
     --blue:#5b8cff;
@@ -21,9 +21,12 @@
     --red:#ff4d6d;
     --yellow:#ffd23f;
     --purple:#a878ff;
+    --orange:#ff9f43;
     --glow-blue:rgba(91,140,255,.55);
     --grad:linear-gradient(135deg,#33e0ff 0%,#5b8cff 45%,#a878ff 100%);
     --grad2:linear-gradient(135deg,#2dff9b,#33e0ff);
+    --shadow:0 8px 32px rgba(0,0,0,.4);
+    --radius:16px;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -31,13 +34,14 @@
     margin:0;font-family:"Segoe UI",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
     color:var(--text);
     background:
-      radial-gradient(1100px 600px at 12% -10%, rgba(91,140,255,.20), transparent 60%),
-      radial-gradient(900px 500px at 100% 0%, rgba(168,120,255,.16), transparent 55%),
-      radial-gradient(700px 500px at 50% 120%, rgba(51,224,255,.12), transparent 60%),
+      radial-gradient(1200px 700px at 10% -10%, rgba(91,140,255,.25), transparent 60%),
+      radial-gradient(1000px 600px at 100% 0%, rgba(168,120,255,.20), transparent 55%),
+      radial-gradient(800px 600px at 50% 120%, rgba(51,224,255,.15), transparent 60%),
       var(--bg);
     background-attachment:fixed;
     -webkit-text-size-adjust:100%;
     min-height:100vh;
+    line-height:1.6;
   }
   /* 科技感网格背景层 */
   body::before{
@@ -126,12 +130,20 @@
   .panel h2{font-size:17px;margin:0 0 12px;font-weight:700;letter-spacing:.3px;
     color:#fff;text-shadow:0 0 18px rgba(91,140,255,.4)}
   .btn{
-    display:inline-block;background:linear-gradient(135deg,#2dff9b,#18b876);color:#04120c;
-    padding:10px 16px;border:none;border-radius:10px;font-size:13.5px;font-weight:700;cursor:pointer;
-    text-decoration:none;margin:6px 8px 0 0;letter-spacing:.02em;transition:all .2s ease;
-    box-shadow:0 4px 14px rgba(45,255,155,.25);
+    display:inline-flex;align-items:center;gap:6px;
+    background:linear-gradient(135deg,#2dff9b,#18b876);color:#04120c;
+    padding:10px 18px;border:none;border-radius:12px;font-size:13.5px;font-weight:700;cursor:pointer;
+    text-decoration:none;margin:6px 8px 0 0;letter-spacing:.02em;transition:all .25s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 4px 16px rgba(45,255,155,.3);
   }
-  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(45,255,155,.4)}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(45,255,155,.45)}
+  .btn:active{transform:translateY(0);box-shadow:0 2px 8px rgba(45,255,155,.3)}
+  .btn.orange{background:linear-gradient(135deg,#ff9f43,#ff6b35);color:#2a1500;box-shadow:0 4px 16px rgba(255,159,67,.3)}
+  .btn.orange:hover{box-shadow:0 8px 28px rgba(255,159,67,.45)}
+  .btn.purple{background:linear-gradient(135deg,#a878ff,#7c3aed);color:#fff;box-shadow:0 4px 16px rgba(168,120,255,.3)}
+  .btn.purple:hover{box-shadow:0 8px 28px rgba(168,120,255,.45)}
+  .btn.pink{background:linear-gradient(135deg,#ff6b9d,#ee5a8a);color:#fff;box-shadow:0 4px 16px rgba(255,107,157,.3)}
+  .btn.pink:hover{box-shadow:0 8px 28px rgba(255,107,157,.45)}
   .btn.gray{background:linear-gradient(135deg,rgba(120,160,255,.22),rgba(120,160,255,.10));
     color:var(--text);box-shadow:none;border:1px solid var(--line2)}
   .btn.gray:hover{background:linear-gradient(135deg,rgba(120,160,255,.32),rgba(120,160,255,.16));border-color:var(--cyan)}
@@ -2256,6 +2268,26 @@ async function testComicSource() {
   } catch(e) {
     st.innerHTML += '<br><b style="color:var(--red)">❌ 失败: ' + e.message + '</b>';
   }
+}
+
+// 加载统计
+async function loadStats() {
+  try {
+    const resp = await fetch('stats.json');
+    const data = await resp.json();
+    document.getElementById('stat-total').textContent = data.total || '0';
+    document.getElementById('stat-valid').textContent = data.valid || '0';
+    document.getElementById('stat-ai').textContent = data.ai_generated || '0';
+    document.getElementById('stat-upstream').textContent = data.upstreams || '0';
+  } catch(e) {
+    console.log('统计加载失败:', e);
+  }
+}
+loadStats();
+
+// 暗色模式切换
+function toggleDark() {
+  document.body.classList.toggle('light');
 }
 
 // 一键生成
