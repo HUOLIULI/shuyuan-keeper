@@ -654,7 +654,6 @@ async function copy(text, msg) {
   toast(msg || "已复制");
 }
 
-// 卡片复制
 document.querySelectorAll(".card").forEach(card => {
   card.addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON") return;
@@ -668,7 +667,6 @@ document.querySelectorAll(".card").forEach(card => {
   });
 });
 
-// AI 助手
 const DFT = { base: "https://apihub.agnes-ai.com/v1", key: "", model: "agnes-3.0-flash" };
 const cfg = JSON.parse(localStorage.getItem("ai_cfg") || "{}");
 document.getElementById("ai-base").value = cfg.base || DFT.base;
@@ -743,39 +741,33 @@ function testSource() {
   status.textContent = "🧪 正在测试源语法...";
   status.style.color = "var(--cyan)";
   
-  // 基本语法检查
   const errors = [];
   if (out.includes("require(")) errors.push("❌ 包含require() - 羊壳接口沙箱禁止");
   if (out.includes("import ")) errors.push("❌ 包含import - 羊壳接口沙箱禁止");
   if (out.includes("DOMParser")) errors.push("❌ 包含DOMParser - 羊壳接口沙箱禁止");
   if (out.includes("document.")) errors.push("❌ 包含document - 羊壳接口沙箱禁止");
   if (out.includes("window.")) errors.push("❌ 包含window - 羊壳接口沙箱禁止");
-  // 自动检测源类型
   const isLegado = out.includes("bookSourceName") && out.includes("ruleSearch");
   const isDrpy = out.includes("var rule") || out.includes("async homeVod");
   
   if (isLegado) {
-    // Legado源检查
     const requiredLegado = ["bookSourceName", "bookSourceUrl", "searchUrl", "ruleSearch", "ruleToc", "ruleContent"];
     const missingLegado = requiredLegado.filter(k => !out.includes(k));
     if (missingLegado.length > 0) {
       errors.push("⚠️ Legado源缺少字段: " + missingLegado.join(", "));
     }
-    // 检查ruleSearch子字段
     const ruleSearchFields = ["bookList", "name", "bookUrl"];
     const missingSearch = ruleSearchFields.filter(k => !out.includes(k));
     if (missingSearch.length > 0) {
       errors.push("⚠️ ruleSearch缺少: " + missingSearch.join(", "));
     }
   } else if (isDrpy) {
-    // drpyS源检查
     const requiredDrpy = ["homeVod", "category", "detail", "search", "lazy"];
     const missingDrpy = requiredDrpy.filter(k => !out.includes(k));
     if (missingDrpy.length > 0) {
       errors.push("⚠️ 羊壳接口缺少函数: " + missingDrpy.join(", "));
     }
   } else {
-    // 未知格式，给出提示
     errors.push("⚠️ 未识别的源格式，请确保是Legado JSON或羊壳接口 var rule格式");
   }
   
@@ -790,7 +782,6 @@ function testSource() {
   }, 500);
 }
 
-// 在线测试源 - 模拟羊壳播放器
 async function onlineTest() {
   const code = document.getElementById('ai-output').value.trim();
   const resultBox = document.getElementById('online-test-result');
@@ -813,7 +804,6 @@ async function onlineTest() {
   };
   
   try {
-    // 1. 检测源类型
     log('📋 检测源类型...');
     const isDrpy = code.includes('var rule') || code.includes('async homeVod');
     const isLegado = code.includes('bookSourceName') && code.includes('ruleSearch');
@@ -821,21 +811,17 @@ async function onlineTest() {
     if (isDrpy) {
       log('✅ 识别为: 羊壳接口(drpyS)源', 'var(--cyan)');
       
-      // 2. 提取host
       const hostMatch = code.match(/host:\s*['"]([^'"]+)['"]/);
       if (hostMatch) {
         log('✅ 站点: ' + hostMatch[1], 'var(--cyan)');
       }
       
-      // 3. 测试搜索功能
       log('🔍 测试搜索功能...');
-      // 从代码里找搜索URL模式
       const searchUrlMatch = code.match(/search\?q=.*?['"]/);
       if (searchUrlMatch) {
         log('✅ 搜索接口: ' + searchUrlMatch[0].slice(0, 60));
       }
       
-      // 4. 测试API连通性
       if (hostMatch) {
         const host = hostMatch[1];
         log('📡 测试站点连通性...');
@@ -847,7 +833,6 @@ async function onlineTest() {
         }
       }
       
-      // 5. 检查5个标准函数
       const funcs = ['homeVod', 'category', 'detail', 'search', 'lazy'];
       const missing = funcs.filter(f => !code.includes(f));
       if (missing.length === 0) {
@@ -861,7 +846,6 @@ async function onlineTest() {
     } else if (isLegado) {
       log('✅ 识别为: Legado书源', 'var(--cyan)');
       
-      // 检查Legado必需字段
       const fields = ['bookSourceName', 'bookSourceUrl', 'searchUrl', 'ruleSearch', 'ruleToc', 'ruleContent'];
       const missing = fields.filter(f => !code.includes(f));
       if (missing.length === 0) {
@@ -908,8 +892,6 @@ async function aiFetchHTML() {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
   };
   
-  // 策略1: 先尝试直接fetch（很多站点支持CORS）
-  // 策略2: 代理备选
   const strategies = [
     { name: "直接访问", build: u => u },
     { name: "allorigins代理", build: u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u) },
@@ -951,7 +933,6 @@ async function aiFetchHTML() {
     return;
   }
   
-  // 提取结构骨架
   try {
     const tmp = document.createElement("div");
     tmp.innerHTML = html;
@@ -964,7 +945,6 @@ async function aiFetchHTML() {
       if (cls || id) skeleton.push(`<${tag}${id}${cls}>`);
     });
     cachedHTML = skeleton.slice(0, 120).join("\n");
-    // 同时保存原始HTML片段供AI分析
     const bodyText = tmp.body ? tmp.body.innerText.replace(/\s+/g, " ").slice(0, 800) : "";
     document.getElementById("ai-input").value = 
       "站点URL: " + url + 
@@ -994,449 +974,13 @@ const DRPY_NOVEL_TPL = `你是 羊壳接口小说源开发者。生成完整 var
 - 文件名必须带[书]标签
 - 禁止: require/DOMParser/document/window`;
 
-// ============================================================
-// 制源实战经验（从2382个Legado源 + 大量peekPro源学习得出）
-// ============================================================
-//
-// 【Legado书源规则语法】
-//   格式: class.类名@tag.标签名.位置@属性
-//   父子层级: && 分隔
-//   示例: "class.novel-item-title@text##/|作者.*|【"
-//   占位符: {{key}}=关键词  {{page}}=页码
-//
-// 【peekPro/drpyS规则语法】
-//   格式: 选择器&&Text/&&src/&&href
-//   父子层级: && 分隔
-//   示例: ".post;h3 a&&Text;img&&src;.meta&&Text;h3 a&&href"
-//   占位符: ** = 关键词
-//
-// 【Legado规则字段】
-//   ruleSearch: bookList/name/author/bookUrl/coverUrl/intro/kind/lastChapter
-//   ruleToc: chapterList/chapterName/chapterUrl
-//   ruleContent: content/title
-//
-// 【peekPro标准函数】
-//   推荐: 首页推荐视频列表
-//   一级: 分类列表页
-//   二级: 详情页解析
-//   搜索: 搜索结果解析
-//   lazy: 播放地址懒加载
-//
-// 【TVBox单仓格式】
-//   type=4: drpyS本地源
-//   api: http://127.0.0.1:5757/api/源名
-//   lang: "ds"
-//
-// ============================================================
 
-// ============================================================
-// 100站批量测试实战经验（2026-09-28）
-// ============================================================
-//
-// 【测试结果】
-// 成功率: 57% (57/100)
-// 主要失败原因:
-//   1. Cloudflare反爬: 22% (22个)
-//   2. 403 Forbidden: 7% (7个)
-//   3. 超时: 7% (7个)
-//   4. 连接失败: 3% (3个)
-//
-// 【站点类型分布】
-//   传统HTML站: 73% (大部分服务端渲染)
-//   SPA空壳站: 3% (少量)
-//   中型HTML(10-100KB): 65% (主流)
-//
-// 【反爬应对策略】
-//   Cloudflare: 标记"需浏览器渲染"，提示用户
-//   403: 自动重试不同UA，添加Referer
-//   超时: 增加超时到15秒，标记"慢站"
-//   连接失败: 标记"死站"，从源列表移除
-//
-// 【抓取策略优先级】
-//   1. 直接fetch + 完整浏览器Headers
-//   2. 失败则切换不同UA重试
-//   3. 再失败则标记反爬，提示用户手动粘贴源码
-//
-// ============================================================
 
-// ============================================================
-// 完整流程实战测试经验（3个站点端到端测试）
-// ============================================================
-//
-// 【测试站点】
-// 1. 天地中文 (传统HTML站, 52.6KB)
-// 2. 长佩文学 (SPA站, 4.9KB)
-// 3. 安轻小说 (大型HTML站, 221.9KB)
-//
-// 【发现的流程缺陷】
-//
-// 缺陷1: 搜索URL自动发现能力弱
-//   现象: 猜测的搜索URL经常404
-//   原因: 不知道正确的搜索路径和参数名
-//   修复: 自动探测多个搜索URL格式，测试返回码
-//   搜索URL候选:
-//     /search?keyword=关键词
-//     /search?q=关键词
-//     /search.php?keyword=关键词
-//     /api/search?q=关键词
-//
-// 缺陷2: 中文编码问题
-//   现象: 很多站抓取后中文乱码
-//   原因: 编码不是UTF-8
-//   修复: 自动检测编码，GBK/GB2312转UTF-8
-//
-// 缺陷3: JS扫描API局限
-//   现象: 主JS都是框架文件，业务API在动态chunk里
-//   原因: SPA站代码分割，主JS不含业务API
-//   修复: 自动探测常见API路径，不依赖JS扫描
-//
-// 缺陷4: 选择器自动分析
-//   现象: AI生成选择器经常不对
-//   原因: 没有实际看到HTML结构
-//   修复: 抓取HTML后喂给AI，让AI根据实际HTML生成选择器
-//
-// 缺陷5: 质量分级不明确
-//   现象: 所有源都显示"成功"，不知道哪个能用
-//   修复: 三级质量分级:
-//     ✅ 完整可用: 搜索+详情+播放都正常
-//     ⚠️ 部分降级: 部分功能正常，标记缺失
-//     ❌ 存在缺陷: 关键功能失败
-//
-// ============================================================
 
-// ============================================================
-// 批量制源实战经验（100站测试 + 50份生成验证）
-// ============================================================
-//
-// 【批量测试结果】
-// 站点总数: 100个
-// 成功抓取: 74个 (74%)
-// 有书籍列表: 60个 (60%)
-// 生成Legado书源: 50个
-//
-// 【验证结果】
-// 首页可访问: 50/50 (100%)
-// 搜索可用: 24/50 (48%)
-// 50分(合格): 24个 (48%)
-// 0-29分(不合格): 26个 (52%)
-//
-// 【主要问题】
-// 1. 搜索URL准确率低: 只有48%
-//    原因: 自动猜测的搜索URL格式不对
-//    解决方案: 自动探测多个搜索URL格式
-//    候选格式:
-//      /search?keyword=关键词
-//      /search?q=关键词
-//      /search.php?keyword=关键词
-//      /api/search?q=关键词
-//      /search?searchkey=关键词
-//
-// 2. 选择器通用性差: 用通用模板不对
-//    原因: 每个站的class名不一样
-//    解决方案: 抓取HTML后自动分析class名
-//
-// 3. 搜索参数名不确定: keyword/q/searchkey
-//    原因: 不同站用不同参数名
-//    解决方案: 自动测试不同参数名
-//
-// 【批量制源流程优化】
-// 1. 抓取HTML → 分析class名
-// 2. 自动探测搜索URL(多个候选)
-// 3. 自动探测搜索参数名
-// 4. 生成针对性的选择器规则
-// 5. 验证搜索可用性
-// 6. 不合格的标记为待人工优化
-//
-// ============================================================
 
-// ============================================================
-// 制源Skill v1.0 - 5大模块完整规范
-// ============================================================
-//
-// 【模块1: Legado书源】
-// 样本: 2382个
-// 格式: JSON
-// 核心字段:
-//   - bookSourceName: 书源名称
-//   - bookSourceUrl: 站点URL
-//   - searchUrl: 搜索URL模板，{{key}}=关键词
-//   - ruleSearch: 搜索规则
-//     - bookList: 书籍列表选择器
-//     - name: 书名选择器@text
-//     - author: 作者选择器@text
-//     - bookUrl: 详情链接@href
-//     - coverUrl: 封面@src
-//   - ruleToc: 目录规则
-//     - chapterList: 章节列表
-//     - chapterName: 章节名@text
-//     - chapterUrl: 章节链接@href
-//   - ruleContent: 正文规则
-//     - content: 正文@p@html
-//     - title: 标题@text
-// 规则语法: class.类名@tag.标签名.位置@属性
-// 父子层级: @分隔
-// 排除: ##/正则/
-//
-// 【模块2: Legado订阅源】
-// 样本: 222个
-// 格式: JSON
-// 核心字段:
-//   - sourceName: 订阅源名称
-//   - sourceUrl: 站点URL
-//   - type: 0 (文章订阅)
-//   - searchUrl: 搜索URL
-//   - ruleArticles: 文章列表规则
-//     - articleList: 文章列表
-//     - title: 文章标题@text
-//     - link: 文章链接@href
-//     - image: 配图@src
-//     - pubDate: 发布时间@text
-//     - description: 摘要@text
-// 规则语法: 同Legado书源
-//
-// 【模块3: peekPro点播源(drpyS)】
-// 样本: 28个
-// 格式: JS脚本 (var rule = {...})
-// 核心字段:
-//   - title: 源名称
-//   - host: 站点域名
-//   - homeUrl: 首页路径
-//   - url: 分类页路径
-//   - searchUrl: 搜索路径，**=关键词
-//   - class_name: 分类名&分隔
-//   - class_url: 分类URL&分隔
-// 5个标准函数:
-//   - 推荐/推荐: 首页推荐
-//   - 一级/category: 分类列表
-//   - 二级/detail: 详情页解析
-//   - 搜索/search: 搜索结果解析
-//   - lazy: 播放地址懒加载
-// 选择器语法: 选择器&&Text/&&src/&&href
-// 父子层级: ;分隔
-//
-// 【模块4: peekPro书源+漫画源】
-// 样本: 9个 (2漫画+7书源)
-// 格式: 同点播源 (JS脚本)
-// 区别:
-//   - 漫画源: lazy返回 {parse:0, url:[图片数组]}
-//   - 书源: lazy返回 {content: 章节正文}
-// 类型字段: 漫画/小说/听书
-//
-// 【模块5: peekProHTML源】
-// 格式: 同点播源 (JS脚本)
-// 区别:
-//   - HTML源: 用pdfa/pdfh解析HTML
-//   - API源: 用JSONPath解析JSON
-// 解析函数:
-//   - pdfa(html, parse): 所有匹配元素数组
-//   - pdfh(html, parse, baseUrl): 第一个匹配元素
-//
-// ============================================================
 
-// ============================================================
-// 【重要】peekProHTML源 = WebHome完整网页应用
-// ============================================================
-//
-// 之前理解错误！HTML源不是drpyS脚本，而是完整网页应用！
-//
-// 【两种源类型区别】
-//
-// 1. drpyS源 (JS脚本)
-//    - 文件: .js
-//    - 格式: var rule = {...};
-//    - 运行: 服务端执行，返回JSON数据
-//    - UI: App原生UI
-//    - 解析: pdfa/pdfh选择器
-//
-// 2. 网页源 (WebHome页面)
-//    - 文件: .html
-//    - 格式: 完整HTML页面 (<!DOCTYPE html>)
-//    - 运行: 直接在webview里运行
-//    - UI: 网页自己的UI
-//    - 交互: 网页自己处理点击/搜索
-//    - 桥接: window.fongmiBridge / window.fm
-//
-// 【网页源特点】
-// - 完整HTML5应用
-// - 自己处理UI渲染和交互
-// - 通过JS Bridge与App通信
-// - 可以自定义样式和功能
-// - 适合复杂功能的源
-//
-// 【网页源桥接API】
-// - window.fongmiBridge
-// - window.fm
-// - fm.ui: UI操作
-// - fm.player: 播放控制
-//
-// ============================================================
 
-// ============================================================
-// 网页源制作方法（去广告+保留主体）
-// ============================================================
-//
-// 【网页源是什么】
-// 把站点包装成一个完整HTML页面，去广告，只保留主体内容
-// 在peekPro的webview里运行
-//
-// 【制作步骤】
-// 1. 分析站点API（或抓取HTML）
-// 2. 写HTML页面，包含:
-//    - 搜索栏
-//    - 分类标签
-//    - 视频网格
-//    - 详情弹窗
-//    - 播放调用
-// 3. 去广告:
-//    - CSS: .ad, .advertisement { display: none !important; }
-//    - JS: 定时删除广告节点
-// 4. 桥接App: window.fongmiBridge / window.fm
-//
-// 【桥接API】
-// - fm.player.play(url): 播放视频
-// - fm.search(): 打开搜索
-// - fm.vodInline: 内联播放
-// - fm.req/res: 网络请求
-//
-// 【网页源模板】
-// <!DOCTYPE html>
-// <html>
-// <head>
-//   <meta charset="UTF-8">
-//   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//   <title>站点名称</title>
-//   <style>
-//     /* 去广告 */
-//     .ad, .advertisement, .banner { display: none !important; }
-//     /* 主体样式 */
-//     body { margin: 0; padding: 10px; background: #222; color: #fff; }
-//     .search-bar { display: flex; gap: 8px; margin-bottom: 10px; }
-//     .tabs { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 10px; }
-//     .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-//     .card { border-radius: 10px; overflow: hidden; background: #333; }
-//     .card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
-//     .card .name { padding: 8px; font-size: 13px; }
-//   </style>
-// </head>
-// <body>
-//   <div class="search-bar">
-//     <input type="text" id="kw" placeholder="搜索...">
-//     <button onclick="doSearch()">搜索</button>
-//   </div>
-//   <div class="tabs" id="tabs"></div>
-//   <div class="grid" id="grid"></div>
-//   <script>
-//     const HOST = 'https://站点域名';
-//     // 加载首页
-//     async function loadHome() {
-//       const resp = await fetch(HOST + '/api/home');
-//       const data = await resp.json();
-//       renderGrid(data.list);
-//     }
-//     // 搜索
-//     async function doSearch() {
-//       const kw = document.getElementById('kw').value;
-//       const resp = await fetch(HOST + '/api/search?q=' + kw);
-//       const data = await resp.json();
-//       renderGrid(data.list);
-//     }
-//     // 渲染
-//     function renderGrid(list) {
-//       document.getElementById('grid').innerHTML = list.map(item => 
-//         `<div class="card" onclick="play('${item.url}')">
-//           <img src="${item.pic}">
-//           <div class="name">${item.name}</div>
-//         </div>`
-//       ).join('');
-//     }
-//     // 播放
-//     function play(url) {
-//       if (window.fm) fm.player.play(url);
-//     }
-//     loadHome();
-//   </script>
-// </body>
-// </html>
-//
-// ============================================================
-// 【源验证与修复经验（实战总结）】
-// ============================================================
-//
-// 【常见错误及解决】
-//
-// 1. 403 Forbidden (占60%)
-//    原因: 服务器检测到爬虫
-//    解决:
-//    - 加User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
-//    - 加Referer: https://www.google.com
-//    - 加Accept: text/html,application/xhtml+xml
-//    - 加Accept-Language: zh-CN,zh;q=0.9
-//
-// 2. 500 Internal Server Error (占20%)
-//    原因: 服务器内部错误
-//    解决:
-//    - 等待5分钟重试
-//    - 换备用节点/线路
-//    - 联系源作者
-//
-// 3. 连接失败/域名失效 (占20%)
-//    原因: 站点关站或换域名
-//    解决:
-//    - 自动检测并标记为"失效"
-//    - 从上游源列表找备用源
-//    - 用搜索引擎找新域名
-//
-// 4. Cloudflare反爬
-//    原因: 站点开启Cloudflare防护
-//    解决:
-//    - 用无头浏览器(Puppeteer/Playwright)
-//    - 用付费验证码识别API
-//    - 换其他源
-//
-// 【验证最佳实践】
-// 1. 批量并发验证 (10线程)
-// 2. 超时设置5秒
-// 3. 只验证前30个，快速判断可用率
-// 4. 可用率低于50%的板块重新生成
-// 5. 定期自动验证 (每周一次)
-//
-// 【当前仓库状态】
-// ✅ 音乐源: 34个，100%可用
-// ⚠️ 点播源: 115个，~60%可用
-// ⚠️ IPTV源: 格式错误，需重新生成
-//
-// ============================================================
 
-// ============================================================
-// PeekPro 1.5.8 各板块解析模块规范（从源码逆向得出）
-// ============================================================
-//
-// 【点播/影视】— drpyS 解析引擎
-//   核心: Fastify 服务端 + html_parser_lite.js 前端解析
-//   接口: /api/:module  (T4协议)
-//   函数: homeVod/category/detail/search/lazy (5个标准函数)
-//   解析: pdfa(html, parse) / pdfh(html, parse, baseUrl) / pd(html, parse, baseUrl)
-//   返回: {class, list, vod_id, vod_name, vod_pic, vod_remarks, vod_play_from, vod_play_url}
-//
-// 【书源/小说】— drpyS 解析引擎
-//   与点播同源，只是字段映射不同
-//   函数: 同样5个标准函数
-//   返回: {bookUrl, chapterUrl, content}
-//
-// 【音乐】— LX Music SDK
-//   核心: lx_bridge.js (Buffer/crypto/zlib polyfill)
-//   函数: homeVod/category/detail/search/lazy
-//   返回: {musicUrl, pic, lrc}
-//
-// 【漫画】— drpyS 解析引擎
-//   与点播同源，lazy返回图片数组
-//   返回: {parse:0, url:["img1.jpg","img2.jpg",...]}
-//
-// 【IPTV】— m3u 播放列表
-//   格式: #EXTM3U + #EXTINF + 频道URL
-//   无需脚本解析，直接播放
-//
-// ============================================================
 
 const DRPY_VOD_TPL = `你是 羊壳接口影视源开发者。生成完整 var rule = {...}; 脚本。
 
@@ -1502,7 +1046,6 @@ const DRPY_VOD_TPL = `你是 羊壳接口影视源开发者。生成完整 var r
    返回: {parse:0, url:"https://xxx.m3u8"}
 
 【解析示例】
-// 解析搜索结果列表
 var html = await request(searchUrl);
 var listHtmls = pdfa(html, ".search-result&&div.item");
 var list = listHtmls.map(itemHtml => {
@@ -1600,7 +1143,6 @@ var rule = {
         }));
         return { list: list };
     }
-    // ... category/detail/lazy 按类似结构补全
 };
 
 【注意】
@@ -1867,7 +1409,6 @@ async function aiMake(mode) {
   }
 }
 
-// 一键生成：自动抓取分析 → AI生成 → 语法检查 → 在线测试
 async function autoGen() {
   const st = document.getElementById("ai-status");
   const urlInput = document.getElementById("ai-input-url").value.trim();
@@ -1875,22 +1416,18 @@ async function autoGen() {
   
   st.innerHTML = '<b style="color:var(--green)">⚡ 开始一键生成...</b>';
   
-  // 步骤1: 抓取分析
   st.innerHTML += '<br>📥 [1/4] 抓取分析站点...';
   await new Promise(r => setTimeout(r, 300));
   await aiFetchHTML();
   
-  // 步骤2: AI生成（自动选择模式）
   st.innerHTML += '<br>🤖 [2/4] AI生成源...';
   await new Promise(r => setTimeout(r, 500));
   await aiMake('drpy_vod'); // 默认羊壳点播源
   
-  // 步骤3: 语法检查
   st.innerHTML += '<br>🔍 [3/4] 语法检查...';
   await new Promise(r => setTimeout(r, 200));
   testSource();
   
-  // 步骤4: 在线测试
   st.innerHTML += '<br>▶️ [4/4] 在线测试...';
   await new Promise(r => setTimeout(r, 300));
   onlineTest();
@@ -1898,7 +1435,6 @@ async function autoGen() {
   st.innerHTML += '<br><b style="color:var(--green)">🎉 一键生成完成！</b>';
 }
 
-// 加载统计
 (async () => {
   try {
     const s = await (await fetch("stats.json")).json();
@@ -1919,7 +1455,6 @@ async function autoGen() {
       `<div class="up"><span class="dot ${st.ok?"":"dead"}"></span>${esc(name)}<small>${st.ok?st.count+"条":(st.msg||"失败")}</small></div>`
     ).join("") || "<div class='up'>暂无数据</div>";
   } catch(e) {}
-  // 加载影视网站列表
   try {
     const vs = await (await fetch("valid_videosite.json")).json();
     const html = vs.map((v,i) => `
@@ -1940,36 +1475,27 @@ async function autoGen() {
 
 function esc(s) { return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 
-// ============================================================
-// Legado 书源在线测试功能
-// ============================================================
 
-// Legado规则解析器
 class LegadoParser {
   constructor(html, baseUrl) {
     this.$ = cheerio.load(html);
     this.baseUrl = baseUrl;
   }
   
-  // 解析Legado规则
   parse(ruleStr, parent) {
     if (!ruleStr) return '';
     
-    // 处理JS规则
     if (ruleStr.startsWith('<js>') || ruleStr.startsWith('@js:')) {
       return this.parseJsRule(ruleStr);
     }
     
-    // 处理正则规则
     if (ruleStr.startsWith('regex:')) {
       return this.parseRegex(ruleStr);
     }
     
-    // 处理普通选择器规则
     return this.parseSelector(ruleStr, parent);
   }
   
-  // 解析选择器规则
   parseSelector(ruleStr, parent) {
     const parts = ruleStr.split('&&');
     let current = parent ? this.$(parent) : this.$('body');
@@ -1978,7 +1504,6 @@ class LegadoParser {
       const sel = parts[i].trim();
       if (!sel || sel === 'body') continue;
       
-      // 处理排除语法 p--a
       let excludeTag = null;
       if (sel.includes('--')) {
         const se = sel.split('--');
@@ -1986,7 +1511,6 @@ class LegadoParser {
         excludeTag = se[1];
       }
       
-      // 处理位置选择器 .0 .-1
       let index = null;
       const idxMatch = sel.match(/\.(-?\d+)$/);
       if (idxMatch) {
@@ -2004,39 +1528,31 @@ class LegadoParser {
       }
     }
     
-    // 最后一部分是取值
     const lastPart = parts[parts.length - 1].trim();
     if (lastPart === 'Text' || lastPart === 'text') {
       return current.text().trim();
     } else if (lastPart === 'Html' || lastPart === 'html') {
       return current.html();
     } else if (lastPart.startsWith('@')) {
-      // @href, @src 等
       const attr = lastPart.slice(1);
       let val = current.attr(attr) || '';
-      // 补全相对路径
       if (val && !val.startsWith('http') && !val.startsWith('//')) {
         val = this.baseUrl.replace(/\/$/, '') + '/' + val.replace(/^\//, '');
       }
       return val;
     } else {
-      // 默认取文本
       return current.text().trim();
     }
   }
   
-  // 解析JS规则（简化版）
   parseJsRule(ruleStr) {
-    // 简化处理，只提取字符串
     return '';
   }
   
-  // 解析正则规则
   parseRegex(ruleStr) {
     return '';
   }
   
-  // 获取所有匹配元素
   findAll(ruleStr) {
     const parts = ruleStr.split('&&');
     let current = this.$('body');
@@ -2045,7 +1561,6 @@ class LegadoParser {
       const sel = parts[i].trim();
       if (!sel || sel === 'body') continue;
       
-      // 处理位置选择器
       let index = null;
       const idxMatch = sel.match(/\.(-?\d+)$/);
       if (idxMatch) {
@@ -2066,7 +1581,6 @@ class LegadoParser {
   }
 }
 
-// 测试Legado书源
 async function testLegadoSource() {
   const code = document.getElementById('ai-output').value.trim();
   const st = document.getElementById('ai-status');
@@ -2079,7 +1593,6 @@ async function testLegadoSource() {
   st.innerHTML = '<b style="color:var(--cyan)">🧪 开始测试Legado书源...</b>';
   
   try {
-    // 1. 解析书源JSON
     let source;
     try {
       source = JSON.parse(code);
@@ -2090,7 +1603,6 @@ async function testLegadoSource() {
     
     st.innerHTML += '<br>✅ [1/4] JSON解析成功: ' + (source.bookSourceName || '未知');
     
-    // 2. 检查必需字段
     const requiredFields = ['bookSourceName', 'bookSourceUrl', 'searchUrl', 'ruleSearch', 'ruleToc', 'ruleContent'];
     const missing = requiredFields.filter(f => !source[f]);
     if (missing.length > 0) {
@@ -2099,7 +1611,6 @@ async function testLegadoSource() {
       st.innerHTML += '<br>✅ [2/4] 必需字段齐全';
     }
     
-    // 3. 测试搜索功能
     st.innerHTML += '<br>🔍 [3/4] 测试搜索功能...';
     await new Promise(r => setTimeout(r, 200));
     
@@ -2132,7 +1643,6 @@ async function testLegadoSource() {
       st.innerHTML += '<br>⚠️ 搜索测试失败: ' + e.message;
     }
     
-    // 4. 完成
     st.innerHTML += '<br><b style="color:var(--green)">🎉 测试完成！</b>';
     
   } catch(e) {
@@ -2140,14 +1650,10 @@ async function testLegadoSource() {
   }
 }
 
-// ============================================================
-// 在线阅读小说完整功能
-// ============================================================
 
 let currentLegadoSource = null;
 let currentBookUrl = null;
 
-// 完整Legado书源测试（搜索→详情→目录→阅读）
 async function testLegadoSourceFull() {
   const code = document.getElementById('ai-output').value.trim();
   const st = document.getElementById('ai-status');
@@ -2160,14 +1666,12 @@ async function testLegadoSourceFull() {
   st.innerHTML = '<b style="color:var(--cyan)">📚 开始完整测试Legado书源...</b>';
   
   try {
-    // 1. 解析书源
     const source = JSON.parse(code);
     currentLegadoSource = source;
     const baseUrl = source.bookSourceUrl;
     
     st.innerHTML += '<br>✅ [1/4] 书源: ' + source.bookSourceName;
     
-    // 2. 搜索
     st.innerHTML += '<br>🔍 [2/4] 搜索"斗罗大陆"...';
     await new Promise(r => setTimeout(r, 100));
     
@@ -2196,7 +1700,6 @@ async function testLegadoSourceFull() {
     
     if (books.length === 0) return;
     
-    // 3. 详情
     st.innerHTML += '<br>📖 [3/4] 获取详情...';
     await new Promise(r => setTimeout(r, 100));
     
@@ -2207,7 +1710,6 @@ async function testLegadoSourceFull() {
     st.innerHTML += '<br>✅ 第一本: ' + bookName;
     st.innerHTML += '<br>   URL: ' + bookUrl.substring(0, 50) + '...';
     
-    // 4. 目录
     st.innerHTML += '<br>📑 [4/4] 获取目录...';
     await new Promise(r => setTimeout(r, 100));
     
@@ -2230,7 +1732,6 @@ async function testLegadoSourceFull() {
         const firstChapter = detailParser.parse(ruleToc.chapterName, chapters[0]);
         st.innerHTML += '<br>   第一章: ' + firstChapter;
         
-        // 5. 阅读第一章内容
         st.innerHTML += '<br>📖 [5/5] 读取第一章内容...';
         await new Promise(r => setTimeout(r, 100));
         
@@ -2261,9 +1762,6 @@ async function testLegadoSourceFull() {
   }
 }
 
-// ============================================================
-// 在线播放直链视频
-// ============================================================
 
 async function testVideoPlay() {
   const code = document.getElementById('ai-output').value.trim();
@@ -2271,17 +1769,14 @@ async function testVideoPlay() {
   
   st.innerHTML = '<b style="color:var(--cyan)">🎬 测试视频播放...</b>';
   
-  // 尝试提取播放链接
   let playUrl = '';
   try {
     const json = JSON.parse(code);
-    // 如果是TVBox格式
     if (json.sites) {
       st.innerHTML += '<br>⚠️ 这是单仓配置，不是单个源';
       return;
     }
   } catch(e) {
-    // 直接当作URL
     if (code.startsWith('http') && (code.includes('.mp4') || code.includes('.m3u8'))) {
       playUrl = code;
     }
@@ -2292,16 +1787,12 @@ async function testVideoPlay() {
     return;
   }
   
-  // 显示视频播放器
   const playerHtml = '<video controls autoplay style="width:100%;max-height:400px;background:#000;border-radius:8px;margin-top:10px"><source src="' + playUrl + '" type="video/mp4"></video>';
   
   st.innerHTML += playerHtml;
   st.innerHTML += '<br>✅ 播放器已加载';
 }
 
-// ============================================================
-// 在线测试漫画
-// ============================================================
 
 async function testComicSource() {
   const code = document.getElementById('ai-output').value.trim();
@@ -2318,7 +1809,6 @@ async function testComicSource() {
     const json = JSON.parse(code);
     st.innerHTML += '<br>✅ JSON解析成功';
     
-    // 检查是否是羊壳格式
     if (json.key && json.api) {
       st.innerHTML += '<br>✅ 羊壳格式: ' + json.name;
       st.innerHTML += '<br>⚠️ 羊壳漫画源需要drpy-node服务端才能测试';
@@ -2332,7 +1822,6 @@ async function testComicSource() {
   }
 }
 
-// 加载统计
 async function loadStats() {
   try {
     const resp = await fetch('stats.json');
@@ -2347,12 +1836,10 @@ async function loadStats() {
 }
 loadStats();
 
-// 暗色模式切换
 function toggleDark() {
   document.body.classList.toggle('light');
 }
 
-// 一键生成
 async function oneClickGenerate() {
   const url = document.getElementById('ai-input').value.trim();
   const st = document.getElementById('ai-status');
@@ -2365,7 +1852,6 @@ async function oneClickGenerate() {
   st.innerHTML = '<b style="color:var(--cyan)">⚡ 开始一键生成...</b>';
   st.innerHTML += '<br>步骤1: 抓取分析站点...';
   
-  // 抓取站点
   try {
     const resp = await fetch(url, { 
       headers: { 'User-Agent': 'Mozilla/5.0' },
@@ -2376,7 +1862,6 @@ async function oneClickGenerate() {
     st.innerHTML += '<br>✅ 抓取成功，大小: ' + (html.length/1024).toFixed(1) + 'KB';
     st.innerHTML += '<br>步骤2: 识别站点类型...';
     
-    // 识别类型
     if (html.length < 10000 && html.includes('id="app"')) {
       st.innerHTML += '<br>→ SPA单页应用，切换API模式';
     } else {
@@ -2391,7 +1876,6 @@ async function oneClickGenerate() {
   }
 }
 
-// 修复源
 async function repairSource() {
   const code = document.getElementById('ai-output').value.trim();
   const st = document.getElementById('ai-status');
@@ -2405,7 +1889,6 @@ async function repairSource() {
   st.innerHTML += '<br>步骤1: 解析源格式...';
   
   try {
-    // 尝试解析JSON
     if (code.trim().startsWith('{')) {
       JSON.parse(code);
       st.innerHTML += '<br>✅ 检测到JSON格式';
