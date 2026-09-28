@@ -759,27 +759,67 @@ async function aiFetchHTML() {
   const url = document.getElementById("ai-input-url").value.trim();
   const st = document.getElementById("ai-status");
   if (!url) { st.innerHTML = '<b style="color:var(--red)">请输入URL</b>'; return; }
-  st.innerHTML = '<b style="color:var(--cyan)">🔍 抓取中...</b>';
+  st.innerHTML = '<b style="color:var(--cyan)">🔍 抓取分析中（多代理备选）...</b>';
+  
+  // 多代理备选，按顺序尝试
+  const proxies = [
+    u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u),
+    u => "https://corsproxy.io/?url=" + encodeURIComponent(u),
+    u => "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u),
+    u => "https://thingproxy.freeboard.io/fetch/" + u
+  ];
+  
+  let html = "";
+  let success = false;
+  
+  for (let i = 0; i < proxies.length; i++) {
+    try {
+      st.innerHTML = '<b style="color:var(--cyan)">🔍 尝试代理 ' + (i+1) + '/' + proxies.length + '...</b>';
+      const proxyUrl = proxies[i](url);
+      const resp = await fetch(proxyUrl, { 
+        headers: { "Accept": "text/html,application/xhtml+xml", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
+        signal: AbortSignal.timeout(10000)
+      });
+      if (resp.ok) {
+        const text = await resp.text();
+        if (text.length > 200 && !text.includes("Just a moment") && !text.includes("cloudflare")) {
+          html = text;
+          success = true;
+          st.innerHTML = '<b style="color:var(--green)">✅ 代理' + (i+1) + '抓取成功 (' + text.length + ' bytes)</b>';
+          break;
+        }
+      }
+    } catch(e) {
+      console.log("代理" + (i+1) + "失败:", e.message);
+    }
+  }
+  
+  if (!success) {
+    st.innerHTML = '<b style="color:var(--orange)">⚠️ 自动抓取失败（反爬/Cloudflare）</b><div style="font-size:11px;color:var(--muted);margin-top:4px">已尝试4个代理。请手动打开网站，按F12复制HTML源码粘贴到输入框</div>';
+    return;
+  }
+  
+  // 提取结构骨架
   try {
-    // 用CORS代理抓取
-    const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
-    const resp = await fetch(proxyUrl);
-    const html = await resp.text();
-    // 提取结构骨架
     const tmp = document.createElement("div");
     tmp.innerHTML = html;
     const skeleton = [];
     tmp.querySelectorAll("*").forEach(el => {
-      if (el.tagName === "SCRIPT" || el.tagName === "STYLE") return;
-      const cls = el.className ? `.${String(el.className).split(" ").join(".")}` : "";
+      if (el.tagName === "SCRIPT" || el.tagName === "STYLE" || el.tagName === "META" || el.tagName === "LINK") return;
+      const cls = el.className ? `.${String(el.className).split(" ").slice(0,2).join(".")}` : "";
       const id = el.id ? "#" + el.id : "";
-      if (cls || id) skeleton.push(`<${el.tagName.toLowerCase()}${id}${cls}>`);
+      const tag = el.tagName.toLowerCase();
+      if (cls || id) skeleton.push(`<${tag}${id}${cls}>`);
     });
-    cachedHTML = skeleton.slice(0, 80).join("\n");
-    document.getElementById("ai-input").value = url + "\n\n--- 站点结构分析 ---\n" + cachedHTML;
-    st.innerHTML = '<b style="color:var(--green)">✅ 已抓取分析 (' + html.length + ' bytes)</b>';
+    cachedHTML = skeleton.slice(0, 100).join("\n");
+    // 同时保存原始HTML片段供AI分析
+    const bodyText = tmp.body ? tmp.body.innerText.slice(0, 500) : "";
+    document.getElementById("ai-input").value = 
+      "站点URL: " + url + 
+      "\n\n--- 页面结构骨架 ---\n" + cachedHTML + 
+      "\n\n--- 页面文本摘要 ---\n" + bodyText;
   } catch(e) {
-    st.innerHTML = '<b style="color:var(--red)">❌ 抓取失败: ' + e.message + '</b>';
+    document.getElementById("ai-input").value = "站点URL: " + url + "\n\n" + html.slice(0, 2000);
   }
 }
 
