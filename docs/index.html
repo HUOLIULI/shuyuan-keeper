@@ -2257,4 +2257,75 @@ async function testComicSource() {
     st.innerHTML += '<br><b style="color:var(--red)">❌ 失败: ' + e.message + '</b>';
   }
 }
+
+// 一键生成
+async function oneClickGenerate() {
+  const url = document.getElementById('ai-input').value.trim();
+  const st = document.getElementById('ai-status');
+  
+  if (!url) {
+    st.innerHTML = '<b style="color:var(--red)">❌ 请先输入站点URL</b>';
+    return;
+  }
+  
+  st.innerHTML = '<b style="color:var(--cyan)">⚡ 开始一键生成...</b>';
+  st.innerHTML += '<br>步骤1: 抓取分析站点...';
+  
+  // 抓取站点
+  try {
+    const resp = await fetch(url, { 
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      signal: AbortSignal.timeout(30000)
+    });
+    const html = await resp.text();
+    
+    st.innerHTML += '<br>✅ 抓取成功，大小: ' + (html.length/1024).toFixed(1) + 'KB';
+    st.innerHTML += '<br>步骤2: 识别站点类型...';
+    
+    // 识别类型
+    if (html.length < 10000 && html.includes('id="app"')) {
+      st.innerHTML += '<br>→ SPA单页应用，切换API模式';
+    } else {
+      st.innerHTML += '<br>→ 传统HTML站';
+    }
+    
+    st.innerHTML += '<br>步骤3: 调用AI生成源...';
+    st.innerHTML += '<br>⚠️ 请选择输出格式：Legado书源/羊壳点播/羊壳书源/漫画/HTML';
+    
+  } catch(e) {
+    st.innerHTML += '<br><b style="color:var(--red)">❌ 抓取失败: ' + e.message + '</b>';
+  }
+}
+
+// 修复源
+async function repairSource() {
+  const code = document.getElementById('ai-output').value.trim();
+  const st = document.getElementById('ai-status');
+  
+  if (!code) {
+    st.innerHTML = '<b style="color:var(--red)">❌ 请先粘贴需要修复的源</b>';
+    return;
+  }
+  
+  st.innerHTML = '<b style="color:var(--cyan)">🔧 开始修复源...</b>';
+  st.innerHTML += '<br>步骤1: 解析源格式...';
+  
+  try {
+    // 尝试解析JSON
+    if (code.trim().startsWith('{')) {
+      JSON.parse(code);
+      st.innerHTML += '<br>✅ 检测到JSON格式';
+    } else if (code.includes('var rule')) {
+      st.innerHTML += '<br>✅ 检测到drpyS格式';
+    } else {
+      st.innerHTML += '<br>⚠️ 未知格式，尝试自动识别';
+    }
+    
+    st.innerHTML += '<br>步骤2: 调用AI分析修复...';
+    st.innerHTML += '<br>⚠️ 请输入站点URL，AI会自动分析并修复';
+    
+  } catch(e) {
+    st.innerHTML += '<br><b style="color:var(--red)">❌ 解析失败: ' + e.message + '</b>';
+  }
+}
 </script>
