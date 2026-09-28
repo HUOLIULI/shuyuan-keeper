@@ -901,6 +901,7 @@ async function aiFetchHTML() {
   ];
   
   let html = "";
+  window._fetchedHTML = ""; // 保存抓取到的HTML
   let success = false;
   let usedStrategy = "";
   
@@ -1368,7 +1369,11 @@ async function aiMake(mode) {
   if (!urlInput && !extraInput) { st.innerHTML = '<b style="color:var(--red)">请输入URL或粘贴内容</b>'; return; }
   localStorage.setItem("ai_cfg", JSON.stringify({base, key, model}));
 
-  const userContent = (urlInput ? "站点: " + urlInput + "\n" : "") + (extraInput ? extraInput : "");
+  // 把抓取到的HTML一起传给AI
+  const fetchedHTML = window._fetchedHTML || "";
+  const userContent = (urlInput ? "站点: " + urlInput + "\n" : "") 
+    + (fetchedHTML ? "\n\n【抓取到的HTML内容】（请根据这个真实HTML生成选择器，不要瞎编！）\n" + fetchedHTML.substring(0, 8000) : "")
+    + (extraInput ? extraInput : "");
   const prompts = {
     legado_book: LEGADO_TPL + "\n\n" + userContent,
     legado_sub: LEGADO_SUB_TPL + "\n\n" + userContent,
