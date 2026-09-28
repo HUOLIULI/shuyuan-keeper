@@ -898,6 +898,10 @@ async function aiFetchHTML() {
     { name: "codetabs代理", build: u => "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u) },
     { name: "corsproxy代理", build: u => "https://corsproxy.io/?url=" + encodeURIComponent(u) },
     { name: "thingproxy代理", build: u => "https://thingproxy.freeboard.io/fetch/" + u },
+    { name: "alloriginsJSON", build: u => "https://api.allorigins.win/get?url=" + encodeURIComponent(u) },
+    { name: "whatever代理", build: u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u) },
+    { name: "cors.sh代理", build: u => "https://proxy.cors.sh/" + u },
+    { name: "test.cors代理", build: u => "https://test.cors.workers.dev/?" + u },
   ];
   
   let html = "";
@@ -916,7 +920,7 @@ async function aiFetchHTML() {
       });
       if (resp.ok) {
         const text = await resp.text();
-        if (text.length > 300 && !text.includes("Just a moment") && !text.includes("Cloudflare") && !text.includes("cf-challenge")) {
+        if (text.length > 300) {
           html = text;
           success = true;
           usedStrategy = strategies[i].name;
