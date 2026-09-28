@@ -1644,4 +1644,196 @@ async function testLegadoSource() {
     st.innerHTML += '<br><b style="color:var(--red)">❌ 测试失败: ' + e.message + '</b>';
   }
 }
+
+// ============================================================
+// 在线阅读小说完整功能
+// ============================================================
+
+let currentLegadoSource = null;
+let currentBookUrl = null;
+
+// 完整Legado书源测试（搜索→详情→目录→阅读）
+async function testLegadoSourceFull() {
+  const code = document.getElementById('ai-output').value.trim();
+  const st = document.getElementById('ai-status');
+  
+  if (!code) {
+    st.innerHTML = '<b style="color:var(--red)">❌ 请先粘贴Legado书源JSON</b>';
+    return;
+  }
+  
+  st.innerHTML = '<b style="color:var(--cyan)">📚 开始完整测试Legado书源...</b>';
+  
+  try {
+    // 1. 解析书源
+    const source = JSON.parse(code);
+    currentLegadoSource = source;
+    const baseUrl = source.bookSourceUrl;
+    
+    st.innerHTML += '<br>✅ [1/4] 书源: ' + source.bookSourceName;
+    
+    // 2. 搜索
+    st.innerHTML += '<br>🔍 [2/4] 搜索"斗罗大陆"...';
+    await new Promise(r => setTimeout(r, 100));
+    
+    const searchUrl = source.searchUrl
+      .replace('{{key}}', encodeURIComponent('斗罗大陆'))
+      .replace('{{page}}', '0');
+    
+    const resp = await fetch(searchUrl, {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      signal: AbortSignal.timeout(10000)
+    });
+    const searchHtml = await resp.text();
+    
+    const parser = new LegadoParser(searchHtml, baseUrl);
+    const ruleSearch = typeof source.ruleSearch === 'string' 
+      ? JSON.parse(source.ruleSearch) 
+      : (source.ruleSearch || {});
+    
+    if (!ruleSearch.bookList) {
+      st.innerHTML += '<br>⚠️ 搜索规则缺少bookList';
+      return;
+    }
+    
+    const books = parser.findAll(ruleSearch.bookList);
+    st.innerHTML += '<br>✅ 找到 ' + books.length + ' 本书';
+    
+    if (books.length === 0) return;
+    
+    // 3. 详情
+    st.innerHTML += '<br>📖 [3/4] 获取详情...';
+    await new Promise(r => setTimeout(r, 100));
+    
+    const bookUrl = parser.parse(ruleSearch.bookUrl, books[0]);
+    const bookName = parser.parse(ruleSearch.name, books[0]);
+    currentBookUrl = bookUrl;
+    
+    st.innerHTML += '<br>✅ 第一本: ' + bookName;
+    st.innerHTML += '<br>   URL: ' + bookUrl.substring(0, 50) + '...';
+    
+    // 4. 目录
+    st.innerHTML += '<br>📑 [4/4] 获取目录...';
+    await new Promise(r => setTimeout(r, 100));
+    
+    const detailResp = await fetch(bookUrl, {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      signal: AbortSignal.timeout(10000)
+    });
+    const detailHtml = await detailResp.text();
+    const detailParser = new LegadoParser(detailHtml, bookUrl);
+    
+    const ruleToc = typeof source.ruleToc === 'string' 
+      ? JSON.parse(source.ruleToc) 
+      : (source.ruleToc || {});
+    
+    if (ruleToc.chapterList) {
+      const chapters = detailParser.findAll(ruleToc.chapterList);
+      st.innerHTML += '<br>✅ 找到 ' + chapters.length + ' 章';
+      
+      if (chapters.length > 0 && ruleToc.chapterName) {
+        const firstChapter = detailParser.parse(ruleToc.chapterName, chapters[0]);
+        st.innerHTML += '<br>   第一章: ' + firstChapter;
+        
+        // 5. 阅读第一章内容
+        st.innerHTML += '<br>📖 [5/5] 读取第一章内容...';
+        await new Promise(r => setTimeout(r, 100));
+        
+        const chapterUrl = detailParser.parse(ruleToc.chapterUrl, chapters[0]);
+        const contentResp = await fetch(chapterUrl, {
+          headers: { 'User-Agent': 'Mozilla/5.0' },
+          signal: AbortSignal.timeout(10000)
+        });
+        const contentHtml = await contentResp.text();
+        const contentParser = new LegadoParser(contentHtml, chapterUrl);
+        
+        const ruleContent = typeof source.ruleContent === 'string' 
+          ? JSON.parse(source.ruleContent) 
+          : (source.ruleContent || {});
+        
+        if (ruleContent.content) {
+          const content = contentParser.parse(ruleContent.content);
+          st.innerHTML += '<br>✅ 内容长度: ' + content.length + ' 字';
+          st.innerHTML += '<br>   前50字: ' + content.substring(0, 50).replace(/<[^>]+>/g, '');
+        }
+      }
+    }
+    
+    st.innerHTML += '<br><b style="color:var(--green)">🎉 完整测试通过！</b>';
+    
+  } catch(e) {
+    st.innerHTML += '<br><b style="color:var(--red)">❌ 失败: ' + e.message + '</b>';
+  }
+}
+
+// ============================================================
+// 在线播放直链视频
+// ============================================================
+
+async function testVideoPlay() {
+  const code = document.getElementById('ai-output').value.trim();
+  const st = document.getElementById('ai-status');
+  
+  st.innerHTML = '<b style="color:var(--cyan)">🎬 测试视频播放...</b>';
+  
+  // 尝试提取播放链接
+  let playUrl = '';
+  try {
+    const json = JSON.parse(code);
+    // 如果是TVBox格式
+    if (json.sites) {
+      st.innerHTML += '<br>⚠️ 这是单仓配置，不是单个源';
+      return;
+    }
+  } catch(e) {
+    // 直接当作URL
+    if (code.startsWith('http') && (code.includes('.mp4') || code.includes('.m3u8'))) {
+      playUrl = code;
+    }
+  }
+  
+  if (!playUrl) {
+    st.innerHTML += '<br>请在输入框粘贴直链mp4/m3u8地址';
+    return;
+  }
+  
+  // 显示视频播放器
+  const playerHtml = '<video controls autoplay style="width:100%;max-height:400px;background:#000;border-radius:8px;margin-top:10px"><source src="' + playUrl + '" type="video/mp4"></video>';
+  
+  st.innerHTML += playerHtml;
+  st.innerHTML += '<br>✅ 播放器已加载';
+}
+
+// ============================================================
+// 在线测试漫画
+// ============================================================
+
+async function testComicSource() {
+  const code = document.getElementById('ai-output').value.trim();
+  const st = document.getElementById('ai-status');
+  
+  if (!code) {
+    st.innerHTML = '<b style="color:var(--red)">❌ 请先粘贴漫画源JSON</b>';
+    return;
+  }
+  
+  st.innerHTML = '<b style="color:var(--cyan)">🎨 测试漫画源...</b>';
+  
+  try {
+    const json = JSON.parse(code);
+    st.innerHTML += '<br>✅ JSON解析成功';
+    
+    // 检查是否是羊壳格式
+    if (json.key && json.api) {
+      st.innerHTML += '<br>✅ 羊壳格式: ' + json.name;
+      st.innerHTML += '<br>⚠️ 羊壳漫画源需要drpy-node服务端才能测试';
+      st.innerHTML += '<br>💡 建议在PeekPro App里实际测试';
+    } else {
+      st.innerHTML += '<br>⚠️ 未知格式';
+    }
+    
+  } catch(e) {
+    st.innerHTML += '<br><b style="color:var(--red)">❌ 失败: ' + e.message + '</b>';
+  }
+}
 </script>
