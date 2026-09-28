@@ -1,13 +1,5 @@
 [
   {
-    "name": "虎牙影视",
-    "url": "https://www.huya.com"
-  },
-  {
-    "name": "优酷",
-    "url": "https://www.youku.com"
-  },
-  {
     "name": "爱奇艺",
     "url": "https://www.iqiyi.com"
   },
@@ -16,8 +8,8 @@
     "url": "https://www.mgtv.com"
   },
   {
-    "name": "搜狐视频",
-    "url": "https://tv.sohu.com"
+    "name": "优酷",
+    "url": "https://www.youku.com"
   },
   {
     "name": "哔哩哔哩",
@@ -28,87 +20,27 @@
     "url": "https://www.pptv.com"
   },
   {
-    "name": "爱奇艺动漫",
-    "url": "https://www.iqiyi.com/dongman"
+    "name": "搜狐视频",
+    "url": "https://tv.sohu.com"
   },
   {
     "name": "腾讯视频",
     "url": "https://v.qq.com"
   },
   {
-    "name": "好看视频",
-    "url": "https://haokan.baidu.com"
-  },
-  {
-    "name": "西瓜视频",
-    "url": "https://www.ixigua.com"
-  },
-  {
-    "name": "优酷动漫",
-    "url": "https://www.youku.com/dongman"
-  },
-  {
-    "name": "番茄短剧",
-    "url": "https://www.fanqie.com"
-  },
-  {
-    "name": "迅雷影视",
-    "url": "https://www.xunlei.tv"
-  },
-  {
-    "name": "快手短剧",
-    "url": "https://www.kuaishou.com"
-  },
-  {
-    "name": "腾讯动漫",
-    "url": "https://ac.qq.com"
+    "name": "4K影院",
+    "url": "https://4kvm.tv"
   },
   {
     "name": "网飞猫",
     "url": "https://www.ncat.tv"
   },
   {
-    "name": "樱花动漫",
-    "url": "https://www.yinghua.com"
+    "name": "迅雷影视",
+    "url": "https://www.xunlei.tv"
   },
   {
-    "name": "爱奇艺儿童",
-    "url": "https://www.iqiyi.com/children"
-  },
-  {
-    "name": "哔哩哔哩漫画",
-    "url": "https://manga.bilibili.com"
-  },
-  {
-    "name": "4K影院",
-    "url": "https://4kvm.tv"
-  },
-  {
-    "name": "芒果TV综艺",
-    "url": "https://www.mgtv.com/variety"
-  },
-  {
-    "name": "抖音短剧",
-    "url": "https://www.douyin.com"
-  },
-  {
-    "name": "微信视频号",
-    "url": "https://channels.weixin.qq.com"
-  },
-  {
-    "name": "豆瓣电影",
-    "url": "https://movie.douban.com"
-  },
-  {
-    "name": "时光网",
-    "url": "https://www.mtime.com"
-  },
-  {
-    "name": "www.ddys.tv",
+    "name": "低端影视",
     "url": "https://www.ddys.tv"
-  },
-  {
-    "name": "淘票票",
-    "url": "https://www.taopiaopiao.com"
   }
 ]
