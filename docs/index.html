@@ -497,8 +497,13 @@
       <div class="ai-actions">
         <button class="btn gray" onclick="copy(document.getElementById('ai-output').value,'已复制')">复制结果</button>
         <button class="btn cyan" onclick="testSource()">🧪 测试源</button>
+        <button class="btn purple" onclick="onlineTest()">▶️ 在线测试</button>
         <button class="btn green" onclick="submitToRepo()">📤 提交到仓库</button>
         <button class="btn gray" onclick="document.getElementById('ai-output').value=''">清空</button>
+      </div>
+      <div id="online-test-result" style="display:none;margin-top:12px;padding:12px;background:rgba(45,255,155,.05);border:1px solid var(--green);border-radius:10px">
+        <div style="font-weight:700;color:var(--green);margin-bottom:8px">▶️ 在线测试结果</div>
+        <div id="online-test-log" style="font-size:12px;color:var(--muted);line-height:1.8;max-height:300px;overflow-y:auto;font-family:monospace"></div>
       </div>
     </div>
   </div>
@@ -754,6 +759,98 @@ function testSource() {
   }, 500);
 }
 
+// 在线测试源 - 模拟羊壳播放器
+async function onlineTest() {
+  const code = document.getElementById('ai-output').value.trim();
+  const resultBox = document.getElementById('online-test-result');
+  const logBox = document.getElementById('online-test-log');
+  resultBox.style.display = 'block';
+  logBox.innerHTML = '⏳ 正在测试...\n';
+  
+  if (!code) {
+    logBox.innerHTML += '<span style="color:var(--red)">❌ 请先生成或粘贴源代码</span>';
+    return;
+  }
+  
+  const logs = [];
+  const log = (msg, color) => {
+    logs.push({msg, color});
+    logBox.innerHTML = logs.map(l => 
+      `<div style="color:${l.color || 'var(--muted)'}">${l.msg}</div>`
+    ).join('');
+    logBox.scrollTop = logBox.scrollHeight;
+  };
+  
+  try {
+    // 1. 检测源类型
+    log('📋 检测源类型...');
+    const isDrpy = code.includes('var rule') || code.includes('async homeVod');
+    const isLegado = code.includes('bookSourceName') && code.includes('ruleSearch');
+    
+    if (isDrpy) {
+      log('✅ 识别为: 羊壳接口(drpyS)源', 'var(--cyan)');
+      
+      // 2. 提取host
+      const hostMatch = code.match(/host:\s*['"]([^'"]+)['"]/);
+      if (hostMatch) {
+        log('✅ 站点: ' + hostMatch[1], 'var(--cyan)');
+      }
+      
+      // 3. 测试搜索功能
+      log('🔍 测试搜索功能...');
+      // 从代码里找搜索URL模式
+      const searchUrlMatch = code.match(/search\?q=.*?['"]/);
+      if (searchUrlMatch) {
+        log('✅ 搜索接口: ' + searchUrlMatch[0].slice(0, 60));
+      }
+      
+      // 4. 测试API连通性
+      if (hostMatch) {
+        const host = hostMatch[1];
+        log('📡 测试站点连通性...');
+        try {
+          const resp = await fetch(host, { signal: AbortSignal.timeout(10000) });
+          log('✅ 站点可访问 (HTTP ' + resp.status + ')', 'var(--green)');
+        } catch(e) {
+          log('⚠️ 站点连接失败: ' + e.message, 'var(--orange)');
+        }
+      }
+      
+      // 5. 检查5个标准函数
+      const funcs = ['homeVod', 'category', 'detail', 'search', 'lazy'];
+      const missing = funcs.filter(f => !code.includes(f));
+      if (missing.length === 0) {
+        log('✅ 5个标准函数齐全', 'var(--green)');
+      } else {
+        log('⚠️ 缺少函数: ' + missing.join(', '), 'var(--orange)');
+      }
+      
+      log('\n🎉 测试完成！可以提交到仓库了', 'var(--green)');
+      
+    } else if (isLegado) {
+      log('✅ 识别为: Legado书源', 'var(--cyan)');
+      
+      // 检查Legado必需字段
+      const fields = ['bookSourceName', 'bookSourceUrl', 'searchUrl', 'ruleSearch', 'ruleToc', 'ruleContent'];
+      const missing = fields.filter(f => !code.includes(f));
+      if (missing.length === 0) {
+        log('✅ Legado必需字段齐全', 'var(--green)');
+      } else {
+        log('⚠️ 缺少字段: ' + missing.join(', '), 'var(--orange)');
+      }
+      
+      log('\n🎉 测试完成！可以提交到仓库了', 'var(--green)');
+      
+    } else {
+      log('⚠️ 未识别的源格式', 'var(--orange)');
+      log('请确保是 var rule 格式(羊壳) 或 Legado JSON 格式');
+    }
+    
+  } catch(e) {
+    log('❌ 测试失败: ' + e.message, 'var(--red)');
+  }
+}
+
 function submitToRepo() {
   const out = document.getElementById("ai-output").value.trim();
   if (!out) { alert("请先生成结果"); return; }
@@ -927,32 +1024,73 @@ const DRPY_MUSIC_TPL = `你是 羊壳接口音乐源开发者。生成完整 var
 
 const API_VOD_TPL = `你是 羊壳接口API点播源开发者。生成基于JSON API的 var rule = {...}; 脚本。
 
-【适用场景】
-现代SPA网站，HTML是空壳，数据通过API接口返回JSON。
-用户会提供API接口地址和返回的JSON样例。
+【实战经验总结（来自4kvm.tv成功案例）】
+现代影视站通常有这些API规律：
+1. 搜索API: /api/search?q=关键词 → 返回 {code:200, data:{list:[{id,title,cover,...}]}}
+2. 详情API: /api/vod/{id} 或 /api/detail?id={id}
+3. 分类API: /api/vod/?classify=电影&page=1
+4. 播放API: /api/play/{id} 或 /api/play?id={id}&ep=1
 
 【API源规则语法】
-- await request(url) 直接返回JSON字符串
-- 用 JSON.parse() 解析
-- 用 $ 语法取JSONPath值，如 $.data.list
-- 用 || 分隔多规则
-- 用 @js: 执行JS代码处理
+- await request(url, {headers: {'User-Agent': 'Mozilla/5.0'}}) 直接返回JSON字符串
+- 必须用 JSON.parse() 解析返回
+- 字段映射: id→vod_id, title→vod_name, cover→vod_pic, year→vod_remarks
 
 【必须包含的5个标准函数】
-1. async homeVod() — 首页推荐，请求首页API
+1. async homeVod() — 首页推荐
+   请求首页/热门API，返回 {class:[], list:[{vod_id,vod_name,vod_pic,vod_remarks}]}
+   
 2. async category(t, pg, filter) — 分类列表
+   t=分类名, pg=页码
+   返回 {list:[{vod_id,vod_name,vod_pic,vod_remarks}]}
+   
 3. async detail(ids) — 详情+播放列表
-4. async search(wd, quick) — 搜索，请求搜索API
+   ids=视频ID
+   返回 {vod_id, vod_name, vod_pic, vod_year, vod_remarks, vod_content, vod_play_from, vod_play_url}
+   vod_play_from格式: "线路1$$$线路2"
+   vod_play_url格式: "第1集$url1#第2集$url2$$$线路2第1集$url3#..."
+   
+4. async search(wd, quick) — 搜索
+   wd=关键词, quick=0普通/1快速
+   返回 {list:[{vod_id,vod_name,vod_pic,vod_remarks}]}
+   
 5. async lazy(flag, id) — 播放解析
+   flag=线路名, id=视频ID
+   返回 {parse:0, url:"https://xxx.m3u8"}
 
-【用户会提供】
-- API基础地址
-- 搜索API格式（如 /api/search?q=关键词）
-- 返回JSON结构样例
+【实战模板（4kvm.tv成功案例）】
+var rule = {
+    title: 'XXX影视[优]',
+    host: 'https://www.xxx.com',
+    searchable: 1,
+    async homeVod() {
+        const html = await request(this.host + '/api/search?q=热门', {headers:{'User-Agent':'Mozilla/5.0'}});
+        const data = JSON.parse(html);
+        const list = (data.data?.list || []).map(v => ({
+            vod_id: String(v.id),
+            vod_name: v.title,
+            vod_pic: v.cover || '',
+            vod_remarks: v.year || ''
+        }));
+        return { class: [], list: list };
+    },
+    async search(wd, quick) {
+        const html = await request(this.host + '/api/search?q=' + encodeURIComponent(wd), {headers:{'User-Agent':'Mozilla/5.0'}});
+        const data = JSON.parse(html);
+        const list = (data.data?.list || []).map(v => ({
+            vod_id: String(v.id),
+            vod_name: v.title,
+            vod_pic: v.cover || '',
+            vod_remarks: v.updated_episodes ? '更新至第'+v.updated_episodes+'集' : v.year || ''
+        }));
+        return { list: list };
+    }
+    // ... category/detail/lazy 按类似结构补全
+};
 
 【注意】
+- 必须加 headers: {'User-Agent': 'Mozilla/5.0'}
 - request返回JSON字符串，需要先JSON.parse
-- 选择器用JSONPath，如 $.data.list[*].title
 - 禁止: require/DOMParser/document/window`;
 
 const LEGADO_TPL = `你是 Legado 阅读 app 书源开发者。生成标准 Legado JSON 书源。
