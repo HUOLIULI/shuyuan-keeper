@@ -481,6 +481,7 @@
         <button class="btn blue" onclick="aiMake('drpy_novel')">羊壳书源</button>
         <button class="btn green" onclick="aiMake('drpy_vod')">羊壳点播</button>
         <button class="btn orange" onclick="aiMake('drpy_music')">羊壳音乐</button>
+        <button class="btn purple" onclick="aiMake('api_vod')">API点播源</button>
         <button class="btn gray" onclick="aiMake('fix')">修复源</button>
         <span class="ai-status" id="ai-status"></span>
       </div>
@@ -924,6 +925,36 @@ const DRPY_MUSIC_TPL = `你是 羊壳接口音乐源开发者。生成完整 var
 - 文件名必须带[听]标签
 - 禁止: require/DOMParser/document/window`;
 
+const API_VOD_TPL = `你是 羊壳接口API点播源开发者。生成基于JSON API的 var rule = {...}; 脚本。
+
+【适用场景】
+现代SPA网站，HTML是空壳，数据通过API接口返回JSON。
+用户会提供API接口地址和返回的JSON样例。
+
+【API源规则语法】
+- await request(url) 直接返回JSON字符串
+- 用 JSON.parse() 解析
+- 用 $ 语法取JSONPath值，如 $.data.list
+- 用 || 分隔多规则
+- 用 @js: 执行JS代码处理
+
+【必须包含的5个标准函数】
+1. async homeVod() — 首页推荐，请求首页API
+2. async category(t, pg, filter) — 分类列表
+3. async detail(ids) — 详情+播放列表
+4. async search(wd, quick) — 搜索，请求搜索API
+5. async lazy(flag, id) — 播放解析
+
+【用户会提供】
+- API基础地址
+- 搜索API格式（如 /api/search?q=关键词）
+- 返回JSON结构样例
+
+【注意】
+- request返回JSON字符串，需要先JSON.parse
+- 选择器用JSONPath，如 $.data.list[*].title
+- 禁止: require/DOMParser/document/window`;
+
 const LEGADO_TPL = `你是 Legado 阅读 app 书源开发者。生成标准 Legado JSON 书源。
 
 【核心字段说明】
@@ -997,6 +1028,7 @@ async function aiMake(mode) {
     drpy_novel: DRPY_NOVEL_TPL + "\n\n" + userContent,
     drpy_vod: DRPY_VOD_TPL + "\n\n" + userContent,
     drpy_music: DRPY_MUSIC_TPL + "\n\n" + userContent,
+    api_vod: API_VOD_TPL + "\n\n" + userContent,
     fix: "你是源修复专家。分析失效源，输出修复后的完整结果。只输出代码/JSON。\n\n" + userContent
   };
   out.value = "";
