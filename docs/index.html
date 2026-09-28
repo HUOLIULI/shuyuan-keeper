@@ -1123,6 +1123,90 @@ const DRPY_NOVEL_TPL = `你是 羊壳接口小说源开发者。生成完整 var
 // ============================================================
 
 // ============================================================
+// 制源Skill v1.0 - 5大模块完整规范
+// ============================================================
+//
+// 【模块1: Legado书源】
+// 样本: 2382个
+// 格式: JSON
+// 核心字段:
+//   - bookSourceName: 书源名称
+//   - bookSourceUrl: 站点URL
+//   - searchUrl: 搜索URL模板，{{key}}=关键词
+//   - ruleSearch: 搜索规则
+//     - bookList: 书籍列表选择器
+//     - name: 书名选择器@text
+//     - author: 作者选择器@text
+//     - bookUrl: 详情链接@href
+//     - coverUrl: 封面@src
+//   - ruleToc: 目录规则
+//     - chapterList: 章节列表
+//     - chapterName: 章节名@text
+//     - chapterUrl: 章节链接@href
+//   - ruleContent: 正文规则
+//     - content: 正文@p@html
+//     - title: 标题@text
+// 规则语法: class.类名@tag.标签名.位置@属性
+// 父子层级: @分隔
+// 排除: ##/正则/
+//
+// 【模块2: Legado订阅源】
+// 样本: 222个
+// 格式: JSON
+// 核心字段:
+//   - sourceName: 订阅源名称
+//   - sourceUrl: 站点URL
+//   - type: 0 (文章订阅)
+//   - searchUrl: 搜索URL
+//   - ruleArticles: 文章列表规则
+//     - articleList: 文章列表
+//     - title: 文章标题@text
+//     - link: 文章链接@href
+//     - image: 配图@src
+//     - pubDate: 发布时间@text
+//     - description: 摘要@text
+// 规则语法: 同Legado书源
+//
+// 【模块3: peekPro点播源(drpyS)】
+// 样本: 28个
+// 格式: JS脚本 (var rule = {...})
+// 核心字段:
+//   - title: 源名称
+//   - host: 站点域名
+//   - homeUrl: 首页路径
+//   - url: 分类页路径
+//   - searchUrl: 搜索路径，**=关键词
+//   - class_name: 分类名&分隔
+//   - class_url: 分类URL&分隔
+// 5个标准函数:
+//   - 推荐/推荐: 首页推荐
+//   - 一级/category: 分类列表
+//   - 二级/detail: 详情页解析
+//   - 搜索/search: 搜索结果解析
+//   - lazy: 播放地址懒加载
+// 选择器语法: 选择器&&Text/&&src/&&href
+// 父子层级: ;分隔
+//
+// 【模块4: peekPro书源+漫画源】
+// 样本: 9个 (2漫画+7书源)
+// 格式: 同点播源 (JS脚本)
+// 区别:
+//   - 漫画源: lazy返回 {parse:0, url:[图片数组]}
+//   - 书源: lazy返回 {content: 章节正文}
+// 类型字段: 漫画/小说/听书
+//
+// 【模块5: peekProHTML源】
+// 格式: 同点播源 (JS脚本)
+// 区别:
+//   - HTML源: 用pdfa/pdfh解析HTML
+//   - API源: 用JSONPath解析JSON
+// 解析函数:
+//   - pdfa(html, parse): 所有匹配元素数组
+//   - pdfh(html, parse, baseUrl): 第一个匹配元素
+//
+// ============================================================
+
+// ============================================================
 // PeekPro 1.5.8 各板块解析模块规范（从源码逆向得出）
 // ============================================================
 //
