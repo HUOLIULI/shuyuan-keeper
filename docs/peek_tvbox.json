@@ -1218,6 +1218,21 @@
       "quickSearch": 0,
       "filterable": 1,
       "changeable": 0
+    },
+    {
+      "key": "drpyS_4K影视[优]",
+      "name": "4K影视[优](DS)",
+      "type": 4,
+      "api": "http://127.0.0.1:5757/api/4K影视[优]",
+      "searchable": 1,
+      "filterable": 0,
+      "quickSearch": 0,
+      "title": "4K影视[优]",
+      "author": "自建",
+      "类型": "影视",
+      "logo": "https://4kvm.staticimgjs.org/uploads/2026/03/e8bbe2c53e4567.png",
+      "lang": "ds",
+      "ext": ""
     }
   ],
   "lives": [],
