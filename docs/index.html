@@ -713,20 +713,33 @@ function testSource() {
   if (out.includes("DOMParser")) errors.push("❌ 包含DOMParser - drpyS沙箱禁止");
   if (out.includes("document.")) errors.push("❌ 包含document - drpyS沙箱禁止");
   if (out.includes("window.")) errors.push("❌ 包含window - drpyS沙箱禁止");
-  // 检查drpyS标准函数
-  const hasHomeVod = out.includes("homeVod");
-  const hasCategory = out.includes("category");
-  const hasDetail = out.includes("detail");
-  const hasSearch = out.includes("search");
-  const hasLazy = out.includes("lazy");
-  const missing = [];
-  if (!hasHomeVod) missing.push("homeVod");
-  if (!hasCategory) missing.push("category");
-  if (!hasDetail) missing.push("detail");
-  if (!hasSearch) missing.push("search");
-  if (!hasLazy) missing.push("lazy");
-  if (missing.length > 0) {
-    errors.push("⚠️ 缺少标准函数: " + missing.join(", "));
+  // 自动检测源类型
+  const isLegado = out.includes("bookSourceName") && out.includes("ruleSearch");
+  const isDrpy = out.includes("var rule") || out.includes("async homeVod");
+  
+  if (isLegado) {
+    // Legado源检查
+    const requiredLegado = ["bookSourceName", "bookSourceUrl", "searchUrl", "ruleSearch", "ruleToc", "ruleContent"];
+    const missingLegado = requiredLegado.filter(k => !out.includes(k));
+    if (missingLegado.length > 0) {
+      errors.push("⚠️ Legado源缺少字段: " + missingLegado.join(", "));
+    }
+    // 检查ruleSearch子字段
+    const ruleSearchFields = ["bookList", "name", "bookUrl"];
+    const missingSearch = ruleSearchFields.filter(k => !out.includes(k));
+    if (missingSearch.length > 0) {
+      errors.push("⚠️ ruleSearch缺少: " + missingSearch.join(", "));
+    }
+  } else if (isDrpy) {
+    // drpyS源检查
+    const requiredDrpy = ["homeVod", "category", "detail", "search", "lazy"];
+    const missingDrpy = requiredDrpy.filter(k => !out.includes(k));
+    if (missingDrpy.length > 0) {
+      errors.push("⚠️ drpyS缺少函数: " + missingDrpy.join(", "));
+    }
+  } else {
+    // 未知格式，给出提示
+    errors.push("⚠️ 未识别的源格式，请确保是Legado JSON或drpyS var rule格式");
   }
   
   setTimeout(() => {
@@ -843,20 +856,44 @@ const DRPY_NOVEL_TPL = `你是 drpyS 小说源开发者。生成完整 var rule 
 
 const DRPY_VOD_TPL = `你是 drpyS 影视源开发者。生成完整 var rule = {...}; 脚本。
 
-【必须包含的标准函数（函数名必须完全一致）】
-1. async homeVod() — 首页推荐列表，返回 {class:[], list:[{vod_id,vod_name,vod_pic,vod_remarks}]}
-2. async category(t, pg, filter) — 分类列表，t=分类ID，pg=页码
-3. async detail(ids) — 详情页，返回 {vod_id,vod_name,vod_pic,vod_year,vod_area,vod_remarks,vod_content,vod_play_from,vod_play_url}
-4. async search(wd, quick) — 搜索，wd=关键词，quick=0/1
-5. async lazy(flag, id) — 播放解析，返回 {parse:0, url:m3u8直链}
+【drpyS 规则语法】
+- await request(url, options) 直接返回HTML字符串
+- pdfa(selector, html) CSS选择器
+- pdfh(selector, html, index) 获取单个元素
+- pd(selector, html, index) 获取属性/文本
+- && 分隔父子层级，如 "class.book-list&&tag.li.0"
+- this.KEY = 搜索关键词
+- this.MY_PAGE = 当前页码
+- result = 当前请求结果
+- javaStr(jsCode) 执行JS代码
 
-【技术要求】
-- await request(url) 直接返回HTML字符串
-- pdfa/pdfh/pd 原生选择器（&&分隔父子层级）
-- this.KEY=搜索词, this.MY_PAGE=页码
-- vod_play_url格式: 第1集$url1#第2集$url2
-- 多线路用$$$分隔 vod_play_from 和 vod_play_url
-- 禁止: require/DOMParser/document/window`;
+【必须包含的5个标准函数（函数名必须完全一致）】
+1. async homeVod() — 首页推荐
+   返回: {class:[{type_id,type_name}], list:[{vod_id,vod_name,vod_pic,vod_remarks}]}
+   
+2. async category(t, pg, filter) — 分类列表
+   参数: t=分类ID, pg=页码
+   返回: {list:[{vod_id,vod_name,vod_pic,vod_remarks}]}
+   
+3. async detail(ids) — 详情+播放列表
+   参数: ids=视频ID
+   返回: {vod_id, vod_name, vod_pic, vod_year, vod_area, vod_remarks, vod_content, vod_play_from, vod_play_url}
+   vod_play_from格式: "线路1$$$线路2"
+   vod_play_url格式: "第1集$url1#第2集$url2$$$线路2的第1集$url3#..."
+   
+4. async search(wd, quick) — 搜索
+   参数: wd=关键词, quick=0普通/1快速
+   返回: {list:[{vod_id,vod_name,vod_pic,vod_remarks}]}
+   
+5. async lazy(flag, id) — 播放解析
+   参数: flag=线路名, id=视频ID
+   返回: {parse:0, url:"https://xxx.m3u8"}
+
+【注意事项】
+- 文件名必须带分类标签 [影]/[短]/[漫]/[听] 等
+- 禁止: require/import/fs/process/DOMParser/document/window/navigator
+- request直接返回HTML，不需要解析器
+- 选择器用 pdfa/pdfh/pd 函数，不用jQuery`;
 
 const DRPY_MUSIC_TPL = `你是 drpyS 音乐源开发者。生成完整 var rule = {...}; 脚本。
 
@@ -876,12 +913,58 @@ const DRPY_MUSIC_TPL = `你是 drpyS 音乐源开发者。生成完整 var rule 
 - 文件名必须带[听]标签
 - 禁止: require/DOMParser/document/window`;
 
-const LEGADO_TPL = `你是 Legado 书源开发者。生成标准 Legado JSON 书源。
+const LEGADO_TPL = `你是 Legado 阅读 app 书源开发者。生成标准 Legado JSON 书源。
 
-【必须包含字段】
-- bookSourceName, bookSourceUrl, bookSourceComment
-- ruleSearch: {bookList, name, url, author, kind, desc, cover, wordCount}
-- ruleBookInfo: {init, name, cover, intro, bookUrl, tocUrl, durChapterUrl}
+【核心字段说明】
+- bookSourceName: 书源名称（带[书]标签）
+- bookSourceUrl: 网站首页URL
+- bookSourceGroup: 分组（如"自建"）
+- searchUrl: 搜索地址，searchKey=关键词，searchPage=页码
+- ruleSearch: 搜索结果规则
+- ruleBookInfo: 书籍详情规则
+- ruleToc: 章节目录规则
+- ruleContent: 章节内容规则
+
+【选择器语法（Jsoup方式）】
+格式: class/id.类名@tag.标签名.位置@属性
+- class.book-list@tag.li@text → class="book-list"下所有li的文本
+- class.book-list@tag.li.0@text → 第一个li的文本
+- class.book-list@tag.li.-1@text → 最后一个li的文本
+- @href → 获取链接
+- @src → 获取图片
+- @textNodes → 获取纯文本内容
+- @html → 获取HTML内容
+- 用 | 分隔多规则，取第一个成功的
+- 用 #正则 做替换，如 #作者：
+
+【ruleSearch 必备子规则】
+{
+  "bookList": "列表选择器",
+  "name": "书名选择器@text",
+  "author": "作者选择器@text",
+  "kind": "分类选择器@text",
+  "coverUrl": "封面选择器@src",
+  "intro": "简介选择器@text",
+  "lastChapter": "最新章节选择器@text",
+  "bookUrl": "链接选择器@href"
+}
+
+【ruleToc 必备子规则】
+{
+  "chapterList": "章节列表选择器",
+  "chapterName": "章节名选择器@text",
+  "chapterUrl": "章节链接选择器@href"
+}
+
+【ruleContent 必备子规则】
+{
+  "content": "正文选择器@textNodes"
+}
+
+【注意事项】
+- 文件名必须带[书]标签
+- 编码不是utf8时加 |char=gbk
+- searchUrl中searchPage从0开始用searchPage-1
 - ruleContent: {nextContent, content, title}
 - 只输出纯JSON，不要解释`;
 
