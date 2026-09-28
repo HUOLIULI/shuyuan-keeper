@@ -1,0 +1,42 @@
+[
+  {
+    "name": "4K影视",
+    "url": "https://4kvm.tv"
+  },
+  {
+    "name": "网飞猫",
+    "url": "https://www.ncat.tv"
+  },
+  {
+    "name": "虎牙影视",
+    "url": "https://www.huya.com"
+  },
+  {
+    "name": "哔哩哔哩",
+    "url": "https://www.bilibili.com"
+  },
+  {
+    "name": "腾讯视频",
+    "url": "https://v.qq.com"
+  },
+  {
+    "name": "爱奇艺",
+    "url": "https://www.iqiyi.com"
+  },
+  {
+    "name": "优酷",
+    "url": "https://www.youku.com"
+  },
+  {
+    "name": "芒果TV",
+    "url": "https://www.mgtv.com"
+  },
+  {
+    "name": "搜狐视频",
+    "url": "https://tv.sohu.com"
+  },
+  {
+    "name": "PPTV",
+    "url": "https://www.pptv.com"
+  }
+]

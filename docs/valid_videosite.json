@@ -1,44 +1,122 @@
 [
- {
-  "name": "4K影视",
-  "url": "https://www.4kvm.tv",
-  "subcat": "online",
-  "source": "curated"
- },
- {
-  "name": "腾讯视频",
-  "url": "https://v.qq.com",
-  "subcat": "online",
-  "source": "curated"
- },
- {
-  "name": "爱奇艺",
-  "url": "https://www.iqiyi.com",
-  "subcat": "online",
-  "source": "curated"
- },
- {
-  "name": "优酷",
-  "url": "https://www.youku.com",
-  "subcat": "online",
-  "source": "curated"
- },
- {
-  "name": "芒果TV",
-  "url": "https://www.mgtv.com",
-  "subcat": "online",
-  "source": "curated"
- },
- {
-  "name": "哔哩哔哩",
-  "url": "https://www.bilibili.com",
-  "subcat": "online",
-  "source": "curated"
- },
- {
-  "name": "低端影视",
-  "url": "https://www.ddys.tv",
-  "subcat": "online",
-  "source": "curated"
- }
+  {
+    "name": "4K影院",
+    "url": "https://4kvm.tv"
+  },
+  {
+    "name": "网飞猫",
+    "url": "https://www.ncat.tv"
+  },
+  {
+    "name": "虎牙影视",
+    "url": "https://www.huya.com"
+  },
+  {
+    "name": "星辰影视",
+    "url": "https://www.xctv.tv"
+  },
+  {
+    "name": "八戒影视",
+    "url": "https://www.bajie.tv"
+  },
+  {
+    "name": "光速影院",
+    "url": "https://www.guangsu.tv"
+  },
+  {
+    "name": "急速影视",
+    "url": "https://www.jisu.tv"
+  },
+  {
+    "name": "暴风影视",
+    "url": "https://www.baofeng.tv"
+  },
+  {
+    "name": "迅雷影视",
+    "url": "https://www.xunlei.tv"
+  },
+  {
+    "name": "快车影视",
+    "url": "https://www.kuaiche.tv"
+  },
+  {
+    "name": "腾讯视频",
+    "url": "https://v.qq.com"
+  },
+  {
+    "name": "爱奇艺",
+    "url": "https://www.iqiyi.com"
+  },
+  {
+    "name": "优酷",
+    "url": "https://www.youku.com"
+  },
+  {
+    "name": "芒果TV",
+    "url": "https://www.mgtv.com"
+  },
+  {
+    "name": "哔哩哔哩",
+    "url": "https://www.bilibili.com"
+  },
+  {
+    "name": "搜狐视频",
+    "url": "https://tv.sohu.com"
+  },
+  {
+    "name": "PP视频",
+    "url": "https://www.pptv.com"
+  },
+  {
+    "name": "1905电影网",
+    "url": "https://www.1905.com"
+  },
+  {
+    "name": "西瓜视频",
+    "url": "https://www.ixigua.com"
+  },
+  {
+    "name": "好看视频",
+    "url": "https://haokan.baidu.com"
+  },
+  {
+    "name": "樱花动漫",
+    "url": "https://www.yinghua.com"
+  },
+  {
+    "name": "哔哩哔哩动画",
+    "url": "https://m.bilibili.com/anime"
+  },
+  {
+    "name": "腾讯动漫",
+    "url": "https://ac.qq.com"
+  },
+  {
+    "name": "爱奇艺动漫",
+    "url": "https://www.iqiyi.com/dongman"
+  },
+  {
+    "name": "优酷动漫",
+    "url": "https://www.youku.com/dongman"
+  },
+  {
+    "name": "红果短剧",
+    "url": "https://www.hongguo.com"
+  },
+  {
+    "name": "星芽短剧",
+    "url": "https://www.xingya.com"
+  },
+  {
+    "name": "七猫短剧",
+    "url": "https://www.qimao.com"
+  },
+  {
+    "name": "番茄短剧",
+    "url": "https://www.fanqie.com"
+  },
+  {
+    "name": "快手短剧",
+    "url": "https://www.kuaishou.com"
+  }
 ]
