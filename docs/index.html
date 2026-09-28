@@ -965,6 +965,37 @@ const DRPY_NOVEL_TPL = `你是 羊壳接口小说源开发者。生成完整 var
 - 文件名必须带[书]标签
 - 禁止: require/DOMParser/document/window`;
 
+// ============================================================
+// PeekPro 1.5.8 各板块解析模块规范（从源码逆向得出）
+// ============================================================
+//
+// 【点播/影视】— drpyS 解析引擎
+//   核心: Fastify 服务端 + html_parser_lite.js 前端解析
+//   接口: /api/:module  (T4协议)
+//   函数: homeVod/category/detail/search/lazy (5个标准函数)
+//   解析: pdfa(html, parse) / pdfh(html, parse, baseUrl) / pd(html, parse, baseUrl)
+//   返回: {class, list, vod_id, vod_name, vod_pic, vod_remarks, vod_play_from, vod_play_url}
+//
+// 【书源/小说】— drpyS 解析引擎
+//   与点播同源，只是字段映射不同
+//   函数: 同样5个标准函数
+//   返回: {bookUrl, chapterUrl, content}
+//
+// 【音乐】— LX Music SDK
+//   核心: lx_bridge.js (Buffer/crypto/zlib polyfill)
+//   函数: homeVod/category/detail/search/lazy
+//   返回: {musicUrl, pic, lrc}
+//
+// 【漫画】— drpyS 解析引擎
+//   与点播同源，lazy返回图片数组
+//   返回: {parse:0, url:["img1.jpg","img2.jpg",...]}
+//
+// 【IPTV】— m3u 播放列表
+//   格式: #EXTM3U + #EXTINF + 频道URL
+//   无需脚本解析，直接播放
+//
+// ============================================================
+
 const DRPY_VOD_TPL = `你是 羊壳接口影视源开发者。生成完整 var rule = {...}; 脚本。
 
 【羊壳接口规则语法】
