@@ -772,43 +772,53 @@ async function aiFetchHTML() {
   const url = document.getElementById("ai-input-url").value.trim();
   const st = document.getElementById("ai-status");
   if (!url) { st.innerHTML = '<b style="color:var(--red)">请输入URL</b>'; return; }
-  st.innerHTML = '<b style="color:var(--cyan)">🔍 抓取分析中（多代理备选）...</b>';
   
-  // 多代理备选，按顺序尝试
-  const proxies = [
-    u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u),
-    u => "https://corsproxy.io/?url=" + encodeURIComponent(u),
-    u => "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u),
-    u => "https://thingproxy.freeboard.io/fetch/" + u
+  const headers = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  };
+  
+  // 策略1: 先尝试直接fetch（很多站点支持CORS）
+  // 策略2: 代理备选
+  const strategies = [
+    { name: "直接访问", build: u => u },
+    { name: "allorigins代理", build: u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u) },
+    { name: "codetabs代理", build: u => "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u) },
+    { name: "corsproxy代理", build: u => "https://corsproxy.io/?url=" + encodeURIComponent(u) },
+    { name: "thingproxy代理", build: u => "https://thingproxy.freeboard.io/fetch/" + u },
   ];
   
   let html = "";
   let success = false;
+  let usedStrategy = "";
   
-  for (let i = 0; i < proxies.length; i++) {
+  for (let i = 0; i < strategies.length; i++) {
     try {
-      st.innerHTML = '<b style="color:var(--cyan)">🔍 尝试代理 ' + (i+1) + '/' + proxies.length + '...</b>';
-      const proxyUrl = proxies[i](url);
-      const resp = await fetch(proxyUrl, { 
-        headers: { "Accept": "text/html,application/xhtml+xml", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
-        signal: AbortSignal.timeout(30000)
+      st.innerHTML = '<b style="color:var(--cyan)">🔍 尝试' + strategies[i].name + ' (' + (i+1) + '/' + strategies.length + ')...</b>';
+      const fetchUrl = strategies[i].build(url);
+      const resp = await fetch(fetchUrl, { 
+        headers: headers,
+        signal: AbortSignal.timeout(30000),
+        redirect: "follow"
       });
       if (resp.ok) {
         const text = await resp.text();
-        if (text.length > 200 && !text.includes("Just a moment") && !text.includes("cloudflare")) {
+        if (text.length > 300 && !text.includes("Just a moment") && !text.includes("Cloudflare") && !text.includes("cf-challenge")) {
           html = text;
           success = true;
-          st.innerHTML = '<b style="color:var(--green)">✅ 代理' + (i+1) + '抓取成功 (' + text.length + ' bytes)</b>';
+          usedStrategy = strategies[i].name;
+          st.innerHTML = '<b style="color:var(--green)">✅ ' + usedStrategy + ' 抓取成功 (' + text.length + ' bytes)</b>';
           break;
         }
       }
     } catch(e) {
-      console.log("代理" + (i+1) + "失败:", e.message);
+      console.log(strategies[i].name + " 失败:", e.message);
     }
   }
   
   if (!success) {
-    st.innerHTML = '<b style="color:var(--orange)">⚠️ 自动抓取失败（反爬/Cloudflare）</b><div style="font-size:11px;color:var(--muted);margin-top:4px">已尝试4个代理。请手动打开网站，按F12复制HTML源码粘贴到输入框</div>';
+    st.innerHTML = '<b style="color:var(--orange)">⚠️ 自动抓取失败（反爬/Cloudflare）</b><div style="font-size:11px;color:var(--muted);margin-top:4px">已尝试' + strategies.length + '种方式。请手动打开网站，按F12复制HTML源码粘贴到输入框</div>';
     return;
   }
   
@@ -818,19 +828,20 @@ async function aiFetchHTML() {
     tmp.innerHTML = html;
     const skeleton = [];
     tmp.querySelectorAll("*").forEach(el => {
-      if (el.tagName === "SCRIPT" || el.tagName === "STYLE" || el.tagName === "META" || el.tagName === "LINK") return;
+      if (el.tagName === "SCRIPT" || el.tagName === "STYLE" || el.tagName === "META" || el.tagName === "LINK" || el.tagName === "BR") return;
       const cls = el.className ? `.${String(el.className).split(" ").slice(0,2).join(".")}` : "";
       const id = el.id ? "#" + el.id : "";
       const tag = el.tagName.toLowerCase();
       if (cls || id) skeleton.push(`<${tag}${id}${cls}>`);
     });
-    cachedHTML = skeleton.slice(0, 100).join("\n");
+    cachedHTML = skeleton.slice(0, 120).join("\n");
     // 同时保存原始HTML片段供AI分析
-    const bodyText = tmp.body ? tmp.body.innerText.slice(0, 500) : "";
+    const bodyText = tmp.body ? tmp.body.innerText.replace(/\s+/g, " ").slice(0, 800) : "";
     document.getElementById("ai-input").value = 
       "站点URL: " + url + 
       "\n\n--- 页面结构骨架 ---\n" + cachedHTML + 
-      "\n\n--- 页面文本摘要 ---\n" + bodyText;
+      "\n\n--- 页面文本摘要 ---\n" + bodyText +
+      "\n\n--- 原始HTML片段(前1500字符) ---\n" + html.slice(0, 1500);
   } catch(e) {
     document.getElementById("ai-input").value = "站点URL: " + url + "\n\n" + html.slice(0, 2000);
   }
