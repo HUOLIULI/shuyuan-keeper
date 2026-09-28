@@ -778,7 +778,7 @@ async function aiFetchHTML() {
       const proxyUrl = proxies[i](url);
       const resp = await fetch(proxyUrl, { 
         headers: { "Accept": "text/html,application/xhtml+xml", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
-        signal: AbortSignal.timeout(10000)
+        signal: AbortSignal.timeout(30000)
       });
       if (resp.ok) {
         const text = await resp.text();
