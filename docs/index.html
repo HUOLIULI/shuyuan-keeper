@@ -968,6 +968,41 @@ const DRPY_NOVEL_TPL = `你是 羊壳接口小说源开发者。生成完整 var
 - 禁止: require/DOMParser/document/window`;
 
 // ============================================================
+// 制源实战经验（从2382个Legado源 + 大量peekPro源学习得出）
+// ============================================================
+//
+// 【Legado书源规则语法】
+//   格式: class.类名@tag.标签名.位置@属性
+//   父子层级: && 分隔
+//   示例: "class.novel-item-title@text##/|作者.*|【"
+//   占位符: {{key}}=关键词  {{page}}=页码
+//
+// 【peekPro/drpyS规则语法】
+//   格式: 选择器&&Text/&&src/&&href
+//   父子层级: && 分隔
+//   示例: ".post;h3 a&&Text;img&&src;.meta&&Text;h3 a&&href"
+//   占位符: ** = 关键词
+//
+// 【Legado规则字段】
+//   ruleSearch: bookList/name/author/bookUrl/coverUrl/intro/kind/lastChapter
+//   ruleToc: chapterList/chapterName/chapterUrl
+//   ruleContent: content/title
+//
+// 【peekPro标准函数】
+//   推荐: 首页推荐视频列表
+//   一级: 分类列表页
+//   二级: 详情页解析
+//   搜索: 搜索结果解析
+//   lazy: 播放地址懒加载
+//
+// 【TVBox单仓格式】
+//   type=4: drpyS本地源
+//   api: http://127.0.0.1:5757/api/源名
+//   lang: "ds"
+//
+// ============================================================
+
+// ============================================================
 // PeekPro 1.5.8 各板块解析模块规范（从源码逆向得出）
 // ============================================================
 //
@@ -1224,12 +1259,67 @@ const YANG_HTML_TPL = `你是 羊壳HTML源开发者。生成 var rule = {...}; 
 
 const LEGADO_TPL = `你是 Legado 阅读 app 书源开发者。生成标准 Legado JSON 书源。
 
+【实战经验总结（从2382个Legado源学习）】
+
 【核心字段说明】
 - bookSourceName: 书源名称（带[书]标签）
 - bookSourceUrl: 网站首页URL
 - bookSourceGroup: 分组（如"自建"）
-- searchUrl: 搜索地址，searchKey=关键词，searchPage=页码
-- ruleSearch: 搜索结果规则
+- searchUrl: 搜索地址，{{key}}=关键词，{{page}}=页码
+  示例: "https://example.com/search?wd={{key}}&page={{page}}"
+
+【Legado规则语法】
+- class.类名 → 按class选择
+- tag.标签名 → 按标签选择
+- 位置.0 → 第一个，.-1 → 最后一个
+- @text → 取文本
+- @href → 取链接（自动补全相对路径）
+- @src → 取图片地址
+- ##/正则/ → 过滤文本
+- 父子层级用 @ 分隔
+  示例: "class.novel-item-title@text##/作者.*/【/"
+
+【ruleSearch字段】
+- bookList: 书籍列表元素选择器
+- name: 书名选择器
+- author: 作者选择器
+- bookUrl: 详情页链接选择器
+- coverUrl: 封面图选择器
+- intro: 简介选择器
+- kind: 分类选择器
+- lastChapter: 最新章节选择器
+
+【ruleToc字段】
+- chapterList: 章节目录元素选择器
+- chapterName: 章节名选择器
+- chapterUrl: 章节链接选择器
+
+【ruleContent字段】
+- content: 正文内容选择器
+- title: 章节标题选择器
+
+【完整示例结构】
+{
+  "bookSourceName": "示例小说站",
+  "bookSourceUrl": "https://example.com",
+  "bookSourceGroup": "自建",
+  "searchUrl": "https://example.com/search?wd={{key}}",
+  "ruleSearch": {
+    "bookList": "class.book-item",
+    "name": "class.title@text",
+    "author": "class.author@text",
+    "bookUrl": "a@href",
+    "coverUrl": "img@src"
+  },
+  "ruleToc": {
+    "chapterList": "class.chapter-item",
+    "chapterName": "a@text",
+    "chapterUrl": "a@href"
+  },
+  "ruleContent": {
+    "content": "class.content@p@html"
+  }
+}索结果规则
 - ruleBookInfo: 书籍详情规则
 - ruleToc: 章节目录规则
 - ruleContent: 章节内容规则
