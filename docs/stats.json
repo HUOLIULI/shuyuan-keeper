@@ -1,5 +1,5 @@
 {
-  "total": 19216,
+  "total": 22312,
   "valid_book": 1166,
   "valid_subscribe": 30,
   "valid_tvbox": 148,
@@ -11,5 +11,8 @@
   "peek_music": 34,
   "peek_pack": 112,
   "upstreams_total": 80,
-  "updated_at": "2026-09-28 20:14"
+  "updated_at": "2026-09-28 20:14",
+  "user_legado_book": 2382,
+  "user_legado_sub": 222,
+  "user_peekpro_sources": 492
 }
