@@ -477,12 +477,14 @@
       <input id="ai-input-url" placeholder="输入站点 URL (如 https://example.com)">
       <div class="ai-actions" style="flex-wrap:wrap;gap:6px">
         <span style="color:var(--muted);font-size:12px">目标格式:</span>
-        <button class="btn purple" onclick="aiMake('legado')">Legado书源</button>
-        <button class="btn blue" onclick="aiMake('drpy_novel')">羊壳书源</button>
-        <button class="btn green" onclick="aiMake('drpy_vod')">羊壳点播</button>
-        <button class="btn orange" onclick="aiMake('drpy_music')">羊壳音乐</button>
-        <button class="btn purple" onclick="aiMake('api_vod')">API点播源</button>
-        <button class="btn gray" onclick="aiMake('fix')">修复源</button>
+        <button class="btn purple" onclick="aiMake('legado_book')">📖 Legado书源</button>
+        <button class="btn blue" onclick="aiMake('legado_sub')">📋 Legado订阅</button>
+        <button class="btn green" onclick="aiMake('drpy_vod')">🎬 羊壳点播</button>
+        <button class="btn blue" onclick="aiMake('drpy_novel')">📚 羊壳书源</button>
+        <button class="btn pink" onclick="aiMake('drpy_comic')">🎨 羊壳漫画</button>
+        <button class="btn cyan" onclick="aiMake('drpy_html')">🌐 羊壳HTML</button>
+        <button class="btn orange" onclick="aiMake('fix')">🔧 修复源</button>
+        <button class="btn green" onclick="autoGen()">⚡ 一键生成</button>
         <span class="ai-status" id="ai-status"></span>
       </div>
       <div class="ai-actions" style="gap:6px">
@@ -1093,6 +1095,60 @@ var rule = {
 - request返回JSON字符串，需要先JSON.parse
 - 禁止: require/DOMParser/document/window`;
 
+const LEGADO_SUB_TPL = `你是 Legado 订阅源开发者。生成 Legado 订阅源JSON。
+
+【订阅源格式】
+{
+  "name": "订阅源名称",
+  "url": "订阅源URL",
+  "version": "1.0",
+  "time": "2024-01-01"
+}
+
+【说明】
+- 订阅源就是一个URL，指向书源列表
+- 通常指向GitHub raw文件
+- 不需要复杂规则`;
+
+const YANG_COMIC_TPL = `你是 羊壳漫画源开发者。生成 var rule = {...}; 漫画脚本。
+
+【漫画源与点播源的区别】
+- vod_pic 是漫画封面图
+- vod_play_url 是章节列表，每章是一张或多张图片URL
+- detail里返回的是章节列表
+- lazy里返回的是图片数组
+
+【必须包含的函数】
+1. async homeVod() — 首页推荐漫画
+2. async category(t, pg, filter) — 分类漫画
+3. async detail(ids) — 漫画详情+章节列表
+4. async search(wd, quick) — 搜索漫画
+5. async lazy(flag, id) — 加载章节图片
+
+【选择器】
+- pdfa(html, '.title') — 取文本
+- pdfh(html, '.img', 'src') — 取属性
+- pd(html, '.list', 0) — 取第0个元素`;
+
+const YANG_HTML_TPL = `你是 羊壳HTML源开发者。生成 var rule = {...}; HTML解析脚本。
+
+【HTML源适用场景】
+- 传统网站，HTML直接在源码里
+- 用选择器解析HTML
+- 不需要API
+
+【必须包含的函数】
+1. async homeVod() — 首页推荐
+2. async category(t, pg, filter) — 分类列表
+3. async detail(ids) — 详情+播放列表
+4. async search(wd, quick) — 搜索
+5. async lazy(flag, id) — 播放解析
+
+【选择器语法】
+- pdfa(html, '.class') — 取文本
+- pdfh(html, '#id', 'src') — 取属性
+- pd(html, '.item', 0) — 取第0个元素`;
+
 const LEGADO_TPL = `你是 Legado 阅读 app 书源开发者。生成标准 Legado JSON 书源。
 
 【核心字段说明】
@@ -1162,10 +1218,13 @@ async function aiMake(mode) {
 
   const userContent = (urlInput ? "站点: " + urlInput + "\n" : "") + (extraInput ? extraInput : "");
   const prompts = {
-    legado: LEGADO_TPL + "\n\n" + userContent,
+    legado_book: LEGADO_TPL + "\n\n" + userContent,
+    legado_sub: LEGADO_SUB_TPL + "\n\n" + userContent,
     drpy_novel: DRPY_NOVEL_TPL + "\n\n" + userContent,
     drpy_vod: DRPY_VOD_TPL + "\n\n" + userContent,
     drpy_music: DRPY_MUSIC_TPL + "\n\n" + userContent,
+    drpy_comic: YANG_COMIC_TPL + "\n\n" + userContent,
+    drpy_html: YANG_HTML_TPL + "\n\n" + userContent,
     api_vod: API_VOD_TPL + "\n\n" + userContent,
     fix: "你是源修复专家。分析失效源，输出修复后的完整结果。只输出代码/JSON。\n\n" + userContent
   };
@@ -1196,6 +1255,37 @@ async function aiMake(mode) {
     console.error("[AI] 异常:", e);
     st.innerHTML = '<b style="color:var(--red)">❌ 失败: ' + e.message + '</b>';
   }
+}
+
+// 一键生成：自动抓取分析 → AI生成 → 语法检查 → 在线测试
+async function autoGen() {
+  const st = document.getElementById("ai-status");
+  const urlInput = document.getElementById("ai-input-url").value.trim();
+  if (!urlInput) { st.innerHTML = '<b style="color:var(--red)">❌ 请先输入站点URL</b>'; return; }
+  
+  st.innerHTML = '<b style="color:var(--green)">⚡ 开始一键生成...</b>';
+  
+  // 步骤1: 抓取分析
+  st.innerHTML += '<br>📥 [1/4] 抓取分析站点...';
+  await new Promise(r => setTimeout(r, 300));
+  await aiFetchHTML();
+  
+  // 步骤2: AI生成（自动选择模式）
+  st.innerHTML += '<br>🤖 [2/4] AI生成源...';
+  await new Promise(r => setTimeout(r, 500));
+  await aiMake('drpy_vod'); // 默认羊壳点播源
+  
+  // 步骤3: 语法检查
+  st.innerHTML += '<br>🔍 [3/4] 语法检查...';
+  await new Promise(r => setTimeout(r, 200));
+  testSource();
+  
+  // 步骤4: 在线测试
+  st.innerHTML += '<br>▶️ [4/4] 在线测试...';
+  await new Promise(r => setTimeout(r, 300));
+  onlineTest();
+  
+  st.innerHTML += '<br><b style="color:var(--green)">🎉 一键生成完成！</b>';
 }
 
 // 加载统计
