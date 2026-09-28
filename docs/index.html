@@ -893,6 +893,7 @@ async function aiFetchHTML() {
   };
   
   const strategies = [
+    { name: "自建后端代理", build: u => "http://17970.my-place.us/proxy.php?url=" + encodeURIComponent(u) },
     { name: "直接访问", build: u => u },
     { name: "allorigins代理", build: u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u) },
     { name: "codetabs代理", build: u => "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u) },
