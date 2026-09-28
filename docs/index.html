@@ -442,7 +442,7 @@
         <div class="card-body">
           <div class="card-title">本地覆盖包</div>
           <div class="card-count">111站</div>
-          <div class="card-desc">PeekPro本地包→解压到peekpro/目录<br><span style="color:var(--muted);font-size:11px">含drpyS源+解析接口</span></div>
+          <div class="card-desc">PeekPro本地包→解压到peekpro/目录<br><span style="color:var(--muted);font-size:11px">含羊壳接口+解析接口</span></div>
         </div>
         <button class="card-btn">复制地址</button>
       </div>
@@ -478,9 +478,9 @@
       <div class="ai-actions" style="flex-wrap:wrap;gap:6px">
         <span style="color:var(--muted);font-size:12px">目标格式:</span>
         <button class="btn purple" onclick="aiMake('legado')">Legado书源</button>
-        <button class="btn blue" onclick="aiMake('drpy_novel')">PeekPro书源</button>
-        <button class="btn green" onclick="aiMake('drpy_vod')">PeekPro点播</button>
-        <button class="btn orange" onclick="aiMake('drpy_music')">PeekPro音乐</button>
+        <button class="btn blue" onclick="aiMake('drpy_novel')">羊壳书源</button>
+        <button class="btn green" onclick="aiMake('drpy_vod')">羊壳点播</button>
+        <button class="btn orange" onclick="aiMake('drpy_music')">羊壳音乐</button>
         <button class="btn gray" onclick="aiMake('fix')">修复源</button>
         <span class="ai-status" id="ai-status"></span>
       </div>
@@ -520,7 +520,7 @@
       </div>
       <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(168,120,255,.05);border-radius:10px">
         <span style="color:var(--purple);font-weight:700">3</span>
-        <span><b style="color:var(--text)">AI转换+修复</b> — Legado书源→drpyS脚本，T4实测验证</span>
+        <span><b style="color:var(--text)">AI转换+修复</b> — Legado书源→羊壳接口脚本，T4实测验证</span>
       </div>
       <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(255,210,63,.05);border-radius:10px">
         <span style="color:var(--yellow);font-weight:700">4</span>
@@ -672,8 +672,8 @@ function testSource() {
   if (!out) { alert("请先生成或加载源"); return; }
   const status = document.getElementById("ai-status");
   const issues = [];
-  if (out.includes("require(")) issues.push("包含require()，drpyS不支持");
-  if (out.includes("DOMParser")) issues.push("包含DOMParser，drpyS不支持");
+  if (out.includes("require(")) issues.push("包含require()，羊壳接口不支持");
+  if (out.includes("DOMParser")) issues.push("包含DOMParser，羊壳接口不支持");
   if (!out.includes("function")) issues.push("缺少函数定义");
   if (out.length < 100) issues.push("内容过短，可能不完整");
   if (issues.length === 0) {
@@ -708,11 +708,11 @@ function testSource() {
   
   // 基本语法检查
   const errors = [];
-  if (out.includes("require(")) errors.push("❌ 包含require() - drpyS沙箱禁止");
-  if (out.includes("import ")) errors.push("❌ 包含import - drpyS沙箱禁止");
-  if (out.includes("DOMParser")) errors.push("❌ 包含DOMParser - drpyS沙箱禁止");
-  if (out.includes("document.")) errors.push("❌ 包含document - drpyS沙箱禁止");
-  if (out.includes("window.")) errors.push("❌ 包含window - drpyS沙箱禁止");
+  if (out.includes("require(")) errors.push("❌ 包含require() - 羊壳接口沙箱禁止");
+  if (out.includes("import ")) errors.push("❌ 包含import - 羊壳接口沙箱禁止");
+  if (out.includes("DOMParser")) errors.push("❌ 包含DOMParser - 羊壳接口沙箱禁止");
+  if (out.includes("document.")) errors.push("❌ 包含document - 羊壳接口沙箱禁止");
+  if (out.includes("window.")) errors.push("❌ 包含window - 羊壳接口沙箱禁止");
   // 自动检测源类型
   const isLegado = out.includes("bookSourceName") && out.includes("ruleSearch");
   const isDrpy = out.includes("var rule") || out.includes("async homeVod");
@@ -735,11 +735,11 @@ function testSource() {
     const requiredDrpy = ["homeVod", "category", "detail", "search", "lazy"];
     const missingDrpy = requiredDrpy.filter(k => !out.includes(k));
     if (missingDrpy.length > 0) {
-      errors.push("⚠️ drpyS缺少函数: " + missingDrpy.join(", "));
+      errors.push("⚠️ 羊壳接口缺少函数: " + missingDrpy.join(", "));
     }
   } else {
     // 未知格式，给出提示
-    errors.push("⚠️ 未识别的源格式，请确保是Legado JSON或drpyS var rule格式");
+    errors.push("⚠️ 未识别的源格式，请确保是Legado JSON或羊壳接口 var rule格式");
   }
   
   setTimeout(() => {
@@ -836,7 +836,7 @@ async function aiFetchHTML() {
   }
 }
 
-const DRPY_NOVEL_TPL = `你是 drpyS 小说源开发者。生成完整 var rule = {...}; 脚本。
+const DRPY_NOVEL_TPL = `你是 羊壳接口小说源开发者。生成完整 var rule = {...}; 脚本。
 
 【必须包含的标准函数（函数名必须完全一致）】
 1. async homeVod() — 首页推荐列表
@@ -854,9 +854,9 @@ const DRPY_NOVEL_TPL = `你是 drpyS 小说源开发者。生成完整 var rule 
 - 文件名必须带[书]标签
 - 禁止: require/DOMParser/document/window`;
 
-const DRPY_VOD_TPL = `你是 drpyS 影视源开发者。生成完整 var rule = {...}; 脚本。
+const DRPY_VOD_TPL = `你是 羊壳接口影视源开发者。生成完整 var rule = {...}; 脚本。
 
-【drpyS 规则语法】
+【羊壳接口规则语法】
 - await request(url, options) 直接返回HTML字符串
 - pdfa(selector, html) CSS选择器
 - pdfh(selector, html, index) 获取单个元素
@@ -895,7 +895,7 @@ const DRPY_VOD_TPL = `你是 drpyS 影视源开发者。生成完整 var rule = 
 - request直接返回HTML，不需要解析器
 - 选择器用 pdfa/pdfh/pd 函数，不用jQuery`;
 
-const DRPY_MUSIC_TPL = `你是 drpyS 音乐源开发者。生成完整 var rule = {...}; 脚本。
+const DRPY_MUSIC_TPL = `你是 羊壳接口音乐源开发者。生成完整 var rule = {...}; 脚本。
 
 【必须包含的标准函数（函数名必须完全一致）】
 1. async homeVod() — 首页推荐列表
