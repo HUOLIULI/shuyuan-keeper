@@ -1,4 +1,4 @@
-name: Fetch HTML
+name: Fetch HTML (Multi-Page)
 
 on:
   issues:
@@ -17,46 +17,90 @@ jobs:
       - name: Extract URL from issue title
         id: extract
         run: |
-          URL=$(echo "${{ github.event.issue.title }}" | sed 's/抓取HTML: //')
-          echo "url=$URL" >> $GITHUB_OUTPUT
-          echo "抓取目标: $URL"
+          BASE_URL=$(echo "${{ github.event.issue.title }}" | sed 's/抓取HTML: //')
+          echo "base_url=$BASE_URL" >> $GITHUB_OUTPUT
+          echo "抓取目标: $BASE_URL"
 
-      - name: Fetch HTML
+      - name: Fetch multiple pages
         id: fetch
         run: |
-          URL="${{ steps.extract.outputs.url }}"
-          # 用curl抓取HTML
-          curl -s -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
-            -o /tmp/fetched.html \
-            --max-time 30 \
-            "$URL" || echo "" > /tmp/fetched.html
+          BASE_URL="${{ steps.extract.outputs.base_url }}"
+          mkdir -p /tmp/fetched
           
-          SIZE=$(wc -c < /tmp/fetched.html)
-          echo "size=$SIZE" >> $GITHUB_OUTPUT
-          echo "抓取完成，大小: $SIZE 字符"
+          # 1. 首页
+          echo "=== 1. 抓取首页 ==="
+          curl -s -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36" \
+            -o /tmp/fetched/01_home.html --max-time 30 "$BASE_URL" || echo "" > /tmp/fetched/01_home.html
+          echo "首页大小: $(wc -c < /tmp/fetched/01_home.html) 字符"
+          
+          # 2. 搜索结果页（用测试关键词"斗破苍穹"）
+          echo "=== 2. 抓取搜索结果页 ==="
+          SEARCH_URL="$BASE_URL/search?wd=斗破苍穹"
+          curl -s -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36" \
+            -o /tmp/fetched/02_search.html --max-time 30 "$SEARCH_URL" || echo "" > /tmp/fetched/02_search.html
+          echo "搜索页大小: $(wc -c < /tmp/fetched/02_search.html) 字符"
+          
+          # 3. 尝试常见的搜索URL格式
+          echo "=== 3. 尝试其他搜索URL格式 ==="
+          # 格式1: /s/关键词
+          SEARCH_URL2="$BASE_URL/s/斗破苍穹"
+          curl -s -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36" \
+            -o /tmp/fetched/03_search2.html --max-time 10 "$SEARCH_URL2" || echo "" > /tmp/fetched/03_search2.html
+          echo "格式2大小: $(wc -c < /tmp/fetched/03_search2.html) 字符"
+          
+          # 4. 尝试搜索URL格式3
+          SEARCH_URL3="$BASE_URL/index.php?searchkey=斗破苍穹"
+          curl -s -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36" \
+            -o /tmp/fetched/04_search3.html --max-time 10 "$SEARCH_URL3" || echo "" > /tmp/fetched/04_search3.html
+          echo "格式3大小: $(wc -c < /tmp/fetched/04_search3.html) 字符"
+          
+          echo "=== 全部抓取完成 ==="
 
-      - name: Upload HTML as artifact
+      - name: Upload all HTML files
         uses: actions/upload-artifact@v4
         with:
-          name: fetched-html
-          path: /tmp/fetched.html
+          name: fetched-html-pages
+          path: /tmp/fetched/
 
       - name: Comment on issue
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const html = fs.readFileSync('/tmp/fetched.html', 'utf8');
-            const size = html.length;
+            const path = require('path');
             
-            // 截取前8000字符，避免评论太长
-            const snippet = html.substring(0, 8000);
+            const pages = [
+              {file: '01_home.html', name: '首页'},
+              {file: '02_search.html', name: '搜索结果页(/search?wd=)'},
+              {file: '03_search2.html', name: '搜索结果页(/s/)'},
+              {file: '04_search3.html', name: '搜索结果页(/index.php?searchkey=)'},
+            ];
+            
+            let body = `## 抓取结果（多页面）\n\n`;
+            body += `抓取了 ${pages.length} 个常见页面，供AI制源助手分析：\n\n`;
+            
+            for (const page of pages) {
+              try {
+                const html = fs.readFileSync(`/tmp/fetched/${page.file}`, 'utf8');
+                const size = html.length;
+                body += `### ${page.name}\n`;
+                body += `- 文件: ${page.file}\n`;
+                body += `- 大小: ${size} 字符\n`;
+                body += `- 有效: ${size > 1000 ? '✅ 是' : '❌ 否（可能404）'}\n`;
+                body += `\`\`\`html\n${html.substring(0, 3000)}\n\`\`\`\n\n`;
+              } catch(e) {
+                body += `### ${page.name}\n- ❌ 抓取失败\n\n`;
+              }
+            }
+            
+            body += `---\n*自动生成，AI制源助手专用*\n`;
+            body += `\n💡 **提示：** 还需要抓取详情页、目录页、正文页才能完整制源。可以手动浏览网站后，把这些页面的URL发给AI助手。`;
             
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `## 抓取结果\n\n- 大小: ${size} 字符\n\n\`\`\`html\n${snippet}\n\`\`\`\n\n---\n*自动生成，AI制源助手专用*`
+              body: body
             });
 
       - name: Close issue
