@@ -935,25 +935,31 @@ async function aiFetchHTML() {
   }
   
   if (!success) {
+    const w3ctoolUrl = "https://www.w3ctool.com/tools/view-source?url=" + encodeURIComponent(url);
     const issueUrl = "https://github.com/HUOLIULI/shuyuan-keeper/issues/new?title=" + encodeURIComponent("抓取HTML: " + url);
     st.innerHTML = '<b style="color:var(--orange)">⚠️ 自动抓取失败（所有代理都挂了）</b>' +
       '<div style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6">' +
-      '<b>一键抓取（推荐）：</b><br>' +
-      '点下面的按钮，创建一个GitHub Issue，<br>' +
-      'GitHub Action会自动抓取HTML并回复结果！<br>' +
+      '<b>方案1：在线工具查看源码（推荐，最快）</b><br>' +
+      '点下面的按钮，打开在线查看源码工具，<br>' +
+      '自动加载你输入的网站，复制HTML内容回来！<br>' +
       '<br>' +
-      '<a href="' + issueUrl + '" target="_blank" style="display:inline-block;padding:8px 16px;background:var(--green);color:#fff;border-radius:6px;text-decoration:none;margin:8px 0">' +
-      '🚀 一键创建抓取任务' +
+      '<a href="' + w3ctoolUrl + '" target="_blank" style="display:inline-block;padding:8px 16px;background:var(--green);color:#fff;border-radius:6px;text-decoration:none;margin:8px 0">' +
+      '🔍 在线查看网页源码' +
       '</a><br>' +
       '<br>' +
       '<b>步骤：</b><br>' +
-      '1. 点上面的按钮，打开GitHub Issue页面<br>' +
-      '2. 点"创建新Issue"按钮<br>' +
-      '3. 等待10-30秒，GitHub Action自动抓取<br>' +
-      '4. 刷新Issue页面，就能看到抓取结果<br>' +
-      '5. 复制HTML内容，粘贴到下面的输入框<br>' +
+      '1. 点上面的按钮，打开在线工具<br>' +
+      '2. 工具会自动抓取你输入的网站HTML<br>' +
+      '3. 复制HTML内容<br>' +
+      '4. 粘贴到下面的输入框<br>' +
+      '5. 点"生成源"按钮<br>' +
       '<br>' +
-      '<b>提示：</b>这种方式没有CORS限制，能抓取任何网站！' +
+      '<b>方案2：GitHub Action抓取</b><br>' +
+      '<a href="' + issueUrl + '" target="_blank" style="display:inline-block;padding:6px 12px;background:var(--card);color:var(--text);border-radius:6px;text-decoration:none;margin:4px 0">' +
+      '🚀 创建GitHub抓取任务' +
+      '</a><br>' +
+      '<br>' +
+      '<b>提示：</b>两种方式都没有CORS限制，能抓取任何网站！' +
       '</div>';
     return;
   }
