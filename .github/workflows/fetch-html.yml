@@ -1,0 +1,66 @@
+name: Fetch HTML
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.issue.title, '抓取HTML:')
+    
+    steps:
+      - name: Extract URL from issue title
+        id: extract
+        run: |
+          URL=$(echo "${{ github.event.issue.title }}" | sed 's/抓取HTML: //')
+          echo "url=$URL" >> $GITHUB_OUTPUT
+          echo "抓取目标: $URL"
+
+      - name: Fetch HTML
+        id: fetch
+        run: |
+          URL="${{ steps.extract.outputs.url }}"
+          # 用curl抓取HTML
+          curl -s -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            -o /tmp/fetched.html \
+            --max-time 30 \
+            "$URL" || echo "" > /tmp/fetched.html
+          
+          SIZE=$(wc -c < /tmp/fetched.html)
+          echo "size=$SIZE" >> $GITHUB_OUTPUT
+          echo "抓取完成，大小: $SIZE 字符"
+
+      - name: Upload HTML as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fetched-html
+          path: /tmp/fetched.html
+
+      - name: Comment on issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const html = fs.readFileSync('/tmp/fetched.html', 'utf8');
+            const size = html.length;
+            
+            // 截取前8000字符，避免评论太长
+            const snippet = html.substring(0, 8000);
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `## 抓取结果\n\n- 大小: ${size} 字符\n\n\`\`\`html\n${snippet}\n\`\`\`\n\n---\n*自动生成，AI制源助手专用*`
+            });
+
+      - name: Close issue
+        run: |
+          gh issue close ${{ github.event.issue.number }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
