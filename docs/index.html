@@ -935,29 +935,25 @@ async function aiFetchHTML() {
   }
   
   if (!success) {
+    const issueUrl = "https://github.com/HUOLIULI/shuyuan-keeper/issues/new?title=" + encodeURIComponent("抓取HTML: " + url);
     st.innerHTML = '<b style="color:var(--orange)">⚠️ 自动抓取失败（所有代理都挂了）</b>' +
       '<div style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6">' +
-      '<b>制源需要抓取多个页面：</b><br>' +
-      '1. 首页（看分类结构）<br>' +
-      '2. 搜索结果页（看列表选择器）<br>' +
-      '3. 详情页（看书名/作者/简介）<br>' +
-      '4. 目录页（看章节列表）<br>' +
-      '5. 正文页（看内容选择器）<br>' +
+      '<b>一键抓取（推荐）：</b><br>' +
+      '点下面的按钮，创建一个GitHub Issue，<br>' +
+      'GitHub Action会自动抓取HTML并回复结果！<br>' +
       '<br>' +
-      '<b>方案1：让AI助手帮你抓取（推荐）</b><br>' +
-      '直接把网站URL发给AI助手，它会帮你：<br>' +
-      '✅ 抓取多个页面的HTML<br>' +
-      '✅ 分析真实的class名<br>' +
-      '✅ 生成完整的源规则<br>' +
+      '<a href="' + issueUrl + '" target="_blank" style="display:inline-block;padding:8px 16px;background:var(--green);color:#fff;border-radius:6px;text-decoration:none;margin:8px 0">' +
+      '🚀 一键创建抓取任务' +
+      '</a><br>' +
       '<br>' +
-      '<b>方案2：手动复制HTML</b><br>' +
-      '1. 打开网站，按 <kbd>F12</kbd><br>' +
-      '2. 按 <kbd>Ctrl+U</kbd> 查看源代码<br>' +
-      '3. <kbd>Ctrl+A</kbd> 全选，<kbd>Ctrl+C</kbd> 复制<br>' +
-      '4. 粘贴到下面的输入框<br>' +
-      '5. 点"生成源"按钮<br>' +
+      '<b>步骤：</b><br>' +
+      '1. 点上面的按钮，打开GitHub Issue页面<br>' +
+      '2. 点"创建新Issue"按钮<br>' +
+      '3. 等待10-30秒，GitHub Action自动抓取<br>' +
+      '4. 刷新Issue页面，就能看到抓取结果<br>' +
+      '5. 复制HTML内容，粘贴到下面的输入框<br>' +
       '<br>' +
-      '<b>提示：</b>手动复制HTML后，AI能看到真实结构，生成的源更准确！' +
+      '<b>提示：</b>这种方式没有CORS限制，能抓取任何网站！' +
       '</div>';
     return;
   }
