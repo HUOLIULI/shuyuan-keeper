@@ -886,75 +886,48 @@ async function aiFetchHTML() {
   const st = document.getElementById("ai-status");
   if (!url) { st.innerHTML = '<b style="color:var(--red)">请输入URL</b>'; return; }
   
-  const headers = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-  };
-  
-  const strategies = [
-    // API Ninjas（用户提供的Key）
-    { 
-      name: "API Ninjas", 
-      build: u => "https://api.api-ninjas.com/v1/webscraper?url=" + encodeURIComponent(u),
-      headers: { "X-Api-Key": "g5gwPoN19kFQGOX3TzKc1za04HiyoJWH5LO6I1Lr" }
-    },
-  ];
-  
-  let html = "";
-  window._fetchedHTML = ""; // 保存抓取到的HTML
-  let success = false;
-  let usedStrategy = "";
-  
-  for (let i = 0; i < strategies.length; i++) {
-    try {
-      st.innerHTML = '<b style="color:var(--cyan)">🔍 尝试' + strategies[i].name + ' (' + (i+1) + '/' + strategies.length + ')...</b>';
-      const fetchUrl = strategies[i].build(url);
-      const resp = await fetch(fetchUrl, { 
-        headers: headers,
-        signal: AbortSignal.timeout(30000),
-        redirect: "follow"
-      });
-      if (resp.ok) {
-        const text = await resp.text();
-        if (text.length > 300) {
-          html = text;
-          success = true;
-          usedStrategy = strategies[i].name;
-          st.innerHTML = '<b style="color:var(--green)">✅ ' + usedStrategy + ' 抓取成功 (' + text.length + ' bytes)</b>';
-          break;
-        }
-      }
-    } catch(e) {
-      console.log(strategies[i].name + " 失败:", e.message);
-    }
-  }
-  
-  {
-    st.innerHTML = '<b style="color:var(--orange)">⚠️ 抓取失败，请检查URL是否正确</b>';
-    return;
-  }
+  st.innerHTML = '<b style="color:var(--cyan)">🔍 正在抓取...</b>';
   
   try {
-    const tmp = document.createElement("div");
-    tmp.innerHTML = html;
-    const skeleton = [];
-    tmp.querySelectorAll("*").forEach(el => {
-      if (el.tagName === "SCRIPT" || el.tagName === "STYLE" || el.tagName === "META" || el.tagName === "LINK" || el.tagName === "BR") return;
-      const cls = el.className ? `.${String(el.className).split(" ").slice(0,2).join(".")}` : "";
-      const id = el.id ? "#" + el.id : "";
-      const tag = el.tagName.toLowerCase();
-      if (cls || id) skeleton.push(`<${tag}${id}${cls}>`);
+    const apiUrl = "https://api.api-ninjas.com/v1/webscraper?url=" + encodeURIComponent(url);
+    const resp = await fetch(apiUrl, { 
+      headers: { "X-Api-Key": "g5gwPoN19kFQGOX3TzKc1za04HiyoJWH5LO6I1Lr" },
+      signal: AbortSignal.timeout(30000)
     });
-    cachedHTML = skeleton.slice(0, 120).join("\n");
-    const bodyText = tmp.body ? tmp.body.innerText.replace(/\s+/g, " ").slice(0, 800) : "";
-    document.getElementById("ai-input").value = 
-      "站点URL: " + url + 
-      "\n\n--- 页面结构骨架 ---\n" + cachedHTML + 
-      "\n\n--- 页面文本摘要 ---\n" + bodyText +
-      "\n\n--- 原始HTML片段(前1500字符) ---\n" + html.slice(0, 1500);
+    
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    const data = await resp.json();
+    const html = data.data || "";
+    
+    if (html.length < 300) throw new Error("HTML太小");
+    
+    window._fetchedHTML = html;
+    st.innerHTML = '<b style="color:var(--green)">✅ 抓取成功 (' + html.length + ' bytes)</b>';
+    
+    // 提取页面结构骨架
+    try {
+      const tmp = document.createElement("div");
+      tmp.innerHTML = html;
+      const skeleton = [];
+      tmp.querySelectorAll("*").forEach(el => {
+        if (["SCRIPT","STYLE","META","LINK","BR"].includes(el.tagName)) return;
+        const cls = el.className ? `.${String(el.className).split(" ").slice(0,2).join(".")}` : "";
+        const id = el.id ? "#" + el.id : "";
+        const tag = el.tagName.toLowerCase();
+        if (cls || id) skeleton.push(`<${tag}${id}${cls}>`);
+      });
+      const bodyText = tmp.body ? tmp.body.innerText.replace(/\s+/g, " ").slice(0, 800) : "";
+      document.getElementById("ai-input").value = 
+        "站点URL: " + url + 
+        "\n\n--- 页面结构骨架 ---\n" + skeleton.slice(0, 120).join("\n") + 
+        "\n\n--- 页面文本摘要 ---\n" + bodyText +
+        "\n\n--- 原始HTML片段(前1500字符) ---\n" + html.slice(0, 1500);
+    } catch(e) {
+      document.getElementById("ai-input").value = "站点URL: " + url + "\n\n" + html.slice(0, 2000);
+    }
+    
   } catch(e) {
-    document.getElementById("ai-input").value = "站点URL: " + url + "\n\n" + html.slice(0, 2000);
+    st.innerHTML = '<b style="color:var(--orange)">⚠️ 抓取失败: ' + e.message + '</b>';
   }
 }
 
