@@ -892,18 +892,8 @@ async function aiFetchHTML() {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
   };
   
-  const strategies = [
-    { name: "直接访问", build: u => u },
-    { name: "allorigins代理", build: u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u) },
-    { name: "codetabs代理", build: u => "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u) },
-    { name: "corsproxy代理", build: u => "https://corsproxy.io/?url=" + encodeURIComponent(u) },
-    { name: "thingproxy代理", build: u => "https://thingproxy.freeboard.io/fetch/" + u },
-    { name: "alloriginsJSON", build: u => "https://api.allorigins.win/get?url=" + encodeURIComponent(u) },
-    { name: "cors.sh代理", build: u => "https://proxy.cors.sh/" + u },
-    { name: "test.cors代理", build: u => "https://test.cors.workers.dev/?" + u },
-    { name: "cors.bridged代理", build: u => "https://cors.bridged.cc/" + u },
-    { name: "crossorigin.me代理", build: u => "https://crossorigin.me/" + u },
-  ];
+  // 所有公共代理都挂了，直接跳到失败提示
+  const strategies = [];
   
   let html = "";
   window._fetchedHTML = ""; // 保存抓取到的HTML
@@ -934,10 +924,10 @@ async function aiFetchHTML() {
     }
   }
   
-  if (!success) {
+  {
     const w3ctoolUrl = "https://www.w3ctool.com/tools/view-source?url=" + encodeURIComponent(url);
     const issueUrl = "https://github.com/HUOLIULI/shuyuan-keeper/issues/new?title=" + encodeURIComponent("抓取HTML: " + url);
-    st.innerHTML = '<b style="color:var(--orange)">⚠️ 自动抓取失败（所有代理都挂了）</b>' +
+    st.innerHTML = '<b style="color:var(--cyan)">🔍 选择抓取方式：</b>' +
       '<div style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6">' +
       '<b>方案1：在线工具查看源码（推荐，最快）</b><br>' +
       '点下面的按钮，打开在线查看源码工具，<br>' +
