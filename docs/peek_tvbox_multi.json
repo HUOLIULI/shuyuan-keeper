@@ -133,6 +133,10 @@
    "sourceUrl": "https://s3plus.meituan.net/opapisdk/op_ticket_1_5673241091_1788770930556_IMPGdz5q.py"
   },
   {
+   "sourceName": "暴风资源",
+   "sourceUrl": "https://bfzyapi.com/api.php/provide/vod"
+  },
+  {
    "sourceName": "360资源",
    "sourceUrl": "https://360zy.com/api.php/provide/vod"
   },
@@ -145,16 +149,36 @@
    "sourceUrl": "https://www.huyaapi.com/api.php/provide/vod"
   },
   {
+   "sourceName": "🍀新浪资源",
+   "sourceUrl": "http://api.xinlangapi.com/xinlangapi.php/provide/vod"
+  },
+  {
    "sourceName": "🍀鲸鱼资源",
    "sourceUrl": "https://jyzyapi.com/provide/vod"
+  },
+  {
+   "sourceName": "魔都影视",
+   "sourceUrl": "https://www.moduzy.com/api.php/provide/vod"
   },
   {
    "sourceName": "🍀非凡API",
    "sourceUrl": "https://api.ffzyapi.com/api.php/provide/vod"
   },
   {
+   "sourceName": "🍀非凡采集",
+   "sourceUrl": "http://cj.ffzyapi.com/api.php/provide/vod"
+  },
+  {
    "sourceName": "🍀无尽CC",
    "sourceUrl": "https://api.wujinapi.cc/api.php/provide/vod"
+  },
+  {
+   "sourceName": "🍀速博资源",
+   "sourceUrl": "https://subocaiji.com/api.php/provide/vod"
+  },
+  {
+   "sourceName": "🍀金鹰点播",
+   "sourceUrl": "https://jinyingzy.com/api.php/provide/vod"
   },
   {
    "sourceName": "🍀閃電资源",
@@ -181,6 +205,14 @@
    "sourceUrl": "https://apiyutu.com/api.php/provide/vod/"
   },
   {
+   "sourceName": "🦋 越南資源｜🔞",
+   "sourceUrl": "https://www.vnzyz.com/api.php/provide/vod/"
+  },
+  {
+   "sourceName": "🦋 155資源｜🔞",
+   "sourceUrl": "https://155api.com/api.php/provide/vod/"
+  },
+  {
    "sourceName": "🦋 18+蕃茄｜🔞",
    "sourceUrl": "https://fqzy.me//api.php/provide/vod/"
   },
@@ -197,12 +229,28 @@
    "sourceUrl": "https://91md.me/api.php/provide/vod/"
   },
   {
+   "sourceName": "电视┃MTV",
+   "sourceUrl": "https://mv.wogg.link/mv/vod"
+  },
+  {
+   "sourceName": "柚子资源",
+   "sourceUrl": "https://api.yzzy-api.com/inc/api.php/provide/vod/at/xml"
+  },
+  {
    "sourceName": "华为资源",
    "sourceUrl": "https://cjhwba.com/api.php/provide/vod/?ac=list"
   },
   {
    "sourceName": "暴风资源",
    "sourceUrl": "http://by.bfzyapi.com/api.php/provide/vod/at/xml"
+  },
+  {
+   "sourceName": "猫眼资源┃刺桐",
+   "sourceUrl": "https://api.maoyanapi.top/api.php/provide/vod/"
+  },
+  {
+   "sourceName": "天翼资源┃刺桐",
+   "sourceUrl": "https://www.911ysw.top/tianyi.php/provide/vod/"
   },
   {
    "sourceName": "采集",
@@ -217,8 +265,20 @@
    "sourceUrl": "http://y.ds05.cn/zyapi.php"
   },
   {
+   "sourceName": "如意资源(CMS)",
+   "sourceUrl": "https://ryzy.tv/api.php/provide/vod/from/rym3u8/"
+  },
+  {
+   "sourceName": "豪华资源(CMS)",
+   "sourceUrl": "https://huohuzy.com/api.php/provide/vod/from/hhm3u8/"
+  },
+  {
    "sourceName": "OK资源(CMS)",
    "sourceUrl": "https://okzyw.cc/api.php/provide/vod/from/okm3u8/"
+  },
+  {
+   "sourceName": "鸭鸭资源(CMS)",
+   "sourceUrl": "https://yayazy2.com/api.php/provide/vod/from/yym3u8/"
   },
   {
    "sourceName": "49Z｜影视",
@@ -237,12 +297,24 @@
    "sourceUrl": "http://caiji.nxflv.com/api.php/provide/vod/"
   },
   {
+   "sourceName": "🥑盘看影视(聚)",
+   "sourceUrl": "http://tvcaiji.pankk.cn/api.php/provide/vod/"
+  },
+  {
    "sourceName": "三八资源(🔥)",
    "sourceUrl": "https://vod38.com/api.php/provide/vod"
   },
   {
+   "sourceName": "新黑木耳(🔥)",
+   "sourceUrl": "https://json.heimuer.xyz/api.php/provide/vod"
+  },
+  {
    "sourceName": "西瓜影视",
    "sourceUrl": "https://caiji.xgzyapi.com/api.php/provide/vod/from/xiguam3u8/at/json/"
+  },
+  {
+   "sourceName": "松视1",
+   "sourceUrl": "https://www.xrbsp.com/api/xml.php"
   },
   {
    "sourceName": "T4爬虫",
@@ -321,6 +393,10 @@
    "sourceUrl": "http://www.lzzy.tv/api.php/provide/vod/"
   },
   {
+   "sourceName": "享看🌀采集",
+   "sourceUrl": "https://shandianzy.com/api.php/provide/vod/"
+  },
+  {
    "sourceName": "百度🌀采集",
    "sourceUrl": "https://bdzy.tv/api.php/provide/vod/"
   },
@@ -381,8 +457,20 @@
    "sourceUrl": "https://jipinvip1.com/api.php/provide/vod/"
   },
   {
+   "sourceName": "💞鲨鱼影视💞",
+   "sourceUrl": "https://shayuzy5.com/api.php/provide/vod/"
+  },
+  {
    "sourceName": "💞鲨鱼资源💞",
    "sourceUrl": "https://shayuzy1.com/api.php/provide/vod/"
+  },
+  {
+   "sourceName": "💥采集网盘💥",
+   "sourceUrl": "https://gh-proxy.org/https://raw.githubusercontent.com/wliqi495-create/jaychouqq/refs/heads/main/yingshi/js7/1234.js"
+  },
+  {
+   "sourceName": "☁云霄丨听了么丨音乐",
+   "sourceUrl": "https://dogpan.com/f/48KESl/听了么音乐.js"
   },
   {
    "sourceName": " 🎑Alist[DRPY]",
@@ -401,6 +489,10 @@
    "sourceUrl": "https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/JWDJ.py"
   },
   {
+   "sourceName": "🎞 低端影视",
+   "sourceUrl": "https://zoe.im/tvbox/sites/ddys/spider.js?v=6e848abf&t=1789816860613"
+  },
+  {
    "sourceName": "💥月光影视💥",
    "sourceUrl": "http://192.129.140.23:5757/cat/月光影视.js?pwd=dzyyds"
   },
@@ -409,8 +501,20 @@
    "sourceUrl": "https://szyyds.cn/js/6F02.js"
   },
   {
+   "sourceName": "🐼｜独播库",
+   "sourceUrl": "https://files.catbox.moe/gd1tos.js"
+  },
+  {
+   "sourceName": "☁云霄PHP",
+   "sourceUrl": "http://jiduo.3116598.xyz/PHP/pkty.php"
+  },
+  {
    "sourceName": "12586.kstore.space [快]",
    "sourceUrl": "https://12586.kstore.space/123.txt"
+  },
+  {
+   "sourceName": "MV┃音乐",
+   "sourceUrl": "http://120.53.102.254/dsp/"
   },
   {
    "sourceName": "Music",
@@ -421,12 +525,24 @@
    "sourceUrl": "https://dxawi.github.io/0/0.json"
   },
   {
+   "sourceName": "多多┃JS",
+   "sourceUrl": "https://git.acwing.com/iduoduo/orange/-/raw/main/drpy_libs/drpy2.min.js"
+  },
+  {
    "sourceName": "🐢达达龟┃在线",
    "sourceUrl": "https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1720319529030/drpy2.min.txt?file=drpy2.min.js"
   },
   {
+   "sourceName": "💖分享努努",
+   "sourceUrl": "https://d.kstore.dev/download/4127/PY/分享努努.py"
+  },
+  {
    "sourceName": "嗷呜剧(坏了)",
    "sourceUrl": "https://newtv.ggff.net/jubaba?token=fhJadO1R"
+  },
+  {
+   "sourceName": "🅱豆瓣荐片",
+   "sourceUrl": "https://service-la7b1xlw-1308372858.gz.apigw.tencentcs.com/release/vod?"
   },
   {
    "sourceName": "🔍T4 Backup‍",
@@ -439,6 +555,10 @@
   {
    "sourceName": "[616ms|软件] 腾腾｜视频",
    "sourceUrl": "https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js"
+  },
+  {
+   "sourceName": "有声小说吧",
+   "sourceUrl": "http://xhztv.top/xhz/js/lib/drpy2.min.js"
   }
  ]
 }

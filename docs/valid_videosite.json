@@ -48,6 +48,24 @@
   "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },
  {
+  "url": "https://www.9day.cc/",
+  "name": "七月影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
+ },
+ {
+  "url": "https://www.55kan.com/",
+  "name": "五五影视.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
+ },
+ {
+  "url": "https://dm84.tv/",
+  "name": "动漫巴士.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
+ },
+ {
   "url": "https://haoxi.vip/",
   "name": "好戏影视.json",
   "subcat": "hccx_rule",
@@ -56,6 +74,12 @@
  {
   "url": "https://rebozj.pro/",
   "name": "热播之家.json",
+  "subcat": "hccx_rule",
+  "origin": "影视直连·hccx规则·荷城茶秀·全目录"
+ },
+ {
+  "url": "https://www.3wyy.com/",
+  "name": "爱看影视.json",
   "subcat": "hccx_rule",
   "origin": "影视直连·hccx规则·荷城茶秀·全目录"
  },

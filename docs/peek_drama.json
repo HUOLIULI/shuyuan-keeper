@@ -946,6 +946,58 @@
    "_source": null,
    "_type": "短剧",
    "changeable": 0
+  },
+  {
+   "key": "drpyS_七猫短剧[短]",
+   "name": "七猫短剧[短](DS)",
+   "type": 4,
+   "api": "/api/七猫短剧[短]",
+   "searchable": 2,
+   "filterable": 1,
+   "quickSearch": 0,
+   "title": "七猫短剧[短]",
+   "类型": "短剧",
+   "lang": "ds",
+   "ext": ""
+  },
+  {
+   "key": "drpyS_星芽短剧[短]",
+   "name": "星芽短剧[短](DS)",
+   "type": 4,
+   "api": "/api/星芽短剧[短]",
+   "searchable": 2,
+   "filterable": 1,
+   "quickSearch": 0,
+   "title": "星芽短剧[短]",
+   "类型": "短剧",
+   "lang": "ds",
+   "ext": ""
+  },
+  {
+   "key": "drpyS_短剧聚合[短]",
+   "name": "短剧聚合[短](DS)",
+   "type": 4,
+   "api": "/api/短剧聚合[短]",
+   "searchable": 2,
+   "filterable": 1,
+   "quickSearch": 0,
+   "title": "短剧聚合[短]",
+   "类型": "短剧",
+   "lang": "ds",
+   "ext": ""
+  },
+  {
+   "key": "drpyS_西饭短剧[短]",
+   "name": "西饭短剧[短](DS)",
+   "type": 4,
+   "api": "/api/西饭短剧[短]",
+   "searchable": 2,
+   "filterable": 1,
+   "quickSearch": 0,
+   "title": "西饭短剧[短]",
+   "类型": "短剧",
+   "lang": "ds",
+   "ext": ""
   }
  ],
  "lives": [],

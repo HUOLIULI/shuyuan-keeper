@@ -28,6 +28,40 @@
   "flags": []
  },
  {
+  "name": "影视解析·hebijunge·肥猫最可爱",
+  "url": "http://xn--ihqu10cn4c.xn--z7x900a.live/jx.php?id=2&url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": [
+   "qq",
+   "腾讯",
+   "qiyi",
+   "爱奇艺",
+   "奇艺",
+   "youku",
+   "优酷",
+   "tucheng",
+   "sohu",
+   "搜狐",
+   "letv",
+   "乐视",
+   "mgtv",
+   "芒果",
+   "tnmb",
+   "seven",
+   "yzm",
+   "aliyun",
+   "RJuMao",
+   "bilibili",
+   "1905",
+   "xinvip",
+   "XAL",
+   "qiqi",
+   "XALS",
+   "YuMi-vip"
+  ]
+ },
+ {
   "name": "影视解析·hebijunge·🌲林中小屋🏡解析线路③",
   "url": "https://jxjson.icu/neibu.php?url=",
   "subcat": "parse_iface",
@@ -117,6 +151,32 @@
   "flags": []
  },
  {
+  "name": "影视解析·hebijunge·影探",
+  "url": "http://jiexi.lyyytv.cn/json.php?url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": [
+   "qq",
+   "腾讯",
+   "qiyi",
+   "爱奇艺",
+   "奇艺",
+   "youku",
+   "优酷",
+   "sohu",
+   "搜狐",
+   "letv",
+   "乐视",
+   "mgtv",
+   "芒果",
+   "rx",
+   "ltnb",
+   "bilibili",
+   "1905",
+   "xigua"
+  ]
+ },
+ {
   "name": "解析1.6",
   "url": "https://jx.300ys.xyz/json/m3u8.php/?url=",
   "subcat": "parse_iface",
@@ -152,6 +212,31 @@
   "flags": []
  },
  {
+  "name": "影视解析·hebijunge·智能[③]",
+  "url": "http://api.ckflv.cn/?url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": [
+   "qq",
+   "腾讯",
+   "qiyi",
+   "爱奇艺",
+   "奇艺",
+   "youku",
+   "优酷",
+   "mgtv",
+   "芒果",
+   "letv",
+   "乐视",
+   "pptv",
+   "PPTV",
+   "sohu",
+   "bilibili",
+   "哔哩哔哩",
+   "哔哩"
+  ]
+ },
+ {
   "name": "西瓜",
   "url": "https://onepage.czl.net/xg/?url=",
   "subcat": "parse_iface",
@@ -164,6 +249,48 @@
   "subcat": "parse_iface",
   "origin": "影视解析·hebijunge",
   "flags": []
+ },
+ {
+  "name": "影视解析·hebijunge·王同学解析",
+  "url": "https://vip.xilibo.com/?url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": [
+   "qq",
+   "腾讯",
+   "企鹅",
+   "IQiYi",
+   "qiyi",
+   "爱奇艺",
+   "奇艺",
+   "youku",
+   "YouKu",
+   "优酷",
+   "sohu",
+   "SoHu",
+   "搜狐",
+   "letv",
+   "LeShi",
+   "乐视",
+   "imgo",
+   "mgtv",
+   "MangGuo",
+   "芒果",
+   "SLYS4k",
+   "BYGA",
+   "luanzi",
+   "AliS",
+   "dxzy",
+   "bilibili",
+   "QEYSS",
+   "xigua",
+   "西瓜视频",
+   "腾讯视频",
+   "奇艺视频",
+   "优酷视频",
+   "芒果视频",
+   "乐视视频"
+  ]
  },
  {
   "name": "线路2",
@@ -180,11 +307,27 @@
   "flags": []
  },
  {
+  "name": "线路4",
+  "url": "https://api.jxapi.cc/api/?key=6e4acf058180b58cbdb0106aa5cdb1e2&url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": []
+ },
+ {
   "name": "线路5",
   "url": "https://api.huaqi.pro/api/?key=5bd0db7c858ba9f999373450f3651af7&url=",
   "subcat": "parse_iface",
   "origin": "影视解析·hebijunge",
   "flags": []
+ },
+ {
+  "name": "影视解析·hebijunge·腾讯专用",
+  "url": "https://api.8l2.cn/lib/?key=5c9905a3dc0bef77647d1bb4a1d319ad&url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": [
+   "qq"
+  ]
  },
  {
   "name": "💝分享者解析①",
@@ -226,6 +369,54 @@
   "subcat": "parse_iface",
   "origin": "影视解析·hebijunge",
   "flags": []
+ },
+ {
+  "name": "丰",
+  "url": "https://fzl4k.xyz/jx.php?url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": []
+ },
+ {
+  "name": "4K - API解析",
+  "url": "http://niubi.69mini.com/api/?key=h28y9WWIgO2BU25bpW&url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": []
+ },
+ {
+  "name": "影视解析·hebijunge·华夏臻彩",
+  "url": "https://xy.183933.xyz/xiayede.php?key=hy1966&url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": [
+   "qq",
+   "腾讯",
+   "qiyi",
+   "爱奇艺",
+   "奇艺",
+   "youku",
+   "优酷",
+   "tucheng",
+   "sohu",
+   "搜狐",
+   "letv",
+   "乐视",
+   "mgtv",
+   "芒果",
+   "tnmb",
+   "seven",
+   "yzm",
+   "aliyun",
+   "RJuMao",
+   "bilibili",
+   "1905",
+   "xinvip",
+   "XAL",
+   "qiqi",
+   "XALS",
+   "YuMi-vip"
+  ]
  },
  {
   "name": "码上解析8",
@@ -317,6 +508,59 @@
    "bilibili",
    "哔哩哔哩",
    "哔哩"
+  ]
+ },
+ {
+  "name": "影视解析·hebijunge·诺诺",
+  "url": "https://www.ckmov.com/?url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": [
+   "qq",
+   "腾讯",
+   "qiyi",
+   "iqiyi",
+   "爱奇艺",
+   "奇艺",
+   "youku",
+   "优酷",
+   "mgtv",
+   "芒果",
+   "letv",
+   "乐视",
+   "pptv",
+   "PPTV",
+   "sohu",
+   "bilibili",
+   "哔哩哔哩",
+   "哔哩"
+  ]
+ },
+ {
+  "name": "影视解析·hebijunge·cygc",
+  "url": "https://api.cygc.xyz/analysis/?url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": [
+   "qq",
+   "腾讯",
+   "qiyi",
+   "爱奇艺",
+   "奇艺",
+   "youku",
+   "优酷",
+   "sohu",
+   "搜狐",
+   "letv",
+   "乐视",
+   "imgo",
+   "mgtv",
+   "芒果",
+   "rx",
+   "ltnb",
+   "bilibili",
+   "1905",
+   "xigua"
   ]
  },
  {
@@ -440,8 +684,41 @@
   ]
  },
  {
+  "name": "影视解析·hebijunge·影探D",
+  "url": "http://m3u8.lyyytv.cn/json.php?url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": [
+   "qq",
+   "腾讯",
+   "qiyi",
+   "爱奇艺",
+   "奇艺",
+   "youku",
+   "优酷",
+   "sohu",
+   "搜狐",
+   "letv",
+   "乐视",
+   "mgtv",
+   "芒果",
+   "rx",
+   "ltnb",
+   "bilibili",
+   "1905",
+   "xigua"
+  ]
+ },
+ {
   "name": "Yoyo1",
   "url": "https://json.legendwhb.cn/json.php/?url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": []
+ },
+ {
+  "name": "优视影视",
+  "url": "http://ccc.ysys.asia/jx/?id=2&url=",
   "subcat": "parse_iface",
   "origin": "影视解析·hebijunge",
   "flags": []
@@ -495,6 +772,13 @@
  {
   "name": "GGTV聚合",
   "url": "https://play.fuqizhishi.com/xiaobai/API.php?appkey=ganggang&url=",
+  "subcat": "parse_iface",
+  "origin": "影视解析·hebijunge",
+  "flags": []
+ },
+ {
+  "name": "自建解析",
+  "url": "https://YOUR-DOMAIN.com/tvbox/parse?url=",
   "subcat": "parse_iface",
   "origin": "影视解析·hebijunge",
   "flags": []
