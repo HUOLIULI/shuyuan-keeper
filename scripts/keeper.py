@@ -3159,6 +3159,120 @@ def cmd_drpy_pack():
     print(f"[drpy-pack] 完成")
 
 
+def cmd_drpy_sync(target_dir, engine="py,js", dry_run=False):
+    """把本仓库已验证的 TVBox 接口源同步进 drpy-node 框架的源仓库。
+
+    目标框架目录结构（drpy-node 2.0.4）：
+      {target}/spider/js/*.js     drpyS 本地脚本（本仓库 peek_pack/spider/js/*.js）
+      {target}/spider/py/*.py     hipy Python 脚本（本仓库 valid_tvbox 里 type3+py 的远程源本地化）
+      {target}/json/*.json        TVBox 单仓静态配置（本仓库 valid_tvbox.json / peek_tvbox.json）
+
+    这样框架每次 /config 重建配置时，会自动扫描这些目录纳入 sites[]，从而动态吃到本仓库
+    校验过的源，且能正常加载/播放（py/js 走框架沙箱执行，json 走壳子远程 spider）。
+
+    用法：
+      python scripts/keeper.py drpy-sync --target /path/to/drpy-node --engine py,js
+      python scripts/keeper.py drpy-sync --target /path/to/drpy-node --dry-run
+    """
+    import shutil
+    target = Path(target_dir)
+    if not target.exists():
+        print(f"[err] 目标目录不存在: {target}")
+        return
+    engines = [e.strip().lower() for e in engine.split(",") if e.strip()]
+
+    # 1) JSON 单仓静态池：拷贝已导出的 TVBox 配置
+    if "json" in engines or not engines or any(e in engines for e in ("all", "tvbox")):
+        json_dir = target / "json"
+        json_dir.mkdir(parents=True, exist_ok=True)
+        for name in ("valid_tvbox", "peek_tvbox", "peek_tvbox_multi"):
+            src = DOCS / f"{name}.json"
+            if not src.exists():
+                print(f"  [skip] 缺少 {src.name}")
+                continue
+            dst = json_dir / f"shuyuan_{name}.json"
+            if dry_run:
+                print(f"  [计划] {src.name} -> {dst.relative_to(target)}")
+                continue
+            shutil.copyfile(src, dst)
+            print(f"  [ok]   {src.name} -> {dst.relative_to(target)}")
+
+    # 2) spider/js：同步本仓库的 drpyS 本地脚本
+    if "js" in engines or "all" in engines:
+        src_js = DOCS / "peek_pack" / "spider" / "js"
+        dst_js = target / "spider" / "js"
+        if src_js.exists():
+            dst_js.mkdir(parents=True, exist_ok=True)
+            n = 0
+            for f in src_js.glob("*.js"):
+                if dry_run:
+                    print(f"  [计划] {f.name} -> spider/js/")
+                    n += 1
+                    continue
+                shutil.copyfile(f, dst_js / f.name)
+                n += 1
+            print(f"  [ok]   spider/js: 同步 {n} 个 drpyS 脚本")
+        else:
+            print(f"  [warn] 本仓库无 {src_js}（先运行 export 生成 peek_pack）")
+
+    # 3) spider/py：把 valid_tvbox 里 type3+py 的远程源本地化为 hipy 脚本（可选）
+    if "py" in engines or "all" in engines:
+        try:
+            tvbox = json.load(open(DOCS / "valid_tvbox.json", encoding="utf-8"))
+        except Exception as exc:  # noqa: BLE001
+            print(f"  [warn] 读取 valid_tvbox.json 失败: {exc}")
+            tvbox = None
+        if tvbox:
+            dst_py = target / "spider" / "py"
+            dst_py.mkdir(parents=True, exist_ok=True)
+            n = 0
+            for site in tvbox.get("sites", []):
+                if site.get("type") != 3:
+                    continue
+                api = str(site.get("api") or "")
+                if not api.lower().endswith(".py"):
+                    continue
+                key = str(site.get("key") or "").strip() or str(site.get("name") or "").strip()
+                if not key:
+                    continue
+                safe = re.sub(r"[^\w\u4e00-\u9fa5-]", "_", key)
+                if not safe:
+                    continue
+                dst = dst_py / f"{safe}.py"
+                if dry_run:
+                    print(f"  [计划] {key} -> spider/py/{safe}.py")
+                    n += 1
+                    continue
+                if dst.exists():
+                    continue  # 不覆盖已有本地实现
+                # 生成本地化 hipy 脚本：远程拉取原始 py 内容转存本地
+                _materialize_py(api, site, dst)
+                n += 1
+            print(f"  [ok]   spider/py: 本地化 {n} 个 hipy 源")
+
+    print("[done] drpy-sync 完成" if not dry_run else "[done] drpy-sync 干跑完成（未写入）")
+
+
+def _materialize_py(remote_url, site, dst):
+    """拉取远程 .py 脚本内容，写入框架 spider/py/ 本地目录。
+
+    拉取失败或内容明显异常时跳过（框架仍可用 json/ 里的远程源配置）。
+    """
+    try:
+        raw = fetch_json_text(remote_url, timeout=40)
+        if not raw:
+            return
+        if len(raw) < 50 or ("def " not in raw and "spiderName" not in raw):
+            return
+        header = f'"""\n@header({{\n  searchable: {site.get("searchable", 1)},\n'
+        header += f"  filterable: {site.get('filterable', 1)},\n  quickSearch: {site.get('quickSearch', 1)},\n"
+        header += f"  title: '{site.get('name', site.get('key', '')).replace(chr(39), '')}',\n"
+        header += "  lang: 'hipy',\n})\n\"\"\"\n"
+        dst.write_text(header + raw, encoding="utf-8")
+    except Exception as exc:  # noqa: BLE001
+        print(f"  [warn] 本地化 {site.get('key','')} 失败: {exc}")
+
+
 def cmd_status():
     store = load_store()
     from collections import Counter
@@ -3198,6 +3312,10 @@ def main():
     sub.add_parser("discover", help="自动探寻新上游仓库")
     sub.add_parser("drpy-pack", help="生成 drpy-node 兼容配置包")
     sub.add_parser("convert-books", help="AI批量把Legado书源转换成drpy脚本")
+    p_dsync = sub.add_parser("drpy-sync", help="把本仓库 TVBox 源同步进 drpy-node 框架源仓库")
+    p_dsync.add_argument("--target", required=True, help="drpy-node 框架根目录")
+    p_dsync.add_argument("--engine", default="js,json", help="同步引擎: js/py/json/all，默认 js,json（py 为远程源本地化，可选）")
+    p_dsync.add_argument("--dry-run", action="store_true", help="仅打印计划，不写入")
     p_ingest = sub.add_parser("ingest", help="入库用户上传条目")
     p_ingest.add_argument("--dir", default=None, help="user_submit 目录（默认 data/user_submit）")
     p_ingest.add_argument("--type", action="append", dest="itypes", help="只处理指定分类")
@@ -3220,6 +3338,8 @@ def main():
         cmd_drpy_pack()
     elif args.cmd == "convert-books":
         cmd_convert_books_to_drpy(limit=int(os.environ.get("CONVERT_BOOKS_LIMIT", "50")))
+    elif args.cmd == "drpy-sync":
+        cmd_drpy_sync(args.target, engine=args.engine, dry_run=args.dry_run)
     elif args.cmd == "ingest":
         cmd_ingest(args.dir, args.itypes or None)
 

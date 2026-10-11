@@ -10,12 +10,17 @@
 
 把社区已维护的聚合仓库作为上游，聚合 7 类资源，做二次验真后按类型导出，供各 App 直接订阅。
 
-- 书源 / 订阅源：阅读 Legado
-- TVBox / 影视仓：单仓配置 JSON（含 T4 接口配置、猫源/肥猫配置）
-- IPTV：M3U 播放列表（VLC / Kodi / DIYP / TVBox）
-- 采集接口：苹果CMS / 空壳影视
-- 影视直连站：drpy/HCCX 规则映射出的可直连影视站
-- 音源：洛雪 LX / MusicFree 音源（.js 插件订阅）
+分类体系：
+
+- **阅读 Legado**
+  - 书源：阅读 Legado 书源
+  - 订阅源：Legado 订阅源
+- **影视 TV**
+  - TVBox / 影视仓：单仓 / 多仓配置 JSON（含 T4 接口配置、猫源/肥猫、羊壳单仓接口、本地覆盖包）
+  - IPTV：M3U 播放列表（VLC / Kodi / DIYP / TVBox）+ 羊壳直播 txt
+  - 音乐：洛雪 LX / MusicFree 音源（.js 插件订阅）
+  - 影视网站：影视直连站（drpy/HCCX 规则映射）、苹果CMS / 空壳影视采集接口、磁力/BT/网盘搜索、影视解析接口（parses）、影视本地包
+- **工具 AI制源**：AI 制源助手（Legado 书源/订阅、羊壳点播/书源/漫画/HTML、修复源）
 
 ## 目录结构
 
@@ -94,7 +99,7 @@ GitHub Pages 首页地址：
 https://你的用户名.github.io/仓库/
 ```
 
-首页按 7 个标签页展示，每条链接支持复制、下载与二维码，书源与订阅源还带「一键导入阅读APP」按钮。
+首页按 7 个标签页展示（Legado / TVBox / IPTV / 音乐 / 影视网站 / AI制源 / 关于），每条链接支持复制、下载与二维码，书源与订阅源还带「一键导入阅读APP」按钮。
 
 ### PeekPro（羊壳）订阅
 羊壳 = FM 二开的 TVBox 系壳（Flutter），`export` 阶段生成 `peek_*` 专用文件。经反编译 v1.5.8 确认：羊壳**只认单仓 TVBox JSON**（不支持 storeHouse 多仓）、直播 txt 为 `频道名,url` 格式、音乐按洛雪 `.js` 脚本逐个导入。
