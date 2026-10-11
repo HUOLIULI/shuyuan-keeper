@@ -32,3 +32,21 @@ https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V2608
 https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/未测试/野花音源_.js
 https://raw.githubusercontent.com/Macrohard0001/lx-ikun-music-sources/main/V260817/未测试/野草音源.js
 https://raw.githubusercontent.com/cdyUuu/lx-music-xinghai-source/main/xinghai-music-source.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/(推荐)裤佬SVIP音源（酷狗挂了）.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/gdstudio音乐源 v1.0.1（仅支持网易）.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/lx-玉宁熙V1.2.2.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/stellarwave-v3.2.0.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/全豆要-聚合音源-V4.1（酷狗挂了）.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/墨澜音乐源v2.3.0.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/屿溪-终章.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/幻音音源 v3.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/念心音源 v1.0.2.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/收集の聚合接口.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/溯音音源_v1.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/独家音源V5.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/稳定版音源 v1.0.3.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/统一音乐源.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/聚合API接口 (CF) v3.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/西瓜聚合.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/非常刀 v5.js
+https://raw.githubusercontent.com/guoyue2010/lxmusic-/main/V260907/𝖧౿ᥣᥣ𝗈 Ԝ𝗈𝗋ᥣᑯ260809.js
