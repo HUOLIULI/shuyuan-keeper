@@ -1,0 +1,3 @@
+# 360资源站采集接口
+# API: https://360zyzz.com/api.php/provide/vod/at/xml/
+# 来源: GitHub:valid_tvbox

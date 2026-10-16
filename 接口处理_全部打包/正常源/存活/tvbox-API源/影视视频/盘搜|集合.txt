@@ -1,0 +1,3 @@
+# 盘搜|集合
+# API: http://tvbox.zling.vip/wanpan.php?type=quark|uc|baidu|tianyi|xunlei|123
+# 来源: GitHub:valid_tvbox

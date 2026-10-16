@@ -1,0 +1,3 @@
+# 湿妹 | 采集
+# API: http://www.afasu.com/api/xml.php
+# 来源: GitHub:valid_tvbox

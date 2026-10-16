@@ -1,0 +1,3 @@
+# Auete影视
+# API: https://www.aeete.com
+# 来源: GitHub:valid_videosite

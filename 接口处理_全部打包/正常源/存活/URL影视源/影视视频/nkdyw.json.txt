@@ -1,0 +1,3 @@
+# nkdyw.json
+# API: https://nkdyw.us
+# 来源: GitHub:valid_videosite

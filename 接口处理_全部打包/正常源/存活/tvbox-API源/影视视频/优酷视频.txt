@@ -1,0 +1,3 @@
+# 优酷视频
+# API: https://szyyds.cn/js/6F02.js
+# 来源: GitHub:valid_tvbox

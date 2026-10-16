@@ -1,0 +1,3 @@
+#  🎑Alist[DRPY]
+# API: https://gh.halonice.com/https://github.com/heroaku/drpy/raw/master/libs/alist.min.js
+# 来源: GitHub:valid_tvbox

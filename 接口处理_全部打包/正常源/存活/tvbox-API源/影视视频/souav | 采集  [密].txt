@@ -1,0 +1,3 @@
+# souav | 采集  [密]
+# API: https://api.souavzy.vip/api.php/provide/vod/?ac=list
+# 来源: GitHub:valid_tvbox

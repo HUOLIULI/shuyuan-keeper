@@ -1,0 +1,3 @@
+# 🅱豆瓣荐片
+# API: https://service-la7b1xlw-1308372858.gz.apigw.tencentcs.com/release/vod?
+# 来源: GitHub:valid_tvbox

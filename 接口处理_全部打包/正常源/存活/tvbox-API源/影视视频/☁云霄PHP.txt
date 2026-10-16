@@ -1,0 +1,3 @@
+# ☁云霄PHP
+# API: http://jiduo.3116598.xyz/PHP/pkty.php
+# 来源: GitHub:valid_tvbox

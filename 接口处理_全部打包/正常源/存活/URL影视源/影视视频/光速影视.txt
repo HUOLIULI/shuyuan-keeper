@@ -1,0 +1,3 @@
+# 光速影视
+# API: https://www.yingshiso.link/
+# 来源: GitHub:valid_videosite

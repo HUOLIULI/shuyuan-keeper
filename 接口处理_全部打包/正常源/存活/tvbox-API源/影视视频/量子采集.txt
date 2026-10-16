@@ -1,0 +1,3 @@
+# 量子采集
+# API: https://cj.lzcaiji.com/api.php/provide/vod/?from=lzm3u8
+# 来源: GitHub:valid_tvbox

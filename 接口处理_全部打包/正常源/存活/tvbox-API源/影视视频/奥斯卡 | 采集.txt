@@ -1,0 +1,3 @@
+# 奥斯卡 | 采集
+# API: https://aosikazy.com/api.php/provide/vod/
+# 来源: GitHub:valid_tvbox

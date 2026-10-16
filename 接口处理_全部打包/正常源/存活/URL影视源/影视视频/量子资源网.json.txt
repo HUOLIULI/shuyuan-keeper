@@ -1,0 +1,3 @@
+# 量子资源网.json
+# API: https://cj.lziapi.com/
+# 来源: GitHub:valid_videosite

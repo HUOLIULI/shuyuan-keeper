@@ -1,0 +1,3 @@
+# 💝分享迷你
+# API: http://qp.69mini.com/api.php/provide/vod/
+# 来源: GitHub:valid_tvbox

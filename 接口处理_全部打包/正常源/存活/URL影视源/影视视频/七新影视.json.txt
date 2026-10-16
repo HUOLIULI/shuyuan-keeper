@@ -1,0 +1,3 @@
+# 七新影视.json
+# API: http://www.7xdy.com/
+# 来源: GitHub:valid_videosite

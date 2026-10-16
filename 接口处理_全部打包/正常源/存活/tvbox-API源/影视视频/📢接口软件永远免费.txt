@@ -1,0 +1,3 @@
+# 📢接口软件永远免费
+# API: https://cdn.jsdmirror.com/gh/ouhaibo1980/tvbox@main/py/py_douban.py
+# 来源: GitHub:valid_tvbox

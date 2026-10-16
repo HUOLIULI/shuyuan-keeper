@@ -1,0 +1,3 @@
+# lkvod.json
+# API: https://lkvod.us
+# 来源: GitHub:valid_videosite

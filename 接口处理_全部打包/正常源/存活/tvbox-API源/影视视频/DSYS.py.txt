@@ -1,0 +1,3 @@
+# DSYS.py
+# API: https://raw.githubusercontent.com/yuanwangokk-1/TV-BOX/main/纯福利/plugin/adult/DSYS.py
+# 来源: GitHub:valid_tvbox

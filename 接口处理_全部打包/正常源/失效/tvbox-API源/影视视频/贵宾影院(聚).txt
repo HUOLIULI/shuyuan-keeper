@@ -1,0 +1,3 @@
+# 贵宾影院(聚)
+# API: http://vipdytv.com/api.php/provide/vod/
+# 来源: GitHub:valid_tvbox

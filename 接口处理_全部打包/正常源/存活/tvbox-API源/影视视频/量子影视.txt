@@ -1,0 +1,3 @@
+# 量子影视
+# API: http://www.lzzy.tv/api.php/provide/vod/
+# 来源: GitHub:valid_tvbox

@@ -1,0 +1,3 @@
+# 影视 • 蛋蛋魔法[直连]
+# API: https://ddmf.net/api.php/provide/vod/?ac=list
+# 来源: GitHub:valid_tvbox

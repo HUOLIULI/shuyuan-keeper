@@ -1,0 +1,3 @@
+# 豪华资源(CMS)
+# API: https://huohuzy.com/api.php/provide/vod/from/hhm3u8/
+# 来源: GitHub:valid_tvbox

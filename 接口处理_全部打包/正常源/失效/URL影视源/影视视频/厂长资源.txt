@@ -1,0 +1,3 @@
+# 厂长资源
+# API: https://www.czzymovie.com
+# 来源: GitHub:valid_videosite

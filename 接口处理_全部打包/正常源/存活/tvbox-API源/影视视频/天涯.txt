@@ -1,0 +1,3 @@
+# 天涯
+# API: https://ty.tyyszy5.com/api.php/provide/vod/?ac=list
+# 来源: GitHub:valid_tvbox

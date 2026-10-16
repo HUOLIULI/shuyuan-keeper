@@ -1,0 +1,3 @@
+# 鸭鸭资源(CMS)
+# API: https://yayazy2.com/api.php/provide/vod/from/yym3u8/
+# 来源: GitHub:valid_tvbox

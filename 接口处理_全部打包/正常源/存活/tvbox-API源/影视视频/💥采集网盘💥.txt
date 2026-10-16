@@ -1,0 +1,3 @@
+# 💥采集网盘💥
+# API: https://gh-proxy.org/https://raw.githubusercontent.com/wliqi495-create/jaychouqq/refs/heads/main/yingshi/js7/1234.js
+# 来源: GitHub:valid_tvbox

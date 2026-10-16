@@ -1,0 +1,3 @@
+# OK资源(CMS)
+# API: https://okzyw.cc/api.php/provide/vod/from/okm3u8/
+# 来源: GitHub:valid_tvbox

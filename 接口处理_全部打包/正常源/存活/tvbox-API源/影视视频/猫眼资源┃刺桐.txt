@@ -1,0 +1,3 @@
+# 猫眼资源┃刺桐
+# API: https://api.maoyanapi.top/api.php/provide/vod/
+# 来源: GitHub:valid_tvbox

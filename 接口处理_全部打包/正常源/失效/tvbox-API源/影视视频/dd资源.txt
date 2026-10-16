@@ -1,0 +1,3 @@
+# dd资源
+# API: https://dd.jzcbed.xyz/api.php/provide/vod
+# 来源: GitHub:valid_tvbox

@@ -1,0 +1,3 @@
+# 🥑盘看影视(聚)
+# API: http://tvcaiji.pankk.cn/api.php/provide/vod/
+# 来源: GitHub:valid_tvbox

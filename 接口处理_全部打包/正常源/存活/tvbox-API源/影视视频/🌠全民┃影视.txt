@@ -1,0 +1,3 @@
+# 🌠全民┃影视
+# API: http://www.cmov.cn/api.php/provide/vod/
+# 来源: GitHub:valid_tvbox

@@ -1,0 +1,3 @@
+# 火速 | 采集
+# API: https://api.huosuapi.cc/api.php/provide/vod/
+# 来源: GitHub:valid_tvbox

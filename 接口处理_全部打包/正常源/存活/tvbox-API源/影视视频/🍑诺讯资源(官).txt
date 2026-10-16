@@ -1,0 +1,3 @@
+# 🍑诺讯资源(官)
+# API: http://caiji.nxflv.com/api.php/provide/vod/
+# 来源: GitHub:valid_tvbox

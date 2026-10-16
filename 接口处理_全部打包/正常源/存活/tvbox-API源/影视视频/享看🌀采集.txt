@@ -1,0 +1,3 @@
+# 享看🌀采集
+# API: https://shandianzy.com/api.php/provide/vod/
+# 来源: GitHub:valid_tvbox

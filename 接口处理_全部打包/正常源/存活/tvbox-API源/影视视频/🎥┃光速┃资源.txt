@@ -1,0 +1,3 @@
+# 🎥┃光速┃资源
+# API: https://api.guangsuapi.com/api.php/provide/vod/
+# 来源: GitHub:valid_tvbox
