@@ -1,0 +1,27 @@
+#EXTM3U x-tvg-url="https://epg.v1.mk/fy.xml"
+#EXTINF:-1,tvg-id="4k" tvg-name="4k" tvg-logo="https://epg.v1.mk/logo/4k.png" group-title="其他",4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236683/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="cctv4k" tvg-name="cctv4k" tvg-logo="https://epg.v1.mk/logo/cctv4k.png" group-title="央视",CCTV4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236847/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="深圳卫视4" tvg-name="深圳卫视4" tvg-logo="https://epg.v1.mk/logo/深圳卫视4.png" group-title="卫视",深圳卫视4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236849/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="四川卫视" tvg-name="四川卫视" tvg-logo="https://epg.v1.mk/logo/四川卫视.png" group-title="四川",四川卫视4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236851/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="湖南卫视4" tvg-name="湖南卫视4" tvg-logo="https://epg.v1.mk/logo/湖南卫视4.png" group-title="湖南",湖南卫视4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236853/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="华数求索频道" tvg-name="华数求索频道" tvg-logo="https://epg.v1.mk/logo/华数求索频道.png" group-title="其他",求索4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236855/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="北京卫视4" tvg-name="北京卫视4" tvg-logo="https://epg.v1.mk/logo/北京卫视4.png" group-title="北京",北京卫视4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236938/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="cctv16" tvg-name="cctv16" tvg-logo="https://epg.v1.mk/logo/cctv16.png" group-title="央视",CCTV16-4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236940/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="广东卫视4" tvg-name="广东卫视4" tvg-logo="https://epg.v1.mk/logo/广东卫视4.png" group-title="广东",广东卫视4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236942/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="浙江卫视4" tvg-name="浙江卫视4" tvg-logo="https://epg.v1.mk/logo/浙江卫视4.png" group-title="浙江",浙江卫视4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236944/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="东方卫视" tvg-name="东方卫视" tvg-logo="https://epg.v1.mk/logo/东方卫视.png" group-title="卫视",东方卫视4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236948/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="山东卫视4" tvg-name="山东卫视4" tvg-logo="https://epg.v1.mk/logo/山东卫视4.png" group-title="山东",山东卫视4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236946/1/index.m3u8?fmt=ts2hls
+#EXTINF:-1,tvg-id="江苏卫视" tvg-name="江苏卫视" tvg-logo="https://epg.v1.mk/logo/江苏卫视.png" group-title="江苏",江苏卫视4K
+http://hwltc.tv.cdn.zj.chinamobile.com/PLTV/88888888/224/3221236950/1/index.m3u8?fmt=ts2hls

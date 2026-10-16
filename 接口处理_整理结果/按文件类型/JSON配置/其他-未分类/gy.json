@@ -1,0 +1,230 @@
+{
+    "spider": "./jar/vox.jar",
+    "logo": "./img/1.gif",
+    "sites": [
+        {
+            "key":"csp_Config",
+            "name":"获取光鸭token",
+            "type":3,
+            "api":"csp_Config",
+            "searchable":0,
+            "changeable":0
+        },
+        {
+            "key": "光鸭追新能手",
+            "name": "光鸭追新能手",
+            "type": 3,
+            "api": "./py/光鸭追新能手.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "ext": {
+                "username": "你的账号",
+                "password": "你的密码",
+                "txt_path": "https://d.kstore.dev/download/15006/my_pan.txt",
+                "gy_token_path": "/storage/emulated/0/Download/gy_token.json",
+                "gy_page_size": 1000,
+                "gy_max_depth": 20,
+                "gy_cache_prefix": "/storage/emulated/0/Download/刮削/gy_cache_",
+                "poster_cache_path": "/storage/emulated/0/Download/刮削/poster_cache.json",
+                "deviceid": "kfrwtbb5c2o5hwp331k4qtxsa4p6dr8y"
+            }
+        },
+        {
+            "key": "panlian",
+            "name": "光鸭盘链",
+            "type": 3,
+            "api": "./py/光鸭盘链.py",
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 1,
+            "changeable": 0,
+            "ext": {
+               "username": "你的账号",
+               "password": "你的密码"
+                }
+        },
+        {
+            "key": "黄豆短剧",
+            "name": "黄豆短剧",
+            "type": 3,
+            "api": "./py/黄豆短剧.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0
+        },
+        {
+            "key": "红果短剧",
+            "name": "红果短剧",
+            "type": 3,
+            "api": "./py/guo_py.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0
+        }
+    ],
+    "parses": [],
+    "flags": [],
+    "ijk": [
+        {
+            "group": "软解码",
+            "options": [
+                {
+                    "category": 4,
+                    "name": "opensles",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "overlay-format",
+                    "value": "842225234"
+                },
+                {
+                    "category": 4,
+                    "name": "framedrop",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "soundtouch",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "start-on-prepared",
+                    "value": "1"
+                },
+                {
+                    "category": 1,
+                    "name": "http-detect-range-support",
+                    "value": "0"
+                },
+                {
+                    "category": 1,
+                    "name": "fflags",
+                    "value": "fastseek"
+                },
+                {
+                    "category": 2,
+                    "name": "skip_loop_filter",
+                    "value": "48"
+                },
+                {
+                    "category": 4,
+                    "name": "reconnect",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "enable-accurate-seek",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-auto-rotate",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-handle-resolution-change",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-hevc",
+                    "value": "0"
+                },
+                {
+                    "category": 1,
+                    "name": "dns_cache_timeout",
+                    "value": "600000000"
+                }
+            ]
+        },
+        {
+            "group": "硬解码",
+            "options": [
+                {
+                    "category": 4,
+                    "name": "opensles",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "overlay-format",
+                    "value": "842225234"
+                },
+                {
+                    "category": 4,
+                    "name": "framedrop",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "soundtouch",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "start-on-prepared",
+                    "value": "1"
+                },
+                {
+                    "category": 1,
+                    "name": "http-detect-range-support",
+                    "value": "0"
+                },
+                {
+                    "category": 1,
+                    "name": "fflags",
+                    "value": "fastseek"
+                },
+                {
+                    "category": 2,
+                    "name": "skip_loop_filter",
+                    "value": "48"
+                },
+                {
+                    "category": 4,
+                    "name": "reconnect",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "enable-accurate-seek",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-auto-rotate",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-handle-resolution-change",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-hevc",
+                    "value": "1"
+                },
+                {
+                    "category": 1,
+                    "name": "dns_cache_timeout",
+                    "value": "600000000"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TVBox 配置生成器 · 全能版</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    background: #f4f7fb;
+    color: #1e293b;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  /* 顶部导航 */
+  .top-bar {
+    background: #ffffff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    max-width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #eef2f6;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .top-bar-left { display: flex; align-items: center; gap: 10px; }
+  .top-bar-left .logo-icon { font-size: 24px; }
+  .top-bar-left h1 { font-size: 20px; font-weight: 600; color: #0f172a; }
+  .top-bar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .top-bar-right a {
+    color: #475569; text-decoration: none; font-size: 14px; font-weight: 500;
+    transition: .2s;
+  }
+  .top-bar-right a:hover { color: #3b82f6; }
+  .btn-register {
+    background: #0f172a; color: #fff !important;
+    padding: 6px 18px; border-radius: 8px; font-weight: 500;
+  }
+  .btn-register:hover { background: #1e293b; }
+
+  /* 主容器 */
+  .app-container {
+    max-width: 1500px;
+    margin: 0 auto;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .left-panel { flex: 1; display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .right-panel { width: 480px; flex-shrink: 0; position: sticky; top: 20px; }
+
+  /* 卡片 */
+  .card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px -8px rgba(0,0,0,0.06);
+    border: 1px solid #eef2f6;
+    padding: 22px 24px;
+  }
+
+  .card-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 18px;
+    font-weight: 600; font-size: 16px; color: #0f172a;
+    flex-wrap: wrap;
+  }
+  .card-header .icon { font-size: 20px; opacity: .85; }
+  .card-header .desc {
+    font-weight: 400; font-size: 13px; color: #94a3b8;
+    margin-left: 4px;
+  }
+
+  /* 表单 */
+  .form-group { margin-bottom: 14px; }
+  .form-group:last-child { margin-bottom: 0; }
+  .form-label {
+    display: block; font-size: 13px; font-weight: 500;
+    color: #334155; margin-bottom: 6px;
+  }
+  .form-label .optional {
+    color: #94a3b8; font-weight: 400; font-size: 12px; margin-left: 4px;
+  }
+  .form-control {
+    width: 100%; padding: 10px 14px;
+    border: 1px solid #e2e8f0; border-radius: 10px;
+    font-size: 14px; background: #f8fafc; transition: .2s;
+    color: #0f172a; font-family: inherit;
+  }
+  .form-control:focus {
+    outline: none; border-color: #3b82f6; background: #fff;
+    box-shadow: 0 0 0 3px rgba(59,130,246,.1);
+  }
+  .form-control::placeholder { color: #94a3b8; font-size: 13px; }
+  select.form-control { cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat; background-position: right 12px center;
+    background-size: 14px; padding-right: 36px;
+  }
+  .form-control.is-error {
+    border-color: #fca5a5 !important;
+    background: #fef2f2 !important;
+  }
+  .form-row { display: flex; gap: 16px; }
+  .form-row .form-group { flex: 1; }
+  .form-help {
+    font-size: 12px; color: #94a3b8;
+    margin-top: 5px; line-height: 1.5;
+  }
+  .form-help.error { color: #dc2626; font-weight: 500; }
+  .form-help.success { color: #16a34a; }
+
+  /* 复选框 */
+  .checkbox-group {
+    display: flex; gap: 22px; flex-wrap: wrap;
+    align-items: center; margin-top: 6px;
+  }
+  .checkbox-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 14px; color: #334155; cursor: pointer;
+    user-select: none;
+  }
+  .checkbox-label input[type="checkbox"] {
+    width: 16px; height: 16px; accent-color: #3b82f6; cursor: pointer;
+  }
+
+  /* 按钮 */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px; padding: 10px 20px; border-radius: 10px;
+    font-weight: 500; font-size: 14px; border: none;
+    cursor: pointer; transition: .2s; text-decoration: none;
+    font-family: inherit;
+  }
+  .btn-primary { background: #0f172a; color: #fff; width: 100%; }
+  .btn-primary:hover {
+    background: #1e293b; transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(15,23,42,.2);
+  }
+  .btn-secondary {
+    background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0;
+  }
+  .btn-secondary:hover { background: #e2e8f0; }
+  .btn-outline {
+    background: transparent; border: 1px solid #e2e8f0; color: #334155;
+  }
+  .btn-outline:hover { background: #f1f5f9; }
+  .btn-danger {
+    background: transparent; border: 1px solid #fecaca; color: #ef4444;
+  }
+  .btn-danger:hover { background: #fef2f2; }
+  .btn-success {
+    background: transparent; border: 1px solid #bbf7d0; color: #16a34a;
+  }
+  .btn-success:hover { background: #f0fdf4; }
+  .btn-sm { padding: 6px 12px; font-size: 13px; border-radius: 8px; }
+  .btn-xs { padding: 4px 8px; font-size: 12px; border-radius: 6px; }
+  .btn-block { width: 100%; }
+  .btn:disabled { opacity: .5; pointer-events: none; }
+
+  /* 动态列表项 */
+  .list-item {
+    background: #f8fafc; border: 1px solid #eef2f6;
+    border-radius: 12px; padding: 16px; margin-bottom: 14px;
+    position: relative;
+  }
+  .list-item:last-child { margin-bottom: 0; }
+  .list-item.dragging {
+    opacity: .5;
+    background: #e0e7ff;
+    border-color: #818cf8;
+    transform: scale(0.98);
+  }
+  .list-item.drag-over {
+    border-top: 3px solid #3b82f6;
+  }
+  .list-item-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 12px; font-weight: 500; font-size: 14px; color: #334155;
+    gap: 8px;
+  }
+  .list-item-header .left {
+    display: flex; align-items: center; gap: 8px;
+    overflow: hidden;
+  }
+  .drag-handle {
+    cursor: grab; color: #94a3b8; font-size: 16px;
+    user-select: none; padding: 0 4px;
+    border-radius: 4px; transition: .15s;
+  }
+  .drag-handle:hover { background: #e2e8f0; color: #475569; }
+  .drag-handle:active { cursor: grabbing; }
+  .list-item-header .item-actions {
+    display: flex; gap: 4px; align-items: center;
+  }
+  .btn-remove {
+    background: transparent; border: none; color: #94a3b8;
+    cursor: pointer; font-size: 18px; padding: 0 6px;
+    border-radius: 6px; transition: .2s; line-height: 1;
+  }
+  .btn-remove:hover { color: #ef4444; background: #fee2e2; }
+
+  /* 上传区 */
+  .upload-zone {
+    background: #ffffffd5;
+    border: 2px dashed #a0b8e0;
+    border-radius: 18px;
+    padding: 20px 18px;
+    text-align: center;
+    cursor: pointer;
+    transition: .25s;
+    margin-bottom: 18px;
+  }
+  .upload-zone:hover, .upload-zone.dragover {
+    border-color: #3b82f6;
+    background: #f0f5ff;
+  }
+  .upload-zone .upload-icon {
+    font-size: 2.6rem; line-height: 1; margin-bottom: 6px;
+    filter: drop-shadow(0 6px 6px #b0c6ff80);
+  }
+  .upload-zone .upload-text {
+    font-weight: 500; color: #1f2a4a; font-size: 1rem;
+  }
+  .upload-zone .upload-hint {
+    color: #62739e; font-size: .85rem; margin-top: 4px;
+  }
+  #fileInput, #importJsonInput { display: none; }
+
+  /* 文件列表 */
+  .file-list {
+    background: #f2f6fe; border-radius: 14px;
+    padding: 6px 8px; max-height: 240px; overflow-y: auto;
+    border: 1px solid #e0e8f5; margin-bottom: 14px;
+  }
+  .file-list::-webkit-scrollbar { width: 6px; }
+  .file-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  .file-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; margin: 4px 0;
+    background: #fff; border-radius: 12px;
+    border: 1px solid #eef3fc; transition: .15s;
+  }
+  .file-item:hover { background: #f9fcff; border-color: #b8ceff; }
+  .file-info { display: flex; align-items: center; gap: 10px; overflow: hidden; }
+  .file-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .file-name {
+    font-weight: 500; color: #0d1a38; font-size: .9rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 380px;
+  }
+  .file-size { font-size: .72rem; color: #5f739b; }
+  .empty-state {
+    text-align: center; color: #7c8bb0;
+    padding: 20px 12px; font-style: italic; font-size: .9rem;
+  }
+
+  /* 上传操作按钮 */
+  .upload-actions {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 6px;
+  }
+
+  /* 预览 */
+  .preview-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 12px;
+    flex-wrap: wrap; gap: 8px;
+  }
+  .preview-header h3 {
+    font-size: 16px; font-weight: 600; color: #0f172a;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .preview-header .desc {
+    font-weight: 400; font-size: 13px; color: #94a3b8;
+  }
+  .json-preview {
+    background: #0f172a; color: #e2e8f0;
+    border-radius: 12px; padding: 16px;
+    font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+    font-size: 12px; line-height: 1.6;
+    max-height: 480px; overflow-y: auto;
+    white-space: pre-wrap; word-break: break-all;
+    border: 1px solid #1e293b;
+  }
+  .json-preview .k { color: #93c5fd; }       /* key */
+  .json-preview .s { color: #86efac; }       /* string */
+  .json-preview .n { color: #fcd34d; }       /* number */
+  .json-preview .b { color: #f0abfc; }       /* boolean */
+  .json-preview::-webkit-scrollbar { width: 6px; }
+  .json-preview::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+
+  .preview-actions {
+    display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap;
+  }
+  .preview-actions .btn { flex: 1; min-width: 100px; }
+
+  /* 校验面板 */
+  .validate-panel {
+    margin-top: 14px; padding: 12px 14px;
+    border-radius: 12px; font-size: 13px;
+    border: 1px solid #e2e8f0; background: #f8fafc;
+  }
+  .validate-panel.ok {
+    background: #f0fdf4; border-color: #bbf7d0; color: #166534;
+  }
+  .validate-panel.err {
+    background: #fef2f2; border-color: #fecaca; color: #991b1b;
+  }
+  .validate-panel .title {
+    font-weight: 600; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .validate-panel ul {
+    margin-left: 18px; line-height: 1.7;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #0f172a; color: #fff;
+    padding: 12px 24px; border-radius: 12px;
+    font-size: 14px; font-weight: 500;
+    opacity: 0; transition: .3s; pointer-events: none;
+    z-index: 9999; box-shadow: 0 10px 30px -10px rgba(0,0,0,.5);
+    max-width: 90vw; text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* 提示条 */
+  .info-strip {
+    background: #eff6ff; border: 1px solid #bfdbfe;
+    color: #1e40af; padding: 10px 14px;
+    border-radius: 10px; font-size: 13px; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+    line-height: 1.5;
+  }
+  .info-strip .ic { font-size: 16px; }
+  .info-strip.warn {
+    background:#fef3c7; border-color:#fde68a; color:#92400e;
+  }
+  .info-strip.danger {
+    background:#fee2e2; border-color:#fecaca; color:#991b1b;
+  }
+  .info-strip.success {
+    background:#f0fdf4; border-color:#bbf7d0; color:#166534;
+  }
+
+  /* 分区标记 */
+  .section-tag {
+    display: inline-block; background: #e0e7ff; color: #3730a3;
+    font-size: 11px; padding: 2px 8px; border-radius: 6px;
+    margin-left: 8px; font-weight: 500;
+  }
+  .section-tag.green {
+    background: #dcfce7; color: #166534;
+  }
+  .section-tag.orange {
+    background: #fed7aa; color: #9a3412;
+  }
+
+  /* 计数 */
+  .counter {
+    background: #e6ecfe; color: #1e3db0;
+    font-weight: 500; padding: 3px 10px; border-radius: 20px;
+    font-size: 12px; margin-left: auto;
+  }
+
+  /* flags 标签 */
+  .flag-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+  }
+  .flag-chip {
+    background: #f1f5f9; color: #475569;
+    padding: 2px 8px; border-radius: 6px;
+    font-size: 11px; border: 1px solid #e2e8f0;
+  }
+  .flag-chip.new {
+    background: #dcfce7; color: #166534; border-color: #bbf7d0;
+  }
+
+  /* ads 标签 */
+  .ads-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+  }
+  .ads-chip {
+    background: #fee2e2; color: #991b1b;
+    padding: 3px 10px; border-radius: 6px;
+    font-size: 11px; border: 1px solid #fecaca;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .ads-chip .del {
+    cursor: pointer; font-weight: bold; opacity: .6;
+    line-height: 1;
+  }
+  .ads-chip .del:hover { opacity: 1; }
+
+  /* Logo 预览 */
+  .logo-preview {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 8px; padding: 10px 12px;
+    background: #f8fafc; border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+  }
+  .logo-preview img {
+    width: 44px; height: 44px; border-radius: 50%;
+    object-fit: cover; background: #e2e8f0;
+    border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  }
+  .logo-preview .logo-info {
+    font-size: 12px; color: #64748b; line-height: 1.4;
+    word-break: break-all;
+  }
+  .logo-preview .logo-info .lbl {
+    color: #334155; font-weight: 500; margin-right: 4px;
+  }
+
+  /* 预设下拉 */
+  .preset-selector {
+    display: flex; gap: 8px; align-items: center;
+    margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .preset-selector select {
+    flex: 1; min-width: 160px;
+  }
+
+  /* 二维码 */
+  .qrcode-wrapper {
+    margin-top: 12px; padding: 14px;
+    background: #fff; border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    display: none; text-align: center;
+  }
+  .qrcode-wrapper.show { display: block; }
+  .qrcode-wrapper .qr-inner {
+    display: inline-block; padding: 10px;
+    background: #fff; border-radius: 8px;
+    border: 2px solid #f1f5f9;
+  }
+  .qrcode-wrapper .qr-hint {
+    font-size: 12px; color: #64748b; margin-top: 8px;
+  }
+
+  /* 导入弹窗 */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    display: none; align-items: center; justify-content: center;
+    z-index: 10000; padding: 20px;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: #fff; border-radius: 16px;
+    max-width: 640px; width: 100%;
+    padding: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,.4);
+    max-height: 85vh; overflow-y: auto;
+  }
+  .modal h2 {
+    font-size: 18px; font-weight: 600; margin-bottom: 6px;
+    color: #0f172a;
+  }
+  .modal .sub {
+    font-size: 13px; color: #64748b; margin-bottom: 16px;
+  }
+  .modal textarea {
+    width: 100%; min-height: 220px;
+    font-family: monospace; font-size: 12px;
+    padding: 12px; border-radius: 10px;
+    border: 1px solid #e2e8f0; background: #f8fafc;
+    resize: vertical;
+  }
+  .modal .modal-actions {
+    display: flex; gap: 10px; margin-top: 16px;
+    justify-content: flex-end;
+  }
+
+  /* 响应式 */
+  @media (max-width: 1100px) {
+    .app-container { flex-direction: column; }
+    .right-panel { width: 100%; position: static; }
+  }
+  @media (max-width: 640px) {
+    .form-row { flex-direction: column; gap: 0; }
+    .top-bar { flex-direction: column; align-items: flex-start; }
+    .top-bar-right { flex-wrap: wrap; }
+    .preview-actions { flex-direction: column; }
+    .file-name { max-width: 160px; }
+    .checkbox-group { gap: 12px; }
+    .modal { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <span class="logo-icon">📺</span>
+    <h1>TVBox 配置生成器 · 全能版</h1>
+  </div>
+  <div class="top-bar-right">
+    <button class="btn btn-outline btn-sm" id="importJsonBtn">📥 导入 JSON</button>
+    <button class="btn btn-outline btn-sm" id="themeBtn">🌙 深色</button>
+</div>
+
+<!-- 主容器 -->
+<div class="app-container">
+  <div class="left-panel">
+
+    <!-- ① 多文件上传 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">📁</span>
+        多文件上传 · 自动生成
+        <span class="section-tag">推荐新手</span>
+        <span class="counter" id="fileCounter">0 个文件</span>
+      </div>
+
+      <div class="info-strip">
+        <span class="ic">💡</span>
+        <span>上传 <b>.py / .js / .json / .php</b> 等文件，将自动生成对应的 <b>视频源</b> 条目。</span>
+      </div>
+
+      <div class="upload-zone" id="dropZone">
+        <div class="upload-icon">📂</div>
+        <div class="upload-text">点击选择文件 或 拖拽到此处</div>
+        <div class="upload-hint">支持多选 · 自动生成 file://TV/ 路径</div>
+        <input type="file" id="fileInput" multiple>
+      </div>
+
+      <div class="file-list" id="fileListContainer">
+        <div class="empty-state">暂无文件，点击上方区域上传</div>
+      </div>
+
+      <div class="upload-actions">
+        <button class="btn btn-primary btn-sm" id="importFilesBtn" style="flex:1;" disabled>✨ 一键导入到视频源</button>
+        <button class="btn btn-secondary btn-sm" id="clearFilesBtn">🗑️ 清空文件</button>
+      </div>
+    </div>
+
+    <!-- ② 全局设置 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">⚙️</span>
+        全局设置
+        <span class="desc">Logo / 爬虫 / 背景图 / 弹幕 / 广告</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Logo 图片地址</label>
+        <input type="text" class="form-control" id="logoUrl"
+               value="https://q2.qlogo.cn/headimg_dl?dst_uin=3139606844&spec=640"
+               placeholder="https://example.com/logo.png">
+        <div class="logo-preview" id="logoPreview">
+          <img id="logoPreviewImg" src="" alt="logo" onerror="this.style.opacity='0.3'">
+          <div class="logo-info">
+            <div><span class="lbl">当前预览</span></div>
+            <div id="logoPreviewUrl"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">爬虫 Jar 包地址 (Spider)</label>
+        <input type="text" class="form-control" id="spiderUrl" placeholder="例如: /custom_spider.jar 或 http://...">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">背景图片地址 (Wallpaper)</label>
+        <input type="text" class="form-control" id="wallpaperUrl" value="https://api.kdcc.cn" placeholder="https://api.kdcc.cn">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">弹幕接口 (Danmaku) <span class="optional">可选</span></label>
+        <input type="text" class="form-control" id="danmakuUrl" value="https://logvardanmu.konfan.cn/danmaku?name={name}&epid={episode}">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">广告过滤 (Ads) <span class="optional">每行一个域名或 IP</span></label>
+        <textarea class="form-control" id="adsInput" rows="3" placeholder="43.248.128.138&#10;ads.example.com">43.248.128.138</textarea>
+        <div class="form-help">用于屏蔽指定域名/IP 的广告。一行一个，可随时增删。</div>
+        <div class="ads-chips" id="adsChips"></div>
+      </div>
+    </div>
+
+    <!-- ③ 视频源 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">🎬</span>
+        视频源 (Sites)
+        <span class="desc">拖拽左侧 ⋮⋮ 可调整顺序</span>
+        <span class="counter" id="siteCounter">0 条</span>
+      </div>
+
+      <div class="preset-selector">
+        <select class="form-control" id="sitePresetSelect">
+          <option value="">-- 选择视频源预设模板 --</option>
+          <option value="apple_cms">🍎 苹果CMS标准接口</option>
+          <option value="lzi">🎬 量子资源</option>
+          <option value="ffzy">🚀 非凡资源</option>
+          <option value="heimuer">🎥 黑木耳</option>
+          <option value="wolong">🐉 卧龙资源</option>
+          <option value="ikun">🐔 艾坤资源</option>
+        </select>
+        <button class="btn btn-secondary btn-sm" id="applySitePresetBtn">应用</button>
+      </div>
+
+      <div id="sitesContainer"></div>
+      <button class="btn btn-primary" id="addSiteBtn" style="margin-top: 12px;">+ 新增源</button>
+    </div>
+
+    <!-- ④ 解析接口 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">🔗</span>
+        解析接口 (Parses)
+        <span class="desc">拖拽左侧 ⋮⋮ 可调整顺序</span>
+        <span class="counter" id="parseCounter">0 条</span>
+      </div>
+      <div class="info-strip warn">
+        <span class="ic">🔔</span>
+        <span>在 <b>平台标识 (flags)</b> 里填写的标签会自动合并到顶层 <b>flags</b> 数组里。</span>
+      </div>
+
+      <div class="preset-selector">
+        <select class="form-control" id="parsePresetSelect">
+          <option value="">-- 选择解析接口预设模板 --</option>
+          <option value="nuoxun">🔮 诺讯解析</option>
+          <option value="aidou">💎 爱豆解析</option>
+          <option value="jx123">⚡ 123解析</option>
+          <option value="m3u8">🎯 M3U8解析</option>
+        </select>
+        <button class="btn btn-secondary btn-sm" id="applyParsePresetBtn">应用</button>
+      </div>
+
+      <div id="parsesContainer"></div>
+      <button class="btn btn-primary" id="addParseBtn" style="margin-top: 12px;">+ 新增解析</button>
+    </div>
+
+    <!-- ⑤ 直播源 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">📡</span>
+        直播源 (Lives)
+        <span class="desc">拖拽左侧 ⋮⋮ 可调整顺序</span>
+        <span class="counter" id="liveCounter">0 条</span>
+      </div>
+      <div id="livesContainer"></div>
+      <button class="btn btn-primary" id="addLiveBtn" style="margin-top: 12px;">+ 新增线路</button>
+    </div>
+
+  </div>
+
+  <!-- 右侧预览 -->
+  <div class="right-panel">
+    <div class="card">
+      <div class="preview-header">
+        <h3>
+          <span>📋</span> 配置预览
+          <span class="desc">实时生成</span>
+        </h3>
+      </div>
+      <pre class="json-preview" id="jsonPreview">加载中...</pre>
+
+      <!-- 校验面板 -->
+      <div class="validate-panel" id="validatePanel"></div>
+
+      <div class="preview-actions">
+        <button class="btn btn-primary" id="downloadBtn">⬇ 下载 tvbox.json</button>
+        <button class="btn btn-outline" id="copyBtn">📋 复制 JSON</button>
+        <button class="btn btn-outline" id="base64Btn">🔐 Base64</button>
+        <button class="btn btn-outline" id="qrBtn">📱 二维码</button>
+        <button class="btn btn-danger" id="resetBtn">↻ 重置</button>
+      </div>
+
+      <div class="qrcode-wrapper" id="qrcodeWrapper">
+        <div class="qr-inner" id="qrcodeBox"></div>
+        <div class="qr-hint">📱 手机扫码导入 TVBox（Base64 编码）</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 导入 JSON 弹窗 -->
+<div class="modal-overlay" id="importModal">
+  <div class="modal">
+    <h2>📥 导入已有 JSON 配置</h2>
+    <div class="sub">粘贴完整的 TVBox 配置 JSON，或选择本地文件导入</div>
+    <textarea id="importJsonText" placeholder='{ "spider": "", "sites": [ ... ], "parses": [ ... ], "lives": [ ... ] }'></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-secondary btn-sm" id="importFileBtn">📁 选择文件</button>
+      <button class="btn btn-secondary btn-sm" id="importCancelBtn">取消</button>
+      <button class="btn btn-primary btn-sm" id="importConfirmBtn" style="width:auto;">✅ 确认导入</button>
+    </div>
+    <input type="file" id="importJsonInput" accept=".json,application/json">
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ===================== 常量字典 =====================
+
+  const SITE_TYPE_OPTIONS = [
+    { value: 0, label: '0 · 网页/影视 (HTML 解析)' },
+    { value: 1, label: '1 · JSON/苹果CMS (API 接口)' },
+    { value: 3, label: '3 · 自定义 Spider (本地 py/js)' },
+    { value: 4, label: '4 · 采集/XML 类型' }
+  ];
+
+  const PARSE_TYPE_OPTIONS = [
+    { value: 0, label: '0 · 网页嗅探/重定向解析' },
+    { value: 1, label: '1 · JSON 接口解析' }
+  ];
+
+  const LIVE_TYPE_OPTIONS = [
+    { value: 'txt', label: 'TXT 格式 (文本直播源)' },
+    { value: 'm3u', label: 'M3U 格式 (M3U 播放列表)' }
+  ];
+
+  // 预设模板
+  const SITE_PRESETS = {
+    apple_cms: {
+      name: '苹果CMS标准接口',
+      type: 1,
+      api: 'https://example.com/api.php/provide/vod/'
+    },
+    lzi: {
+      name: '量子资源',
+      type: 1,
+      api: 'https://cj.lziapi.com/api.php/provide/vod/'
+    },
+    ffzy: {
+      name: '非凡资源',
+      type: 1,
+      api: 'http://cj.ffzyapi.com/api.php/provide/vod/'
+    },
+    heimuer: {
+      name: '黑木耳',
+      type: 1,
+      api: 'https://json.heimuer.xyz/api.php/provide/vod/'
+    },
+    wolong: {
+      name: '卧龙资源',
+      type: 1,
+      api: 'https://collect.wolongzyw.com/api.php/provide/vod/'
+    },
+    ikun: {
+      name: '艾坤资源',
+      type: 1,
+      api: 'https://ikunzyapi.com/api.php/provide/vod/'
+    }
+  };
+
+  const PARSE_PRESETS = {
+    nuoxun: {
+      name: '诺讯解析',
+      type: 0,
+      url: 'https://jx.nxhw.pro/jx.php?url=',
+      flags: 'youku, qq, iqiyi, qiyi, letv, sohu, tudou, pptv, mgtv, wasu'
+    },
+    aidou: {
+      name: '爱豆解析',
+      type: 0,
+      url: 'https://jx.aidouer.net/?url=',
+      flags: 'youku, qq, iqiyi, qiyi, letv, sohu, tudou, pptv, mgtv, wasu'
+    },
+    jx123: {
+      name: '123解析',
+      type: 0,
+      url: 'https://jx.1234567.com/?url=',
+      flags: 'youku, qq, iqiyi, qiyi, letv, sohu, tudou, pptv, mgtv, wasu'
+    },
+    m3u8: {
+      name: 'M3U8解析',
+      type: 1,
+      url: 'https://jx.example.com/m3u8/?url=',
+      flags: 'youku, qq, iqiyi, qiyi, letv, sohu, tudou, pptv, mgtv, wasu'
+    }
+  };
+
+  // ===================== 状态管理 =====================
+  const defaultConfig = {
+    spider: "",
+    logo: "https://q2.qlogo.cn/headimg_dl?dst_uin=3139606844&spec=640",
+    danmaku: "https://logvardanmu.konfan.cn/danmaku?name={name}&epid={episode}",
+    wallpaper: "https://api.kdcc.cn",
+    lives: [
+      {
+        name: "央视频道",
+        type: "txt",
+        url: "",
+        epg: ""
+      }
+    ],
+    sites: [
+      {
+        key: "site_171681010982",
+        name: "示例站点",
+        type: 1,
+        api: "",
+        searchable: 1,
+        quickSearch: 1,
+        filterable: 1
+      }
+    ],
+    parses: [
+      {
+        name: "新解析接口",
+        type: 0,
+        url: "",
+        flags: "youku, qq, iqiyi, qiyi, letv, sohu, tudou, pptv, mgtv, wasu"
+      }
+    ],
+    flags: [
+      "youku","qq","QQ","iqiyi","qiyi","letv","sohu","pptv","PPTV",
+      "mgtv","wasu","bilibili","m1905","zijianm3u8"
+    ],
+    ads: ["43.248.128.138"]
+  };
+
+  let currentData = JSON.parse(JSON.stringify(defaultConfig));
+  let uploadedFiles = [];
+  let validationErrors = []; // 校验错误列表
+
+  // ===================== 本地草稿自动保存 =====================
+  const DRAFT_KEY = 'tvbox_gen_draft_v1';
+
+  function saveDraft() {
+    try {
+      const data = {
+        config: {
+          spider: currentData.spider,
+          logo: currentData.logo,
+          danmaku: currentData.danmaku,
+          wallpaper: currentData.wallpaper,
+          lives: currentData.lives,
+          sites: currentData.sites,
+          parses: currentData.parses,
+          flags: currentData.flags,
+          ads: currentData.ads
+        },
+        ts: Date.now()
+      };
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+    } catch (e) { /* ignore */ }
+  }
+
+  function loadDraft() {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      return data.config || null;
+    } catch (e) { return null; }
+  }
+
+  function clearDraft() {
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+  }
+
+  // ===================== DOM 元素 =====================
+  const $ = (id) => document.getElementById(id);
+  const logoUrlInput = $('logoUrl');
+  const logoPreviewImg = $('logoPreviewImg');
+  const logoPreviewUrl = $('logoPreviewUrl');
+  const spiderUrlInput = $('spiderUrl');
+  const wallpaperUrlInput = $('wallpaperUrl');
+  const danmakuUrlInput = $('danmakuUrl');
+  const adsInput = $('adsInput');
+  const adsChips = $('adsChips');
+  const sitesContainer = $('sitesContainer');
+  const parsesContainer = $('parsesContainer');
+  const livesContainer = $('livesContainer');
+  const jsonPreview = $('jsonPreview');
+  const toastEl = $('toast');
+  const validatePanel = $('validatePanel');
+
+  const fileInput = $('fileInput');
+  const dropZone = $('dropZone');
+  const fileListContainer = $('fileListContainer');
+  const fileCounter = $('fileCounter');
+  const importFilesBtn = $('importFilesBtn');
+  const clearFilesBtn = $('clearFilesBtn');
+
+  const siteCounter = $('siteCounter');
+  const parseCounter = $('parseCounter');
+  const liveCounter = $('liveCounter');
+
+  const addSiteBtn = $('addSiteBtn');
+  const addParseBtn = $('addParseBtn');
+  const addLiveBtn = $('addLiveBtn');
+  const downloadBtn = $('downloadBtn');
+  const copyBtn = $('copyBtn');
+  const base64Btn = $('base64Btn');
+  const qrBtn = $('qrBtn');
+  const resetBtn = $('resetBtn');
+
+  const importJsonBtn = $('importJsonBtn');
+  const importModal = $('importModal');
+  const importJsonText = $('importJsonText');
+  const importConfirmBtn = $('importConfirmBtn');
+  const importCancelBtn = $('importCancelBtn');
+  const importFileBtn = $('importFileBtn');
+  const importJsonInput = $('importJsonInput');
+
+  const sitePresetSelect = $('sitePresetSelect');
+  const applySitePresetBtn = $('applySitePresetBtn');
+  const parsePresetSelect = $('parsePresetSelect');
+  const applyParsePresetBtn = $('applyParsePresetBtn');
+
+  const qrcodeWrapper = $('qrcodeWrapper');
+  const qrcodeBox = $('qrcodeBox');
+
+  // ===================== 工具函数 =====================
+  function showToast(msg, duration = 2200) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastEl._timer);
+    toastEl._timer = setTimeout(() => toastEl.classList.remove('show'), duration);
+  }
+
+  function escapeAttr(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function escapeHtml(str) {
+    return escapeAttr(str);
+  }
+
+  function randomKey(prefix = 'site') {
+    return prefix + '_' + Date.now() + Math.floor(Math.random() * 1000);
+  }
+
+  function formatFileSize(bytes) {
+    if (!bytes) return '0 B';
+    const units = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+    return (bytes / Math.pow(1024, i)).toFixed(i === 0 ? 0 : 1) + ' ' + units[i];
+  }
+
+  function getExtension(filename) {
+    const parts = filename.split('.');
+    return parts.length > 1 ? parts.pop().toLowerCase() : '';
+  }
+
+  function humanNameFromFile(filename) {
+    let base = filename.replace(/\.[^/.]+$/, '');
+    base = base.replace(/[_-]/g, ' ');
+    base = base.replace(/[^\w\u4e00-\u9fa5]+/g, ' ').trim();
+    if (!base) return '未命名站点';
+    return base.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  }
+
+  function generateKeyFromFilename(filename) {
+    let base = filename.replace(/\.[^/.]+$/, '').trim();
+    if (!base) return 'site_' + Math.random().toString(36).substring(2, 8);
+    base = base.replace(/[^\w\u4e00-\u9fa5-]/g, '_');
+    if (base.length > 36) base = base.substring(0, 36);
+    return base.toLowerCase();
+  }
+
+  function parseFlags(str) {
+    if (!str) return [];
+    return str.split(',').map(s => s.trim()).filter(Boolean);
+  }
+
+  function parseAds(text) {
+    if (!text) return [];
+    const lines = text.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+    return Array.from(new Set(lines));
+  }
+
+  // 语法高亮 JSON
+  function highlightJson(jsonStr) {
+    // 先转义 HTML
+    let s = escapeHtml(jsonStr);
+    // 字符串（key 或 value）
+    // 先处理 "key": 的形式
+    s = s.replace(/&quot;([^&]*?)&quot;(\s*:)/g, '<span class="k">&quot;$1&quot;</span>$2');
+    // 再处理 "value"（字符串值）
+    s = s.replace(/:\s*&quot;([^&]*?)&quot;/g, ': <span class="s">&quot;$1&quot;</span>');
+    // 数字
+    s = s.replace(/:\s*(-?\d+\.?\d*)/g, ': <span class="n">$1</span>');
+    // 布尔
+    s = s.replace(/:\s*(true|false)/g, ': <span class="b">$1</span>');
+    return s;
+  }
+
+  // ===================== 校验逻辑 =====================
+  function validateConfig(output) {
+    const errors = [];
+
+    // Sites 校验
+    output.sites.forEach((s, i) => {
+      const prefix = `视频源 #${i + 1}`;
+      if (!s.name || !String(s.name).trim()) {
+        errors.push({ field: `${prefix} · 名称`, msg: '名称为空', level: 'warn' });
+      }
+      if (!s.api || !String(s.api).trim()) {
+        errors.push({ field: `${prefix} · API`, msg: 'API 地址为空', level: 'error' });
+      } else if (!/^(https?:\/\/|file:\/\/)/i.test(s.api.trim())) {
+        errors.push({ field: `${prefix} · API`, msg: 'API 应以 http:// 或 file:// 开头', level: 'warn' });
+      }
+    });
+
+    // Parses 校验
+    output.parses.forEach((p, i) => {
+      const prefix = `解析 #${i + 1}`;
+      if (!p.name || !String(p.name).trim()) {
+        errors.push({ field: `${prefix} · 名称`, msg: '名称为空', level: 'warn' });
+      }
+      if (!p.url || !String(p.url).trim()) {
+        errors.push({ field: `${prefix} · URL`, msg: '解析 URL 为空', level: 'error' });
+      } else if (!/^https?:\/\//i.test(p.url.trim())) {
+        errors.push({ field: `${prefix} · URL`, msg: '解析 URL 应以 http:// 或 https:// 开头', level: 'warn' });
+      }
+    });
+
+    // Lives 校验
+    output.lives.forEach((l, i) => {
+      const prefix = `线路 #${i + 1}`;
+      if (!l.name || !String(l.name).trim()) {
+        errors.push({ field: `${prefix} · 名称`, msg: '线路名称为空', level: 'warn' });
+      }
+      if (!l.url || !String(l.url).trim()) {
+        errors.push({ field: `${prefix} · 地址`, msg: '直播地址为空', level: 'warn' });
+      } else if (!/^https?:\/\//i.test(l.url.trim())) {
+        errors.push({ field: `${prefix} · 地址`, msg: '直播地址应以 http:// 或 https:// 开头', level: 'warn' });
+      }
+    });
+
+    return errors;
+  }
+
+  // ===================== 构建输出对象 =====================
+  function buildOutput() {
+    currentData.spider = spiderUrlInput.value.trim();
+    currentData.wallpaper = wallpaperUrlInput.value.trim();
+    currentData.logo = logoUrlInput.value.trim() || defaultConfig.logo;
+    const danmakuVal = danmakuUrlInput.value.trim();
+    currentData.ads = parseAds(adsInput.value);
+
+    // 合并 parses 里的 flags
+    const flagSet = new Set(currentData.flags || []);
+    currentData.parses.forEach(p => {
+      if (p.flags) {
+        parseFlags(p.flags).forEach(f => flagSet.add(f));
+      }
+    });
+    const mergedFlags = Array.from(flagSet);
+
+    const output = {
+      spider: currentData.spider,
+      logo: currentData.logo
+    };
+    if (danmakuVal) output.danmaku = danmakuVal;
+    output.wallpaper = currentData.wallpaper;
+    output.lives = currentData.lives;
+    output.sites = currentData.sites;
+    output.parses = currentData.parses;
+    output.flags = mergedFlags;
+    output.ads = currentData.ads;
+    return output;
+  }
+
+  // ===================== 更新预览 =====================
+  function updatePreview() {
+    const output = buildOutput();
+    const jsonStr = JSON.stringify(output, null, 2);
+    jsonPreview.innerHTML = highlightJson(jsonStr);
+
+    siteCounter.textContent = currentData.sites.length + ' 条';
+    parseCounter.textContent = currentData.parses.length + ' 条';
+    liveCounter.textContent = currentData.lives.length + ' 条';
+
+    updateFlagsHint();
+    updateAdsChips();
+    updateLogoPreview();
+    renderValidatePanel(output);
+
+    // 自动保存草稿
+    saveDraft();
+  }
+
+  function renderValidatePanel(output) {
+    validationErrors = validateConfig(output);
+    if (validationErrors.length === 0) {
+      validatePanel.className = 'validate-panel ok';
+      validatePanel.innerHTML = '<div class="title">✅ 校验通过</div><div>配置看起来没问题，可以下载使用了。</div>';
+      return;
+    }
+    const hasError = validationErrors.some(e => e.level === 'error');
+    validatePanel.className = 'validate-panel ' + (hasError ? 'err' : 'ok');
+    let html = '<div class="title">' + (hasError ? '⚠️ 发现 ' + validationErrors.length + ' 个问题' : '🔔 发现 ' + validationErrors.length + ' 个提醒') + '</div>';
+    html += '<ul>';
+    validationErrors.slice(0, 12).forEach(e => {
+      const icon = e.level === 'error' ? '❌' : '⚠️';
+      html += `<li>${icon} <b>${escapeHtml(e.field)}</b>：${escapeHtml(e.msg)}</li>`;
+    });
+    if (validationErrors.length > 12) {
+      html += `<li>... 还有 ${validationErrors.length - 12} 项</li>`;
+    }
+    html += '</ul>';
+    validatePanel.innerHTML = html;
+  }
+
+  function updateFlagsHint() {
+    document.querySelectorAll('.flags-hint').forEach(hint => {
+      const idx = parseInt(hint.dataset.index, 10);
+      if (isNaN(idx)) return;
+      const parse = currentData.parses[idx];
+      if (!parse) return;
+      const list = parseFlags(parse.flags);
+      let html = '';
+      list.forEach(f => {
+        const isNew = !currentData.flags.includes(f);
+        html += `<span class="flag-chip ${isNew ? 'new' : ''}">${escapeHtml(f)}${isNew ? ' ✨' : ''}</span>`;
+      });
+      hint.innerHTML = html || '<span style="color:#94a3b8;font-size:12px;">暂无标签</span>';
+    });
+  }
+
+  function updateAdsChips() {
+    const list = parseAds(adsInput.value);
+    if (list.length === 0) {
+      adsChips.innerHTML = '<span style="color:#94a3b8;font-size:12px;">暂无广告过滤规则</span>';
+      return;
+    }
+    let html = '';
+    list.forEach(a => {
+      html += `<span class="ads-chip">${escapeHtml(a)}<span class="del" data-ads="${escapeAttr(a)}" title="移除">✕</span></span>`;
+    });
+    adsChips.innerHTML = html;
+
+    adsChips.querySelectorAll('.del').forEach(el => {
+      el.addEventListener('click', () => {
+        const target = el.dataset.ads;
+        const lines = adsInput.value.split(/\r?\n/).filter(l => l.trim() && l.trim() !== target);
+        adsInput.value = lines.join('\n');
+        updatePreview();
+      });
+    });
+  }
+
+  function updateLogoPreview() {
+    const url = logoUrlInput.value.trim() || defaultConfig.logo;
+    logoPreviewImg.src = url;
+    logoPreviewUrl.textContent = url;
+  }
+
+  // ===================== 通用绑定工具 =====================
+  function bindInput(container, selector, callback) {
+    container.querySelectorAll(selector).forEach(el => {
+      el.addEventListener('input', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (!isNaN(idx)) {
+          callback(idx, e.target.value);
+          updatePreview();
+        }
+      });
+    });
+  }
+  function bindSelect(container, selector, callback) {
+    container.querySelectorAll(selector).forEach(el => {
+      el.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (!isNaN(idx)) {
+          callback(idx, e.target.value);
+          updatePreview();
+        }
+      });
+    });
+  }
+  function bindCheckbox(container, selector, callback) {
+    container.querySelectorAll(selector).forEach(el => {
+      el.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (!isNaN(idx)) {
+          callback(idx, e.target.checked);
+          updatePreview();
+        }
+      });
+    });
+  }
+
+  // ===================== 拖拽排序（通用） =====================
+  function makeSortable(container, arrayRef, afterFn) {
+    let dragIdx = null;
+
+    container.querySelectorAll('.drag-handle').forEach(handle => {
+      // 只处理直接子级 list-item
+      const item = handle.closest('.list-item');
+      if (!item) return;
+
+      // HTML5 drag
+      item.setAttribute('draggable', 'true');
+
+      item.addEventListener('dragstart', (e) => {
+        dragIdx = parseInt(item.dataset.index, 10);
+        item.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        try { e.dataTransfer.setData('text/plain', String(dragIdx)); } catch (er) {}
+      });
+
+      item.addEventListener('dragend', () => {
+        item.classList.remove('dragging');
+        container.querySelectorAll('.list-item').forEach(i => i.classList.remove('drag-over'));
+      });
+
+      item.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        // 判断是放在上方还是下方
+        const overItem = e.currentTarget;
+        if (overItem.classList.contains('dragging')) return;
+        const rect = overItem.getBoundingClientRect();
+        const midY = rect.top + rect.height / 2;
+        container.querySelectorAll('.list-item').forEach(i => i.classList.remove('drag-over'));
+        overItem.classList.add('drag-over');
+      });
+
+      item.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const overIdx = parseInt(item.dataset.index, 10);
+        if (dragIdx === null || isNaN(dragIdx) || isNaN(overIdx)) return;
+        if (dragIdx === overIdx) return;
+
+        const rect = item.getBoundingClientRect();
+        const midY = rect.top + rect.height / 2;
+        let insertIdx = overIdx;
+        if (e.clientY > midY) insertIdx = overIdx + 1;
+
+        // 从 arrayRef 中移除 dragIdx
+        const [moved] = arrayRef.splice(dragIdx, 1);
+        // 处理索引偏移
+        if (dragIdx < insertIdx) insertIdx--;
+        arrayRef.splice(insertIdx, 0, moved);
+
+        container.querySelectorAll('.list-item').forEach(i => i.classList.remove('drag-over'));
+        if (afterFn) afterFn();
+        updatePreview();
+      });
+    });
+  }
+
+  // ===================== 复制单项 =====================
+  function copySingleItem(obj) {
+    const jsonStr = JSON.stringify(obj, null, 2);
+    navigator.clipboard.writeText(jsonStr).then(() => {
+      showToast('✅ 已复制该项配置');
+    }).catch(() => {
+      const textarea = document.createElement('textarea');
+      textarea.value = jsonStr;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showToast('✅ 已复制该项配置 (fallback)');
+    });
+  }
+
+  // ===================== 渲染视频源 =====================
+  function renderSites() {
+    if (currentData.sites.length === 0) {
+      sitesContainer.innerHTML = '<div class="empty-state">暂无视频源，点击下方按钮添加，或上传文件后一键导入</div>';
+      return;
+    }
+    let html = '';
+    currentData.sites.forEach((site, index) => {
+      const typeOptions = SITE_TYPE_OPTIONS.map(opt =>
+        `<option value="${opt.value}" ${site.type === opt.value ? 'selected' : ''}>${opt.label}</option>`
+      ).join('');
+
+      html += `
+        <div class="list-item" data-index="${index}">
+          <div class="list-item-header">
+            <div class="left">
+              <span class="drag-handle" title="拖拽排序">⋮⋮</span>
+              <span>视频源 #${index + 1} · <code style="font-size:12px;color:#64748b;">${escapeAttr(site.key || '')}</code></span>
+            </div>
+            <div class="item-actions">
+              <button class="btn btn-outline btn-xs copy-site" data-index="${index}" title="复制此项 JSON">📋</button>
+              <button class="btn-remove" data-type="site" data-index="${index}" title="移除">✕</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">源名称</label>
+              <input type="text" class="form-control site-name" value="${escapeAttr(site.name)}" placeholder="例如: 🎬 我的视频源" data-index="${index}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">类型 (type)</label>
+              <select class="form-control site-type" data-index="${index}">${typeOptions}</select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">API 接口地址</label>
+            <input type="text" class="form-control site-api" value="${escapeAttr(site.api)}" placeholder="例如: file://TV/xxx.py 或 https://..." data-index="${index}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">扩展 (ext) <span class="optional">可选</span></label>
+            <input type="text" class="form-control site-ext" value="${escapeAttr(typeof site.ext === 'object' ? JSON.stringify(site.ext) : (site.ext || ''))}" placeholder='例如: {"site":"https://..."}' data-index="${index}">
+          </div>
+          <div class="checkbox-group">
+            <label class="checkbox-label"><input type="checkbox" class="site-searchable" data-index="${index}" ${site.searchable ? 'checked' : ''}> 可搜索</label>
+            <label class="checkbox-label"><input type="checkbox" class="site-quickSearch" data-index="${index}" ${site.quickSearch ? 'checked' : ''}> 快速搜索</label>
+            <label class="checkbox-label"><input type="checkbox" class="site-filterable" data-index="${index}" ${site.filterable ? 'checked' : ''}> 可筛选</label>
+          </div>
+        </div>
+      `;
+    });
+    sitesContainer.innerHTML = html;
+
+    bindInput(sitesContainer, '.site-name', (idx, val) => { currentData.sites[idx].name = val; });
+    bindInput(sitesContainer, '.site-api', (idx, val) => { currentData.sites[idx].api = val; });
+    bindSelect(sitesContainer, '.site-type', (idx, val) => {
+      const n = parseInt(val, 10);
+      currentData.sites[idx].type = isNaN(n) ? 1 : n;
+    });
+    bindInput(sitesContainer, '.site-ext', (idx, val) => {
+      const trimmed = val.trim();
+      if (!trimmed) { currentData.sites[idx].ext = ""; return; }
+      if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+        try { currentData.sites[idx].ext = JSON.parse(trimmed); }
+        catch (e) { currentData.sites[idx].ext = trimmed; }
+      } else { currentData.sites[idx].ext = trimmed; }
+    });
+    bindCheckbox(sitesContainer, '.site-searchable', (idx, checked) => { currentData.sites[idx].searchable = checked ? 1 : 0; });
+    bindCheckbox(sitesContainer, '.site-quickSearch', (idx, checked) => { currentData.sites[idx].quickSearch = checked ? 1 : 0; });
+    bindCheckbox(sitesContainer, '.site-filterable', (idx, checked) => { currentData.sites[idx].filterable = checked ? 1 : 0; });
+
+    sitesContainer.querySelectorAll('.btn-remove[data-type="site"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (isNaN(idx)) return;
+        currentData.sites.splice(idx, 1);
+        renderSites(); updatePreview();
+      });
+    });
+    sitesContainer.querySelectorAll('.copy-site').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (isNaN(idx)) return;
+        copySingleItem(currentData.sites[idx]);
+      });
+    });
+
+    // 拖拽排序
+    makeSortable(sitesContainer, currentData.sites, renderSites);
+  }
+
+  // ===================== 渲染解析 =====================
+  function renderParses() {
+    if (currentData.parses.length === 0) {
+      parsesContainer.innerHTML = '<div class="empty-state">暂无解析接口，点击下方按钮添加</div>';
+      return;
+    }
+    let html = '';
+    currentData.parses.forEach((parse, index) => {
+      const typeOptions = PARSE_TYPE_OPTIONS.map(opt =>
+        `<option value="${opt.value}" ${parse.type === opt.value ? 'selected' : ''}>${opt.label}</option>`
+      ).join('');
+
+      html += `
+        <div class="list-item" data-index="${index}">
+          <div class="list-item-header">
+            <div class="left">
+              <span class="drag-handle" title="拖拽排序">⋮⋮</span>
+              <span>解析 #${index + 1}</span>
+            </div>
+            <div class="item-actions">
+              <button class="btn btn-outline btn-xs copy-parse" data-index="${index}" title="复制此项 JSON">📋</button>
+              <button class="btn-remove" data-type="parse" data-index="${index}" title="移除">✕</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">解析名称</label>
+              <input type="text" class="form-control parse-name" value="${escapeAttr(parse.name)}" placeholder="例如: 新解析接口" data-index="${index}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">类型 (type)</label>
+              <select class="form-control parse-type" data-index="${index}">${typeOptions}</select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">解析 URL</label>
+            <input type="text" class="form-control parse-url" value="${escapeAttr(parse.url)}" placeholder="例如: https://jx.example.com/?url=" data-index="${index}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">平台标识 (Flags) <span class="optional">会自动合并到顶层 flags</span></label>
+            <input type="text" class="form-control parse-flags" value="${escapeAttr(parse.flags || '')}" placeholder="youku, qq, iqiyi, ..." data-index="${index}">
+            <div class="form-help">用英文逗号分隔。默认包含: youku, qq, iqiyi, qiyi, letv, sohu, tudou, pptv, mgtv, wasu</div>
+            <div class="flag-chips flags-hint" data-index="${index}"></div>
+          </div>
+        </div>
+      `;
+    });
+    parsesContainer.innerHTML = html;
+
+    bindInput(parsesContainer, '.parse-name', (idx, val) => { currentData.parses[idx].name = val; });
+    bindInput(parsesContainer, '.parse-url', (idx, val) => { currentData.parses[idx].url = val; });
+    bindSelect(parsesContainer, '.parse-type', (idx, val) => {
+      const n = parseInt(val, 10);
+      currentData.parses[idx].type = isNaN(n) ? 0 : n;
+    });
+    bindInput(parsesContainer, '.parse-flags', (idx, val) => { currentData.parses[idx].flags = val; });
+
+    parsesContainer.querySelectorAll('.btn-remove[data-type="parse"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (isNaN(idx)) return;
+        currentData.parses.splice(idx, 1);
+        renderParses(); updatePreview();
+      });
+    });
+    parsesContainer.querySelectorAll('.copy-parse').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (isNaN(idx)) return;
+        copySingleItem(currentData.parses[idx]);
+      });
+    });
+
+    makeSortable(parsesContainer, currentData.parses, renderParses);
+  }
+
+  // ===================== 渲染直播源 =====================
+  function renderLives() {
+    if (currentData.lives.length === 0) {
+      livesContainer.innerHTML = '<div class="empty-state">暂无直播线路，点击下方按钮添加</div>';
+      return;
+    }
+    let html = '';
+    currentData.lives.forEach((live, index) => {
+      const typeOptions = LIVE_TYPE_OPTIONS.map(opt =>
+        `<option value="${opt.value}" ${live.type === opt.value ? 'selected' : ''}>${opt.label}</option>`
+      ).join('');
+
+      html += `
+        <div class="list-item" data-index="${index}">
+          <div class="list-item-header">
+            <div class="left">
+              <span class="drag-handle" title="拖拽排序">⋮⋮</span>
+              <span>线路 #${index + 1}</span>
+            </div>
+            <div class="item-actions">
+              <button class="btn btn-outline btn-xs copy-live" data-index="${index}" title="复制此项 JSON">📋</button>
+              <button class="btn-remove" data-type="live" data-index="${index}" title="移除">✕</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">线路名称</label>
+              <input type="text" class="form-control live-name" value="${escapeAttr(live.name || '')}" placeholder="例如: 央视频道" data-index="${index}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">直播类型</label>
+              <select class="form-control live-type" data-index="${index}">${typeOptions}</select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">直播地址</label>
+            <input type="text" class="form-control live-url" value="${escapeAttr(live.url || '')}" placeholder="例如: https://example.com/live.txt" data-index="${index}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">EPG 地址 <span class="optional">可选</span></label>
+            <input type="text" class="form-control live-epg" value="${escapeAttr(live.epg || '')}" placeholder="例如: https://example.com/epg.xml" data-index="${index}">
+            <div class="form-help">电子节目单地址，用于显示节目预告</div>
+          </div>
+        </div>
+      `;
+    });
+    livesContainer.innerHTML = html;
+
+    bindInput(livesContainer, '.live-name', (idx, val) => { currentData.lives[idx].name = val; });
+    bindInput(livesContainer, '.live-url', (idx, val) => { currentData.lives[idx].url = val; });
+    bindInput(livesContainer, '.live-epg', (idx, val) => { currentData.lives[idx].epg = val; });
+    bindSelect(livesContainer, '.live-type', (idx, val) => { currentData.lives[idx].type = val; });
+
+    livesContainer.querySelectorAll('.btn-remove[data-type="live"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (isNaN(idx)) return;
+        currentData.lives.splice(idx, 1);
+        renderLives(); updatePreview();
+      });
+    });
+    livesContainer.querySelectorAll('.copy-live').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (isNaN(idx)) return;
+        copySingleItem(currentData.lives[idx]);
+      });
+    });
+
+    makeSortable(livesContainer, currentData.lives, renderLives);
+  }
+
+  // ===================== 文件上传渲染 =====================
+  function renderFileList() {
+    if (uploadedFiles.length === 0) {
+      fileListContainer.innerHTML = '<div class="empty-state">暂无文件，点击上方区域上传</div>';
+      fileCounter.textContent = '0 个文件';
+      importFilesBtn.disabled = true;
+      return;
+    }
+    importFilesBtn.disabled = false;
+    let html = '';
+    uploadedFiles.forEach((file, idx) => {
+      const ext = getExtension(file.name);
+      const icon = ext === 'py' ? '🐍' : ext === 'js' ? '📜' : ext === 'json' ? '📋' : ext === 'php' ? '🐘' : '📄';
+      html += `
+        <div class="file-item">
+          <div class="file-info">
+            <span class="file-icon">${icon}</span>
+            <div>
+              <div class="file-name" title="${escapeAttr(file.name)}">${escapeAttr(file.name)}</div>
+              <div class="file-size">${formatFileSize(file.size)}</div>
+            </div>
+          </div>
+          <button class="btn-remove" data-file-index="${idx}" title="移除">✕</button>
+        </div>
+      `;
+    });
+    fileListContainer.innerHTML = html;
+    fileCounter.textContent = uploadedFiles.length + ' 个文件';
+
+    fileListContainer.querySelectorAll('.btn-remove[data-file-index]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.target.dataset.fileIndex, 10);
+        if (!isNaN(idx)) {
+          uploadedFiles.splice(idx, 1);
+          renderFileList();
+        }
+      });
+    });
+  }
+
+  function addFiles(fileList) {
+    const newFiles = Array.from(fileList);
+    if (newFiles.length === 0) return;
+    const existingKeys = new Set(uploadedFiles.map(f => f.name + '_' + f.size));
+    const uniqueNew = newFiles.filter(f => !existingKeys.has(f.name + '_' + f.size));
+    if (uniqueNew.length === 0) {
+      showToast('文件已存在，未添加重复项');
+      return;
+    }
+    uploadedFiles = uploadedFiles.concat(uniqueNew);
+    renderFileList();
+    showToast(`已添加 ${uniqueNew.length} 个文件`);
+  }
+
+  function importFilesToSites() {
+    if (uploadedFiles.length === 0) {
+      showToast('请先上传文件');
+      return;
+    }
+    let importedCount = 0;
+    uploadedFiles.forEach((file) => {
+      const filename = file.name;
+      const ext = getExtension(filename);
+      const humanName = humanNameFromFile(filename);
+      let baseKey = generateKeyFromFilename(filename);
+      let finalKey = baseKey;
+      let counter = 1;
+      while (currentData.sites.some(s => s.key === finalKey)) {
+        finalKey = baseKey + '_' + counter;
+        counter++;
+      }
+      let siteType = 3;
+      if (ext === 'json') siteType = 1;
+      currentData.sites.push({
+        key: finalKey,
+        name: humanName + ` (${ext || '未知'})`,
+        type: siteType,
+        api: `file://TV/${filename}`,
+        searchable: 1,
+        quickSearch: 1,
+        filterable: 1,
+        order_num: 0,
+        ext: ""
+      });
+      importedCount++;
+    });
+    renderSites();
+    updatePreview();
+    showToast(`✅ 已导入 ${importedCount} 个文件到视频源`);
+    sitesContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ===================== 预设应用 =====================
+  function applySitePreset() {
+    const key = sitePresetSelect.value;
+    if (!key || !SITE_PRESETS[key]) {
+      showToast('请选择视频源预设');
+      return;
+    }
+    const preset = SITE_PRESETS[key];
+    let baseKey = generateKeyFromFilename(preset.name);
+    let finalKey = baseKey;
+    let counter = 1;
+    while (currentData.sites.some(s => s.key === finalKey)) {
+      finalKey = baseKey + '_' + counter;
+      counter++;
+    }
+    currentData.sites.push({
+      key: finalKey,
+      name: preset.name,
+      type: preset.type,
+      api: preset.api,
+      searchable: 1,
+      quickSearch: 1,
+      filterable: 1,
+      order_num: 0,
+      ext: ""
+    });
+    renderSites();
+    updatePreview();
+    sitePresetSelect.value = '';
+    showToast(`✅ 已添加「${preset.name}」`);
+  }
+
+  function applyParsePreset() {
+    const key = parsePresetSelect.value;
+    if (!key || !PARSE_PRESETS[key]) {
+      showToast('请选择解析接口预设');
+      return;
+    }
+    const preset = PARSE_PRESETS[key];
+    currentData.parses.push({
+      name: preset.name,
+      type: preset.type,
+      url: preset.url,
+      flags: preset.flags
+    });
+    renderParses();
+    updatePreview();
+    parsePresetSelect.value = '';
+    showToast(`✅ 已添加「${preset.name}」`);
+  }
+
+  // ===================== 导入 JSON =====================
+  function openImportModal() {
+    importJsonText.value = '';
+    importModal.classList.add('show');
+    setTimeout(() => importJsonText.focus(), 100);
+  }
+  function closeImportModal() {
+    importModal.classList.remove('show');
+  }
+  function confirmImport() {
+    const text = importJsonText.value.trim();
+    if (!text) { showToast('请粘贴 JSON 内容'); return; }
+    let data;
+    try { data = JSON.parse(text); }
+    catch (e) { showToast('❌ JSON 格式错误: ' + e.message); return; }
+
+    // 合并字段
+    if (data.spider !== undefined) currentData.spider = String(data.spider);
+    if (data.logo !== undefined) currentData.logo = String(data.logo);
+    if (data.danmaku !== undefined) currentData.danmaku = String(data.danmaku);
+    if (data.wallpaper !== undefined) currentData.wallpaper = String(data.wallpaper);
+    if (Array.isArray(data.sites)) currentData.sites = data.sites.map(s => ({ ...s }));
+    if (Array.isArray(data.parses)) currentData.parses = data.parses.map(p => ({ ...p }));
+    if (Array.isArray(data.lives)) currentData.lives = data.lives.map(l => ({ ...l }));
+    if (Array.isArray(data.flags)) currentData.flags = data.flags.slice();
+    if (Array.isArray(data.ads)) currentData.ads = data.ads.slice();
+
+    closeImportModal();
+    renderAll();
+    showToast('✅ 已导入配置');
+  }
+
+  // ===================== 二维码 =====================
+  function showQrcode() {
+    const output = buildOutput();
+    const jsonStr = JSON.stringify(output);
+    const base64Str = btoa(unescape(encodeURIComponent(jsonStr)));
+    qrcodeBox.innerHTML = '';
+    try {
+      new QRCode(qrcodeBox, {
+        text: base64Str,
+        width: 200,
+        height: 200,
+        colorDark: '#0f172a',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.L
+      });
+      qrcodeWrapper.classList.add('show');
+      qrcodeWrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      showToast('📱 二维码已生成，扫码导入');
+    } catch (e) {
+      showToast('❌ 二维码生成失败: ' + e.message);
+    }
+  }
+
+  // ===================== 初始化渲染 =====================
+  function renderAll() {
+    logoUrlInput.value = currentData.logo || defaultConfig.logo;
+    spiderUrlInput.value = currentData.spider || '';
+    wallpaperUrlInput.value = currentData.wallpaper || 'https://api.kdcc.cn';
+    danmakuUrlInput.value = currentData.danmaku || '';
+    adsInput.value = (currentData.ads || []).join('\n');
+
+    updateLogoPreview();
+    renderSites();
+    renderParses();
+    renderLives();
+    renderFileList();
+    updatePreview();
+  }
+
+  // ===================== 事件绑定 =====================
+  logoUrlInput.addEventListener('input', () => { updateLogoPreview(); updatePreview(); });
+  spiderUrlInput.addEventListener('input', updatePreview);
+  wallpaperUrlInput.addEventListener('input', updatePreview);
+  danmakuUrlInput.addEventListener('input', updatePreview);
+  adsInput.addEventListener('input', updatePreview);
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      addFiles(e.target.files);
+      fileInput.value = '';
+    }
+  });
+  dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+  dropZone.addEventListener('dragleave', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); });
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault(); dropZone.classList.remove('dragover');
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) addFiles(e.dataTransfer.files);
+  });
+
+  importFilesBtn.addEventListener('click', importFilesToSites);
+  clearFilesBtn.addEventListener('click', () => {
+    if (uploadedFiles.length === 0) return;
+    uploadedFiles = [];
+    renderFileList();
+    showToast('已清空文件列表');
+  });
+
+  addSiteBtn.addEventListener('click', () => {
+    currentData.sites.push({
+      key: randomKey('site'), name: '', type: 1, api: '',
+      searchable: 1, quickSearch: 1, filterable: 1, order_num: 0, ext: ""
+    });
+    renderSites(); updatePreview();
+  });
+  addParseBtn.addEventListener('click', () => {
+    currentData.parses.push({
+      name: '新解析接口', type: 0, url: '',
+      flags: 'youku, qq, iqiyi, qiyi, letv, sohu, tudou, pptv, mgtv, wasu'
+    });
+    renderParses(); updatePreview();
+  });
+  addLiveBtn.addEventListener('click', () => {
+    currentData.lives.push({ name: '新直播线路', type: 'txt', url: '', epg: '' });
+    renderLives(); updatePreview();
+  });
+
+  // 预设
+  applySitePresetBtn.addEventListener('click', applySitePreset);
+  applyParsePresetBtn.addEventListener('click', applyParsePreset);
+
+  // 导入导出
+  downloadBtn.addEventListener('click', () => {
+    const output = buildOutput();
+    const blob = new Blob([JSON.stringify(output, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'tvbox.json'; a.click();
+    URL.revokeObjectURL(url);
+    showToast('✅ 配置已下载');
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    const output = buildOutput();
+    const jsonStr = JSON.stringify(output, null, 2);
+    try {
+      await navigator.clipboard.writeText(jsonStr);
+      showToast('✅ JSON 已复制到剪贴板');
+    } catch (err) {
+      const textarea = document.createElement('textarea');
+      textarea.value = jsonStr;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showToast('✅ JSON 已复制 (fallback)');
+    }
+  });
+
+  base64Btn.addEventListener('click', () => {
+    const output = buildOutput();
+    const jsonStr = JSON.stringify(output);
+    const base64Str = btoa(unescape(encodeURIComponent(jsonStr)));
+    navigator.clipboard.writeText(base64Str).then(() => {
+      showToast('✅ Base64 已复制到剪贴板');
+    }).catch(() => {
+      const textarea = document.createElement('textarea');
+      textarea.value = base64Str;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showToast('✅ Base64 已复制 (fallback)');
+    });
+    jsonPreview.innerHTML = highlightJson(base64Str);
+    setTimeout(() => updatePreview(), 3000);
+  });
+
+  qrBtn.addEventListener('click', showQrcode);
+
+  resetBtn.addEventListener('click', () => {
+    if (!confirm('确定要重置所有配置吗？此操作不可撤销。')) return;
+    currentData = JSON.parse(JSON.stringify(defaultConfig));
+    uploadedFiles = [];
+    clearDraft();
+    renderAll();
+    qrcodeWrapper.classList.remove('show');
+    showToast('↻ 配置已重置');
+  });
+
+  // 导入 JSON
+  importJsonBtn.addEventListener('click', openImportModal);
+  importCancelBtn.addEventListener('click', closeImportModal);
+  importConfirmBtn.addEventListener('click', confirmImport);
+  importFileBtn.addEventListener('click', () => importJsonInput.click());
+  importJsonInput.addEventListener('change', (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => { importJsonText.value = reader.result; };
+    reader.readAsText(f);
+    importJsonInput.value = '';
+  });
+  importModal.addEventListener('click', (e) => {
+    if (e.target === importModal) closeImportModal();
+  });
+
+  // 快捷键
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+      e.preventDefault();
+      downloadBtn.click();
+    }
+    if (e.key === 'Escape') closeImportModal();
+  });
+
+  // ===================== 启动 =====================
+  // 优先从草稿恢复
+  const draft = loadDraft();
+  if (draft) {
+    if (typeof draft === 'object') {
+      if (draft.spider !== undefined) currentData.spider = draft.spider;
+      if (draft.logo !== undefined) currentData.logo = draft.logo;
+      if (draft.danmaku !== undefined) currentData.danmaku = draft.danmaku;
+      if (draft.wallpaper !== undefined) currentData.wallpaper = draft.wallpaper;
+      if (Array.isArray(draft.sites)) currentData.sites = draft.sites;
+      if (Array.isArray(draft.parses)) currentData.parses = draft.parses;
+      if (Array.isArray(draft.lives)) currentData.lives = draft.lives;
+      if (Array.isArray(draft.flags)) currentData.flags = draft.flags;
+      if (Array.isArray(draft.ads)) currentData.ads = draft.ads;
+      showToast('📂 已恢复上次编辑的草稿');
+    }
+  }
+
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

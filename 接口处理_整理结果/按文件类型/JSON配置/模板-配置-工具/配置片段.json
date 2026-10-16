@@ -1,0 +1,5122 @@
+{
+ "port": {
+  "sites": [
+   {
+    "key": "zaka_py001",
+    "name": "007吃瓜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p001.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py002",
+    "name": "123AV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p002.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py003",
+    "name": "123av短视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p003.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py004",
+    "name": "18AV🔞(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p004.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py005",
+    "name": "18jtv🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p005.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py006",
+    "name": "2048成人短剧",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p006.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py007",
+    "name": "2048核基地(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p007.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py008",
+    "name": "275听书",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p008.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py009",
+    "name": "30剧集网(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p009.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py010",
+    "name": "456电影网",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p010.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py011",
+    "name": "4K影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p011.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py012",
+    "name": "4K影院",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p012.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py013",
+    "name": "51FANS🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p013.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py014",
+    "name": "51吃瓜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p014.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py015",
+    "name": "51大赛🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p015.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py016",
+    "name": "51暗网🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p016.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py017",
+    "name": "51爆料🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p017.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py018",
+    "name": "51视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p018.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py019",
+    "name": "58影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p019.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py020",
+    "name": "66大片网(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p020.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py021",
+    "name": "777午夜影院🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p021.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py022",
+    "name": "808影院(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p022.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py023",
+    "name": "818黑料网🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p023.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py024",
+    "name": "8X8X🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p024.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py025",
+    "name": "911爆料🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p025.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py026",
+    "name": "91porna🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p026.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py027",
+    "name": "91porn🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p027.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py028",
+    "name": "91rb🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p028.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py029",
+    "name": "91吃瓜中心🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p029.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py030",
+    "name": "91大赛(无封面)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p030.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py031",
+    "name": "91热爆🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p031.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py032",
+    "name": "91爆料🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p032.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py033",
+    "name": "9g88x(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p033.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py034",
+    "name": "ASMRHoney🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p034.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py035",
+    "name": "ASMR吧",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p035.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py036",
+    "name": "AVTOP10🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p036.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py037",
+    "name": "AVToday🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p037.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py038",
+    "name": "AV星球🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p038.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py039",
+    "name": "AdultpornaAV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p039.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py040",
+    "name": "Auete影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p040.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py041",
+    "name": "BadNews(挂梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p041.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py042",
+    "name": "Beeg🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p042.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py043",
+    "name": "DJGEM音乐网",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p043.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py044",
+    "name": "DJ呦呦",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p044.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py045",
+    "name": "DSYS🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p045.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py046",
+    "name": "EPORNER🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p046.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py047",
+    "name": "FoFo影院(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p047.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py048",
+    "name": "FreeOK(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p048.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py049",
+    "name": "GGGG51",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p049.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py050",
+    "name": "GetAV",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p050.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py051",
+    "name": "Hanime🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p051.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py052",
+    "name": "Huoporn🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p052.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py053",
+    "name": "JAV36🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p053.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py054",
+    "name": "JK领域🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p054.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py055",
+    "name": "Jable🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p055.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py056",
+    "name": "Javmenu🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p056.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py057",
+    "name": "MSAVX🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p057.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py058",
+    "name": "MissAV",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p058.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py059",
+    "name": "Pornhub🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p059.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py060",
+    "name": "TOPTV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p060.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py061",
+    "name": "TnAflix🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p061.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py062",
+    "name": "UAA🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p062.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py063",
+    "name": "UU视视APP🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p063.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py064",
+    "name": "vf🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p064.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py065",
+    "name": "VHUB🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p065.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py066",
+    "name": "VIP兔",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p066.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py067",
+    "name": "VS影院",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p067.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py068",
+    "name": "VV视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p068.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py069",
+    "name": "XX01🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p069.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py070",
+    "name": "Xvideos🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p070.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py071",
+    "name": "YOUTUBE",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p071.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py072",
+    "name": "[动漫]HS日本4K动漫🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p072.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py073",
+    "name": "[动漫]MiFun动漫",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p073.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py074",
+    "name": "[动漫]NaughtyMachinima🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p074.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py075",
+    "name": "[动漫]hanime1动漫🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p075.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py076",
+    "name": "[动漫]共和国动漫",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p076.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py077",
+    "name": "[动漫]动漫巴士",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p077.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py078",
+    "name": "[动漫]樱之空动漫",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p078.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py079",
+    "name": "[动漫]樱花动漫🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p079.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py080",
+    "name": "[动漫]青空次元",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p080.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py081",
+    "name": "[听书]ASMR听书🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p081.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py082",
+    "name": "[听书]有声骚麦🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p082.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py083",
+    "name": "[直播]Cam4直播🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p083.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py084",
+    "name": "[直播]Chaturbate2直播🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p084.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py085",
+    "name": "[直播]Chaturbate直播🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p085.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py086",
+    "name": "[直播]myfreecams直播🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p086.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py087",
+    "name": "stripchatxf",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p087.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py088",
+    "name": "色播聚合🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p088.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py089",
+    "name": "[直播]韩国Pandalive直播🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p089.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py090",
+    "name": "[短剧]51短剧🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p090.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py091",
+    "name": "[短剧]一抖阁🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p091.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py092",
+    "name": "[短剧]狂飙短剧🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p092.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py093",
+    "name": "[短剧]黄豆短剧🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p093.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py094",
+    "name": "[磁力]catemby磁力观看🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p094.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py095",
+    "name": "av3698(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p095.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py096",
+    "name": "avgood🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p096.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py097",
+    "name": "fulao2🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p097.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py098",
+    "name": "fulleroticmovies怀旧经典🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p098.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py099",
+    "name": "fullhd🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p099.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py100",
+    "name": "hqg🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p100.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py101",
+    "name": "hubff🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p101.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py102",
+    "name": "iSese影库🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p102.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py103",
+    "name": "javfree🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p103.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py104",
+    "name": "javhd🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p104.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py105",
+    "name": "kemono🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p105.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py106",
+    "name": "kiss🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p106.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py107",
+    "name": "lmlgdjr🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p107.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py108",
+    "name": "missav🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p108.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py109",
+    "name": "netfapx🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p109.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py110",
+    "name": "one点播(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p110.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py111",
+    "name": "owoav🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p111.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py112",
+    "name": "pomo(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p112.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py113",
+    "name": "pornlulu🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p113.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py114",
+    "name": "tideember🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p114.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py115",
+    "name": "vf🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p115.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py116",
+    "name": "vidhub(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p116.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py117",
+    "name": "xhamster🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p117.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py118",
+    "name": "xxbrits🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p118.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py119",
+    "name": "youav🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p119.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py120",
+    "name": "一个区🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p120.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py121",
+    "name": "一牛影视🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p121.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py122",
+    "name": "一起影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p122.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py123",
+    "name": "一起草(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p123.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py124",
+    "name": "七猫影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p124.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py125",
+    "name": "七色谷🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p125.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py126",
+    "name": "三流视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p126.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py127",
+    "name": "专草校花🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p127.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py128",
+    "name": "丝袜乐土🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p128.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py129",
+    "name": "久久視頻🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p129.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py130",
+    "name": "久夜AV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p130.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py131",
+    "name": "乐园🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p131.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py132",
+    "name": "九个区🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p132.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py133",
+    "name": "九亿少女🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p133.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py134",
+    "name": "九阴争茎🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p134.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py135",
+    "name": "乱伦48小时🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p135.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py136",
+    "name": "乱伦仓库🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p136.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py137",
+    "name": "乱伦伊甸园(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p137.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py138",
+    "name": "云途影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p138.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py139",
+    "name": "五月天🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p139.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py140",
+    "name": "五月星空🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p140.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py141",
+    "name": "亚色影库🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p141.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py142",
+    "name": "京东淫联🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p142.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py143",
+    "name": "人妻偷情🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p143.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py144",
+    "name": "今日看料🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p144.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py145",
+    "name": "仙腾影院(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p145.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py146",
+    "name": "优视频 有🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p146.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py147",
+    "name": "优质粉嫩鲍🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p147.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py148",
+    "name": "youkushipin1",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p148.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py149",
+    "name": "低端影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p149.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py150",
+    "name": "儿子上穴🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p150.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py151",
+    "name": "兄弟影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p151.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py152",
+    "name": "兔岛影院（刁民）",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p152.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py153",
+    "name": "八天电影",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p153.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py154",
+    "name": "八戒影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p154.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py155",
+    "name": "共青春影院(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p155.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py156",
+    "name": "农民影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p156.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py157",
+    "name": "初见影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p157.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py158",
+    "name": "刷不停短剧(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p158.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py159",
+    "name": "juokxf",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p159.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py160",
+    "name": "剧下饭4K",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p160.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py161",
+    "name": "努努影院",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p161.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py162",
+    "name": "千千音乐",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p162.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py163",
+    "name": "华数TV(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p163.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py164",
+    "name": "厂长影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p164.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py165",
+    "name": "厂长资源",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p165.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py166",
+    "name": "口爆大全AV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p166.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py167",
+    "name": "可可影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p167.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py168",
+    "name": "向上影院🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p168.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py169",
+    "name": "君念影院(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p169.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py170",
+    "name": "听书网456",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p170.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py171",
+    "name": "咖啡体育直播",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p171.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py172",
+    "name": "哇哇APP(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p172.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py173",
+    "name": "哔哩直播",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p173.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py174",
+    "name": "weimeijingpin",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p174.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py175",
+    "name": "啊哈DJ网",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p175.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py176",
+    "name": "善良的小姨子🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p176.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py177",
+    "name": "善解人衣🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p177.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py178",
+    "name": "喜福短剧",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p178.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py179",
+    "name": "嘀嗒影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p179.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py180",
+    "name": "四色(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p180.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py181",
+    "name": "四虎视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p181.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py182",
+    "name": "在线短剧(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p182.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py183",
+    "name": "夏日影院",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p183.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py184",
+    "name": "多多影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p184.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py185",
+    "name": "多瑙影院",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p185.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py186",
+    "name": "夜夜春梦（刁民）🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p186.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py187",
+    "name": "夜社短剧（刁民）🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p187.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py188",
+    "name": "夜社🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p188.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py189",
+    "name": "夜色🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p189.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py190",
+    "name": "大屌视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p190.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py191",
+    "name": "大师兄影视🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p191.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py192",
+    "name": "大米星球(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p192.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py193",
+    "name": "大象影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p193.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py194",
+    "name": "大马猴(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p194.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py195",
+    "name": "大鸡吧🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p195.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py196",
+    "name": "奇优影院",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p196.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py197",
+    "name": "奇点影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p197.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py198",
+    "name": "奈非工厂",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p198.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py199",
+    "name": "nvxuesheng",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p199.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py200",
+    "name": "奶糖视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p200.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py201",
+    "name": "好剧屋",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p201.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py202",
+    "name": "好好看",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p202.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py203",
+    "name": "好莱污影院🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p203.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py204",
+    "name": "妈妈自拍🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p204.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py205",
+    "name": "妲己高清视频(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p205.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py206",
+    "name": "威视TV",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p206.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py207",
+    "name": "宅男影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p207.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py208",
+    "name": "寂寞阿姨🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p208.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py209",
+    "name": "密云视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p209.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py210",
+    "name": "小学妹🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p210.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py211",
+    "name": "小心御欲🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p211.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py212",
+    "name": "小涩界🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p212.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py213",
+    "name": "小男娘🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p213.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py214",
+    "name": "小红薯APP🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p214.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py215",
+    "name": "小红薯🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p215.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py216",
+    "name": "小鸭子看看,有🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p216.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py217",
+    "name": "少妇喝多了🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p217.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py218",
+    "name": "山水影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p218.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py219",
+    "name": "幸福加油站🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p219.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py220",
+    "name": "弟大勿勃🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p220.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py221",
+    "name": "影视大全(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p221.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py222",
+    "name": "徐娘阁🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p222.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py223",
+    "name": "怡红院🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p223.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py224",
+    "name": "怦然心动🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p224.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py225",
+    "name": "性运机场(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p225.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py226",
+    "name": "悟圣短剧",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p226.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py227",
+    "name": "悟空传媒🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p227.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py228",
+    "name": "悟空影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p228.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py229",
+    "name": "悦听吧",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p229.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py230",
+    "name": "房中㊙️术🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p230.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py231",
+    "name": "手鸡助手🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p231.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py232",
+    "name": "拍摄现场🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p232.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py233",
+    "name": "换母俱乐部🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p233.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py234",
+    "name": "推特APP🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p234.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py235",
+    "name": "推特涩涩🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p235.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py236",
+    "name": "推特🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p236.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py237",
+    "name": "搜剧AI",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p237.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py238",
+    "name": "撸一天🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p238.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py239",
+    "name": "撸状元🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p239.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py240",
+    "name": "撸王宝典🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p240.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py241",
+    "name": "教授🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p241.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py242",
+    "name": "日久生情(刁民)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p242.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py243",
+    "name": "易听书网(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p243.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py244",
+    "name": "星梦Asmr",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p244.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py245",
+    "name": "星河影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p245.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py246",
+    "name": "星芽短剧",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p246.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py247",
+    "name": "星辰影院(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p247.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py248",
+    "name": "映像星球(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p248.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py249",
+    "name": "映刻短剧",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p249.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py250",
+    "name": "智者玩水🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p250.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py251",
+    "name": "yuezhici",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p251.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py252",
+    "name": "有料🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p252.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py253",
+    "name": "权色视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p253.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py254",
+    "name": "杏吧视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p254.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py255",
+    "name": "极品少女🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p255.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py256",
+    "name": "枝枝影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p256.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py257",
+    "name": "枫叶4K(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p257.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py258",
+    "name": "枫叶音乐",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p258.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py259",
+    "name": "柯南影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p259.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py260",
+    "name": "楓林網(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p260.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py261",
+    "name": "樱花传媒🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p261.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py262",
+    "name": "橘子资源🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p262.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py263",
+    "name": "正妹AV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p263.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py264",
+    "name": "母夜插插插🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p264.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py265",
+    "name": "每日大乱斗🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p265.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py266",
+    "name": "每日大赛🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p266.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py267",
+    "name": "毒舌影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p267.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py268",
+    "name": "毒舌短剧(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p268.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py269",
+    "name": "气泡视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p269.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py270",
+    "name": "水兰亭🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p270.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py271",
+    "name": "永乐视频",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p271.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py272",
+    "name": "河马剧场",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p272.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py273",
+    "name": "河马影视🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p273.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py274",
+    "name": "油管",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p274.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py275",
+    "name": "油管直播",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p275.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py276",
+    "name": "泡泡屋(刁民)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p276.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py277",
+    "name": "泡泡影院",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p277.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py278",
+    "name": "泥视频",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p278.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py279",
+    "name": "海角乱伦(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p279.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py280",
+    "name": "淫兽穴院🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p280.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py281",
+    "name": "淫母原味🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p281.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py282",
+    "name": "淫水洞(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p282.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py283",
+    "name": "清纯人妻🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p283.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py284",
+    "name": "清纯富婆🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p284.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py285",
+    "name": "溏心次元(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p285.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py286",
+    "name": "热播APP",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p286.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py287",
+    "name": "熊猫直播",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p287.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py288",
+    "name": "熊猫视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p288.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py289",
+    "name": "熟女汇🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p289.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py290",
+    "name": "熟妇天堂🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p290.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py291",
+    "name": "爆片库",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p291.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py292",
+    "name": "爆瓜网🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p292.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py293",
+    "name": "爆色🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p293.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py294",
+    "name": "爱壹帆影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p294.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py295",
+    "name": "爱看机器人",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p295.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py296",
+    "name": "猫又影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p296.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py297",
+    "name": "猫咪AV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p297.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py298",
+    "name": "猫咪TV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p298.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py299",
+    "name": "玉蚌含珠🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p299.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py300",
+    "name": "玩物社区🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p300.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py301",
+    "name": "玩蛋吧🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p301.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py302",
+    "name": "瓜子APP",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p302.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py303",
+    "name": "电影侠",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p303.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py304",
+    "name": "男人本色🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p304.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py305",
+    "name": "百合TV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p305.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py306",
+    "name": "百年直播🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p306.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py307",
+    "name": "百花影院(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p307.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py308",
+    "name": "皮皮虾",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p308.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py309",
+    "name": "直播录屏🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p309.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py310",
+    "name": "看剧AI(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p310.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py311",
+    "name": "看戏影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p311.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py312",
+    "name": "真实人妻🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p312.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py313",
+    "name": "真实未流出🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p313.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py314",
+    "name": "真狼影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p314.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py315",
+    "name": "短剧巴士(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p315.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py316",
+    "name": "短剧聚合",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p316.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py317",
+    "name": "石榴短剧",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p317.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py318",
+    "name": "神秘电影🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p318.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py319",
+    "name": "神马影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p319.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py320",
+    "name": "禁片天堂🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p320.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py321",
+    "name": "福利天堂🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p321.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py322",
+    "name": "sifangyanjiusuo",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p322.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py323",
+    "name": "笔盒🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p323.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py324",
+    "name": "第七区🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p324.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py325",
+    "name": "精英突击(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p325.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py326",
+    "name": "糖心Vlog网页2🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p326.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py327",
+    "name": "糖心Vlog网页🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p327.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py328",
+    "name": "糯米短剧",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p328.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py329",
+    "name": "网飞TV(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p329.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py330",
+    "name": "肉视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p330.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py331",
+    "name": "腾爱优芒B",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p331.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py332",
+    "name": "腾讯视频",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p332.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py333",
+    "name": "色吧资源🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p333.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py334",
+    "name": "色播聚合🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p334.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py335",
+    "name": "艾旦影视🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p335.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py336",
+    "name": "芒果TV",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p336.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py337",
+    "name": "花都影视(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p337.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py338",
+    "name": "茶杯狐(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p338.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py339",
+    "name": "草榴社区(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p339.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py340",
+    "name": "草榴视频区🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p340.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py341",
+    "name": "草莓影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p341.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py342",
+    "name": "萝莉AV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p342.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py343",
+    "name": "luolidaoxf",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p343.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py344",
+    "name": "萝莉聚合AV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p344.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py345",
+    "name": "蛋挞TV",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p345.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py346",
+    "name": "蜜桃AV🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p346.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py347",
+    "name": "蜜桃源",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p347.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py348",
+    "name": "蝶卡影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p348.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py349",
+    "name": "袋鼠影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p349.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py350",
+    "name": "西瓜视频(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p350.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py351",
+    "name": "观风影视(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p351.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py352",
+    "name": "视觉影院",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p352.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py353",
+    "name": "豆花影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p353.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py354",
+    "name": "追光影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p354.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py355",
+    "name": "追影",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p355.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py356",
+    "name": "酒与花🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p356.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py357",
+    "name": "酷我音乐",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p357.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py358",
+    "name": "采花大盗🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p358.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py359",
+    "name": "采集合集🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p359.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py360",
+    "name": "采集聚合",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p360.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py361",
+    "name": "野马中文🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p361.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py362",
+    "name": "金牌APP",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p362.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py363",
+    "name": "阴阳宝鉴🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p363.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py364",
+    "name": "陌陌一夜情🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p364.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py365",
+    "name": "青牛影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p365.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py366",
+    "name": "青蛙影视(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p366.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py367",
+    "name": "青蛙视频(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p367.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py368",
+    "name": "韩国色情电影🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p368.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py369",
+    "name": "韩小圈(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p369.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py370",
+    "name": "音乐聚合",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p370.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py371",
+    "name": "飞快TV(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p371.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py372",
+    "name": "飞流视频(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p372.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py373",
+    "name": "首映网(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p373.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py374",
+    "name": "香肠派对🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p374.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py375",
+    "name": "香蕉视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p375.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py376",
+    "name": "香蕉视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p376.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py377",
+    "name": "骚女档案馆🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p377.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py378",
+    "name": "骚火影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p378.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py379",
+    "name": "高清点播(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p379.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py380",
+    "name": "高端视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p380.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py381",
+    "name": "高考模拟🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p381.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py382",
+    "name": "魑魅魍魉(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p382.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py383",
+    "name": "魔色365🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p383.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py384",
+    "name": "鲍鱼盒子🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p384.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py385",
+    "name": "麒麟影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p385.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py386",
+    "name": "麦田影院",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p386.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py387",
+    "name": "麻花影视",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p387.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py388",
+    "name": "麻豆免费在线播放🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p388.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py389",
+    "name": "麻豆影院🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p389.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py390",
+    "name": "麻豆社🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p390.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py391",
+    "name": "黄色仓库动态版🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p391.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py392",
+    "name": "黄色仓库🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p392.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py393",
+    "name": "黑料不打烊🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p393.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py394",
+    "name": "黑料网🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p394.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py395",
+    "name": "📺Javday(开梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p395.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py396",
+    "name": "📺Vjav(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p396.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py397",
+    "name": "📺大哥视频(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p397.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py398",
+    "name": "📺rouAV(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p398.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py399",
+    "name": "📺AirAV.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p399.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py400",
+    "name": "📺57短剧(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p400.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py401",
+    "name": "📺591AV(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p401.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py402",
+    "name": "📺SuperPorn(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p402.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py403",
+    "name": "📺Libvio.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p403.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py404",
+    "name": "📺橘汁视频.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p404.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py405",
+    "name": "📺Zaka影院(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p405.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py406",
+    "name": "📺LissAVJP(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p406.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py407",
+    "name": "📺XV123(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p407.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py408",
+    "name": "📺YesPorn(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p408.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py409",
+    "name": "📺MissAV(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p409.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py410",
+    "name": "📺北斗影院.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p410.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py411",
+    "name": "📺倒茶小妹(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p411.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py412",
+    "name": "📺独播库.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p412.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py413",
+    "name": "📺草草(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p413.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py414",
+    "name": "📺抠爆B处(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p414.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py415",
+    "name": "📺123视频(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p415.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py416",
+    "name": "📺LissAVCN(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p416.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py417",
+    "name": "📺CHX站.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p417.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py418",
+    "name": "📺汤头条(开梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p418.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py419",
+    "name": "📺XOJAV(开梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p419.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py420",
+    "name": "📺FCJAV(开梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p420.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py421",
+    "name": "📺一线黑料(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p421.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py422",
+    "name": "📺HOHO(开梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p422.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py423",
+    "name": "📺5X5X(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p423.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py424",
+    "name": "📺Avple(开梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p424.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py425",
+    "name": "📺东方色文化.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p425.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py426",
+    "name": "📺望春视频.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p426.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py427",
+    "name": "📺浪巢福地(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p427.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py428",
+    "name": "📺露思AV网.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p428.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py429",
+    "name": "📺霸王鸟视频(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p429.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py430",
+    "name": "📺蘑菇影院.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p430.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py431",
+    "name": "📺你的秘书.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p431.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py432",
+    "name": "📺色花堂视频.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p432.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py433",
+    "name": "📺色即空.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p433.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py434",
+    "name": "📺香女园.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p434.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py435",
+    "name": "📺悠悠乐园(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p435.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py436",
+    "name": "📺18Today(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p436.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py437",
+    "name": "📺8K视界(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p437.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py438",
+    "name": "📺爆操留学生(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p438.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py439",
+    "name": "📺红杏视界(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p439.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py440",
+    "name": "📺色牛秒播(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p440.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py441",
+    "name": "📺臻美视界(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p441.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py442",
+    "name": "📺青禾视界(关梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p442.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py443",
+    "name": "📺FreePorn(开梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p443.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py444",
+    "name": "📺Xvideos.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p444.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py445",
+    "name": "📺XSZAV.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p445.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py446",
+    "name": "📺欲女心经.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p446.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py447",
+    "name": "📺淫荡阁.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p447.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py448",
+    "name": "📺EBA视频.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p448.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py449",
+    "name": "📺欧美影.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p449.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py450",
+    "name": "📺九合一(免翻).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p450.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py451",
+    "name": "📺TikTok成人版.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p451.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py452",
+    "name": "📺MissavJP.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p452.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py453",
+    "name": "📺黄果短剧.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p453.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py454",
+    "name": "📺高清SEX.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p454.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py455",
+    "name": "📺换妻网.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p455.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py456",
+    "name": "📺华谊影视.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p456.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py457",
+    "name": "📺云朵影视.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p457.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py458",
+    "name": "📺儿歌乐园.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p458.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py459",
+    "name": "📺轻音乐.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p459.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py460",
+    "name": "📺抖阴.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p460.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py461",
+    "name": "📺鉴黄师（开梯）.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p461.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py462",
+    "name": "📺AI漫剧.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p462.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py463",
+    "name": "📺91大神.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p463.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py464",
+    "name": "📺风欲.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p464.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py465",
+    "name": "📺海角.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p465.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py466",
+    "name": "📺秀秀.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p466.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py467",
+    "name": "📺撸上天.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p467.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py468",
+    "name": "📺漫剧短剧.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p468.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py469",
+    "name": "📺叔叔和侄女.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p469.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py470",
+    "name": "📺泡泡屋.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p470.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py471",
+    "name": "📺日久生情（刁民）.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p471.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py472",
+    "name": "📺夜夜春梦（刁民）.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p472.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py473",
+    "name": "📺萝莉岛.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p473.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py474",
+    "name": "📺Twitter精选.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p474.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py475",
+    "name": "📺91成人短剧.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p475.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py476",
+    "name": "📺大象影视.py(关梯)｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p476.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py477",
+    "name": "📺[直播]stripchat直播.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p477.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py478",
+    "name": "📺百年直播.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p478.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py479",
+    "name": "📺女学生.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p479.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py480",
+    "name": "📺私房研究所.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p480.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py481",
+    "name": "📺有料.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p481.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py482",
+    "name": "📺唯美精品.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p482.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py483",
+    "name": "📺高考模拟.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p483.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py484",
+    "name": "📺国色天香.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p484.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py485",
+    "name": "📺京东淫联.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p485.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py486",
+    "name": "📺优酷视频.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p486.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py487",
+    "name": "📺低端影视.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p487.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py488",
+    "name": "📺啊哈DJ网.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p488.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py489",
+    "name": "📺DJGEM音乐网.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p489.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py490",
+    "name": "📺月之祠（番剧）.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p490.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py491",
+    "name": "📺兔岛影院（刁民）.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p491.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py492",
+    "name": "📺星影4K（刁民）.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p492.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py493",
+    "name": "📺猫又影视.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p493.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py494",
+    "name": "📺剧OK.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p494.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py495",
+    "name": "📺油管,py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p495.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py496",
+    "name": "📺NjAV(开梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p496.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py497",
+    "name": "📺五合一(免翻).py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p497.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py498",
+    "name": "📺[短视频]TikTok(开梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p498.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py499",
+    "name": "📺[短视频]PornTok(开梯).py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p499.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py500",
+    "name": "📺毒舌影视.py(关梯)",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p500.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py501",
+    "name": "📺绅士影视.py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p501.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py502",
+    "name": "📺怀旧经典.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p502.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py503",
+    "name": "📺红果短剧,py",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p503.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py504",
+    "name": "📺经典老片.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p504.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py505",
+    "name": "📺野果短剧.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p505.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py506",
+    "name": "📺禁果短剧.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p506.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py507",
+    "name": "📺精仙阁.py｜🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p507.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py508",
+    "name": "VF四级老片🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p508.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py509",
+    "name": "[直播]stripchat直播🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p509.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py510",
+    "name": "[直播]色播聚合🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p510.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py511",
+    "name": "ahadjwang",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p511.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py512",
+    "name": "bainianzhibo",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p512.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py513",
+    "name": "djgemyinyuewang",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p513.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py514",
+    "name": "jingdongyinlianxf",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p514.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py515",
+    "name": "maoyouyingshi",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p515.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py516",
+    "name": "youliao",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p516.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py517",
+    "name": "优酷视频",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p517.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py518",
+    "name": "兔岛影院",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p518.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py519",
+    "name": "剧OK",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p519.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py520",
+    "name": "唯美精品🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p520.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py521",
+    "name": "夜夜春梦",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p521.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py522",
+    "name": "夜社🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p522.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py523",
+    "name": "大象影视(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p523.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py524",
+    "name": "女学生🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p524.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py525",
+    "name": "弟大勿勃🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p525.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py526",
+    "name": "日久生情",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p526.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py527",
+    "name": "月之祠（番剧）",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p527.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py528",
+    "name": "海角",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p528.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py529",
+    "name": "私房研究所🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p529.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py530",
+    "name": "肉视频🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p530.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py531",
+    "name": "萝莉岛🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p531.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py532",
+    "name": "香蕉视频(关梯)🔞",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p532.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   },
+   {
+    "key": "zaka_py533",
+    "name": "🔞[采集]采集聚合",
+    "type": 3,
+    "api": "https://py.ystv.top/port/p533.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 移植插件"
+   }
+  ]
+ },
+ "native": {
+  "sites": [
+   {
+    "key": "zaka_pyn001",
+    "name": "18㊙️MissAV",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n001.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn002",
+    "name": "51短剧",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n002.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn003",
+    "name": "91精品",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n003.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn004",
+    "name": "941影视",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n004.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn005",
+    "name": "MissAV㊙️",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n005.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn006",
+    "name": "XSZAV2",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n006.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn007",
+    "name": "XSZAV2",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n007.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn008",
+    "name": "demo_missav",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n008.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn009",
+    "name": "gdd视频",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n009.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn010",
+    "name": "mjv015",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n010.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn011",
+    "name": "勃士",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n011.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn012",
+    "name": "午夜剧场",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n012.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn013",
+    "name": "午夜剧场_ok影视全量版",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n013.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn014",
+    "name": "午夜剧场_分组版",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n014.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn015",
+    "name": "小猫视频",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n015.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn016",
+    "name": "弟大勿勃",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n016.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn017",
+    "name": "快猫社区",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n017.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn018",
+    "name": "欲语心镜",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n018.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn019",
+    "name": "海天盛筵",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n019.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn020",
+    "name": "爽上天",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n020.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn021",
+    "name": "爽水妹",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n021.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn022",
+    "name": "狼友天堂",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n022.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn023",
+    "name": "秘境视频",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n023.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn024",
+    "name": "红果漫剧",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n024.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn025",
+    "name": "红果短剧",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n025.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn026",
+    "name": "肉视频",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n026.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn027",
+    "name": "色花堂图鉴",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n027.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn028",
+    "name": "花千色",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n028.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn029",
+    "name": "西瓜短剧",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n029.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn030",
+    "name": "集芳阁",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n030.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn031",
+    "name": "风月夜禁脔",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n031.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn032",
+    "name": "风月阁",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n032.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn033",
+    "name": "黄果漫剧",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n033.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn034",
+    "name": "🎧红果听书",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n034.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   },
+   {
+    "key": "zaka_pyn035",
+    "name": "XSZAV22",
+    "type": 3,
+    "api": "https://py.ystv.top/native/n035.py",
+    "searchable": 1,
+    "quickSearch": 1,
+    "group": "🐍 原生插件"
+   }
+  ]
+ }
+}

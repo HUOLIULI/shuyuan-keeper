@@ -1,0 +1,200 @@
+{
+  "logo": "/storage/emulated/0/peekpro/jar/头像.gif",
+  "spider": "",
+  "sites": [
+    {
+      "name": "智能加载",
+      "key": "智能加载",
+      "type": 3,
+      "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/EHR663/refs/heads/main/py/智能加载v5.1.py"
+    },
+    {
+      "name": "弹幕 TG @hshsjk9",
+      "key": "弹幕豆瓣",
+      "type": 3,
+      "api": "csp_SecureDanmu",
+      "searchable": 1,
+      "jar": "https://ghfast.top/https://raw.githubusercontent.com/goodcommunication/mydm/main/danmu-spider-native.jar",
+      "ext": {
+        "apiUrls": [
+          "https://danmu.iyo.us.ci/theft-dastardly-prognosis-hula-agenda2-dropkick|公益源",
+          "https://logo.saodu.work:8888/87654321|公益源1",
+          "https://dm.ljiaovm.com/luosen|公益源2"
+        ],
+        "titleMappingsUrl": "https://ghfast.top/https://raw.githubusercontent.com/goodcommunication/mydm/main/yins.json",
+        "filter": "./lib/douban.json"
+      }
+    },
+    {
+      "key": "4k_py",
+      "name": "4k",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/4k.py"
+    },
+    {
+      "key": "gimyai (1)_py",
+      "name": "gimyai (1)",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/gimyai (1).py"
+    },
+    {
+      "key": "miss_py",
+      "name": "miss",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/miss.py"
+    },
+    {
+      "key": "tudoukankan_py",
+      "name": "tudoukankan",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/tudoukankan.py"
+    },
+    {
+      "key": "剧迷4K (1)_py",
+      "name": "剧迷4K (1)",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/剧迷4K (1).py"
+    },
+    {
+      "key": "悟空影视_py",
+      "name": "悟空影视",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/悟空影视.py"
+    },
+    {
+      "key": "新6V_py",
+      "name": "新6V",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/新6V.py"
+    },
+    {
+      "key": "无码片厂v1_py",
+      "name": "无码片厂v1",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/无码片厂v1.py"
+    },
+    {
+      "key": "智能接口[工具]_py",
+      "name": "智能接口[工具]",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/智能接口[工具].py"
+    },
+    {
+      "key": "果香园新_py",
+      "name": "果香园新",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/果香园新.py"
+    },
+    {
+      "key": "枫叶4K影院(6)_py",
+      "name": "枫叶4K影院(6)",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/枫叶4K影院(6).py"
+    },
+    {
+      "key": "猫咪AV_py",
+      "name": "猫咪AV",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/猫咪AV.py"
+    },
+    {
+      "key": "蕃茄小说_py",
+      "name": "蕃茄小说",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/蕃茄小说.py"
+    },
+    {
+      "key": "追剧网_py",
+      "name": "追剧网",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/追剧网.py"
+    },
+    {
+      "key": "黄果短剧-代理版_py",
+      "name": "黄果短剧-代理版",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./py/黄果短剧-代理版.py"
+    },
+    {
+      "key": "新6v_js",
+      "name": "新6v",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./js/新6v.js"
+    },
+    {
+      "key": "枫叶4K影院_js",
+      "name": "枫叶4K影院",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./js/枫叶4K影院.js"
+    },
+    {
+      "key": "绅士仓库1_js",
+      "name": "绅士仓库1",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./js/绅士仓库1.js"
+    },
+    {
+      "key": "追剧网_js",
+      "name": "追剧网",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "api": "./js/追剧网.js"
+    }
+  ]
+}
